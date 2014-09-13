@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.0.0
+// @version        5.1.0
 // @license        BSD
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
@@ -17,9 +17,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.0.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.0.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.0.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.1.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.1.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.1.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -658,8 +658,8 @@ var $;
     var config = null;
     $.register({
       rule: {
-        host: /^legnaleurc\.github\.io$/,
-        path: /^\/nopicads\/configure\.html$/,
+        host: /^adsbypasser\.github\.io$/,
+        path: /^\/configure\.html$/,
       },
       ready: function () {
         unsafeWindow.commit = $.inject(function (data) {
@@ -924,6 +924,25 @@ var $;
     });
   }
 })();
+
+$.register({
+  rule: {
+    host: /^www\.4shared\.com$/,
+    path: /^\/(mp3|get|rar|zip|file|android|software|program)\//,
+  },
+  ready: function () {
+    'use strict';
+    $.get('http://www.4server.info/find.php', {
+      data: window.location.href,
+    }, function (data) {
+      var d = $.toDOM(data);
+      var c = $('meta[http-equiv=refresh]', d);
+      var b = c.content.match(/URL=(.+)$/);
+      var a = b[1];
+      $.openLink(a);
+    });
+  },
+});
 
 $.register({
   rule: 'http://www.dl-protect.com/*',
@@ -3018,6 +3037,19 @@ $.register({
 
 $.register({
   rule: {
+    host: /^binbox\.io$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var a = $.searchScripts('start_clock');
+    _.info(a);
+    var jq = unsafeWindow.$;
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?(buz|vzt)url\.com$/,
   },
   ready: function () {
@@ -3515,6 +3547,22 @@ $.register({
 })();
 
 $.register({
+  rule: {
+    host: /^linkshrink\.net$/,
+    path: /^\/[a-zA-Z0-9]+$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $.searchScripts(/class="bt" href="([^"]+)"/);
+    if (!a) {
+      _.warn('pattern changed');
+      return;
+    }
+    $.openLink(a[1]);
+  },
+});
+
+$.register({
   rule: 'http://lix.in/-*',
   ready: function () {
     'use strict';
@@ -3950,7 +3998,7 @@ $.register({
 $.register({
   rule: {
     host: /^(www\.)?sylnk\.net$/,
-    query: /(?:^|\?|&)link=(\w+)(?:&|$)/
+    query: /link=([^&]+)/
   },
   ready: function (m) {
     'use strict';
