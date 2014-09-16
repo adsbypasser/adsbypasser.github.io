@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.1.0
+// @version        5.2.0
 // @license        BSD
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
@@ -17,9 +17,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.1.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.1.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.1.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.2.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.2.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.2.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -736,7 +736,7 @@ var $;
     }
     function dispatchByArray (byLocation, rules, url_1, url_3, url_6) {
       var tmp = _.C(rules).find(function (rule) {
-        var m = dispatch(rule, url_1, url_3, url_6);
+        var m = dispatch(byLocation, rule, url_1, url_3, url_6);
         if (!m) {
           return _.nop;
         }
@@ -1524,18 +1524,41 @@ $.register({
   },
 });
 
-$.register({
-  rule: {
-    host: /^binbox\.io$/,
-  },
-  ready: function () {
-    'use strict';
-    $.removeNodes('iframe');
-    var a = $.searchScripts('start_clock');
-    _.info(a);
-    var jq = unsafeWindow.$;
-  },
-});
+(function () {
+  'use strict';
+  function linkify (text) {
+    var rUrl = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return text.replace(rUrl, function(match) {
+      return _.T("<a href='{0}'>{0}</a>")(match);
+    });
+  }
+  $.register({
+    rule: {
+      host: /^(www\.)?binbox\.io$/,
+      path: /\/([a-zA-Z0-9]+)/,
+      hash: /#([a-zA-Z0-9]+)/,
+    },
+    ready: function (m) {
+      var sjcl = unsafeWindow.sjcl;
+      var paste_id = m.path[1];
+      var paste_salt = m.hash[1];
+      var fake_user = 'binbox';
+      var API_URL = _.T('https://{0}.binbox.io/{1}.json')(fake_user, paste_id);
+      $.get(API_URL, "", function (pasteInfo) {
+        pasteInfo = JSON.parse(pasteInfo);
+        if (!pasteInfo.ok) {
+          throw new _.AdsBypasserError("error when getting paste information");
+        }
+        var raw_paste = sjcl.decrypt(paste_salt, pasteInfo.paste.text);
+        var elm = document.createElement('pre');
+        elm.id = 'paste-text';
+        elm.innerHTML = linkify(raw_paste);
+        var frame = $('#paste-frame');
+        frame.parentNode.replaceChild(elm, frame);
+      });
+    },
+  });
+})();
 
 $.register({
   rule: {
@@ -2785,28 +2808,54 @@ $.register({
   },
 });
 
-$.register({
-  rule: 'http://www.dl-protect.com/*',
-  ready: function () {
-    'use strict';
-    var f = $.$('form[name=ccerure]');
-    if (f) {
-      if (f.onsubmit !== null) {
+(function() {
+  'use strict';
+  $.register({
+    rule: {
+      host: /^(www\.)?dl-protect\.com$/,
+      path: /\/[A-Z1-9]+/,
+    },
+    ready: function () {
+      var f = $.$('form[name=ccerure]');
+      if (f) {
+        var observer = new MutationObserver(function (mutations) {
+          var iIn = $('input[id=in]');
+          for (var i = 0; i < mutations.length; i++) {
+            if (mutations[i].target.value && mutations[i].attributeName === 'value') {
+              observer.disconnect();
+              iIn.value = "Tracking too much hurts users' privacy";
+              if (!canFastRedirect()) {
+                return;
+              }
+              setTimeout(function() {
+                f.submit();
+              }, 600);
+              break;
+            }
+          }
+        });
+        var iIn = $('input[id=in]');
+        if (iIn.value) {
+          setTimeout(function() {
+            f.submit();
+          }, 600);
+        } else {
+          observer.observe(iIn, {
+            attributes: true,
+          });
+        }
         return;
       }
-      var p = $.$('form[name=ccerure] input[name=pwd]');
-      if (p) {
-        return;
+      var l = $.$$('#slinks > a');
+      if (l.size() === 1) {
+        $.openLink(l.at(0).href);
       }
-      f.submit();
-      return;
-    }
-    var l = $.$$('#slinks > a');
-    if (l.size() === 1) {
-      $.openLink(l.at(0).href);
-    }
-  },
-});
+    },
+  });
+  function canFastRedirect () {
+    return !$.$('form[name=ccerure]').onsubmit && !$.$('form[name=ccerure] input[name=pwd]');
+  }
+})();
 
 $.register({
   rule: 'http://www.firedrive.com/file/*',
