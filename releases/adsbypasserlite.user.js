@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.2.0
+// @version        5.3.0
 // @license        BSD
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
@@ -17,9 +17,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.2.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.2.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.2.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.3.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.3.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.3.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -244,7 +244,6 @@ var $;
       try {
         return $(selector, context);
       } catch (e) {
-        _.info(e.message);
         return null;
       }
     };
@@ -1553,7 +1552,7 @@ $.register({
         var elm = document.createElement('pre');
         elm.id = 'paste-text';
         elm.innerHTML = linkify(raw_paste);
-        var frame = $('#paste-frame');
+        var frame = $('#paste-frame, #captcha-page');
         frame.parentNode.replaceChild(elm, frame);
       });
     },
@@ -2813,7 +2812,7 @@ $.register({
   $.register({
     rule: {
       host: /^(www\.)?dl-protect\.com$/,
-      path: /\/[A-Z1-9]+/,
+      path: /\/[A-Z0-9]+/,
     },
     ready: function () {
       var f = $.$('form[name=ccerure]');
