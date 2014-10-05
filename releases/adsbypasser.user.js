@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.3.0
+// @version        5.4.0
 // @license        BSD
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
@@ -17,9 +17,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.3.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.3.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.3.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.4.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.4.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.4.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -388,21 +388,21 @@ var $;
       o.style.overflow = '';
     };
     function toggleShrinking () {
-      this.classList.toggle('nopicads-shrinked');
+      this.classList.toggle('adsbypasser-shrinked');
     }
     function checkScaling () {
       var nw = this.naturalWidth;
       var nh = this.naturalHeight;
       var cw = document.documentElement.clientWidth;
       var ch = document.documentElement.clientHeight;
-      if ((nw > cw || nh > ch) && !this.classList.contains('nopicads-resizable')) {
-        this.classList.add('nopicads-resizable');
-        this.classList.add('nopicads-shrinked');
+      if ((nw > cw || nh > ch) && !this.classList.contains('adsbypasser-resizable')) {
+        this.classList.add('adsbypasser-resizable');
+        this.classList.add('adsbypasser-shrinked');
         this.addEventListener('click', toggleShrinking);
       } else {
         this.removeEventListener('click', toggleShrinking);
-        this.classList.remove('nopicads-shrinked');
-        this.classList.remove('nopicads-resizable');
+        this.classList.remove('adsbypasser-shrinked');
+        this.classList.remove('adsbypasser-resizable');
       }
     }
     function scaleImage (i) {
@@ -430,8 +430,8 @@ var $;
     }
     function injectStyle (d, i) {
       $.removeNodes('style, link[rel=stylesheet]');
-      d.id = 'nopicads-wrapper';
-      i.id = 'nopicads-image';
+      d.id = 'adsbypasser-wrapper';
+      i.id = 'adsbypasser-image';
     }
     $.replace = function (imgSrc) {
       if (!config.redirectImage) {
@@ -899,7 +899,7 @@ var $;
       }
     };
     GM.registerMenuCommand('AdsBypasser - Configure', function () {
-      GM.openInTab('https://legnaleurc.github.io/nopicads/configure.html');
+      GM.openInTab('https://adsbypasser.github.io/configure.html');
     });
     return $;
   }
@@ -993,7 +993,10 @@ $.register({
 })();
 
 $.register({
-  rule: 'http://www.firedrive.com/file/*',
+  rule: {
+    host: /^(www\.)?(firedrive|putlocker)\.com$/,
+    path: /^\/file\/[0-9A-F]+$/,
+  },
   ready: function () {
     'use strict';
     var c = $('#confirm_form');
@@ -2227,6 +2230,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^www\.pornimagex\.com$/,
+    path: /^\/image\/.*$/,
+  },
+  ready: function () {
+    'use strict';
+    var img = $('#fixed img.border2px');
+    $.openImage(img.src);
+  },
+});
+
+$.register({
+  rule: {
     host: /^postimg\.org$/,
   },
   ready: function () {
@@ -2283,7 +2298,7 @@ $.register({
           /^(image(decode|ontime)|(zonezeed|zelje|croft|myhot|dam)image|pic(\.apollon-fervor|stwist)|www\.imglemon|ericsony)\.com$/,
           /^(img(serve|coin|fap)|gallerycloud)\.net$/,
           /^hotimages\.eu$/,
-          /^(imgstudio|dragimage)\.org$/,
+          /^(imgstudio|dragimage|imagelook)\.org$/,
         ],
         path: /^\/img-.*\.html$/,
       },
@@ -2295,7 +2310,10 @@ $.register({
     ready: ready,
   });
   $.register({
-    rule: 'http://www.imgadult.com/img-*.html',
+    rule: {
+      host: /^www.img(adult|taxi).com$/,
+      path: /^\/img-.*\.html$/,
+    },
     start: function () {
       var c = $.getCookie('user');
       if (c) {
@@ -3023,42 +3041,6 @@ $.register({
   },
 });
 
-(function () {
-  'use strict';
-  function linkify (text) {
-    var rUrl = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-    return text.replace(rUrl, function(match) {
-      return _.T("<a href='{0}'>{0}</a>")(match);
-    });
-  }
-  $.register({
-    rule: {
-      host: /^(www\.)?binbox\.io$/,
-      path: /\/([a-zA-Z0-9]+)/,
-      hash: /#([a-zA-Z0-9]+)/,
-    },
-    ready: function (m) {
-      var sjcl = unsafeWindow.sjcl;
-      var paste_id = m.path[1];
-      var paste_salt = m.hash[1];
-      var fake_user = 'binbox';
-      var API_URL = _.T('https://{0}.binbox.io/{1}.json')(fake_user, paste_id);
-      $.get(API_URL, "", function (pasteInfo) {
-        pasteInfo = JSON.parse(pasteInfo);
-        if (!pasteInfo.ok) {
-          throw new _.AdsBypasserError("error when getting paste information");
-        }
-        var raw_paste = sjcl.decrypt(paste_salt, pasteInfo.paste.text);
-        var elm = document.createElement('pre');
-        elm.id = 'paste-text';
-        elm.innerHTML = linkify(raw_paste);
-        var frame = $('#paste-frame, #captcha-page');
-        frame.parentNode.replaceChild(elm, frame);
-      });
-    },
-  });
-})();
-
 $.register({
   rule: {
     host: /^(www\.)?(buz|vzt)url\.com$/,
@@ -3667,7 +3649,7 @@ $.register({
   },
   ready: function () {
     'use strict';
-    var a = $('a.redirect');
+    var a = $('a.redirect, a[target=_blank][rel=nofollow]');
     $.openLink(a.href);
   },
 });
@@ -4287,5 +4269,60 @@ $.register({
     $.openLink(m[1]);
   },
 });
+
+(function () {
+  'use strict';
+  var sUrl = '(\\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])';
+  function isLink (text) {
+    var rUrl = new RegExp(_.T('^{0}$')(sUrl), 'i');
+    return rUrl.test(text);
+  }
+  function linkify (text) {
+    var rUrl = new RegExp(sUrl, 'ig');
+    return text.replace(rUrl, function(match) {
+      return _.T("<a href='{0}'>{0}</a>")(match);
+    });
+  }
+  $.register({
+    rule: {
+      host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
+      path: /\/([a-zA-Z0-9]+)/,
+      hash: /#([a-zA-Z0-9]+)/,
+    },
+    ready: function (m) {
+      var sjcl = unsafeWindow.sjcl;
+      var paste_id = m.path[1];
+      var paste_salt = m.hash[1];
+      var fake_user = 'binbox';
+      var API_URL = _.T('https://{0}.binbox.io/{1}.json')(fake_user, paste_id);
+      $.get(API_URL, "", function (pasteInfo) {
+        pasteInfo = JSON.parse(pasteInfo);
+        if (!pasteInfo.ok) {
+          throw new _.AdsBypasserError("error when getting paste information");
+        }
+        var raw_paste = sjcl.decrypt(paste_salt, pasteInfo.paste.text);
+        if (isLink(raw_paste)) {
+          $.openLink(raw_paste);
+          return;
+        }
+        var elm = document.createElement('pre');
+        elm.id = 'paste-text';
+        elm.innerHTML = linkify(raw_paste);
+        var frame = $('#paste-frame, #captcha-page');
+        frame.parentNode.replaceChild(elm, frame);
+      });
+    },
+  });
+  $.register({
+    rule: {
+      host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
+      path: /\/o\/([a-zA-Z0-9]+)/,
+    },
+    ready: function (m) {
+      var direct_link = window.atob(m.path[1]);
+      $.openLink(direct_link);
+    },
+  });
+})();
 
 $._main();
