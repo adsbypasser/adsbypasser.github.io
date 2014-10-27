@@ -3,10 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.4.0
+// @version        5.5.0
 // @license        BSD
+// @homepageURL    https://adsbypasser.github.io/
+// @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.5.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -17,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.4.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.4.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.4.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.5.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.5.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.5.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -370,7 +373,11 @@ var $;
       }
       var from = window.location.toString();
       _.info(_.T('{0} -> {1}')(from, to));
-      window.location.href = to;
+      var a = document.createElement('a');
+      a.href = to;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
     };
     $.openImage = function (imgSrc) {
       if (config.redirectImage) {
@@ -991,6 +998,19 @@ $.register({
     return !$.$('form[name=ccerure]').onsubmit && !$.$('form[name=ccerure] input[name=pwd]');
   }
 })();
+
+$.register({
+  rule: {
+    host: /^(www\.)?embedupload\.com$/,
+    path: /^\/$/,
+    query: /^\?\w{2}=\w+$/
+  },
+  ready: function () {
+    'use strict';
+    var downloadPage = $('.categories a[target=_blank]');
+    $.openLink(downloadPage);
+  },
+});
 
 $.register({
   rule: {
@@ -1840,7 +1860,7 @@ $.register({
   rule: [
     {
       host: [
-        /^img(paying|mega)\.com$/,
+        /^((img(paying|mega))|imzdrop)\.com$/,
         /^(www\.)?imgsee\.me$/,
         /^imgclick\.net$/,
       ],
@@ -2295,7 +2315,7 @@ $.register({
     rule: [
       {
         host: [
-          /^(image(decode|ontime)|(zonezeed|zelje|croft|myhot|dam)image|pic(\.apollon-fervor|stwist)|www\.imglemon|ericsony)\.com$/,
+          /^(image(decode|ontime)|(zonezeed|zelje|croft|myhot|dam)image|pic(\.apollon-fervor|stwist)|www\.imglemon|ericsony|imgpu|wpc8)\.com$/,
           /^(img(serve|coin|fap)|gallerycloud)\.net$/,
           /^hotimages\.eu$/,
           /^(imgstudio|dragimage|imagelook)\.org$/,
@@ -2662,7 +2682,7 @@ $.register({
       });
       var url = script.payload.match(/&url=([^&]+)/);
       url = url[1];
-      $.openLink(url);
+      $.openLinkWithReferer(url);
     },
   });
 })();
@@ -2783,19 +2803,10 @@ $.register({
   $.register({
     rule: {
       host: /^bc\.vc$/,
-      query: /^.+(https?:\/\/.+)/,
-    },
-    start: function (m) {
-      $.openLink(m.query[1]);
-    },
-  });
-  $.register({
-    rule: {
-      host: /^bc\.vc$/,
       path: /^.+(https?:\/\/.+)$/,
     },
     start: function (m) {
-      $.openLink(m.path[1]);
+      $.openLink(m.path[1] + document.location.search + document.location.hash);
     },
   });
   function decompress (script, unzip) {
@@ -3038,6 +3049,18 @@ $.register({
     'use strict';
     var i = $('img.bilde');
     $.openLink(i.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
+    path: /\/o\/([a-zA-Z0-9]+)/,
+  },
+  ready: function (m) {
+    'use strict';
+    var direct_link = window.atob(m.path[1]);
+    $.openLink(direct_link);
   },
 });
 
@@ -3501,7 +3524,7 @@ $.register({
         }
         if (data.Success && !data.AdBlockSpotted && data.Url) {
           clearInterval(i);
-          $.openLink(data.Url);
+          $.openLinkWithReferer(data.Url);
           return;
         }
       });
@@ -3517,7 +3540,7 @@ $.register({
       $.resetCookies();
       $.removeNodes('iframe');
       if (m.path[1] !== null) {
-        $.openLink(m.path[1] + window.location.search);
+        $.openLinkWithReferer(m.path[1] + window.location.search);
       }
     }
   });
@@ -3537,6 +3560,15 @@ $.register({
       sendRequest(token);
     },
   });
+  $.register({
+    rule: {
+      query: /^\?_lbGate=\d+$/,
+    },
+    start: function () {
+      $.setCookie('_lbGatePassed', 'true');
+      $.openLink(window.location.pathname);
+    },
+  });
 })();
 
 $.register({
@@ -3551,7 +3583,7 @@ $.register({
       _.warn('pattern changed');
       return;
     }
-    $.openLink(a[1]);
+    $.openLinkWithReferer(a[1]);
   },
 });
 
@@ -3747,6 +3779,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?\w+\.rapeit\.net$/,
+    path: /^\/(go|prepair|request|collect|analyze)\/[a-f0-9]+$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var a = $('a#download_link');
+    $.openLink(a.href);
+  },
+});
+
+$.register({
+  rule: {
     host: /^ref\.so$/,
   },
   ready: function () {
@@ -3849,6 +3893,18 @@ $.register({
     $.removeNodes('iframe');
     var url = atob(unsafeWindow.fl);
     $.openLink(url);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?safelinkconverter2\.com$/,
+    path: /^\/decrypt-\d\/$/,
+    query: /id=(\w+==)/,
+  },
+  ready: function (m) {
+    'use strict';
+    $.openLink(window.atob(m.query[1]));
   },
 });
 
@@ -3985,6 +4041,19 @@ $.register({
     var i = url.lastIndexOf('http');
     url = url.substr(i);
     $.openLink(url);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^steamcommunity\.com$/,
+    path: /^\/linkfilter\/(.+)?$/,
+    query: /^(?:\?url=(.+))?$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var target = m.path[1]? m.path[1]+document.location.search : m.query[1];
+    $.openLink(target);
   },
 });
 
@@ -4311,16 +4380,6 @@ $.register({
         var frame = $('#paste-frame, #captcha-page');
         frame.parentNode.replaceChild(elm, frame);
       });
-    },
-  });
-  $.register({
-    rule: {
-      host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
-      path: /\/o\/([a-zA-Z0-9]+)/,
-    },
-    ready: function (m) {
-      var direct_link = window.atob(m.path[1]);
-      $.openLink(direct_link);
     },
   });
 })();
