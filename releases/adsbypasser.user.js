@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.5.0
+// @version        5.6.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.5.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.6.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.5.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.5.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.5.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.6.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.6.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.6.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -1026,6 +1026,33 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?jheberg\.net$/,
+    path: /^\/captcha\//,
+  },
+  ready: function () {
+    'use strict';
+    $('.dl-button').click();
+  },
+});
+$.register({
+  rule: {
+    host: /^(www\.)?jheberg\.net$/,
+    path: /^\/redirect\//,
+  },
+  ready: function () {
+    'use strict';
+    var matches = $.searchScripts(/'slug':\s*'([^']+)',\s*'hoster':\s*'([^']+)'/);
+    var slug = matches[1];
+    var hoster = matches[2];
+    $.post('/get/link/', {'slug': slug, 'hoster': hoster}, function(response) {
+      var respJSON = JSON.parse(response);
+      $.openLink(respJSON.url);
+    });
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?mirrorcreator\.com$/,
     path: /^\/showlink\.php$/,
   },
@@ -1264,7 +1291,7 @@ $.register({
 
 $.register({
   rule: {
-    host: /^img(dino|tiger)\.com$/,
+    host: /^img(dino|tiger|zap)\.com$/,
     path: /^\/viewer\.php$/,
     query: /^\?file=/,
   },
@@ -1354,6 +1381,34 @@ $.register({
     'use strict';
     var i = $('#viewer img');
     $.openImage(i.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?gallerynova\.se$/,
+    path: /^\/site\/v\//,
+  },
+  ready: function () {
+    'use strict';
+    var i = $('#myUniqueImg').parentNode;
+    $.openImage(i.href);
+  },
+});
+$.register({
+  rule: {
+    host: /^(www\.)?gallerynova\.se$/,
+    path: /^\/site\/viewImage\/(\w+)/,
+  },
+  ready: function (m) {
+    'use strict';
+    var confirm = $.searchScripts(/\$\("#confirmImage"\).val\("([^"]+)"\)/)[1];
+    $.post('/site/viewConfirmCode/' + m.path[1], {confirm: confirm}, function (rawJson) {
+    	var json = JSON.parse(rawJson);
+    	var decodedHTML = document.createTextNode(json.content).data;
+    	var imgURL = decodedHTML.match(/<a href="([^"]+)" target="_blank">/)[1];
+    	$.openImage(imgURL);
+    });
   },
 });
 
@@ -1895,12 +1950,12 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^(img(rill|next|savvy|\.spicyzilla|twyti)|image(corn|picsa)|www\.(imagefolks|imgblow)|hosturimage|img-zone)\.com$/,
+        /^(img(rill|next|savvy|\.spicyzilla|twyti)|image(corn|picsa)|www\.(imagefolks|imgblow)|hosturimage|img-zone|08lkk)\.com$/,
         /^img(candy|master|-view|run)\.net$/,
         /^imgcloud\.co|pixup\.us$/,
         /^(www\.)?\.imgult\.com$/,
         /^bulkimg\.info$/,
-        /^(image\.adlock|imgspot)\.org$/,
+        /^(image\.adlock|imgspot|teenshot)\.org$/,
         /^img\.yt$/,
         /^vava\.in$/,
       ],
@@ -2317,7 +2372,7 @@ $.register({
         host: [
           /^(image(decode|ontime)|(zonezeed|zelje|croft|myhot|dam)image|pic(\.apollon-fervor|stwist)|www\.imglemon|ericsony|imgpu|wpc8)\.com$/,
           /^(img(serve|coin|fap)|gallerycloud)\.net$/,
-          /^hotimages\.eu$/,
+          /^(hotimages|55888)\.eu$/,
           /^(imgstudio|dragimage|imagelook)\.org$/,
         ],
         path: /^\/img-.*\.html$/,
@@ -2727,7 +2782,7 @@ $.register({
   },
   ready: function () {
     'use strict';
-    var a = $.$('#xre a.xxr');
+    var a = $.$('#xre a.xxr, #downloadButton1');
     if (a) {
       $.openLink(a.href);
       return;
@@ -2982,6 +3037,8 @@ $.register({
         /^srk\.gs$/,
         /^cun\.bz$/,
         /^miniurl\.tk$/,
+        /^vizzy\.es$/,
+        /^kazan\.vc$/,
       ],
       path: /^\/.+/,
     },
@@ -3107,6 +3164,21 @@ $.register({
     'use strict';
     var a = $('a.RedirectLink');
     $.openLink(a.href);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?clictune\.com$/,
+    path: /^\/id=\d+/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var linkHolder = $('#compteur');
+    var matches = linkHolder.innerHTML.match(/<a href=".*url=([^&"]+).*>/);
+    var url = decodeURIComponent(matches[1]);
+    $.openLink(url);
   },
 });
 
@@ -3677,7 +3749,10 @@ $.register({
 
 $.register({
   rule: {
-    host: /^mantap\.in$/,
+    host: [
+      /^mant(a|e)p\.in$/,
+      /^st\.oploverz\.net$/,
+    ],
   },
   ready: function () {
     'use strict';
@@ -3688,7 +3763,11 @@ $.register({
 
 $.register({
   rule: {
-    host: /^moe\.god\.jp$/,
+    host: [
+      /^moe\.god\.jp$/,
+      /^moesubs\.akurapopo\.pro$/,
+      /^dl\.nsfk\.in$/,
+    ]
   },
   ready: function () {
     'use strict';
@@ -4028,6 +4107,19 @@ $.register({
       l = 'http://' + l;
     }
     $.openLink(l);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?srelink\.com$/,
+    path: /^\/i\/\w+$/,
+  },
+  ready: function (m) {
+    'use strict';
+    $.removeNodes('iframe');
+    var matches = $.searchScripts(/href="([^"]+)">SKIP AD<\/a>/);
+    $.openLink(matches[1]);
   },
 });
 
