@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.6.0
+// @version        5.7.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.6.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.7.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.6.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.6.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.6.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.7.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.7.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.7.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -227,6 +227,7 @@ var $;
     var unsafeWindow = context.unsafeWindow;
     var GM = context.GM;
     var document = window.document;
+    var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
     var DomNotFoundError = _.AdsBypasserError.extend({
       name: 'DomNotFoundError',
       constructor: function (selector) {
@@ -858,16 +859,29 @@ var $;
     }
     function disableLeavePrompt () {
       var seal = {
-        set: function () {
+        set: $.inject(function () {
           _.info('blocked onbeforeunload');
-        },
+        }),
       };
       _.C([unsafeWindow, unsafeWindow.document.body]).each(function (o) {
         if (!o) {
           return;
         }
         o.onbeforeunload = undefined;
-        Object.defineProperty(o, 'onbeforeunload', seal);
+        if (isSafari) {
+          o.__defineSetter__('onbeforeunload', seal.set);
+        } else {
+          Object.defineProperty(o, 'onbeforeunload', $.inject(seal));
+        }
+        var oael = o.addEventListener;
+        var nael = function (type) {
+          if (type === 'beforeunload') {
+            _.info('blocked addEventListener onbeforeunload');
+            return;
+          }
+          return oael.apply(this, arguments);
+        };
+        o.addEventListener = $.inject(addEventListener);
       });
     }
     $._main = function (isNodeJS) {
@@ -2240,6 +2254,21 @@ $.register({
     'use strict';
     var iframe = $('iframe');
     $.openLink(iframe.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^www\.oni\.vn$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var url = $.searchScripts(/window\.location='([^']+)'/);
+    if (!url) {
+      throw new _.AdsBypasserError('pattern changed');
+    }
+    $.openLink(url[1]);
   },
 });
 
