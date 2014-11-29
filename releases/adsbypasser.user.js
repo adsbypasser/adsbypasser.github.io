@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.7.0
+// @version        5.8.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.7.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.8.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.7.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.7.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.7.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.8.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.8.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.8.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -386,9 +386,13 @@ var $;
       }
     };
     $.removeAllTimer = function () {
-      var intervalID = window.setInterval(_.nop, 10);
-      while (intervalID > 0) {
-        window.clearInterval(intervalID--);
+      var handle = window.setInterval(_.nop, 10);
+      while (handle > 0) {
+        window.clearInterval(handle--);
+      }
+      handle = window.setTimeout(_.nop, 10);
+      while (handle > 0) {
+        window.clearTimeout(handle--);
       }
     };
     $.enableScrolling = function () {
@@ -1055,6 +1059,7 @@ $.register({
   },
   ready: function () {
     'use strict';
+    $.removeAllTimer();
     var matches = $.searchScripts(/'slug':\s*'([^']+)',\s*'hoster':\s*'([^']+)'/);
     var slug = matches[1];
     var hoster = matches[2];
@@ -1925,28 +1930,48 @@ $.register({
   },
 });
 
-$.register({
-  rule: [
-    {
+(function () {
+  'use strict';
+  var pathRule = /^\/([^\/]+)\/[^\/]+\.[^\/]{3,4}$/;
+  $.register({
+    rule: {
       host: [
         /^((img(paying|mega))|imzdrop)\.com$/,
         /^(www\.)?imgsee\.me$/,
         /^imgclick\.net$/,
       ],
-      path: /^\/([^\/]+)\/[^\/]+\.[^\/]{3,4}$/,
+      path: pathRule,
     },
-  ],
-  ready: function () {
-    'use strict';
-    var i = $.$('img.pic');
-    if (!i) {
-      i = $('form');
-      i.submit();
-      return;
-    }
-    $.openImage(i.src);
-  },
-});
+    ready: function () {
+      var i = $.$('img.pic');
+      if (!i) {
+        i = $('form');
+        i.submit();
+        return;
+      }
+      $.openImage(i.src);
+    },
+  });
+  $.register({
+    rule: {
+      host: /^imgrock\.net$/,
+      path: pathRule,
+    },
+    ready: function (m) {
+      var i = $.$('img.pic');
+      if (!i) {
+        $.openLinkByPost('', {
+          op: 'view',
+          id: m.path[1],
+          pre: 1,
+          next: 'Continue to Image...',
+        });
+        return;
+      }
+      $.openImage(i.src);
+    },
+  });
+})();
 
 (function () {
   'use strict';
@@ -3551,7 +3576,37 @@ $.register({
 });
 
 (function() {
-  'use strict';
+  function ConvertFromHex (str) {
+    var result = [];
+    while (str.length >= 2) {
+      result.push(String.fromCharCode(parseInt(str.substring(0, 2), 16)));
+      str = str.substring(2, str.length);
+    }
+    return result.join("");
+  }
+  var Encode = function (str) {
+    var s = [], j = 0, x, res = '', k = arguments.callee.toString().replace(/\s+/g, "");
+    for (var i = 0; i < 256; i++) {
+      s[i] = i;
+    }
+    for (i = 0; i < 256; i++) {
+      j = (j + s[i] + k.charCodeAt(i % k.length)) % 256;
+      x = s[i];
+      s[i] = s[j];
+      s[j] = x;
+    }
+    i = 0;
+    j = 0;
+    for (var y = 0; y < str.length; y++) {
+      i = (i + 1) % 256;
+      j = (j + s[i]) % 256;
+      x = s[i];
+      s[i] = s[j];
+      s[j] = x;
+      res += String.fromCharCode(str.charCodeAt(y) ^ s[(s[i] + s[j]) % 256]);
+    }
+    return res;
+  };
   var hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
@@ -3565,96 +3620,106 @@ $.register({
     /^(([\w]{8}|www)\.)?youfap\.me$/,
     /^warning-this-linkcode-will-cease-working-soon\.www\.linkbucksdns\.com$/,
   ];
-  function findToken (context) {
-    var script = $.$$('script', context).find(function (n) {
-      if (n.innerHTML.indexOf('window[\'init\' + \'Lb\' + \'js\' + \'\']') < 0) {
-        return _.nop;
-      }
-      return n.innerHTML;
-    });
-    if (!script) {
-      _.warn('pattern changed');
-      return null;
-    }
-    script = script.payload;
-    var m = script.match(/AdPopUrl\s*:\s*'.+\?ref=([\w\d]+)'/);
-    var token = m[1];
-    m = script.match(/=\s*(\d+);/);
-    var ak = parseInt(m[1], 10);
-    var re = /\+\s*(\d+);/g;
-    var tmp = null;
-    while((m = re.exec(script)) !== null) {
-      tmp = m[1];
-    }
-    ak += parseInt(tmp, 10);
-    return {
-      t: token,
-      aK: ak,
-    };
-  }
-  function sendRequest (token) {
-    _.info('sending token: %o', token);
-    var i = setInterval(function () {
-      $.get('/intermission/loadTargetUrl', token, function (text) {
-        var data = JSON.parse(text);
-        _.info('response: %o', data);
-        if (!data.Success && data.Errors[0] === 'Invalid token') {
-          _.info('got invalid token');
-          clearInterval(i);
-          $.get(window.location.toString(), {}, function (text) {
-            var d = $.toDOM(text);
-            var t = findToken(d);
-            sendRequest(t);
-          });
-          return;
+  (function () {
+    'use strict';
+    function findToken (context) {
+      var script = $.$$('script', context).find(function (n) {
+        if (n.innerHTML.indexOf('window[\'init\' + \'Lb\' + \'js\' + \'\']') < 0) {
+          return _.nop;
         }
-        if (data.Success && !data.AdBlockSpotted && data.Url) {
-          clearInterval(i);
-          $.openLinkWithReferer(data.Url);
-          return;
-        }
+        return n.innerHTML;
       });
-    }, 1000);
-  }
-  $.register({
-    rule: {
-      host: hostRules,
-      path: /^\/\w+\/url\/(.*)$/,
-    },
-    ready: function(m) {
-      $.removeAllTimer();
-      $.resetCookies();
-      $.removeNodes('iframe');
-      if (m.path[1] !== null) {
-        $.openLinkWithReferer(m.path[1] + window.location.search);
+      if (!script) {
+        _.warn('pattern changed');
+        return null;
       }
+      script = script.payload;
+      var m = script.match(/AdPopUrl\s*:\s*'.+\?ref=([\w\d]+)'/);
+      var token = m[1];
+      m = script.match(/=\s*(\d+);/);
+      var ak = parseInt(m[1], 10);
+      var re = /\+\s*(\d+);/g;
+      var tmp = null;
+      while((m = re.exec(script)) !== null) {
+        tmp = m[1];
+      }
+      ak += parseInt(tmp, 10);
+      return {
+        t: token,
+        aK: ak,
+      };
     }
-  });
-  $.register({
-    rule: {
-      host: hostRules,
-    },
-    ready: function () {
-      $.removeAllTimer();
-      $.resetCookies();
-      $.removeNodes('iframe');
-      if (window.location.pathname.indexOf('verify') >= 0) {
-        $.openLink('../');
-        return;
+    function sendRequest (token) {
+      _.info('sending token: %o', token);
+      var i = setInterval(function () {
+        $.get('/intermission/loadTargetUrl', token, function (text) {
+          var data = JSON.parse(text);
+          _.info('response: %o', data);
+          if (!data.Success && data.Errors[0] === 'Invalid token') {
+            _.info('got invalid token');
+            clearInterval(i);
+            $.get(window.location.toString(), {}, function (text) {
+              var d = $.toDOM(text);
+              var t = findToken(d);
+              sendRequest(t);
+            });
+            return;
+          }
+          if (data.Success && !data.AdBlockSpotted && data.Url) {
+            clearInterval(i);
+            $.openLinkWithReferer(data.Url);
+            return;
+          }
+        });
+      }, 1000);
+    }
+    $.register({
+      rule: {
+        host: hostRules,
+        path: /^\/\w+\/url\/(.*)$/,
+      },
+      ready: function(m) {
+        $.removeAllTimer();
+        $.resetCookies();
+        $.removeNodes('iframe');
+        if (!m.path[1]) {
+          throw new _.AdsBypasserError('wrong url pattern');
+        }
+        var url = m.path[1] + window.location.search;
+        var match = $.searchScripts(/UrlEncoded: ([^,]+)/);
+        if (match && match[1] === 'true') {
+          url = Encode(ConvertFromHex(url));
+        }
+        $.openLinkWithReferer(url);
       }
-      var token = findToken(document);
-      sendRequest(token);
-    },
-  });
-  $.register({
-    rule: {
-      query: /^\?_lbGate=\d+$/,
-    },
-    start: function () {
-      $.setCookie('_lbGatePassed', 'true');
-      $.openLink(window.location.pathname);
-    },
-  });
+    });
+    $.register({
+      rule: {
+        host: hostRules,
+      },
+      ready: function () {
+        $.removeAllTimer();
+        $.resetCookies();
+        $.removeNodes('iframe');
+        if (window.location.pathname.indexOf('verify') >= 0) {
+          var path = window.location.pathname.replace('/verify', '');
+          $.openLink(path);
+          return;
+        }
+        var token = findToken(document);
+        sendRequest(token);
+      },
+    });
+    $.register({
+      rule: {
+        query: /^\?_lbGate=\d+$/,
+      },
+      start: function () {
+        $.setCookie('_lbGatePassed', 'true');
+        $.openLink(window.location.pathname);
+      },
+    });
+  })();
 })();
 
 $.register({
