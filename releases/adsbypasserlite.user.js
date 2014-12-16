@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.9.0
+// @version        5.9.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.1/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.1/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.1/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -578,6 +578,7 @@ var $;
       } else {
         injected = cloneInto(vaccine, unsafeWindow, {
           cloneFunctions: true,
+          wrapReflectors: true,
         });
       }
       return injected;
@@ -588,7 +589,9 @@ var $;
         injected = vaccine;
       } else {
         try {
-          injected = exportFunction(vaccine, unsafeWindow);
+          injected = exportFunction(vaccine, unsafeWindow, {
+            allowCrossOriginArguments: true,
+          });
         } catch(e) {
           console.error(e);
         }
@@ -863,9 +866,9 @@ var $;
     }
     function disableLeavePrompt () {
       var seal = {
-        set: $.inject(function () {
+        set: function () {
           _.info('blocked onbeforeunload');
-        }),
+        },
       };
       _.C([unsafeWindow, unsafeWindow.document.body]).each(function (o) {
         if (!o) {
@@ -875,7 +878,11 @@ var $;
         if (isSafari) {
           o.__defineSetter__('onbeforeunload', seal.set);
         } else {
-          Object.defineProperty(o, 'onbeforeunload', $.inject(seal));
+          var opd = Object.getOwnPropertyDescriptor(o, 'onbeforeunload');
+          if (opd) {
+            opd.set = $.inject(seal.set);
+            Object.defineProperty(o, 'onbeforeunload', opd);
+          }
         }
         var oael = o.addEventListener;
         var nael = function (type) {
@@ -885,7 +892,7 @@ var $;
           }
           return oael.apply(this, arguments);
         };
-        o.addEventListener = $.inject(addEventListener);
+        o.addEventListener = $.inject(nael);
       });
     }
     $._main = function (isNodeJS) {
