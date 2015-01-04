@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.9.2
+// @version        5.10.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.10.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.2/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.2/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.9.2/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.10.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.10.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.10.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -1819,6 +1819,20 @@ $.register({
 
 $.register({
   rule: {
+    host: /^gca\.sh$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var jQuery = unsafeWindow.$;
+    setTimeout(function () {
+      jQuery("#captcha-dialog").dialog("open");
+    }, 1000);
+  },
+});
+
+$.register({
+  rule: {
     host: /^gkurl\.us$/,
   },
   ready: function () {
@@ -2106,11 +2120,11 @@ $.register({
     });
     $.register({
       rule: {
-        query: /^\?_lbGate=\d+$/,
+        query: /^(.*)[?&]_lbGate=\d+$/,
       },
-      start: function () {
+      start: function (m) {
         $.setCookie('_lbGatePassed', 'true');
-        $.openLink(window.location.pathname);
+        $.openLink(window.location.pathname + m.query[1]);
       },
     });
   })();
@@ -2223,7 +2237,7 @@ $.register({
 $.register({
   rule: {
     host: [
-      /^mant(a|e)p\.in$/,
+      /^mant[ae][pb]\.in$/,
       /^st\.oploverz\.net$/,
     ],
   },
@@ -2467,11 +2481,18 @@ $.register({
   rule: {
     host: /^(www\.)?safelinkconverter2\.com$/,
     path: /^\/decrypt-\d\/$/,
-    query: /id=(\w+==)/,
+    query: /id=(\w+=+)/,
   },
-  ready: function (m) {
+  start: function (m) {
     'use strict';
-    $.openLink(window.atob(m.query[1]));
+    $.get('https://decrypt.safelinkconverter.com/index.php' + window.location.search, {}, function (html) {
+      var m = html.match(/3;URL=([^"]+)/);
+      if (!m) {
+        _.warn('pattern changed');
+        return;
+      }
+      $.openLink(m[1]);
+    });
   },
 });
 
@@ -2557,7 +2578,7 @@ $.register({
   }
   $.register({
     rule: {
-      host: /^sh\.st|dh10thbvu\.com|u2ks\.com$/,
+      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com$/,
       path: /^\/[\d\w]+/,
     },
     ready: function () {
