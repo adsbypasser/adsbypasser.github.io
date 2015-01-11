@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.10.0
+// @version        5.11.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.10.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,16 +20,22 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.10.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.10.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.10.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
 
-var _ = typeof module !== 'undefined' ? module.exports : {};
-(function () {
+(function (global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory;
+  } else {
+    factory(global, Promise);
+  }
+}(this, function (global, Promise) {
   'use strict';
+  var _ = global._ = {};
   function setupStack () {
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, this.constructor);
@@ -196,6 +202,9 @@ var _ = typeof module !== 'undefined' ? module.exports : {};
       return fn.apply(this, args.concat(slice.call(arguments)));
     };
   };
+  _.D = function (fn) {
+    return new Promise(fn);
+  };
   _.nop = function () {
   };
   function log (method, args) {
@@ -216,736 +225,759 @@ var _ = typeof module !== 'undefined' ? module.exports : {};
   _.warn = function () {
     log('warn', arguments);
   };
-})();
+  return _;
+}));
 
-var $;
-(function () {
+(function (global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory;
+  } else {
+    global.$ = factory(global, global._);
+  }
+}(this, function (global, _) {
   'use strict';
-  function bootstrap (context) {
-    var _ = context._;
-    var window = context.window;
-    var unsafeWindow = context.unsafeWindow;
-    var GM = context.GM;
-    var document = window.document;
-    var DomNotFoundError = _.AdsBypasserError.extend({
-      name: 'DomNotFoundError',
-      constructor: function (selector) {
-        DomNotFoundError.super.constructor.call(this, _.T('`{0}` not found')(selector));
-      },
+  var window = global.window;
+  var document = window.document;
+  var DomNotFoundError = _.AdsBypasserError.extend({
+    name: 'DomNotFoundError',
+    constructor: function (selector) {
+      DomNotFoundError.super.constructor.call(this, _.T('`{0}` not found')(selector));
+    },
+  });
+  var $ = function (selector, context) {
+    if (!context || !context.querySelector) {
+      context = document;
+    }
+    var n = context.querySelector(selector);
+    if (!n) {
+      throw new DomNotFoundError(selector);
+    }
+    return n;
+  };
+  $.$ = function (selector, context) {
+    try {
+      return $(selector, context);
+    } catch (e) {
+      return null;
+    }
+  };
+  $.$$ = function (selector, context) {
+    if (!context || !context.querySelectorAll) {
+      context = document;
+    }
+    var ns = context.querySelectorAll(selector);
+    return _.C(ns);
+  };
+  $.toDOM = function(rawHTML) {
+    try {
+      var parser = new DOMParser();
+      var DOMHTML = parser.parseFromString(rawHTML, "text/html");
+      return DOMHTML;
+    } catch (e) {
+      throw new _.AdsBypasserError('could not parse HTML to DOM');
+    }
+  };
+  $.removeNodes = function (selector, context) {
+    $.$$(selector, context).each(function (e) {
+      e.parentNode.removeChild(e);
     });
-    var $ = function (selector, context) {
-      if (!context || !context.querySelector) {
-        context = document;
+  };
+  function searchScriptsByRegExp (pattern, context) {
+    var m = $.$$('script', context).find(function (s) {
+      var m = s.innerHTML.match(pattern);
+      if (!m) {
+        return _.nop;
       }
-      var n = context.querySelector(selector);
-      if (!n) {
-        throw new DomNotFoundError(selector);
-      }
-      return n;
-    };
-    $.$ = function (selector, context) {
-      try {
-        return $(selector, context);
-      } catch (e) {
-        return null;
-      }
-    };
-    $.$$ = function (selector, context) {
-      if (!context || !context.querySelectorAll) {
-        context = document;
-      }
-      var ns = context.querySelectorAll(selector);
-      return _.C(ns);
-    };
-    function deepJoin (prefix, object) {
-      return _.C(object).map(function (v, k) {
-        var key = _.T('{0}[{1}]')(prefix, k);
-        if (typeof v === 'object') {
-          return deepJoin(key, v);
-        }
-        return _.T('{0}={1}').apply(this, [key, v].map(encodeURIComponent));
-      }).join('&');
+      return m;
+    });
+    if (!m) {
+      return null;
     }
-    function toQuery (data) {
-      if (typeof data === 'string') {
-        return data;
+    return m.payload;
+  }
+  function searchScriptsByString (pattern, context) {
+    var m = $.$$('script', context).find(function (s) {
+      var m = s.innerHTML.indexOf(pattern);
+      if (m < 0) {
+        return _.nop;
       }
-      if (data instanceof String) {
-        return data.toString();
-      }
-      return _.C(data).map(function (v, k) {
-        if (typeof v === 'object') {
-          return deepJoin(k, v);
-        }
-        return _.T('{0}={1}').apply(this, [k, v].map(encodeURIComponent));
-      }).join('&');
+      return m;
+    });
+    if (!m) {
+      return null;
     }
-    function ajax (method, url, data, headers, callback) {
-      var l = document.createElement('a');
-      l.href = url;
-      var reqHost = l.hostname;
-      headers.Host = reqHost || window.location.host;
-      headers.Origin = window.location.origin;
-      headers.Referer = window.location.href;
-      headers['X-Requested-With'] = 'XMLHttpRequest';
-      var controller = GM.xmlhttpRequest({
+    return m.value.innerHTML;
+  }
+  $.searchScripts = function (pattern, context) {
+    if (pattern instanceof RegExp) {
+      return searchScriptsByRegExp(pattern, context);
+    } else if (typeof pattern === 'string') {
+      return searchScriptsByString(pattern, context);
+    } else {
+      return null;
+    }
+  };
+  return $;
+}));
+
+(function (global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory;
+  } else {
+    factory(global, {
+      xmlhttpRequest: GM_xmlhttpRequest,
+    }, global._, global.$);
+  }
+}(this, function (global, GM, _, $) {
+  'use strict';
+  var window = global.window;
+  var document = window.document;
+  function deepJoin (prefix, object) {
+    return _.C(object).map(function (v, k) {
+      var key = _.T('{0}[{1}]')(prefix, k);
+      if (typeof v === 'object') {
+        return deepJoin(key, v);
+      }
+      return _.T('{0}={1}').apply(this, [key, v].map(encodeURIComponent));
+    }).join('&');
+  }
+  function toQuery (data) {
+    if (typeof data === 'undefined') {
+      return '';
+    }
+    if (typeof data === 'string') {
+      return data;
+    }
+    if (data instanceof String) {
+      return data.toString();
+    }
+    return _.C(data).map(function (v, k) {
+      if (typeof v === 'object') {
+        return deepJoin(k, v);
+      }
+      return _.T('{0}={1}').apply(this, [k, v].map(encodeURIComponent));
+    }).join('&');
+  }
+  function ajax (method, url, data, headers) {
+    var l = document.createElement('a');
+    l.href = url;
+    var reqHost = l.hostname;
+    headers.Host = reqHost || window.location.host;
+    headers.Origin = window.location.origin;
+    headers.Referer = window.location.href;
+    headers['X-Requested-With'] = 'XMLHttpRequest';
+    var xhr = null;
+    var promise = _.D(function (resolve, reject) {
+      xhr = GM.xmlhttpRequest({
         method: method,
         url: url,
         data: data,
         headers: headers,
         onload: function (response) {
-          var headers = {
-            get: function (key) {
-              return this[key.toLowerCase()];
-            },
-          };
-          response.responseHeaders.split(/[\r\n]+/g).filter(function (v) {
-            return v.length !== 0;
-          }).map(function (v) {
-            return v.split(/:\s+/);
-          }).forEach(function (v) {
-            headers[v[0].toLowerCase()] = v[1];
-          });
-          callback(response.responseText, headers);
-        },
-      });
-      return controller;
-    }
-    $.toDOM = function(rawHTML) {
-      try {
-        var parser = new DOMParser();
-        var DOMHTML = parser.parseFromString(rawHTML, "text/html");
-        return DOMHTML;
-      } catch (e) {
-        throw new _.AdsBypasserError('could not parse HTML to DOM');
-      }
-    };
-    $.get = function (url, data, callback, headers) {
-      data = toQuery(data);
-      data = data!==''? '?' + data : '';
-      headers = headers || {};
-      return ajax('GET', url + data, '', headers, callback);
-    };
-    $.post = function (url, data, callback, headers) {
-      data = toQuery(data);
-      var h = {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        'Content-Length': data.length,
-      };
-      if (headers) {
-        _.C(headers).each(function (v, k) {
-          h[k] = v;
-        });
-      }
-      return ajax('POST', url, data, h, callback);
-    };
-    function go (path, params, method) {
-      method = method || 'post';
-      var form = document.createElement('form');
-      form.method = method;
-      form.action = path;
-      _.C(params).each(function (value, key) {
-          var input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = key;
-          input.value = value;
-          form.appendChild(input);
-      });
-      document.body.appendChild(form);
-      form.submit();
-    }
-    $.openLinkByPost = function (url, data) {
-      go(url, data, 'post');
-    };
-    $.openLink = function (to) {
-      if (!to) {
-        _.warn('false URL');
-        return;
-      }
-      var from = window.location.toString();
-      _.info(_.T('{0} -> {1}')(from, to));
-      window.top.location.replace(to);
-    };
-    $.openLinkWithReferer = function (to) {
-      if (!to) {
-        _.warn('false URL');
-        return;
-      }
-      var from = window.location.toString();
-      _.info(_.T('{0} -> {1}')(from, to));
-      var a = document.createElement('a');
-      a.href = to;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-    };
-    $.openImage = function (imgSrc) {
-      if (config.redirectImage) {
-        $.openLink(imgSrc);
-      }
-    };
-    $.removeAllTimer = function () {
-      var handle = window.setInterval(_.nop, 10);
-      while (handle > 0) {
-        window.clearInterval(handle--);
-      }
-      handle = window.setTimeout(_.nop, 10);
-      while (handle > 0) {
-        window.clearTimeout(handle--);
-      }
-    };
-    $.enableScrolling = function () {
-      var o = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
-      o.style.overflow = '';
-    };
-    function toggleShrinking () {
-      this.classList.toggle('adsbypasser-shrinked');
-    }
-    function checkScaling () {
-      var nw = this.naturalWidth;
-      var nh = this.naturalHeight;
-      var cw = document.documentElement.clientWidth;
-      var ch = document.documentElement.clientHeight;
-      if ((nw > cw || nh > ch) && !this.classList.contains('adsbypasser-resizable')) {
-        this.classList.add('adsbypasser-resizable');
-        this.classList.add('adsbypasser-shrinked');
-        this.addEventListener('click', toggleShrinking);
-      } else {
-        this.removeEventListener('click', toggleShrinking);
-        this.classList.remove('adsbypasser-shrinked');
-        this.classList.remove('adsbypasser-resizable');
-      }
-    }
-    function scaleImage (i) {
-      var style = GM.getResourceText('scaleImage');
-      GM.addStyle(style);
-      if (i.naturalWidth && i.naturalHeight) {
-        checkScaling.call(i);
-      } else {
-        i.addEventListener('load', checkScaling);
-      }
-      var h;
-      window.addEventListener('resize', function () {
-        window.clearTimeout(h);
-        h = window.setTimeout(checkScaling.bind(i), 100);
-      });
-    }
-    function changeBackground () {
-      var bgImage = GM.getResourceURL('bgImage');
-      document.body.style.backgroundColor = '#222222';
-      document.body.style.backgroundImage = _.T('url(\'{0}\')')(bgImage);
-    }
-    function alignCenter () {
-      var style = GM.getResourceText('alignCenter');
-      GM.addStyle(style);
-    }
-    function injectStyle (d, i) {
-      $.removeNodes('style, link[rel=stylesheet]');
-      d.id = 'adsbypasser-wrapper';
-      i.id = 'adsbypasser-image';
-    }
-    $.replace = function (imgSrc) {
-      if (!config.redirectImage) {
-        return;
-      }
-      if (!imgSrc) {
-        _.warn('false url');
-        return;
-      }
-      _.info(_.T('replacing body with `{0}` ...')(imgSrc));
-      $.removeAllTimer();
-      $.enableScrolling();
-      document.body = document.createElement('body');
-      var d = document.createElement('div');
-      document.body.appendChild(d);
-      var i = document.createElement('img');
-      i.src = imgSrc;
-      d.appendChild(i);
-      if (config.alignCenter || config.scaleImage) {
-        injectStyle(d, i);
-      }
-      if (config.alignCenter) {
-        alignCenter();
-      }
-      if (config.changeBackground) {
-        changeBackground();
-      }
-      if (config.scaleImage) {
-        scaleImage(i);
-      }
-    };
-    $.removeNodes = function (selector, context) {
-      $.$$(selector, context).each(function (e) {
-        e.parentNode.removeChild(e);
-      });
-    };
-    function searchScriptsByRegExp (pattern, context) {
-      var m = $.$$('script', context).find(function (s) {
-        var m = s.innerHTML.match(pattern);
-        if (!m) {
-          return _.nop;
-        }
-        return m;
-      });
-      if (!m) {
-        return null;
-      }
-      return m.payload;
-    }
-    function searchScriptsByString (pattern, context) {
-      var m = $.$$('script', context).find(function (s) {
-        var m = s.innerHTML.indexOf(pattern);
-        if (m < 0) {
-          return _.nop;
-        }
-        return m;
-      });
-      if (!m) {
-        return null;
-      }
-      return m.value.innerHTML;
-    }
-    $.searchScripts = function (pattern, context) {
-      if (pattern instanceof RegExp) {
-        return searchScriptsByRegExp(pattern, context);
-      } else if (typeof pattern === 'string') {
-        return searchScriptsByString(pattern, context);
-      } else {
-        return null;
-      }
-    };
-    $.setCookie = function (key, value) {
-      var now = new Date();
-      now.setTime(now.getTime() + 3600 * 1000);
-      var tpl = _.T('{0}={1};path=/;');
-      document.cookie = tpl(key, value, now.toUTCString());
-    };
-    $.getCookie = function (key) {
-      var c = _.C(document.cookie.split(';')).find(function (v) {
-        var k = v.replace(/^\s*(\w+)=.+$/, '$1');
-        if (k !== key) {
-          return _.nop;
-        }
-      });
-      if (!c) {
-        return null;
-      }
-      c = c.value.replace(/^\s*\w+=([^;]+).+$/, '$1');
-      if (!c) {
-        return null;
-      }
-      return c;
-    };
-    $.resetCookies = function () {
-      var a = document.domain;
-      var b = document.domain.replace(/^www\./, '');
-      var c = document.domain.replace(/^(\w+\.)+?(\w+\.\w+)$/, '$2');
-      var d = (new Date(1e3)).toUTCString();
-      _.C(document.cookie.split(';')).each(function (v) {
-        var k = v.replace(/^\s*(\w+)=.+$/, '$1');
-        document.cookie = _.T('{0}=;expires={1};')(k, d);
-        document.cookie = _.T('{0}=;path=/;expires={1};')(k, d);
-        var e = _.T('{0}=;path=/;domain={1};expires={2};');
-        document.cookie = e(k, a, d);
-        document.cookie = e(k, b, d);
-        document.cookie = e(k, c, d);
-      });
-    };
-    $.captcha = function (imgSrc, cb) {
-      if (!config.externalServerSupport) {
-        return;
-      }
-      var a = document.createElement('canvas');
-      var b = a.getContext('2d');
-      var c = new Image();
-      c.src = imgSrc;
-      c.onload = function () {
-        a.width = c.width;
-        a.height = c.height;
-        b.drawImage(c, 0, 0);
-        var d = a.toDataURL();
-        var e = d.substr(d.indexOf(',') + 1);
-        $.post('http://www.wcpan.info/cgi-bin/captcha.cgi', {
-          i: e,
-        }, cb);
-      };
-    };
-    function injectClone (vaccine) {
-      var injected;
-      if (typeof cloneInto !== 'function') {
-        injected = vaccine;
-      } else {
-        injected = cloneInto(vaccine, unsafeWindow, {
-          cloneFunctions: true,
-          wrapReflectors: true,
-        });
-      }
-      return injected;
-    }
-    function injectFunction (vaccine) {
-      var injected;
-      if (typeof exportFunction !== 'function') {
-        injected = vaccine;
-      } else {
-        try {
-          injected = exportFunction(vaccine, unsafeWindow, {
-            allowCrossOriginArguments: true,
-          });
-        } catch(e) {
-          console.error(e);
-        }
-      }
-      return injected;
-    }
-    function injectReference () {
-      var injected;
-      if (typeof createObjectIn !== 'function') {
-        injected = {};
-      } else {
-        injected = createObjectIn(unsafeWindow);
-      }
-      return injected;
-    }
-    $.inject = function (vaccine) {
-      if (typeof vaccine === 'function') {
-        return injectFunction(vaccine);
-      } else if (typeof vaccine === 'undefined') {
-        return injectReference();
-      } else {
-        return injectClone(vaccine);
-      }
-    };
-    var patterns = [];
-    $.register = function (pattern) {
-      patterns.push(pattern);
-    };
-    function load () {
-      var tmp = {
-        version: GM.getValue('version', 0),
-        alignCenter: GM.getValue('align_center'),
-        changeBackground: GM.getValue('change_background'),
-        externalServerSupport: GM.getValue('external_server_support'),
-        redirectImage: GM.getValue('redirect_image'),
-        scaleImage: GM.getValue('scale_image'),
-      };
-      fixup(tmp);
-      save(tmp);
-      return tmp;
-    }
-    function save (c) {
-      GM.setValue('version', c.version);
-      GM.setValue('align_center', c.alignCenter);
-      GM.setValue('change_background', c.changeBackground);
-      GM.setValue('external_server_support', c.externalServerSupport);
-      GM.setValue('redirect_image', c.redirectImage);
-      GM.setValue('scale_image', c.scaleImage);
-    }
-    function fixup (c) {
-      var patches = [
-        function (c) {
-          var ac = typeof c.alignCenter !== 'undefined';
-          if (typeof c.changeBackground === 'undefined') {
-            c.changeBackground = ac ? c.alignCenter : true;
-          }
-          if (typeof c.scaleImage === 'undefined') {
-            c.scaleImage = ac ? c.alignCenter : true;
-          }
-          if (!ac) {
-            c.alignCenter = true;
-          }
-          if (typeof c.redirectImage === 'undefined') {
-            c.redirectImage = true;
+          if (this.status !== 200) {
+            reject(this.responseText);
+          } else {
+            resolve(this.responseText);
           }
         },
-        function (c) {
-          if (typeof c.externalServerSupport === 'undefined') {
-            c.externalServerSupport = false;
-          }
+        onerror: function (response) {
+          reject(this.responseText);
         },
-      ];
-      while (c.version < patches.length) {
-        patches[c.version](c);
-        ++c.version;
-      }
-    }
-    var config = null;
-    $.register({
-      rule: {
-        host: /^adsbypasser\.github\.io$/,
-        path: /^\/configure\.html$/,
-      },
-      ready: function () {
-        unsafeWindow.commit = $.inject(function (data) {
-          data.version = config.version;
-          _.C(data).each(function (v, k) {
-            config[k] = v;
-          });
-          setTimeout(function () {
-            save(data);
-          }, 0);
-        });
-        unsafeWindow.render($.inject({
-          version: config.version,
-          options: {
-            alignCenter: {
-              type: 'checkbox',
-              value: config.alignCenter,
-              label: 'Align Center',
-              help: 'Align image to the center if possible. (default: enabled)',
-            },
-            changeBackground: {
-              type: 'checkbox',
-              value: config.changeBackground,
-              label: 'Change Background',
-              help: 'Use Firefox-like image background if possible. (default: enabled)',
-            },
-            redirectImage: {
-              type: 'checkbox',
-              value: config.redirectImage,
-              label: 'Redirect Image',
-              help: [
-                'Directly open image link if possible. (default: enabled)',
-                'If disabled, redirection will only works on link shortener sites.',
-              ].join('<br/>\n'),
-            },
-            scaleImage: {
-              type: 'checkbox',
-              value: config.scaleImage,
-              label: 'Scale Image',
-              help: 'When image loaded, scale it to fit window if possible. (default: enabled)',
-            },
-            externalServerSupport: {
-              type: 'checkbox',
-              value: config.externalServerSupport,
-              label: 'External Server Support',
-              help: [
-                'Send URL information to external server to enhance features (e.g.: captcha resolving). (default: disabled)',
-                'Affected sites:',
-                'urlz.so (captcha)',
-              ].join('<br/>\n'),
-            },
-          },
-        }));
-      },
+      });
     });
-    function dispatchByObject (rule, url_6) {
-      var matched = {};
-      var passed = _.C(rule).all(function (pattern, part) {
-        if (pattern instanceof RegExp) {
-          matched[part] = url_6[part].match(pattern);
-        } else if (pattern instanceof Array) {
-          var r = _.C(pattern).find(function (p) {
-            var m = url_6[part].match(p);
-            return m || _.nop;
-          });
-          matched[part] = r ? r.payload : null;
-        }
-        return !!matched[part];
-      });
-      return passed ? matched : null;
-    }
-    function dispatchByRegExp (rule, url_1) {
-      return url_1.match(rule);
-    }
-    function dispatchByArray (byLocation, rules, url_1, url_3, url_6) {
-      var tmp = _.C(rules).find(function (rule) {
-        var m = dispatch(byLocation, rule, url_1, url_3, url_6);
-        if (!m) {
-          return _.nop;
-        }
-        return m;
-      });
-      return tmp ? tmp.payload : null;
-    }
-    function dispatchByString (rule, url_3) {
-      var scheme = /\*|https?|file|ftp|chrome-extension/;
-      var host = /\*|(\*\.)?([^\/*]+)/;
-      var path = /\/.*/;
-      var up = new RegExp(_.T('^({scheme})://({host})?({path})$')({
-        scheme: scheme.source,
-        host: host.source,
-        path: path.source,
-      }));
-      var matched = rule.match(up);
-      if (!matched) {
-        return null;
-      }
-      scheme = matched[1];
-      host = matched[2];
-      var wc = matched[3];
-      var sd = matched[4];
-      path = matched[5];
-      if (scheme === '*' && !/https?/.test(url_3.scheme)) {
-        return null;
-      } else if (scheme !== url_3.scheme) {
-        return null;
-      }
-      if (scheme !== 'file' && host !== '*') {
-        if (wc) {
-          up = url_3.host.indexOf(sd);
-          if (up < 0 || up + sd.length !== url_3.host.length) {
-            return null;
-          }
-        } else if (host !== url_3.host) {
-          return null;
-        }
-      }
-      path = new RegExp(_.T('^{0}$')(path.replace(/[*.\[\]?+#]/g, function (c) {
-        if (c === '*') {
-          return '.*';
-        }
-        return '\\' + c;
-      })));
-      if (!path.test(url_3.path)) {
-        return null;
-      }
-      return url_3;
-    }
-    function dispatchByFunction (rule, url_1, url_3, url_6) {
-      return rule(url_1, url_3, url_6);
-    }
-    function dispatch (byLocation, rule, url_1, url_3, url_6) {
-      if (rule instanceof Array) {
-        return dispatchByArray(byLocation, rule, url_1, url_3, url_6);
-      }
-      if (!byLocation) {
-        if (typeof rule !== 'function') {
-          return null;
-        }
-        return dispatchByFunction(rule, url_1, url_3, url_6);
-      }
-      if (rule instanceof RegExp) {
-        return dispatchByRegExp(rule, url_1);
-      }
-      if (typeof rule === 'string' || rule instanceof String) {
-        return dispatchByString(rule, url_3);
-      }
-      if (typeof rule === 'function') {
-        return null;
-      }
-      return dispatchByObject(rule, url_6);
-    }
-    function findHandler (byLocation) {
-      var url_1 = window.location.toString();
-      var url_3 = {
-        scheme: window.location.protocol.slice(0, -1),
-        host: window.location.host,
-        path: window.location.pathname + window.location.search + window.location.hash,
-      };
-      var url_6 = {
-        scheme: window.location.protocol,
-        host: window.location.hostname,
-        port: window.location.port,
-        path: window.location.pathname,
-        query: window.location.search,
-        hash: window.location.hash,
-      };
-      var pattern = _.C(patterns).find(function (pattern) {
-        var m = dispatch(byLocation, pattern.rule, url_1, url_3, url_6);
-        if (!m) {
-          return _.nop;
-        }
-        return m;
-      });
-      if (!pattern) {
-        return null;
-      }
-      var matched = pattern.payload;
-      pattern = pattern.value;
-      if (!pattern.start && !pattern.ready) {
-        return null;
-      }
-      return {
-        start: pattern.start ? _.P(pattern.start, matched) : _.nop,
-        ready: pattern.ready ? _.P(pattern.ready, matched) : _.nop,
-      };
-    }
-    function disableWindowOpen () {
-      unsafeWindow.open = _.nop;
-    }
-    function disableLeavePrompt () {
-      var seal = {
-        set: function () {
-          _.info('blocked onbeforeunload');
-        },
-      };
-      _.C([unsafeWindow, unsafeWindow.document.body]).each(function (o) {
-        if (!o) {
-          return;
-        }
-        o.onbeforeunload = undefined;
-        o.__defineSetter__('onbeforeunload', $.inject(seal.set));
-        var oael = o.addEventListener;
-        var nael = function (type) {
-          if (type === 'beforeunload') {
-            _.info('blocked addEventListener onbeforeunload');
-            return;
-          }
-          return oael.apply(this, arguments);
-        };
-        o.addEventListener = $.inject(nael);
-      });
-    }
-    $._main = function (isNodeJS) {
-      delete $._main;
-      if (isNodeJS) {
-        config = load();
-        return;
-      }
-      if (window.top !== window.self) {
-        return;
-      }
-      var handler = findHandler(true);
-      if (handler) {
-        config = load();
-        _.info('working on\n%s \nwith\n%o', window.location.toString(), config);
-        disableWindowOpen();
-        handler.start();
-        document.addEventListener('DOMContentLoaded', function () {
-            disableLeavePrompt();
-            handler.ready();
-        });
-      } else {
-        _.info('does not match location on `%s`, will try HTML content', window.location.toString());
-        document.addEventListener('DOMContentLoaded', function () {
-          handler = findHandler(false);
-          if (!handler) {
-            _.info('does not match HTML content on `%s`', window.location.toString());
-            return;
-          }
-          config = load();
-          _.info('working on\n%s \nwith\n%o', window.location.toString(), config);
-          disableWindowOpen();
-          disableLeavePrompt();
-          handler.ready();
-        });
-      }
-    };
-    GM.registerMenuCommand('AdsBypasser - Configure', function () {
-      GM.openInTab('https://adsbypasser.github.io/configure.html');
-    });
-    return $;
+    promise.abort = xhr.abort.bind(xhr);
+    return promise;
   }
-  if (typeof module !== 'undefined') {
-    module.exports = bootstrap;
+  $.get = function (url, data, headers) {
+    data = toQuery(data);
+    data = data ? '?' + data : '';
+    headers = headers || {};
+    return ajax('GET', url + data, '', headers);
+  };
+  $.post = function (url, data, headers) {
+    data = toQuery(data);
+    var h = {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'Content-Length': data.length,
+    };
+    if (headers) {
+      _.C(headers).each(function (v, k) {
+        h[k] = v;
+      });
+    }
+    return ajax('POST', url, data, h);
+  };
+  return $;
+}));
+
+(function (global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory;
   } else {
-    $ = bootstrap({
-      _: _,
-      window: window,
-      unsafeWindow: unsafeWindow,
-      GM: {
-        getValue: GM_getValue,
-        setValue: GM_setValue,
-        xmlhttpRequest: GM_xmlhttpRequest,
-        getResourceText: GM_getResourceText,
-        addStyle: GM_addStyle,
-        getResourceURL: GM_getResourceURL,
-        openInTab: GM_openInTab,
-        registerMenuCommand: GM_registerMenuCommand,
+    factory(global, global._, global.$);
+  }
+}(this, function (global, _, $) {
+  'use strict';
+  var window = global.window;
+  var unsafeWindow = global.unsafeWindow;
+  var document = window.document;
+  $.setCookie = function (key, value) {
+    var now = new Date();
+    now.setTime(now.getTime() + 3600 * 1000);
+    var tpl = _.T('{0}={1};path=/;');
+    document.cookie = tpl(key, value, now.toUTCString());
+  };
+  $.getCookie = function (key) {
+    var c = _.C(document.cookie.split(';')).find(function (v) {
+      var k = v.replace(/^\s*(\w+)=.+$/, '$1');
+      if (k !== key) {
+        return _.nop;
+      }
+    });
+    if (!c) {
+      return null;
+    }
+    c = c.value.replace(/^\s*\w+=([^;]+).+$/, '$1');
+    if (!c) {
+      return null;
+    }
+    return c;
+  };
+  $.resetCookies = function () {
+    var a = document.domain;
+    var b = document.domain.replace(/^www\./, '');
+    var c = document.domain.replace(/^(\w+\.)+?(\w+\.\w+)$/, '$2');
+    var d = (new Date(1e3)).toUTCString();
+    _.C(document.cookie.split(';')).each(function (v) {
+      var k = v.replace(/^\s*(\w+)=.+$/, '$1');
+      document.cookie = _.T('{0}=;expires={1};')(k, d);
+      document.cookie = _.T('{0}=;path=/;expires={1};')(k, d);
+      var e = _.T('{0}=;path=/;domain={1};expires={2};');
+      document.cookie = e(k, a, d);
+      document.cookie = e(k, b, d);
+      document.cookie = e(k, c, d);
+    });
+  };
+  return $;
+}));
+
+(function (global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory;
+  } else {
+    factory(global, global._, global.$);
+  }
+}(this, function (global, _, $) {
+  'use strict';
+  var window = global.window;
+  var document = window.document;
+  var patterns = [];
+  $.register = function (pattern) {
+    patterns.push(pattern);
+  };
+  function dispatchByObject (rule, url_6) {
+    var matched = {};
+    var passed = _.C(rule).all(function (pattern, part) {
+      if (pattern instanceof RegExp) {
+        matched[part] = url_6[part].match(pattern);
+      } else if (pattern instanceof Array) {
+        var r = _.C(pattern).find(function (p) {
+          var m = url_6[part].match(p);
+          return m || _.nop;
+        });
+        matched[part] = r ? r.payload : null;
+      }
+      return !!matched[part];
+    });
+    return passed ? matched : null;
+  }
+  function dispatchByRegExp (rule, url_1) {
+    return url_1.match(rule);
+  }
+  function dispatchByArray (byLocation, rules, url_1, url_3, url_6) {
+    var tmp = _.C(rules).find(function (rule) {
+      var m = dispatch(byLocation, rule, url_1, url_3, url_6);
+      if (!m) {
+        return _.nop;
+      }
+      return m;
+    });
+    return tmp ? tmp.payload : null;
+  }
+  function dispatchByString (rule, url_3) {
+    var scheme = /\*|https?|file|ftp|chrome-extension/;
+    var host = /\*|(\*\.)?([^\/*]+)/;
+    var path = /\/.*/;
+    var up = new RegExp(_.T('^({scheme})://({host})?({path})$')({
+      scheme: scheme.source,
+      host: host.source,
+      path: path.source,
+    }));
+    var matched = rule.match(up);
+    if (!matched) {
+      return null;
+    }
+    scheme = matched[1];
+    host = matched[2];
+    var wc = matched[3];
+    var sd = matched[4];
+    path = matched[5];
+    if (scheme === '*' && !/https?/.test(url_3.scheme)) {
+      return null;
+    } else if (scheme !== url_3.scheme) {
+      return null;
+    }
+    if (scheme !== 'file' && host !== '*') {
+      if (wc) {
+        up = url_3.host.indexOf(sd);
+        if (up < 0 || up + sd.length !== url_3.host.length) {
+          return null;
+        }
+      } else if (host !== url_3.host) {
+        return null;
+      }
+    }
+    path = new RegExp(_.T('^{0}$')(path.replace(/[*.\[\]?+#]/g, function (c) {
+      if (c === '*') {
+        return '.*';
+      }
+      return '\\' + c;
+    })));
+    if (!path.test(url_3.path)) {
+      return null;
+    }
+    return url_3;
+  }
+  function dispatchByFunction (rule, url_1, url_3, url_6) {
+    return rule(url_1, url_3, url_6);
+  }
+  function dispatch (byLocation, rule, url_1, url_3, url_6) {
+    if (rule instanceof Array) {
+      return dispatchByArray(byLocation, rule, url_1, url_3, url_6);
+    }
+    if (!byLocation) {
+      if (typeof rule !== 'function') {
+        return null;
+      }
+      return dispatchByFunction(rule, url_1, url_3, url_6);
+    }
+    if (rule instanceof RegExp) {
+      return dispatchByRegExp(rule, url_1);
+    }
+    if (typeof rule === 'string' || rule instanceof String) {
+      return dispatchByString(rule, url_3);
+    }
+    if (typeof rule === 'function') {
+      return null;
+    }
+    return dispatchByObject(rule, url_6);
+  }
+  $._findHandler = function (byLocation) {
+    var url_1 = window.location.toString();
+    var url_3 = {
+      scheme: window.location.protocol.slice(0, -1),
+      host: window.location.host,
+      path: window.location.pathname + window.location.search + window.location.hash,
+    };
+    var url_6 = {
+      scheme: window.location.protocol,
+      host: window.location.hostname,
+      port: window.location.port,
+      path: window.location.pathname,
+      query: window.location.search,
+      hash: window.location.hash,
+    };
+    var pattern = _.C(patterns).find(function (pattern) {
+      var m = dispatch(byLocation, pattern.rule, url_1, url_3, url_6);
+      if (!m) {
+        return _.nop;
+      }
+      return m;
+    });
+    if (!pattern) {
+      return null;
+    }
+    var matched = pattern.payload;
+    pattern = pattern.value;
+    if (!pattern.start && !pattern.ready) {
+      return null;
+    }
+    return {
+      start: pattern.start ? _.P(pattern.start, matched) : _.nop,
+      ready: pattern.ready ? _.P(pattern.ready, matched) : _.nop,
+    };
+  };
+  return $;
+}));
+
+(function (global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory;
+  } else {
+    factory(global, global._, global.$);
+  }
+}(this, function (global, _, $) {
+  'use strict';
+  var window = global.window;
+  var document = window.document;
+  function go (path, params, method) {
+    method = method || 'post';
+    var form = document.createElement('form');
+    form.method = method;
+    form.action = path;
+    _.C(params).each(function (value, key) {
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value;
+        form.appendChild(input);
+    });
+    document.body.appendChild(form);
+    form.submit();
+  }
+  $.openLinkByPost = function (url, data) {
+    go(url, data, 'post');
+  };
+  $.openLink = function (to) {
+    if (!to) {
+      _.warn('false URL');
+      return;
+    }
+    var from = window.location.toString();
+    _.info(_.T('{0} -> {1}')(from, to));
+    window.top.location.replace(to);
+  };
+  $.openLinkWithReferer = function (to) {
+    if (!to) {
+      _.warn('false URL');
+      return;
+    }
+    var from = window.location.toString();
+    _.info(_.T('{0} -> {1}')(from, to));
+    var a = document.createElement('a');
+    a.href = to;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+  };
+  return $;
+}));
+
+(function (global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory;
+  } else {
+    factory(global, global._, global.$);
+  }
+}(this, function (global, _, $) {
+  'use strict';
+  var window = global.window;
+  var unsafeWindow = global.unsafeWindow;
+  var document = window.document;
+  function injectClone (vaccine) {
+    var injected;
+    if (typeof cloneInto !== 'function') {
+      injected = vaccine;
+    } else {
+      injected = cloneInto(vaccine, unsafeWindow, {
+        cloneFunctions: true,
+        wrapReflectors: true,
+      });
+    }
+    return injected;
+  }
+  function injectFunction (vaccine) {
+    var injected;
+    if (typeof exportFunction !== 'function') {
+      injected = vaccine;
+    } else {
+      try {
+        injected = exportFunction(vaccine, unsafeWindow, {
+          allowCrossOriginArguments: true,
+        });
+      } catch(e) {
+        console.error(e);
+      }
+    }
+    return injected;
+  }
+  function injectReference () {
+    var injected;
+    if (typeof createObjectIn !== 'function') {
+      injected = {};
+    } else {
+      injected = createObjectIn(unsafeWindow);
+    }
+    return injected;
+  }
+  $.inject = function (vaccine) {
+    if (typeof vaccine === 'function') {
+      return injectFunction(vaccine);
+    } else if (typeof vaccine === 'undefined') {
+      return injectReference();
+    } else {
+      return injectClone(vaccine);
+    }
+  };
+  $.removeAllTimer = function () {
+    var handle = window.setInterval(_.nop, 10);
+    while (handle > 0) {
+      window.clearInterval(handle--);
+    }
+    handle = window.setTimeout(_.nop, 10);
+    while (handle > 0) {
+      window.clearTimeout(handle--);
+    }
+  };
+  $.captcha = function (imgSrc, cb) {
+    if (!config.externalServerSupport) {
+      return;
+    }
+    var a = document.createElement('canvas');
+    var b = a.getContext('2d');
+    var c = new Image();
+    c.src = imgSrc;
+    c.onload = function () {
+      a.width = c.width;
+      a.height = c.height;
+      b.drawImage(c, 0, 0);
+      var d = a.toDataURL();
+      var e = d.substr(d.indexOf(',') + 1);
+      $.post('http://www.wcpan.info/cgi-bin/captcha.cgi', {
+        i: e,
+      }, cb);
+    };
+  };
+  return $;
+}));
+
+(function (global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory;
+  } else {
+    factory(global, {
+      getValue: GM_getValue,
+      setValue: GM_setValue,
+    }, global._, global.$);
+  }
+}(this, function (global, GM, _, $) {
+  'use strict';
+  var window = global.window;
+  var unsafeWindow = global.unsafeWindow;
+  var document = window.document;
+  $._load = function () {
+    delete $._load;
+    var tmp = {
+      version: GM.getValue('version', 0),
+      alignCenter: GM.getValue('align_center'),
+      changeBackground: GM.getValue('change_background'),
+      externalServerSupport: GM.getValue('external_server_support'),
+      redirectImage: GM.getValue('redirect_image'),
+      scaleImage: GM.getValue('scale_image'),
+    };
+    fixup(tmp);
+    save(tmp);
+    $.config = tmp;
+  };
+  function save (c) {
+    GM.setValue('version', c.version);
+    GM.setValue('align_center', c.alignCenter);
+    GM.setValue('change_background', c.changeBackground);
+    GM.setValue('external_server_support', c.externalServerSupport);
+    GM.setValue('redirect_image', c.redirectImage);
+    GM.setValue('scale_image', c.scaleImage);
+  }
+  function fixup (c) {
+    var patches = [
+      function (c) {
+        var ac = typeof c.alignCenter !== 'undefined';
+        if (typeof c.changeBackground === 'undefined') {
+          c.changeBackground = ac ? c.alignCenter : true;
+        }
+        if (typeof c.scaleImage === 'undefined') {
+          c.scaleImage = ac ? c.alignCenter : true;
+        }
+        if (!ac) {
+          c.alignCenter = true;
+        }
+        if (typeof c.redirectImage === 'undefined') {
+          c.redirectImage = true;
+        }
       },
+      function (c) {
+        if (typeof c.externalServerSupport === 'undefined') {
+          c.externalServerSupport = false;
+        }
+      },
+    ];
+    while (c.version < patches.length) {
+      patches[c.version](c);
+      ++c.version;
+    }
+  }
+  $.register({
+    rule: {
+      host: /^adsbypasser\.github\.io$/,
+      path: /^\/configure\.html$/,
+    },
+    ready: function () {
+      unsafeWindow.commit = $.inject(function (data) {
+        data.version = $.config.version;
+        _.C(data).each(function (v, k) {
+          $.config[k] = v;
+        });
+        setTimeout(function () {
+          save(data);
+        }, 0);
+      });
+      unsafeWindow.render($.inject({
+        version: $.config.version,
+        options: {
+          alignCenter: {
+            type: 'checkbox',
+            value: $.config.alignCenter,
+            label: 'Align Center',
+            help: 'Align image to the center if possible. (default: enabled)',
+          },
+          changeBackground: {
+            type: 'checkbox',
+            value: $.config.changeBackground,
+            label: 'Change Background',
+            help: 'Use Firefox-like image background if possible. (default: enabled)',
+          },
+          redirectImage: {
+            type: 'checkbox',
+            value: $.config.redirectImage,
+            label: 'Redirect Image',
+            help: [
+              'Directly open image link if possible. (default: enabled)',
+              'If disabled, redirection will only works on link shortener sites.',
+            ].join('<br/>\n'),
+          },
+          scaleImage: {
+            type: 'checkbox',
+            value: $.config.scaleImage,
+            label: 'Scale Image',
+            help: 'When image loaded, scale it to fit window if possible. (default: enabled)',
+          },
+          externalServerSupport: {
+            type: 'checkbox',
+            value: $.config.externalServerSupport,
+            label: 'External Server Support',
+            help: [
+              'Send URL information to external server to enhance features (e.g.: captcha resolving). (default: disabled)',
+              'Affected sites:',
+              'urlz.so (captcha)',
+            ].join('<br/>\n'),
+          },
+        },
+      }));
+    },
+  });
+  return $;
+}));
+
+(function (global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory;
+  } else {
+    factory(global, {
+      getResourceText: GM_getResourceText,
+      addStyle: GM_addStyle,
+      getResourceURL: GM_getResourceURL,
+    }, global._, global.$);
+  }
+}(this, function (global, GM, _, $) {
+  'use strict';
+  var window = global.window;
+  var document = window.document;
+  $.openImage = function (imgSrc) {
+    if ($.config.redirectImage) {
+      $.openLink(imgSrc);
+    }
+  };
+  $.enableScrolling = function () {
+    var o = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
+    o.style.overflow = '';
+  };
+  function toggleShrinking () {
+    this.classList.toggle('adsbypasser-shrinked');
+  }
+  function checkScaling () {
+    var nw = this.naturalWidth;
+    var nh = this.naturalHeight;
+    var cw = document.documentElement.clientWidth;
+    var ch = document.documentElement.clientHeight;
+    if ((nw > cw || nh > ch) && !this.classList.contains('adsbypasser-resizable')) {
+      this.classList.add('adsbypasser-resizable');
+      this.classList.add('adsbypasser-shrinked');
+      this.addEventListener('click', toggleShrinking);
+    } else {
+      this.removeEventListener('click', toggleShrinking);
+      this.classList.remove('adsbypasser-shrinked');
+      this.classList.remove('adsbypasser-resizable');
+    }
+  }
+  function scaleImage (i) {
+    var style = GM.getResourceText('scaleImage');
+    GM.addStyle(style);
+    if (i.naturalWidth && i.naturalHeight) {
+      checkScaling.call(i);
+    } else {
+      i.addEventListener('load', checkScaling);
+    }
+    var h;
+    window.addEventListener('resize', function () {
+      window.clearTimeout(h);
+      h = window.setTimeout(checkScaling.bind(i), 100);
     });
   }
-})();
+  function changeBackground () {
+    var bgImage = GM.getResourceURL('bgImage');
+    document.body.style.backgroundColor = '#222222';
+    document.body.style.backgroundImage = _.T('url(\'{0}\')')(bgImage);
+  }
+  function alignCenter () {
+    var style = GM.getResourceText('alignCenter');
+    GM.addStyle(style);
+  }
+  function injectStyle (d, i) {
+    $.removeNodes('style, link[rel=stylesheet]');
+    d.id = 'adsbypasser-wrapper';
+    i.id = 'adsbypasser-image';
+  }
+  $.replace = function (imgSrc) {
+    if (!$.config.redirectImage) {
+      return;
+    }
+    if (!imgSrc) {
+      _.warn('false url');
+      return;
+    }
+    _.info(_.T('replacing body with `{0}` ...')(imgSrc));
+    $.removeAllTimer();
+    $.enableScrolling();
+    document.body = document.createElement('body');
+    var d = document.createElement('div');
+    document.body.appendChild(d);
+    var i = document.createElement('img');
+    i.src = imgSrc;
+    d.appendChild(i);
+    if ($.config.alignCenter || $.config.scaleImage) {
+      injectStyle(d, i);
+    }
+    if ($.config.alignCenter) {
+      alignCenter();
+    }
+    if ($.config.changeBackground) {
+      changeBackground();
+    }
+    if ($.config.scaleImage) {
+      scaleImage(i);
+    }
+  };
+  return $;
+}));
 
 $.register({
   rule: {
@@ -956,7 +988,7 @@ $.register({
     'use strict';
     $.get('http://www.4server.info/find.php', {
       data: window.location.href,
-    }, function (data) {
+    }).then(function (data) {
       var d = $.toDOM(data);
       var c = $('meta[http-equiv=refresh]', d);
       var b = c.content.match(/URL=(.+)$/);
@@ -1061,7 +1093,10 @@ $.register({
     var matches = $.searchScripts(/'slug':\s*'([^']+)',\s*'hoster':\s*'([^']+)'/);
     var slug = matches[1];
     var hoster = matches[2];
-    $.post('/get/link/', {'slug': slug, 'hoster': hoster}, function(response) {
+    $.post('/get/link/', {
+      'slug': slug,
+      'hoster': hoster
+    }).then(function(response) {
       var respJSON = JSON.parse(response);
       $.openLink(respJSON.url);
     });
@@ -1420,7 +1455,9 @@ $.register({
   ready: function (m) {
     'use strict';
     var confirm = $.searchScripts(/\$\("#confirmImage"\).val\("([^"]+)"\)/)[1];
-    $.post('/site/viewConfirmCode/' + m.path[1], {confirm: confirm}, function (rawJson) {
+    $.post('/site/viewConfirmCode/' + m.path[1], {
+      confirm: confirm
+    }).then(function (rawJson) {
     	var json = JSON.parse(rawJson);
     	var decodedHTML = document.createTextNode(json.content).data;
     	var imgURL = decodedHTML.match(/<a href="([^"]+)" target="_blank">/)[1];
@@ -1727,7 +1764,7 @@ $.register({
 (function () {
   'use strict';
   function run () {
-    unsafeWindow.$ = undefined;
+    unsafeWindow.jQuery.prototype.append = undefined;
     var i = $('img.pic');
     $.replace(i.src);
   }
@@ -1987,21 +2024,21 @@ $.register({
   });
   $.register({
     rule: {
-      host: /^uploadrr\.com$/,
+      host: /^(uploadrr|imageeer)\.com|imgsee\.me$/,
       path: /^\/([^\/]+)$/,
     },
     ready: function (m) {
       var i = $.$('img.pic');
-      if (!i) {
-        $.openLinkByPost('', {
-          op: 'view',
-          id: m.path[1],
-          pre: 1,
-          next: 'Continue to image...',
-        });
+      if (i) {
+        $.openImage(i.src);
         return;
       }
-      $.openImage(i.src);
+      $.openLinkByPost('', {
+        op: 'view',
+        id: m.path[1],
+        pre: 1,
+        next: 'Continue to image...',
+      });
     },
   });
 })();
@@ -2031,8 +2068,16 @@ $.register({
         /^img\.yt$/,
         /^vava\.in$/,
         /^55888\.eu$/,
+        /^pixxx\.me$/,
       ],
       path: /^\/img-.*\.html$/,
+    },
+    ready: handler,
+  });
+  $.register({
+    rule: {
+      host: /^imgking\.co$/,
+      path: /^\/img-.*\.htmls$/,
     },
     ready: handler,
   });
@@ -2043,7 +2088,7 @@ $.register({
     },
     start: function () {
       unsafeWindow.setTimeout = $.inject(_.nop);
-      $.get(window.location.toString(), {}, function (data) {
+      $.get(window.location.toString()).then(function (data) {
         var a = $.toDOM(data);
         var bbcode = $.$('#imagecodes input', a);
         bbcode = bbcode.value.match(/.+\[IMG\]([^\[]+)\[\/IMG\].+/);
@@ -2489,7 +2534,7 @@ $.register({
     },
     start: function () {
       unsafeWindow.setTimeout = $.inject(_.nop);
-      $.get(window.location.toString(), {}, function (data) {
+      $.get(window.location.toString()).then(function (data) {
         var a = $.toDOM(data);
         var i = $('img[class^=centred]', a);
         $.openImage(i.src);
@@ -2740,7 +2785,7 @@ $.register({
     m = eval('(' + m[0] + ')');
     var url = window.location.pathname + '/skip_timer';
     var i = setInterval(function () {
-      $.post(url, m, function (text) {
+      $.post(url, m).then(function (text) {
         var jj = JSON.parse(text);
         if (!jj.errors && jj.messages) {
           clearInterval(i);
@@ -2988,7 +3033,7 @@ $.register({
     var make_url = matches[1];
     var make_opts = eval('(' + matches[2] + ')');
     var i = setInterval(function () {
-      $.post(make_url, make_opts, function (text) {
+      $.post(make_url, make_opts).then(function (text) {
         if (dirtyFix) {
           text = text.match(/\{.+\}/)[0];
         }
@@ -3293,40 +3338,42 @@ $.register({
   },
 });
 
-(function () {
-  'use strict';
-  $.register({
-    rule: {
-      host: /^(?:(\w+)\.)?(coinurl\.com|cur\.lv)$/,
-      path: /^\/[-\w]+$/
-    },
-    ready: function (m) {
-      $.removeNodes('iframe');
-      if (m.host[1] == null) {
-        var mainFrame = 'http://cur.lv/redirect_curlv.php?code=' + escape(window.location.pathname.substring(1));
-      } else {
-        var mainFrame = 'http://cur.lv/redirect_curlv.php?zone=' + m.host[1] + '&name=' + escape(window.location.pathname.substring(1));
+$.register({
+  rule: {
+    host: /^(?:(\w+)\.)?(coinurl\.com|cur\.lv)$/,
+    path: /^\/([-\w]+)$/
+  },
+  ready: function (m) {
+    'use strict';
+    $.removeNodes('iframe');
+    var host = 'http://cur.lv/redirect_curlv.php';
+    var param = m.host[1] === null ? {
+      code: m.path[1],
+    } : {
+      zone: m.host[1],
+      name: m.path[1],
+    };
+    $.get(host, param).then(function(mainFrameContent) {
+      try {
+        var docMainFrame = $.toDOM(mainFrameContent);
+      } catch (e) {
+        throw new _.AdsBypasserError('main frame changed');
       }
-      $.get(mainFrame, {}, function(mainFrameContent) {
-        try {
-          var docMainFrame = $.toDOM(mainFrameContent);
-        } catch (e) {
-          throw new _.AdsBypasserError('main frame changed');
-        }
-        var rExtractLink = /onclick="open_url\('([^']+)',\s*'go'\)/;
-        var innerFrames = $.$$('frameset > frame', docMainFrame).each(function (currFrame) {
-          var currFrameAddr = window.location.origin + '/' + currFrame.getAttribute('src');
-          $.get(currFrameAddr, {}, function(currFrameContent) {
-            var aRealLink = rExtractLink.exec(currFrameContent);
-            if (aRealLink == null || aRealLink[1] == null) {return;}
-            var realLink = aRealLink[1];
-            $.openLink(realLink);
-          });
+      var rExtractLink = /onclick="open_url\('([^']+)',\s*'go'\)/;
+      var innerFrames = $.$$('frameset > frame', docMainFrame).each(function (currFrame) {
+        var currFrameAddr = window.location.origin + '/' + currFrame.getAttribute('src');
+        $.get(currFrameAddr).then(function(currFrameContent) {
+          var aRealLink = rExtractLink.exec(currFrameContent);
+          if (aRealLink === null || aRealLink[1] === null) {
+            return;
+          }
+          var realLink = aRealLink[1];
+          $.openLink(realLink);
         });
       });
-    },
-  });
-})();
+    });
+  },
+});
 
 $.register({
   rule: {
@@ -3713,13 +3760,13 @@ $.register({
     function sendRequest (token) {
       _.info('sending token: %o', token);
       var i = setInterval(function () {
-        $.get('/intermission/loadTargetUrl', token, function (text) {
+        $.get('/intermission/loadTargetUrl', token).then(function (text) {
           var data = JSON.parse(text);
           _.info('response: %o', data);
           if (!data.Success && data.Errors[0] === 'Invalid token') {
             _.info('got invalid token');
             clearInterval(i);
-            $.get(window.location.toString(), {}, function (text) {
+            $.get(window.location.toString()).then(function (text) {
               var d = $.toDOM(text);
               var t = findToken(d);
               sendRequest(t);
@@ -3737,7 +3784,7 @@ $.register({
     $.register({
       rule: {
         host: hostRules,
-        path: /^\/\w+\/url\/(.*)$/,
+        path: /^\/\w+\/url\/(.+)$/,
       },
       ready: function(m) {
         $.removeAllTimer();
@@ -3782,6 +3829,27 @@ $.register({
     });
   })();
 })();
+
+$.register({
+  rule: {
+    host: [
+      /^www\.linkdecode\.com$/,
+      /^www\.fastdecode\.com$/,
+    ],
+    path: /^\/$/,
+    query: /^\?.+$/,
+  },
+  ready: function (m) {
+    'use strict';
+    $.removeNodes('iframe');
+    var b = $('#m > .Visit_Link');
+    b = b.onclick.toString().match(/\'([^']+)\'/);
+    if (!b) {
+      throw new _.AdsBypasser('pattern changed');
+    }
+    $.openLink(b[1]);
+  },
+});
 
 $.register({
   rule: {
@@ -3881,7 +3949,7 @@ $.register({
     $.removeNodes('iframe');
     $.post('/ajax/check_redirect.php', {
       link: m[1],
-    }, function (text) {
+    }).then(function (text) {
       $.openLink(text);
     });
   },
@@ -4050,7 +4118,7 @@ $.register({
       fp: 0,
       location: location,
       referer: '',
-    }, function (text) {
+    }).then(function (text) {
       var m = text.match(/'([^']+)'/);
       if (!m) {
         throw new _.AdsBypasserError('pattern changed');
@@ -4138,7 +4206,7 @@ $.register({
   },
   start: function (m) {
     'use strict';
-    $.get('https://decrypt.safelinkconverter.com/index.php' + window.location.search, {}, function (html) {
+    $.get('https://decrypt.safelinkconverter.com/index.php' + window.location.search).then(function (html) {
       var m = html.match(/3;URL=([^"]+)/);
       if (!m) {
         _.warn('pattern changed');
@@ -4220,13 +4288,13 @@ $.register({
       header['X-NewRelic-ID'] = X_NewRelic_ID;
     }
     var i = setInterval(function () {
-      $.get('/adSession/callback', data, function (text) {
+      $.get('/adSession/callback', data, header).then(function (text) {
         var r = JSON.parse(text);
         if (r.status == "ok" && r.destinationUrl) {
           clearInterval(i);
           $.openLink(r.destinationUrl);
         }
-      }, header);
+      });
     }, 1000);
   }
   $.register({
@@ -4569,8 +4637,7 @@ $.register({
     var path = window.location.pathname;
     var url = _.T('{0}?ajax=true&adblock=false&old=false&framed=false&uniq={1}')(path, uniq);
     var getURL = function() {
-      $.get(url, {
-      }, function (text) {
+      $.get(url).then(function (text) {
         var goodURL = /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(text);
         if (goodURL) {
           $.openLink(text);
@@ -4631,7 +4698,7 @@ $.register({
       var paste_salt = m.hash[1];
       var fake_user = 'binbox';
       var API_URL = _.T('https://{0}.binbox.io/{1}.json')(fake_user, paste_id);
-      $.get(API_URL, "", function (pasteInfo) {
+      $.get(API_URL).then(function (pasteInfo) {
         pasteInfo = JSON.parse(pasteInfo);
         if (!pasteInfo.ok) {
           throw new _.AdsBypasserError("error when getting paste information");
@@ -4651,4 +4718,86 @@ $.register({
   });
 })();
 
+(function (global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory;
+  } else {
+    factory(global, {
+      openInTab: GM_openInTab,
+      registerMenuCommand: GM_registerMenuCommand,
+    }, global._, global.$);
+  }
+}(this, function (global, GM, _, $) {
+  'use strict';
+  var window = global.window;
+  var unsafeWindow = global.unsafeWindow;
+  var document = window.document;
+  function disableWindowOpen () {
+    unsafeWindow.open = _.nop;
+  }
+  function disableLeavePrompt () {
+    var seal = {
+      set: function () {
+        _.info('blocked onbeforeunload');
+      },
+    };
+    _.C([unsafeWindow, unsafeWindow.document.body]).each(function (o) {
+      if (!o) {
+        return;
+      }
+      o.onbeforeunload = undefined;
+      o.__defineSetter__('onbeforeunload', $.inject(seal.set));
+      var oael = o.addEventListener;
+      var nael = function (type) {
+        if (type === 'beforeunload') {
+          _.info('blocked addEventListener onbeforeunload');
+          return;
+        }
+        return oael.apply(this, arguments);
+      };
+      o.addEventListener = $.inject(nael);
+    });
+  }
+  $._main = function (isNodeJS) {
+    var findHandler = $._findHandler;
+    delete $._main;
+    delete $._findHandler;
+    if (isNodeJS) {
+      config = load();
+      return;
+    }
+    if (window.top !== window.self) {
+      return;
+    }
+    GM.registerMenuCommand('AdsBypasser - Configure', function () {
+      GM.openInTab('https://adsbypasser.github.io/configure.html');
+    });
+    var handler = findHandler(true);
+    if (handler) {
+      $._load();
+      _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
+      disableWindowOpen();
+      handler.start();
+      document.addEventListener('DOMContentLoaded', function () {
+          disableLeavePrompt();
+          handler.ready();
+      });
+    } else {
+      _.info('does not match location on `%s`, will try HTML content', window.location.toString());
+      document.addEventListener('DOMContentLoaded', function () {
+        handler = findHandler(false);
+        if (!handler) {
+          _.info('does not match HTML content on `%s`', window.location.toString());
+          return;
+        }
+        $._load();
+        _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
+        disableWindowOpen();
+        disableLeavePrompt();
+        handler.ready();
+      });
+    }
+  };
+  return $;
+}));
 $._main();
