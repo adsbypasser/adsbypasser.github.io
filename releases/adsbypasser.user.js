@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.11.1
+// @version        5.11.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.1/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.1/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.1/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.2/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.2/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.2/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -3353,7 +3353,7 @@ $.register({
     'use strict';
     $.removeNodes('iframe');
     var host = 'http://cur.lv/redirect_curlv.php';
-    var param = m.host[1] === null ? {
+    var param = m.host[1] === undefined ? {
       code: m.path[1],
     } : {
       zone: m.host[1],
@@ -3370,7 +3370,7 @@ $.register({
         var currFrameAddr = window.location.origin + '/' + currFrame.getAttribute('src');
         $.get(currFrameAddr).then(function(currFrameContent) {
           var aRealLink = rExtractLink.exec(currFrameContent);
-          if (aRealLink === null || aRealLink[1] === null) {
+          if (aRealLink === undefined || aRealLink[1] === undefined) {
             return;
           }
           var realLink = aRealLink[1];
