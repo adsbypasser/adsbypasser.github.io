@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.11.2
+// @version        5.12.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.11.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.12.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -25,9 +25,14 @@
 
 (function (global, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = factory;
+    var bluebird = require('bluebird');
+    module.exports = factory(global, bluebird.Promise);
   } else {
-    factory(global, Promise);
+    factory(global, global.Promise || function (fn) {
+      return global.unsafeWindow.Future.call(this, function (fr) {
+        fn(fr.resolve.bind(fr), fr.reject.bind(fr));
+      });
+    });
   }
 }(this, function (global, Promise) {
   'use strict';
@@ -212,7 +217,7 @@
     }
     var f = console[method];
     if (typeof f === 'function') {
-      f.apply(console, $.inject(args));
+      f.apply(console, args);
     }
   }
   _.info = function () {
@@ -226,7 +231,10 @@
 
 (function (global, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = factory;
+    module.exports = function (global) {
+      var core = require('./core.js');
+      return factory(global, core);
+    };
   } else {
     global.$ = factory(global, global._);
   }
@@ -318,16 +326,20 @@
 
 (function (global, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = factory;
+    module.exports = function (global, GM) {
+      var core = require('./core.js');
+      return factory(global, GM, core);
+    };
   } else {
     factory(global, {
       xmlhttpRequest: GM_xmlhttpRequest,
-    }, global._, global.$);
+    }, global._);
   }
-}(this, function (global, GM, _, $) {
+}(this, function (global, GM, _) {
   'use strict';
   var window = global.window;
   var document = window.document;
+  var $ = global.$ || {};
   function deepJoin (prefix, object) {
     return _.C(object).map(function (v, k) {
       var key = _.T('{0}[{1}]')(prefix, k);
@@ -410,15 +422,18 @@
 
 (function (global, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = factory;
+    module.exports = function (global) {
+      var core = require('./core.js');
+      return factory(global, core);
+    };
   } else {
-    factory(global, global._, global.$);
+    factory(global, global._);
   }
-}(this, function (global, _, $) {
+}(this, function (global, _) {
   'use strict';
   var window = global.window;
-  var unsafeWindow = global.unsafeWindow;
   var document = window.document;
+  var $ = global.$ || {};
   $.setCookie = function (key, value) {
     var now = new Date();
     now.setTime(now.getTime() + 3600 * 1000);
@@ -461,14 +476,18 @@
 
 (function (global, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = factory;
+    module.exports = function (global) {
+      var core = require('./core.js');
+      return factory(global, core);
+    };
   } else {
-    factory(global, global._, global.$);
+    factory(global, global._);
   }
-}(this, function (global, _, $) {
+}(this, function (global, _) {
   'use strict';
   var window = global.window;
   var document = window.document;
+  var $ = global.$ || {};
   var patterns = [];
   $.register = function (pattern) {
     patterns.push(pattern);
@@ -610,14 +629,18 @@
 
 (function (global, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = factory;
+    module.exports = function (global) {
+      var core = require('./core.js');
+      return factory(global, core);
+    };
   } else {
-    factory(global, global._, global.$);
+    factory(global, global._);
   }
-}(this, function (global, _, $) {
+}(this, function (global, _) {
   'use strict';
   var window = global.window;
   var document = window.document;
+  var $ = global.$ || {};
   function go (path, params, method) {
     method = method || 'post';
     var form = document.createElement('form');
@@ -663,7 +686,12 @@
 
 (function (global, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = factory;
+    module.exports = function (global) {
+      var core = require('./core.js');
+      var ajax = require('./ajax.js');
+      var $ = ajax(global);
+      return factory(global, core, $);
+    };
   } else {
     factory(global, global._, global.$);
   }
@@ -751,7 +779,17 @@
 
 (function (global, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = factory;
+    module.exports = function (global, GM) {
+      var _ = require('lodash');
+      var core = require('./core.js');
+      var misc = require('./misc.js');
+      var handler = require('./handler.js');
+      var modules = [misc, handler].map(function (v) {
+        return v.call(null, global, GM);
+      });
+      var $ = _.assign.apply(null, modules);
+      return factory(global, GM, core, $);
+    };
   } else {
     factory(global, {
       getValue: GM_getValue,
@@ -762,29 +800,45 @@
   'use strict';
   var window = global.window;
   var unsafeWindow = global.unsafeWindow;
-  var document = window.document;
-  $._load = function () {
-    delete $._load;
-    var tmp = {
-      version: GM.getValue('version', 0),
-      alignCenter: GM.getValue('align_center'),
-      changeBackground: GM.getValue('change_background'),
-      externalServerSupport: GM.getValue('external_server_support'),
-      redirectImage: GM.getValue('redirect_image'),
-      scaleImage: GM.getValue('scale_image'),
-    };
-    fixup(tmp);
-    save(tmp);
-    $.config = tmp;
+  $.config = {
+    set version (value) {
+      GM.setValue('version', value);
+    },
+    get version () {
+      return GM.getValue('version', 0);
+    },
+    set alignCenter (value) {
+      GM.setValue('align_center', value);
+    },
+    get alignCenter () {
+      return GM.getValue('align_center');
+    },
+    set changeBackground (value) {
+      GM.setValue('change_background', value);
+    },
+    get changeBackground () {
+      return GM.getValue('change_background');
+    },
+    set externalServerSupport (value) {
+      GM.setValue('external_server_support', value);
+    },
+    get externalServerSupport () {
+      GM.getValue('external_server_support');
+    },
+    set redirectImage (value) {
+      GM.setValue('redirect_image', value);
+    },
+    get redirectImage () {
+      return GM.getValue('redirect_image');
+    },
+    set scaleImage (value) {
+      GM.setValue('scale_image', value);
+    },
+    get scaleImage () {
+      return GM.getValue('scale_image');
+    },
   };
-  function save (c) {
-    GM.setValue('version', c.version);
-    GM.setValue('align_center', c.alignCenter);
-    GM.setValue('change_background', c.changeBackground);
-    GM.setValue('external_server_support', c.externalServerSupport);
-    GM.setValue('redirect_image', c.redirectImage);
-    GM.setValue('scale_image', c.scaleImage);
-  }
+  fixup($.config);
   function fixup (c) {
     var patches = [
       function (c) {
@@ -2020,9 +2074,6 @@ $.register({
         $.removeAllTimer();
         $.resetCookies();
         $.removeNodes('iframe');
-        if (!m.path[1]) {
-          throw new _.AdsBypasserError('wrong url pattern');
-        }
         var url = m.path[1] + window.location.search;
         var match = $.searchScripts(/UrlEncoded: ([^,]+)/);
         if (match && match[1] === 'true') {
@@ -3111,7 +3162,17 @@ $.register({
 
 (function (global, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = factory;
+    module.exports = function (global, GM) {
+      var _ = require('lodash');
+      var core = require('./core.js');
+      var misc = require('./misc.js');
+      var handler = require('./handler.js');
+      var modules = [misc, handler].map(function (v) {
+        return v.call(null, global, GM);
+      });
+      var $ = _.assign.apply(_, modules);
+      return factory(global, GM, core, $);
+    };
   } else {
     factory(global, {
       openInTab: GM_openInTab,
@@ -3165,8 +3226,7 @@ $.register({
     });
     var handler = findHandler(true);
     if (handler) {
-      $._load();
-      _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
+      _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config.toString());
       disableWindowOpen();
       handler.start();
       document.addEventListener('DOMContentLoaded', function () {
@@ -3181,8 +3241,7 @@ $.register({
           _.info('does not match HTML content on `%s`', window.location.toString());
           return;
         }
-        $._load();
-        _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
+        _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config.toString());
         disableWindowOpen();
         disableLeavePrompt();
         handler.ready();
