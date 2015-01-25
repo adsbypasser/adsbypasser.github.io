@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.12.1
+// @version        5.13.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.12.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.13.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -350,10 +350,11 @@
     }).join('&');
   }
   function toQuery (data) {
-    if (typeof data === 'undefined') {
+    var type = typeof data;
+    if (data === null || (type !== 'string' && type !== 'object')) {
       return '';
     }
-    if (typeof data === 'string') {
+    if (type === 'string') {
       return data;
     }
     if (data instanceof String) {
@@ -702,51 +703,6 @@
   var window = global.window;
   var unsafeWindow = global.unsafeWindow;
   var document = window.document;
-  function injectClone (vaccine) {
-    var injected;
-    if (typeof cloneInto !== 'function') {
-      injected = vaccine;
-    } else {
-      injected = cloneInto(vaccine, unsafeWindow, {
-        cloneFunctions: true,
-        wrapReflectors: true,
-      });
-    }
-    return injected;
-  }
-  function injectFunction (vaccine) {
-    var injected;
-    if (typeof exportFunction !== 'function') {
-      injected = vaccine;
-    } else {
-      try {
-        injected = exportFunction(vaccine, unsafeWindow, {
-          allowCrossOriginArguments: true,
-        });
-      } catch(e) {
-        console.error(e);
-      }
-    }
-    return injected;
-  }
-  function injectReference () {
-    var injected;
-    if (typeof createObjectIn !== 'function') {
-      injected = {};
-    } else {
-      injected = createObjectIn(unsafeWindow);
-    }
-    return injected;
-  }
-  $.inject = function (vaccine) {
-    if (typeof vaccine === 'function') {
-      return injectFunction(vaccine);
-    } else if (typeof vaccine === 'undefined') {
-      return injectReference();
-    } else {
-      return injectClone(vaccine);
-    }
-  };
   $.removeAllTimer = function () {
     var handle = window.setInterval(_.nop, 10);
     while (handle > 0) {
@@ -776,6 +732,65 @@
       }, cb);
     };
   };
+  function injectClone (vaccine) {
+    return cloneInto(vaccine, unsafeWindow, {
+      cloneFunctions: true,
+      wrapReflectors: true,
+    });
+  }
+  function injectFunction (vaccine) {
+    return exportFunction(vaccine, unsafeWindow, {
+      allowCrossOriginArguments: true,
+    });
+  }
+  function injectReference () {
+    return new unsafeWindow.Object();
+  }
+  function inject (vaccine) {
+    var type = typeof vaccine;
+    if (type === 'function') {
+      return injectFunction(vaccine);
+    } else if (type === 'undefined') {
+      return injectReference();
+    } else if (vaccine !== null && type === 'object') {
+      return injectClone(vaccine);
+    } else {
+      return vaccine;
+    }
+  };
+  var MAGIC_KEY = '__adsbypasser_metamagic__';
+  $.window = (function () {
+    var isFirefox = typeof InstallTrigger !== 'undefined';
+    if (!isFirefox) {
+      return unsafeWindow;
+    }
+    var decorator = {
+      set: function (target, key, value) {
+        if (key === MAGIC_KEY) {
+          return;
+        }
+        target[key] = inject(value);
+      },
+      get: function (target, key) {
+        if (key === MAGIC_KEY) {
+          return target;
+        }
+        var value = target[key];
+        var type = typeof value;
+        if (value === null || (type !== 'function' && type !== 'object')) {
+          return value;
+        }
+        return new Proxy(value, decorator);
+      },
+      apply: function (target, self, args) {
+        if (self[MAGIC_KEY] === unsafeWindow.Object && target.name === 'defineProperty') {
+          args[0] = args[0][MAGIC_KEY];
+        }
+        return target.apply(self, inject(args));
+      },
+    };
+    return new Proxy(unsafeWindow, decorator);
+  })();
   return $;
 }));
 
@@ -801,7 +816,6 @@
 }(this, function (global, GM, _, $) {
   'use strict';
   var window = global.window;
-  var unsafeWindow = global.unsafeWindow;
   $.config = {
     set version (value) {
       GM.setValue('version', value);
@@ -875,7 +889,7 @@
       path: /^\/configure\.html$/,
     },
     ready: function () {
-      unsafeWindow.commit = $.inject(function (data) {
+      $.window.commit = function (data) {
         data.version = $.config.version;
         _.C(data).each(function (v, k) {
           $.config[k] = v;
@@ -883,8 +897,8 @@
         setTimeout(function () {
           save(data);
         }, 0);
-      });
-      unsafeWindow.render($.inject({
+      };
+      $.window.render({
         version: $.config.version,
         options: {
           alignCenter: {
@@ -925,7 +939,7 @@
             ].join('<br/>\n'),
           },
         },
-      }));
+      });
     },
   });
   return $;
@@ -961,18 +975,11 @@ $.register({
   },
   ready: function () {
     'use strict';
-    var rUrl = /window\.location='([^']+)';/;
-    var directUrl = $.$$('script').find(function (script) {
-     var m = rUrl.exec(script.innerHTML);
-      if (!m) {
-       return _.nop;
-      }
-      return m[1];
-    });
+    var directUrl = $.searchScripts(/window\.location='([^']+)';/);
     if (!directUrl) {
       throw new _.AdsBypasserError('script content changed');
     }
-    $.openLink(directUrl.payload);
+    $.openLink(directUrl[1]);
   },
 });
 
@@ -996,7 +1003,7 @@ $.register({
   ready: function () {
     'use strict';
     $.removeNodes('iframe');
-    var f = unsafeWindow.fc;
+    var f = $.window.fc;
     if (!f) {
       throw new _.AdsBypasserError('window.fc is undefined');
     }
@@ -1110,11 +1117,11 @@ $.register({
         return;
       }
       $.removeNodes('iframe');
-      unsafeWindow.cookieCheck = $.inject(_.nop);
-      h = unsafeWindow.eu;
+      $.window.cookieCheck = _.nop;
+      h = $.window.eu;
       if (!h) {
         h = $('#adfly_bar');
-        unsafeWindow.close_bar();
+        $.window.close_bar();
         return;
       }
       var a = h.indexOf('!HiTommy');
@@ -1143,13 +1150,8 @@ $.register({
     ready: function () {
       $.removeNodes('iframe');
       $.resetCookies();
-      var script = $.$$('script').find(function (v) {
-        if (v.innerHTML.indexOf('var r_url') < 0) {
-          return _.nop;
-        }
-        return v.innerHTML;
-      });
-      var url = script.payload.match(/&url=([^&]+)/);
+      var script = $.searchScripts('var r_url');
+      var url = script.match(/&url=([^&]+)/);
       url = url[1];
       $.openLinkWithReferer(url);
     },
@@ -1201,7 +1203,7 @@ $.register({
       $.openLink(a.href);
       return;
     }
-    a = unsafeWindow.fileLocation;
+    a = $.window.fileLocation;
     if (a) {
       $.openLink(a);
     }
@@ -1215,18 +1217,13 @@ $.register({
   ready: function () {
     'use strict';
     $.removeNodes('iframe');
-    var script = $.$$('script').find(function (v) {
-      if (v.innerHTML.indexOf('form') < 0) {
-        return _.nop;
-      }
-      return v.innerHTML;
-    });
+    var script = $.searchScripts('form');
     var p = /name='([^']+)' value='([^']+)'/g;
     var opt = {
       image: ' ',
     };
     var tmp = null;
-    while (tmp = p.exec(script.payload)) {
+    while (tmp = p.exec(script)) {
       opt[tmp[1]] = tmp[2];
     }
     $.openLinkByPost('', opt);
@@ -1288,28 +1285,18 @@ $.register({
     return script;
   }
   function searchScript (unzip) {
-    var content = $.$$('script').find(function (script) {
-      if (script.innerHTML.indexOf('make_log') < 0) {
-        return _.nop;
-      }
-      return script.innerHTML;
-    });
+    var content = $.searchScripts('make_log');
     if (content) {
       return {
         direct: false,
-        script: decompress(content.payload, unzip),
+        script: decompress(content, unzip),
       };
     }
-    content = $.$$('script').find(function (script) {
-      if (script.innerHTML.indexOf('click_log') < 0) {
-        return _.nop;
-      }
-      return script.innerHTML;
-    });
+    content = $.searchScripts('click_log');
     if (content) {
       return {
         direct: true,
-        script: decompress(content.payload, unzip),
+        script: decompress(content, unzip),
       };
     }
     throw _.AdsBypasserError('script changed');
@@ -1332,8 +1319,8 @@ $.register({
     }, 1000);
   }
   function knockServer2 (script) {
-    var post = unsafeWindow.$.post;
-    unsafeWindow.$.post = $.inject(function (a, b, c) {
+    var post = $.window.$.post;
+    $.window.$.post = function (a, b, c) {
       if (typeof c !== 'function') {
         return;
       }
@@ -1346,13 +1333,13 @@ $.register({
         };
         c(JSON.stringify(data));
       }, 1000);
-    });
+    };
     var matches = script.match(/\$.post\('([^']*)'[^{]+(\{opt:'make_log'[^}]+\}\}),/i);
     var make_url = matches[1];
     var make_opts = eval('(' + matches[2] + ')');
     function makeLog () {
         make_opts.opt = 'make_log';
-        post(make_url, $.inject(make_opts), $.inject(function (text) {
+        post(make_url, make_opts, function (text) {
           var data = JSON.parse(text);
           _.info('make_log', data);
           if (!data.message) {
@@ -1360,11 +1347,11 @@ $.register({
             return;
           }
           $.openLink(data.message.url);
-        }));
+        });
     }
     function checkLog () {
       make_opts.opt = 'check_log';
-      post(make_url, $.inject(make_opts), $.inject(function (text) {
+      post(make_url, make_opts, function (text) {
         var data = JSON.parse(text);
         _.info('check_log', data);
         if (!data.message) {
@@ -1372,14 +1359,14 @@ $.register({
           return;
         }
         makeLog();
-      }));
+      });
     }
     function checksLog () {
       make_opts.opt = 'checks_log';
-      post(make_url, $.inject(make_opts), $.inject(function () {
+      post(make_url, make_opts, function () {
         _.info('checks_log');
         checkLog();
-      }));
+      });
     }
     checksLog();
   }
@@ -1737,6 +1724,17 @@ $.register({
 
 $.register({
   rule: {
+    host: /empireload\.com$/,
+    path: /^\/plugin\.php$/,
+    query: /^\?id=linkout&url=([^&]+)$/,
+  },
+  start: function (m) {
+    $.openLink(m.query[1]);
+  },
+});
+
+$.register({
+  rule: {
     host: [
     	/^ethi\.in$/,
     	/^st\.wardhanime\.net$/,
@@ -1810,7 +1808,7 @@ $.register({
   ready: function () {
     'use strict';
     $.removeNodes('iframe');
-    var jQuery = unsafeWindow.$;
+    var jQuery = $.window.$;
     setTimeout(function () {
       jQuery("#captcha-dialog").dialog("open");
     }, 1000);
@@ -1900,7 +1898,7 @@ $.register({
       throw new _.AdsBypasserError('site changed');
     }
     f = f[1];
-    var data = unsafeWindow.des('ksnslmtmk0v4Pdviusajqu', unsafeWindow.hexToString(f), 0, 0);
+    var data = $.window.des('ksnslmtmk0v4Pdviusajqu', $.window.hexToString(f), 0, 0);
     if (data) {
       $.openLink('http://ity.im/1104_21_50846_' + data);
     }
@@ -2014,103 +2012,115 @@ $.register({
     /^(([\w]{8}|www)\.)?youfap\.me$/,
     /^warning-this-linkcode-will-cease-working-soon\.www\.linkbucksdns\.com$/,
   ];
-  (function () {
+  function generateRandomIP () {
     'use strict';
-    function findToken (context) {
-      var script = $.$$('script', context).find(function (n) {
-        if (n.innerHTML.indexOf('window[\'init\' + \'Lb\' + \'js\' + \'\']') < 0) {
-          return _.nop;
-        }
-        return n.innerHTML;
-      });
-      if (!script) {
-        _.warn('pattern changed');
-        return null;
-      }
-      script = script.payload;
-      var m = script.match(/AdPopUrl\s*:\s*'.+\?ref=([\w\d]+)'/);
-      var token = m[1];
-      m = script.match(/=\s*(\d+);/);
-      var ak = parseInt(m[1], 10);
-      var re = /\+\s*(\d+);/g;
-      var tmp = null;
-      while((m = re.exec(script)) !== null) {
-        tmp = m[1];
-      }
-      ak += parseInt(tmp, 10);
-      return {
-        t: token,
-        aK: ak,
-      };
+    return [0,0,0,0].map(function () {
+      return Math.floor(Math.random() * 256);
+    }).join('.');
+  }
+  function findToken (context) {
+    'use strict';
+    var script = $.searchScripts('window[\'init\' + \'Lb\' + \'js\' + \'\']', context);
+    if (!script) {
+      _.warn('pattern changed');
+      return null;
     }
-    function sendRequest (token) {
-      _.info('sending token: %o', token);
-      var i = setInterval(function () {
-        $.get('/intermission/loadTargetUrl', token).then(function (text) {
-          var data = JSON.parse(text);
-          _.info('response: %o', data);
-          if (!data.Success && data.Errors[0] === 'Invalid token') {
-            _.info('got invalid token');
-            clearInterval(i);
-            $.get(window.location.toString()).then(function (text) {
-              var d = $.toDOM(text);
-              var t = findToken(d);
-              sendRequest(t);
-            });
-            return;
-          }
-          if (data.Success && !data.AdBlockSpotted && data.Url) {
-            clearInterval(i);
-            $.openLinkWithReferer(data.Url);
-            return;
-          }
-        });
-      }, 1000);
+    var m = script.match(/AdPopUrl\s*:\s*'.+\?ref=([\w\d]+)'/);
+    var token = m[1];
+    m = script.match(/=\s*(\d+);/);
+    var ak = parseInt(m[1], 10);
+    var re = /\+\s*(\d+);/g;
+    var tmp = null;
+    while((m = re.exec(script)) !== null) {
+      tmp = m[1];
     }
-    $.register({
-      rule: {
-        host: hostRules,
-        path: /^\/\w+\/url\/(.+)$/,
-      },
-      ready: function(m) {
-        $.removeAllTimer();
-        $.resetCookies();
-        $.removeNodes('iframe');
-        var url = m.path[1] + window.location.search;
-        var match = $.searchScripts(/UrlEncoded: ([^,]+)/);
-        if (match && match[1] === 'true') {
-          url = Encode(ConvertFromHex(url));
-        }
-        $.openLinkWithReferer(url);
-      }
-    });
-    $.register({
-      rule: {
-        host: hostRules,
-      },
-      ready: function () {
-        $.removeAllTimer();
-        $.resetCookies();
-        $.removeNodes('iframe');
-        if (window.location.pathname.indexOf('verify') >= 0) {
-          var path = window.location.pathname.replace('/verify', '');
-          $.openLink(path);
+    ak += parseInt(tmp, 10);
+    return {
+      t: token,
+      aK: ak,
+    };
+  }
+  function sendRequest (token) {
+    'use strict';
+    _.info('sending token: %o', token);
+    var i = setInterval(function () {
+      $.get('/intermission/loadTargetUrl', token).then(function (text) {
+        var data = JSON.parse(text);
+        _.info('response: %o', data);
+        if (!data.Success && data.Errors[0] === 'Invalid token') {
+          _.info('got invalid token');
+          clearInterval(i);
+          retry();
           return;
         }
-        var token = findToken(document);
-        sendRequest(token);
-      },
+        if (data.Success && !data.AdBlockSpotted && data.Url) {
+          clearInterval(i);
+          $.openLinkWithReferer(data.Url);
+          return;
+        }
+      });
+    }, 1000);
+  }
+  function retry () {
+    'use strict';
+    $.get(window.location.toString(), {}, {
+      'X-Forwarded-For': generateRandomIP(),
+    }).then(function (text) {
+      var d = $.toDOM(text);
+      var t = findToken(d);
+      if (!t) {
+        var i = setTimeout(retry, 1000);
+        return;
+      }
+      sendRequest(t);
     });
-    $.register({
-      rule: {
-        query: /^(.*)[?&]_lbGate=\d+$/,
-      },
-      start: function (m) {
-        $.setCookie('_lbGatePassed', 'true');
-        $.openLink(window.location.pathname + m.query[1]);
-      },
-    });
-  })();
+  }
+  $.register({
+    rule: {
+      host: hostRules,
+      path: /^\/\w+\/url\/(.+)$/,
+    },
+    ready: function(m) {
+      'use strict';
+      $.removeAllTimer();
+      $.resetCookies();
+      $.removeNodes('iframe');
+      var url = m.path[1] + window.location.search;
+      var match = $.searchScripts(/UrlEncoded: ([^,]+)/);
+      if (match && match[1] === 'true') {
+        url = Encode(ConvertFromHex(url));
+      }
+      $.openLinkWithReferer(url);
+    }
+  });
+  $.register({
+    rule: {
+      host: hostRules,
+    },
+    ready: function () {
+      'use strict';
+      $.removeAllTimer();
+      $.resetCookies();
+      $.removeNodes('iframe');
+      if (window.location.pathname.indexOf('verify') >= 0) {
+        var path = window.location.pathname.replace('/verify', '');
+        $.openLink(path);
+        return;
+      }
+      var token = findToken(document);
+      sendRequest(token);
+    },
+  });
+  $.register({
+    rule: {
+      query: /^(.*)[?&]_lbGate=\d+$/,
+    },
+    start: function (m) {
+      'use strict';
+      $.setCookie('_lbGatePassed', 'true');
+      $.openLink(window.location.pathname + m.query[1]);
+    },
+  });
 })();
 
 $.register({
@@ -2476,7 +2486,7 @@ $.register({
   ready: function () {
     'use strict';
     $.removeNodes('iframe');
-    var url = atob(unsafeWindow.fl);
+    var url = atob($.window.fl);
     $.openLink(url);
   },
 });
@@ -2556,10 +2566,10 @@ $.register({
   'use strict';
   function afterGotSessionId (sessionId) {
     var X_NewRelic_ID = $.searchScripts(/xpid:"([^"]+)"/);
-    var Fingerprint = unsafeWindow.Fingerprint;
+    var Fingerprint = $.window.Fingerprint;
     var browserToken = null;
     if (Fingerprint) {
-      browserToken = (new Fingerprint($.inject({canvas: !0}))).get();
+      browserToken = (new Fingerprint({canvas: !0})).get();
     } else {
       browserToken = Math.round((new Date()).getTime() / 1000);
     }
@@ -2776,8 +2786,8 @@ $.register({
   },
   ready: function () {
     'use strict';
-    if (unsafeWindow && unsafeWindow.linkDestUrl) {
-      $.openLink(unsafeWindow.linkDestUrl);
+    if ($.window && $.window.linkDestUrl) {
+      $.openLink($.window.linkDestUrl);
       return;
     }
     var matches = document.body.innerHTML.match(/linkDestUrl = '(.+)'/);
@@ -2915,7 +2925,7 @@ $.register({
   ready: function () {
     'use strict';
     $.removeNodes('iframe');
-    var uniq = unsafeWindow.uniq || unsafeWindow.uniqi;
+    var uniq = $.window.uniq || $.window.uniqi;
     if (!uniq) {return;}
     var path = window.location.pathname;
     var url = _.T('{0}?ajax=true&adblock=false&old=false&framed=false&uniq={1}')(path, uniq);
@@ -3137,7 +3147,7 @@ $.register({
       hash: /#([a-zA-Z0-9]+)/,
     },
     ready: function (m) {
-      var sjcl = unsafeWindow.sjcl;
+      var sjcl = $.window.sjcl;
       var paste_id = m.path[1];
       var paste_salt = m.hash[1];
       var fake_user = 'binbox';
@@ -3184,10 +3194,10 @@ $.register({
 }(this, function (global, GM, _, $) {
   'use strict';
   var window = global.window;
-  var unsafeWindow = global.unsafeWindow;
   var document = window.document;
+  var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
   function disableWindowOpen () {
-    unsafeWindow.open = _.nop;
+    $.window.open = _.nop;
   }
   function disableLeavePrompt () {
     var seal = {
@@ -3195,12 +3205,21 @@ $.register({
         _.info('blocked onbeforeunload');
       },
     };
-    _.C([unsafeWindow, unsafeWindow.document.body]).each(function (o) {
+    _.C([$.window, $.window.document.body]).each(function (o) {
       if (!o) {
         return;
       }
       o.onbeforeunload = undefined;
-      o.__defineSetter__('onbeforeunload', $.inject(seal.set));
+      if (isSafari) {
+        o.__defineSetter__('onbeforeunload', seal.set);
+      } else {
+        $.window.Object.defineProperty(o, 'onbeforeunload', {
+          configurable: false,
+          enumerable: false,
+          get: undefined,
+          set: seal.set,
+        });
+      }
       var oael = o.addEventListener;
       var nael = function (type) {
         if (type === 'beforeunload') {
@@ -3209,17 +3228,13 @@ $.register({
         }
         return oael.apply(this, arguments);
       };
-      o.addEventListener = $.inject(nael);
+      o.addEventListener = nael;
     });
   }
-  $._main = function (isNodeJS) {
+  $._main = function () {
     var findHandler = $._findHandler;
     delete $._main;
     delete $._findHandler;
-    if (isNodeJS) {
-      config = load();
-      return;
-    }
     if (window.top !== window.self) {
       return;
     }
@@ -3228,7 +3243,7 @@ $.register({
     });
     var handler = findHandler(true);
     if (handler) {
-      _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config.toString());
+      _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
       disableWindowOpen();
       handler.start();
       document.addEventListener('DOMContentLoaded', function () {
@@ -3243,7 +3258,7 @@ $.register({
           _.info('does not match HTML content on `%s`', window.location.toString());
           return;
         }
-        _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config.toString());
+        _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
         disableWindowOpen();
         disableLeavePrompt();
         handler.ready();
