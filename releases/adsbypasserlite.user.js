@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.13.0
+// @version        5.13.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.13.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.13.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -757,7 +757,7 @@
     } else {
       return vaccine;
     }
-  };
+  }
   var MAGIC_KEY = '__adsbypasser_metamagic__';
   $.window = (function () {
     var isFirefox = typeof InstallTrigger !== 'undefined';
@@ -783,10 +783,20 @@
         return new Proxy(value, decorator);
       },
       apply: function (target, self, args) {
-        if (self[MAGIC_KEY] === unsafeWindow.Object && target.name === 'defineProperty') {
+        if (typeof self !== 'undefined' && self[MAGIC_KEY] === unsafeWindow.Object && target.name === 'defineProperty') {
           args[0] = args[0][MAGIC_KEY];
         }
-        return target.apply(self, inject(args));
+        var usargs = new unsafeWindow.Array();
+        _.C(args).each(function (v, i) {
+          usargs.push(inject(v));
+        });
+        return target.apply(self, usargs);
+      },
+      construct: function (target, args) {
+        args = Array.prototype.slice.call(args);
+        args.unshift(undefined);
+        var bind = unsafeWindow.Function.prototype.bind;
+        return new (bind.apply(target, inject(args)));
       },
     };
     return new Proxy(unsafeWindow, decorator);
