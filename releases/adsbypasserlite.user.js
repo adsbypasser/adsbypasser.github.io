@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.13.1
+// @version        5.14.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.13.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.14.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,20 +23,20 @@
 // @include        https://*
 // ==/UserScript==
 
-(function (global, factory) {
+(function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
     var bluebird = require('bluebird');
-    module.exports = factory(global, bluebird.Promise);
+    module.exports = factory(context, bluebird.Promise);
   } else {
-    factory(global, global.Promise || function (fn) {
-      return global.unsafeWindow.Future.call(this, function (fr) {
+    factory(context, context.Promise || function (fn) {
+      return context.unsafeWindow.Future.call(this, function (fr) {
         fn(fr.resolve.bind(fr), fr.reject.bind(fr));
       });
     });
   }
-}(this, function (global, Promise) {
+}(this, function (context, Promise) {
   'use strict';
-  var _ = global._ = {};
+  var _ = context._ = {};
   function setupStack () {
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, this.constructor);
@@ -229,18 +229,18 @@
   return _;
 }));
 
-(function (global, factory) {
+(function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = function (global) {
+    module.exports = function (context) {
       var core = require('./core.js');
-      return factory(global, core);
+      return factory(context, core);
     };
   } else {
-    global.$ = factory(global, global._);
+    context.$ = factory(context, context._);
   }
-}(this, function (global, _) {
+}(this, function (context, _) {
   'use strict';
-  var window = global.window;
+  var window = context.window;
   var document = window.document;
   var DomNotFoundError = _.AdsBypasserError.extend({
     name: 'DomNotFoundError',
@@ -324,22 +324,22 @@
   return $;
 }));
 
-(function (global, factory) {
+(function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = function (global, GM) {
+    module.exports = function (context, GM) {
       var core = require('./core.js');
-      return factory(global, GM, core);
+      return factory(context, GM, core);
     };
   } else {
-    factory(global, {
+    factory(context, {
       xmlhttpRequest: GM_xmlhttpRequest,
-    }, global._);
+    }, context._);
   }
-}(this, function (global, GM, _) {
+}(this, function (context, GM, _) {
   'use strict';
-  var window = global.window;
+  var window = context.window;
   var document = window.document;
-  var $ = global.$ || {};
+  var $ = context.$ || {};
   function deepJoin (prefix, object) {
     return _.C(object).map(function (v, k) {
       var key = _.T('{0}[{1}]')(prefix, k);
@@ -423,20 +423,20 @@
   return $;
 }));
 
-(function (global, factory) {
+(function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = function (global) {
+    module.exports = function (context) {
       var core = require('./core.js');
-      return factory(global, core);
+      return factory(context, core);
     };
   } else {
-    factory(global, global._);
+    factory(context, context._);
   }
-}(this, function (global, _) {
+}(this, function (context, _) {
   'use strict';
-  var window = global.window;
+  var window = context.window;
   var document = window.document;
-  var $ = global.$ || {};
+  var $ = context.$ || {};
   $.setCookie = function (key, value) {
     var now = new Date();
     now.setTime(now.getTime() + 3600 * 1000);
@@ -477,20 +477,20 @@
   return $;
 }));
 
-(function (global, factory) {
+(function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = function (global) {
+    module.exports = function (context) {
       var core = require('./core.js');
-      return factory(global, core);
+      return factory(context, core);
     };
   } else {
-    factory(global, global._);
+    factory(context, context._);
   }
-}(this, function (global, _) {
+}(this, function (context, _) {
   'use strict';
-  var window = global.window;
+  var window = context.window;
   var document = window.document;
-  var $ = global.$ || {};
+  var $ = context.$ || {};
   var patterns = [];
   $.register = function (pattern) {
     patterns.push(pattern);
@@ -575,8 +575,8 @@
     if (rule instanceof Array) {
       return dispatchByArray(byLocation, rule, url_1, url_3, url_6);
     }
-    if (!byLocation) {
-      if (typeof rule !== 'function') {
+    if (typeof rule === 'function') {
+      if (byLocation) {
         return null;
       }
       return dispatchByFunction(rule, url_1, url_3, url_6);
@@ -586,9 +586,6 @@
     }
     if (typeof rule === 'string' || rule instanceof String) {
       return dispatchByString(rule, url_3);
-    }
-    if (typeof rule === 'function') {
-      return null;
     }
     return dispatchByObject(rule, url_6);
   }
@@ -630,20 +627,20 @@
   return $;
 }));
 
-(function (global, factory) {
+(function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = function (global) {
+    module.exports = function (context) {
       var core = require('./core.js');
-      return factory(global, core);
+      return factory(context, core);
     };
   } else {
-    factory(global, global._);
+    factory(context, context._);
   }
-}(this, function (global, _) {
+}(this, function (context, _) {
   'use strict';
-  var window = global.window;
+  var window = context.window;
   var document = window.document;
-  var $ = global.$ || {};
+  var $ = context.$ || {};
   function go (path, params, method) {
     method = method || 'post';
     var form = document.createElement('form');
@@ -687,21 +684,21 @@
   return $;
 }));
 
-(function (global, factory) {
+(function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = function (global) {
+    module.exports = function (context) {
       var core = require('./core.js');
       var ajax = require('./ajax.js');
-      var $ = ajax(global);
-      return factory(global, core, $);
+      var $ = ajax(context);
+      return factory(context, core, $);
     };
   } else {
-    factory(global, global._, global.$);
+    factory(context, context._, context.$);
   }
-}(this, function (global, _, $) {
+}(this, function (context, _, $) {
   'use strict';
-  var window = global.window;
-  var unsafeWindow = global.unsafeWindow;
+  var window = context.window;
+  var unsafeWindow = context.unsafeWindow || (0, eval)('this').window;
   var document = window.document;
   $.removeAllTimer = function () {
     var handle = window.setInterval(_.nop, 10);
@@ -732,33 +729,32 @@
       }, cb);
     };
   };
-  function injectClone (vaccine) {
-    return cloneInto(vaccine, unsafeWindow, {
-      cloneFunctions: true,
-      wrapReflectors: true,
-    });
-  }
-  function injectFunction (vaccine) {
-    return exportFunction(vaccine, unsafeWindow, {
-      allowCrossOriginArguments: true,
-    });
-  }
-  function injectReference () {
-    return new unsafeWindow.Object();
-  }
-  function inject (vaccine) {
-    var type = typeof vaccine;
-    if (type === 'function') {
-      return injectFunction(vaccine);
-    } else if (type === 'undefined') {
-      return injectReference();
-    } else if (vaccine !== null && type === 'object') {
-      return injectClone(vaccine);
-    } else {
-      return vaccine;
+  function clone (safe) {
+    if (safe === null || !(safe instanceof Object)) {
+      return safe;
     }
+    if (safe instanceof String) {
+      return safe.toString();
+    }
+    if (safe instanceof Function) {
+      return exportFunction(safe, unsafeWindow, {
+        allowCrossOriginArguments: true,
+      });
+    }
+    if (safe instanceof Array) {
+      var unsafe = new unsafeWindow.Array();
+      for (var i = 0; i < safe.length; ++i) {
+        unsafe.push(clone(safe[i]));
+      }
+      return unsafe;
+    }
+    var unsafe = new unsafeWindow.Object();
+    _.C(safe).each(function (v, k) {
+      unsafe[k] = clone(v);
+    });
+    return unsafe;
   }
-  var MAGIC_KEY = '__adsbypasser_metamagic__';
+  var MAGIC_KEY = '__adsbypasser_reverse_proxy__';
   $.window = (function () {
     var isFirefox = typeof InstallTrigger !== 'undefined';
     if (!isFirefox) {
@@ -769,7 +765,7 @@
         if (key === MAGIC_KEY) {
           return;
         }
-        target[key] = inject(value);
+        target[key] = clone(value);
       },
       get: function (target, key) {
         if (key === MAGIC_KEY) {
@@ -783,20 +779,23 @@
         return new Proxy(value, decorator);
       },
       apply: function (target, self, args) {
-        if (typeof self !== 'undefined' && self[MAGIC_KEY] === unsafeWindow.Object && target.name === 'defineProperty') {
+        args = Array.prototype.slice.call(args);
+        if (target === unsafeWindow.Object.defineProperty) {
           args[0] = args[0][MAGIC_KEY];
         }
-        var usargs = new unsafeWindow.Array();
-        _.C(args).each(function (v, i) {
-          usargs.push(inject(v));
-        });
+        if (target === unsafeWindow.Function.apply) {
+          self = self[MAGIC_KEY];
+          args[1] = Array.prototype.slice.call(args[1]);
+        }
+        var usargs = clone(args);
         return target.apply(self, usargs);
       },
       construct: function (target, args) {
         args = Array.prototype.slice.call(args);
         args.unshift(undefined);
+        var usargs = clone(args);
         var bind = unsafeWindow.Function.prototype.bind;
-        return new (bind.apply(target, inject(args)));
+        return new (bind.apply(target, usargs));
       },
     };
     return new Proxy(unsafeWindow, decorator);
@@ -804,28 +803,28 @@
   return $;
 }));
 
-(function (global, factory) {
+(function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = function (global, GM) {
+    module.exports = function (context, GM) {
       var _ = require('lodash');
       var core = require('./core.js');
       var misc = require('./misc.js');
       var handler = require('./handler.js');
       var modules = [misc, handler].map(function (v) {
-        return v.call(null, global, GM);
+        return v.call(null, context, GM);
       });
       var $ = _.assign.apply(null, modules);
-      return factory(global, GM, core, $);
+      return factory(context, GM, core, $);
     };
   } else {
-    factory(global, {
+    factory(context, {
       getValue: GM_getValue,
       setValue: GM_setValue,
-    }, global._, global.$);
+    }, context._, context.$);
   }
-}(this, function (global, GM, _, $) {
+}(this, function (context, GM, _, $) {
   'use strict';
-  var window = global.window;
+  var window = context.window;
   $.config = {
     set version (value) {
       GM.setValue('version', value);
@@ -1265,6 +1264,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?allkeyshop\.com$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var matches = $.searchScripts(/window\.location\.href = "([^"]+)"/);
+    $.openLink(matches[1]);
+    $.removeAllTimer();
+  },
+});
+
+$.register({
+  rule: {
     host: /^anonymbucks\.com$/,
   },
   ready: function () {
@@ -1525,7 +1536,7 @@ $.register({
     host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
     path: /\/o\/([a-zA-Z0-9]+)/,
   },
-  ready: function (m) {
+  start: function (m) {
     'use strict';
     var direct_link = window.atob(m.path[1]);
     $.openLink(direct_link);
@@ -1923,6 +1934,24 @@ $.register({
     'use strict';
     var l = $('#textresult > a');
     $.openLink(l.href);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?leechbd\.tk$/,
+    path: /^\/Shortener\/(\w+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    $.get('/Shortener/API/read/get', {id: m.path[1], type: 'json'}).then(function (text) {
+      var r = JSON.parse(text);
+      if (r.success == true && r.data.full) {
+        $.openLink(r.data.full);
+      } else {
+        _.warn('API Error ' + r.error.code + ' : ' + r.error.msg);
+      }
+    });
   },
 });
 
@@ -2626,6 +2655,17 @@ $.register({
       });
     },
   });
+  $.register({
+    rule: {
+      host: /^ouo\.io$/,
+      path: /^\/\w+/,
+    },
+    ready: function () {
+      $.removeNodes('iframe');
+      var m = $.searchScripts(/<a class="skip-btn" href="([^"]+)">/);
+      $.openLink(m[1]);
+    },
+  });
 })();
 
 $.register({
@@ -2646,7 +2686,7 @@ $.register({
     host: /^(www\.)?similarsites\.com$/,
     path: /^\/goto\/([^?]+)/
   },
-  ready: function (m) {
+  start: function (m) {
     'use strict';
     var l = m.path[1];
     if (!/^https?:\/\//.test(l)) {
@@ -2688,7 +2728,7 @@ $.register({
     path: /^\/linkfilter\/(.+)?$/,
     query: /^(?:\?url=(.+))?$/,
   },
-  ready: function (m) {
+  start: function (m) {
     'use strict';
     var target = m.path[1]? m.path[1]+document.location.search : m.query[1];
     $.openLink(target);
@@ -2700,7 +2740,7 @@ $.register({
     host: /^(www\.)?sylnk\.net$/,
     query: /link=([^&]+)/
   },
-  ready: function (m) {
+  start: function (m) {
     'use strict';
     var rawLink = atob(m.query[1]);
     $.openLink(rawLink);
@@ -2747,7 +2787,7 @@ $.register({
     path: /^\/(?:(?:\d-)?(\d+)|index\.php)$/,
     query: /^(?:\?a=\d&c=(\d+))?$/
   },
-  ready: function (m) {
+  start: function (m) {
     'use strict';
     var linkId = m.path[1]?m.path[1]:m.query[1];
     var directLink = '/3-' + linkId;
@@ -3182,28 +3222,28 @@ $.register({
   });
 })();
 
-(function (global, factory) {
+(function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = function (global, GM) {
+    module.exports = function (context, GM) {
       var _ = require('lodash');
       var core = require('./core.js');
       var misc = require('./misc.js');
       var handler = require('./handler.js');
       var modules = [misc, handler].map(function (v) {
-        return v.call(null, global, GM);
+        return v.call(null, context, GM);
       });
       var $ = _.assign.apply(_, modules);
-      return factory(global, GM, core, $);
+      return factory(context, GM, core, $);
     };
   } else {
-    factory(global, {
+    factory(context, {
       openInTab: GM_openInTab,
       registerMenuCommand: GM_registerMenuCommand,
-    }, global._, global.$);
+    }, context._, context.$);
   }
-}(this, function (global, GM, _, $) {
+}(this, function (context, GM, _, $) {
   'use strict';
-  var window = global.window;
+  var window = context.window;
   var document = window.document;
   var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
   function disableWindowOpen () {
