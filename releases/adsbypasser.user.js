@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.14.0
+// @version        5.15.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.14.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.15.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.14.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.14.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.14.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.15.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.15.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.15.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -817,8 +817,8 @@
       var _ = require('lodash');
       var core = require('./core.js');
       var misc = require('./misc.js');
-      var handler = require('./handler.js');
-      var modules = [misc, handler].map(function (v) {
+      var dispatcher = require('./dispatcher.js');
+      var modules = [misc, dispatcher].map(function (v) {
         return v.call(null, context, GM);
       });
       var $ = _.assign.apply(null, modules);
@@ -2275,12 +2275,11 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^(hentai-hosting|miragepics|funextra\.hostzi|img(rex|banana))\.com$/,
+        /^(hentai-hosting|miragepics|funextra\.hostzi|imgrex)\.com$/,
         /^bilder\.nixhelp\.de$/,
         /^imagecurl\.(com|org)$/,
         /^imagevau\.eu$/,
         /^img\.deli\.sh$/,
-        /^imgking\.us$/,
         /^image(pong|back)\.info$/,
         /^imgdream\.net$/,
         /^photoup\.biz$/,
@@ -2307,17 +2306,6 @@ $.register({
       query: /file=([^&]+)/,
     },
     start: helper,
-  });
-  $.register({
-    rule: {
-      host: /^catpic\.biz$/,
-      path: /^(\/\w)?\/viewer\.php$/,
-      query: /file=([^&]+)/,
-    },
-    start: function (m) {
-      var url = _.T('{0}/images/{1}');
-      $.openImage(url(m.path[1] || '', m.query[1]));
-    },
   });
   $.register({
     rule: [
@@ -2590,7 +2578,7 @@ $.register({
     rule: [
       {
         host: [
-          /^(image(decode|ontime)|(zonezeed|zelje|croft|myhot|dam)image|pic(\.apollon-fervor|stwist)|www\.imglemon|ericsony|imgpu|wpc8)\.com$/,
+          /^(image(decode|ontime)|(zonezeed|zelje|croft|myhot|dam|bok)image|picstwist|www\.imglemon|ericsony|imgpu|wpc8)\.com$/,
           /^(img(serve|coin|fap)|gallerycloud)\.net$/,
           /^hotimages\.eu$/,
           /^(imgstudio|dragimage|image(look|team))\.org$/,
@@ -2890,7 +2878,12 @@ $.register({
     },
     start: function (m) {
       $.resetCookies();
-      $.openLink('/' + m.query[1]);
+      var url = decodeURIComponent(m.query[1]);
+      if (url.match(/^http/)) {
+        $.openLink(url);
+      } else {
+        $.openLink('/' + url);
+      }
     },
   });
   $.register({
@@ -4086,6 +4079,19 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?microtec\.com\.sg$/,
+    path: /^\/short\/\w+$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var l = $('a.btn-block.redirect').href;
+    var b64 = l.match(/\?r=(\w+={0,2}?)/);
+    $.openLink(atob(b64[1]));
+  },
+});
+
+$.register({
+  rule: {
     host: [
       /^moe\.god\.jp$/,
       /^moesubs\.akurapopo\.pro$/,
@@ -4314,11 +4320,17 @@ $.register({
 });
 
 $.register({
-  rule: {
-    host: /^(www\.)?safelinkconverter2\.com$/,
-    path: /^\/decrypt-\d\/$/,
-    query: /id=(\w+=+)/,
-  },
+  rule: [
+    {
+      host: /^(www\.)?safelinkconverter2\.com$/,
+      path: /^\/decrypt-\d\/$/,
+      query: /id=(\w+=+)/,
+    },
+    {
+      host: /^(www\.)?safelinkreview\.com$/,
+      query: /id=(\w+=+)/,
+    },
+  ],
   start: function (m) {
     'use strict';
     $.get('https://decrypt.safelinkconverter.com/index.php' + window.location.search).then(function (html) {
@@ -4345,6 +4357,18 @@ $.register({
     }
     directUrl = directUrl[1];
     $.openLink(directUrl);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^segmentnext\.com$/,
+    path: /^\/interstitial\.html$/,
+    query: /return_url=([^&]+)/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink(decodeURIComponent(m.query[1]));
   },
 });
 
@@ -4453,14 +4477,16 @@ $.register({
 
 $.register({
   rule: {
-    host: /^(www\.)?shortenurl\.tk$/,
+    host: [
+      /^(www\.)?shortenurl\.tk$/,
+      /^(www\.)?pengaman\.link$/,
+    ],
     path: /^\/\w+$/,
   },
   ready: function (m) {
     'use strict';
-    var l = $('a.btn-block.redirect').href;
-    var b64 = l.match(/\?r=(\w+={2})/); 
-    $.openLink(atob(b64[1]));
+    var l = $('a.btn-block.redirect');
+    $.openLink(l.href);
   },
 });
 
@@ -4850,8 +4876,8 @@ $.register({
       var _ = require('lodash');
       var core = require('./core.js');
       var misc = require('./misc.js');
-      var handler = require('./handler.js');
-      var modules = [misc, handler].map(function (v) {
+      var dispatcher = require('./dispatcher.js');
+      var modules = [misc, dispatcher].map(function (v) {
         return v.call(null, context, GM);
       });
       var $ = _.assign.apply(_, modules);

@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.14.0
+// @version        5.15.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.14.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.15.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -809,8 +809,8 @@
       var _ = require('lodash');
       var core = require('./core.js');
       var misc = require('./misc.js');
-      var handler = require('./handler.js');
-      var modules = [misc, handler].map(function (v) {
+      var dispatcher = require('./dispatcher.js');
+      var modules = [misc, dispatcher].map(function (v) {
         return v.call(null, context, GM);
       });
       var $ = _.assign.apply(null, modules);
@@ -1107,7 +1107,12 @@ $.register({
     },
     start: function (m) {
       $.resetCookies();
-      $.openLink('/' + m.query[1]);
+      var url = decodeURIComponent(m.query[1]);
+      if (url.match(/^http/)) {
+        $.openLink(url);
+      } else {
+        $.openLink('/' + url);
+      }
     },
   });
   $.register({
@@ -2303,6 +2308,19 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?microtec\.com\.sg$/,
+    path: /^\/short\/\w+$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var l = $('a.btn-block.redirect').href;
+    var b64 = l.match(/\?r=(\w+={0,2}?)/);
+    $.openLink(atob(b64[1]));
+  },
+});
+
+$.register({
+  rule: {
     host: [
       /^moe\.god\.jp$/,
       /^moesubs\.akurapopo\.pro$/,
@@ -2531,11 +2549,17 @@ $.register({
 });
 
 $.register({
-  rule: {
-    host: /^(www\.)?safelinkconverter2\.com$/,
-    path: /^\/decrypt-\d\/$/,
-    query: /id=(\w+=+)/,
-  },
+  rule: [
+    {
+      host: /^(www\.)?safelinkconverter2\.com$/,
+      path: /^\/decrypt-\d\/$/,
+      query: /id=(\w+=+)/,
+    },
+    {
+      host: /^(www\.)?safelinkreview\.com$/,
+      query: /id=(\w+=+)/,
+    },
+  ],
   start: function (m) {
     'use strict';
     $.get('https://decrypt.safelinkconverter.com/index.php' + window.location.search).then(function (html) {
@@ -2562,6 +2586,18 @@ $.register({
     }
     directUrl = directUrl[1];
     $.openLink(directUrl);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^segmentnext\.com$/,
+    path: /^\/interstitial\.html$/,
+    query: /return_url=([^&]+)/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink(decodeURIComponent(m.query[1]));
   },
 });
 
@@ -2670,14 +2706,16 @@ $.register({
 
 $.register({
   rule: {
-    host: /^(www\.)?shortenurl\.tk$/,
+    host: [
+      /^(www\.)?shortenurl\.tk$/,
+      /^(www\.)?pengaman\.link$/,
+    ],
     path: /^\/\w+$/,
   },
   ready: function (m) {
     'use strict';
-    var l = $('a.btn-block.redirect').href;
-    var b64 = l.match(/\?r=(\w+={2})/); 
-    $.openLink(atob(b64[1]));
+    var l = $('a.btn-block.redirect');
+    $.openLink(l.href);
   },
 });
 
@@ -3228,8 +3266,8 @@ $.register({
       var _ = require('lodash');
       var core = require('./core.js');
       var misc = require('./misc.js');
-      var handler = require('./handler.js');
-      var modules = [misc, handler].map(function (v) {
+      var dispatcher = require('./dispatcher.js');
+      var modules = [misc, dispatcher].map(function (v) {
         return v.call(null, context, GM);
       });
       var $ = _.assign.apply(_, modules);
