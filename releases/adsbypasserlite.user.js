@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.15.0
+// @version        5.16.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.15.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.16.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -643,6 +643,7 @@
   var $ = context.$ || {};
   function go (path, params, method) {
     method = method || 'post';
+    params = params || {};
     var form = document.createElement('form');
     form.method = method;
     form.action = path;
@@ -1033,6 +1034,20 @@ $.register({
     'use strict';
     var i = $('#original_url');
     $.openLink(i.value);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^ad2links\.com$/,
+    path: /^\/\w-.+$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    $.openLinkByPost(window.location.toString(), {
+      image: 'Skip Ad.',
+    });
   },
 });
 
@@ -3212,6 +3227,28 @@ $.register({
     accessInput.value = Math.random();
     accessForm.appendChild(accessInput);
     accessForm.submit();
+  },
+});
+
+$.register({
+  rule: {
+    host: /^mylinkgen\.com$/,
+    path: /^\/p\/(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink('/g/' + m.path[1]);
+  },
+});
+$.register({
+  rule: {
+    host: /^mylinkgen\.com$/,
+    path: /^\/g\//,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#main-content a.btn.btn-default');
+    $.openLink(a.href);
   },
 });
 

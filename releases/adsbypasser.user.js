@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.15.0
+// @version        5.16.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.15.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.16.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.15.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.15.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.15.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.16.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.16.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.16.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -651,6 +651,7 @@
   var $ = context.$ || {};
   function go (path, params, method) {
     method = method || 'post';
+    params = params || {};
     var form = document.createElement('form');
     form.method = method;
     form.action = path;
@@ -1234,6 +1235,28 @@ $.register({
     accessInput.value = Math.random();
     accessForm.appendChild(accessInput);
     accessForm.submit();
+  },
+});
+
+$.register({
+  rule: {
+    host: /^mylinkgen\.com$/,
+    path: /^\/p\/(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink('/g/' + m.path[1]);
+  },
+});
+$.register({
+  rule: {
+    host: /^mylinkgen\.com$/,
+    path: /^\/g\//,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#main-content a.btn.btn-default');
+    $.openLink(a.href);
   },
 });
 
@@ -2559,7 +2582,7 @@ $.register({
 
 $.register({
   rule: {
-    host: /^qrrro\.com$/,
+    host: /^(qrrro|greenpiccs)\.com$/,
     path: /^(\/images\/.+)\.html$/,
   },
   start: function (m) {
@@ -2804,6 +2827,20 @@ $.register({
     'use strict';
     var i = $('#original_url');
     $.openLink(i.value);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^ad2links\.com$/,
+    path: /^\/\w-.+$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    $.openLinkByPost(window.location.toString(), {
+      image: 'Skip Ad.',
+    });
   },
 });
 
