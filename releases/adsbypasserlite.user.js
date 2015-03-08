@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.16.0
+// @version        5.17.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.16.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.17.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -383,7 +383,7 @@
         data: data,
         headers: headers,
         onload: function (response) {
-          response = (typeof this.responseText !== 'undefined') ? this : response;
+          response = (typeof response.responseText !== 'undefined') ? response : this;
           if (response.status !== 200) {
             reject(response.responseText);
           } else {
@@ -391,7 +391,7 @@
           }
         },
         onerror: function (response) {
-          response = (typeof this.responseText !== 'undefined') ? this : response;
+          response = (typeof response.responseText !== 'undefined') ? response : this;
           reject(response.responseText);
         },
       });
@@ -712,7 +712,7 @@
     }
   };
   $.captcha = function (imgSrc, cb) {
-    if (!config.externalServerSupport) {
+    if (!$.config.externalServerSupport) {
       return;
     }
     var a = document.createElement('canvas');
@@ -849,7 +849,7 @@
       GM.setValue('external_server_support', value);
     },
     get externalServerSupport () {
-      GM.getValue('external_server_support');
+      return GM.getValue('external_server_support');
     },
     set redirectImage (value) {
       GM.setValue('redirect_image', value);
@@ -1728,6 +1728,18 @@ $.register({
 });
 
 $.register({
+  rule: {
+    host: /^dikit\.in$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var a = $('.disclaimer a');
+    $.openLink(a.href);
+  },
+});
+
+$.register({
   rule: 'http://www.dumppix.com/viewer.php?*',
   ready: function () {
     'use strict';
@@ -2457,18 +2469,6 @@ $.register({
 });
 
 $.register({
-  rule: {
-    host: /^ref\.so$/,
-  },
-  ready: function () {
-    'use strict';
-    $.removeNodes('iframe');
-    var a = $('#btn_open a');
-    $.openLink(a.href);
-  },
-});
-
-$.register({
   rule: 'http://reffbux.com/refflinx/view/*',
   ready: function () {
     'use strict';
@@ -2560,6 +2560,18 @@ $.register({
     $.removeNodes('iframe');
     var url = atob($.window.fl);
     $.openLink(url);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?sa\.ae$/,
+    path: /^\/\w+\/$/,
+  },
+  ready: function () {
+    'use strict';
+    var m = $.searchScripts(/var real_link = '([^']+)';/);
+    $.openLink(m[1]);
   },
 });
 
@@ -2706,17 +2718,6 @@ $.register({
       });
     },
   });
-  $.register({
-    rule: {
-      host: /^ouo\.io$/,
-      path: /^\/\w+/,
-    },
-    ready: function () {
-      $.removeNodes('iframe');
-      var m = $.searchScripts(/<a class="skip-btn" href="([^"]+)">/);
-      $.openLink(m[1]);
-    },
-  });
 })();
 
 $.register({
@@ -2789,10 +2790,17 @@ $.register({
 });
 
 $.register({
-  rule: {
-    host: /^(www\.)?sylnk\.net$/,
-    query: /link=([^&]+)/
-  },
+  rule: [
+    {
+      host: /^(www\.)?sylnk\.net$/,
+      query: /link=([^&]+)/,
+    },
+    {
+      host: /^(www\.)?compul\.in$/,
+      path: /^\/n\.php$/,
+      query: /v=([^&]+)/,
+    },
+  ],
   start: function (m) {
     'use strict';
     var rawLink = atob(m.query[1]);
@@ -3356,6 +3364,26 @@ $.register({
       o.addEventListener = nael;
     });
   }
+  function beforeDOMReady (handler) {
+    _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
+    disableWindowOpen();
+    handler.start();
+  }
+  function afterDOMReady (handler) {
+    disableLeavePrompt();
+    handler.ready();
+  }
+  function waitDOM () {
+    return _.D(function (resolve, reject) {
+      if (document.readyState !== 'loading') {
+        resolve();
+        return;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        resolve();
+      });
+    });
+  }
   $._main = function () {
     var findHandler = $._findHandler;
     delete $._main;
@@ -3368,27 +3396,22 @@ $.register({
     });
     var handler = findHandler(true);
     if (handler) {
-      _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
-      disableWindowOpen();
-      handler.start();
-      document.addEventListener('DOMContentLoaded', function () {
-          disableLeavePrompt();
-          handler.ready();
+      beforeDOMReady(handler);
+      waitDOM().then(function () {
+        afterDOMReady(handler);
       });
-    } else {
-      _.info('does not match location on `%s`, will try HTML content', window.location.toString());
-      document.addEventListener('DOMContentLoaded', function () {
-        handler = findHandler(false);
-        if (!handler) {
-          _.info('does not match HTML content on `%s`', window.location.toString());
-          return;
-        }
-        _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
-        disableWindowOpen();
-        disableLeavePrompt();
-        handler.ready();
-      });
+      return;
     }
+    _.info('does not match location on `%s`, will try HTML content', window.location.toString());
+    waitDOM().then(function () {
+      handler = findHandler(false);
+      if (!handler) {
+        _.info('does not match HTML content on `%s`', window.location.toString());
+        return;
+      }
+      beforeDOMReady(handler);
+      afterDOMReady(handler);
+    });
   };
   return $;
 }));
