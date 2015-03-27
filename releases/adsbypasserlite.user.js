@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.17.1
+// @version        5.18.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.17.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.18.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -764,9 +764,10 @@
     var decorator = {
       set: function (target, key, value) {
         if (key === MAGIC_KEY) {
-          return;
+          return false;
         }
         target[key] = clone(value);
+        return true;
       },
       get: function (target, key) {
         if (key === MAGIC_KEY) {
@@ -1617,10 +1618,21 @@ $.register({
   ready: function () {
     'use strict';
     $.removeNodes('iframe');
-    var linkHolder = $('#compteur');
-    var matches = linkHolder.innerHTML.match(/<a href=".*url=([^&"]+).*>/);
+    var matches = $.searchScripts(/<a href="http:\/\/(?:www.)?clictune\.com\/redirect\.php\?url=([^&]+)&/);
     var url = decodeURIComponent(matches[1]);
     $.openLink(url);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^clk\.im$/,
+  },
+  ready: function (m) {
+    'use strict';
+    $.removeNodes('iframe');
+    var matches = $.searchScripts(/\$\("\.countdown"\)\.attr\("href","([^"]+)"\)/);
+    $.openLink(matches[1]);
   },
 });
 
@@ -1824,10 +1836,23 @@ $.register({
       throw new _.AdsBypasserError('site changed');
     }
     m = m[1];
-    var interLink = '/go/' + m + '?a=' + window.location.hash.substr(1);
+    var interLink = '/go/' + m + '?fa=15466&a=' + window.location.hash.substr(1);
     setTimeout(function () {
       $.openLink(interLink);
     }, 6000);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^www\.free-tv-video-online\.info$/,
+    path: /^\/interstitial2\.html$/,
+    query: /lnk=([^&]+)/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = decodeURIComponent(m.query[1]);
+    $.openLink(url);
   },
 });
 
@@ -1856,7 +1881,7 @@ $.register({
 
 $.register({
   rule: {
-    host: /^gca\.sh$/,
+    host: /^gca\.sh|repla\.cr$/,
   },
   ready: function () {
     'use strict';
@@ -2944,6 +2969,23 @@ $.register({
     'use strict';
     var iframe = $('#content');
     $.openLink(iframe.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?urlv2\.com$/,
+  },
+  ready: function (m) {
+    'use strict';
+    if (window.location.pathname.indexOf('locked') >= 0) {
+      var path = window.location.pathname.replace('/locked', '');
+      $.openLink(path);
+      return;
+    }
+    var m = $.searchScripts(/jeton=([\w]+)/);
+    var l = 'http://urlv2.com/algo.php?action=passer&px=0&so=1&jeton=' + m[1];
+    window.setTimeout(function() {$.openLink(l)}, 5000);
   },
 });
 
