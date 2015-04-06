@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.18.0
+// @version        5.19.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.18.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.18.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.18.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.18.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1266,10 +1266,30 @@ $.register({
 
 $.register({
   rule: {
-    host: /^1dl\.biz$/,
-    path: /^\/(\w)\.php$/,
-    query: /^\?([\d\/]+)$/,
+    host: /^(www\.)?vidto\.me$/,
   },
+  ready: function () {
+    'use strict';
+    var f = $('#btn_download').form;
+    setTimeout(function() {
+        f.submit();
+    }, 6000);
+  },
+});
+
+$.register({
+  rule: [
+    {
+      host: /^1dl\.biz$/,
+      path: /^\/(\w)\.php$/,
+      query: /^\?([\d\/]+)$/,
+    },
+    {
+      host: /^img\.1dl\.biz$/,
+      path: /^\/(\w)\.php$/,
+      query: /^\?\w\/([\d\/]+)$/,
+    },
+  ],
   ready: function () {
     'use strict';
     var a = $('div.tor a, div.i-h a');
@@ -2606,7 +2626,7 @@ $.register({
     rule: [
       {
         host: [
-          /^(image(decode|ontime)|(zonezeed|zelje|croft|myhot|dam|bok)image|picstwist|www\.imglemon|ericsony|imgpu|wpc8)\.com$/,
+          /^(image(decode|ontime)|(zonezeed|zelje|croft|myhot|dam|bok)image|picstwist|www\.imglemon|ericsony|img(pu|slip)|wpc8)\.com$/,
           /^(img(serve|coin|fap)|gallerycloud)\.net$/,
           /^hotimages\.eu$/,
           /^(imgstudio|dragimage|imageteam)\.org$/,
@@ -4123,6 +4143,23 @@ $.register({
 });
 
 $.register({
+  rule: {
+    host: /^lynk\.my$/,
+  },
+  ready: function () {
+    'use strict';
+    var i = setInterval(function () {
+      var a = $.$('#continueButton a', window.frames[0].document);
+      if (!a) {
+        return;
+      }
+      clearInterval(i);
+      $.openLink(a.href);
+    }, 100);
+  },
+});
+
+$.register({
   rule: [
     'http://madlink.sk/',
     'http://madlink.sk/*.html',
@@ -4165,6 +4202,21 @@ $.register({
     var l = $('a.btn-block.redirect').href;
     var b64 = l.match(/\?r=(\w+={0,2}?)/);
     $.openLink(atob(b64[1]));
+  },
+});
+
+$.register({
+  rule: {
+    host: /^www\.mije\.net$/,
+    path: /^\/\w+\/(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = atob(m.path[1]);
+    if (!url.match(/^https?:\/\//)) {
+      return;
+    }
+    $.openLink(url);
   },
 });
 
@@ -5020,6 +5072,9 @@ $.register({
       o.addEventListener = nael;
     });
   }
+  function changeTitle () {
+    document.title += ' - AdsBypasser';
+  }
   function beforeDOMReady (handler) {
     _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
     disableWindowOpen();
@@ -5027,6 +5082,7 @@ $.register({
   }
   function afterDOMReady (handler) {
     disableLeavePrompt();
+    changeTitle();
     handler.ready();
   }
   function waitDOM () {
