@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.19.0
+// @version        5.19.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.1/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.1/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.1/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1347,7 +1347,6 @@ $.register({
 $.register({
   rule: [
     'http://*.abload.de/image.php?img=*',
-    'http://fastpic.ru/view/*.html',
     'http://www.imageup.ru/*/*/*.html',
     'http://itmages.ru/image/view/*/*',  // different layout same handler
   ],
@@ -1540,6 +1539,18 @@ $.register({
   ready: function () {
     'use strict';
     var img = $('#full_image');
+    $.openImage(img.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^fastpic\.ru$/,
+    path: /^\/view\//,
+  },
+  ready: function () {
+    'use strict';
+    var img = $('#picContainer #image');
     $.openImage(img.src);
   },
 });
@@ -4213,9 +4224,6 @@ $.register({
   start: function (m) {
     'use strict';
     var url = atob(m.path[1]);
-    if (!url.match(/^https?:\/\//)) {
-      return;
-    }
     $.openLink(url);
   },
 });
@@ -4561,6 +4569,7 @@ $.register({
         var r = JSON.parse(text);
         if (r.status == "ok" && r.destinationUrl) {
           clearInterval(i);
+          $.removeAllTimer();
           $.openLink(r.destinationUrl);
         }
       });
@@ -4626,14 +4635,14 @@ $.register({
 
 $.register({
   rule: {
-    host: /^(www\.)?srelink\.com$/,
-    path: /^\/i\/\w+$/,
+    host: /^(www\.)?safelinkair\.com$/,
+    path: /^\/code$/,
+    query: /(?:\?|&)link=([a-zA-Z0-9=]+)(?:$|&)/,
   },
-  ready: function (m) {
+  start: function (m) {
     'use strict';
-    $.removeNodes('iframe');
-    var matches = $.searchScripts(/href="([^"]+)">SKIP AD<\/a>/);
-    $.openLink(matches[1]);
+    var l = atob(m.query[1])
+    $.openLink(l);
   },
 });
 
