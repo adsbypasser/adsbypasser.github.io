@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.19.1
+// @version        5.20.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.20.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.1/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.1/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.19.1/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.20.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.20.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.20.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1097,6 +1097,20 @@ $.register({
   },
 });
 
+$.register({
+  rule: {
+    host: /^(www\.)?arab\.sh$/,
+    path: /^\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('form[name=F1]');
+    setTimeout(function() {
+        f.submit();
+    }, 20000);
+  },
+});
+
 (function() {
   'use strict';
   $.register({
@@ -1957,7 +1971,10 @@ $.register({
   });
   $.register({
     rule: {
-      host: /^image(twist|cherry)\.com$/,
+      host: [
+        /^image(twist|cherry)\.com$/,
+        /^imgtrex\.com$/,
+      ],
     },
     ready: run,
   });
@@ -3363,6 +3380,17 @@ $.register({
 })();
 
 $.register({
+  rule: {
+    host: /^(www\.)?biglistofwebsites\.com$/,
+    path: /^\/go\/(\w+\.\w+)$/
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink('http://' + m.path[1]);
+  },
+});
+
+$.register({
   rule: 'http://www.bild.me/bild.php?file=*',
   ready: function () {
     'use strict';
@@ -4155,6 +4183,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?loook\.ga$/,
+    path: /^\/\d+$/
+  },
+  ready: function (m) {
+    'use strict';
+    var a = $('#download_link > a.btn');
+    $.openLink(a.href);
+  },
+});
+
+$.register({
+  rule: {
     host: /^lynk\.my$/,
   },
   ready: function () {
@@ -4673,6 +4713,18 @@ $.register({
 });
 
 $.register({
+  rule: {
+    host: /^(www\.)?supercheats\.com$/,
+    path: /^\/interstitial\.html$/,
+    query: /(?:\?|&)oldurl=([^&]+)(?:$|&)/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink(m.query[1]);
+  },
+});
+
+$.register({
   rule: [
     {
       host: /^(www\.)?sylnk\.net$/,
@@ -5000,8 +5052,7 @@ $.register({
       var sjcl = $.window.sjcl;
       var paste_id = m.path[1];
       var paste_salt = m.hash[1];
-      var fake_user = 'binbox';
-      var API_URL = _.T('https://{0}.binbox.io/{1}.json')(fake_user, paste_id);
+      var API_URL = _.T('https://binbox.io/{0}.json')(paste_id);
       $.get(API_URL).then(function (pasteInfo) {
         pasteInfo = JSON.parse(pasteInfo);
         if (!pasteInfo.ok) {
