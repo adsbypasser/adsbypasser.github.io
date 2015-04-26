@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.20.0
+// @version        5.21.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.20.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.21.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -3322,6 +3322,18 @@ $.register({
       var respJSON = JSON.parse(response);
       $.openLink(respJSON.url);
     });
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?larashare\.com$/,
+    path: /^\/do\.php$/,
+    query: /id=\d+/,
+  },
+  start: function () {
+    'use strict';
+    $.openLink(document.location.href.replace('id=','down='));
   },
 });
 

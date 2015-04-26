@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.20.0
+// @version        5.21.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.20.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.21.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.20.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.20.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.20.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.21.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.21.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.21.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1221,6 +1221,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?larashare\.com$/,
+    path: /^\/do\.php$/,
+    query: /id=\d+/,
+  },
+  start: function () {
+    'use strict';
+    $.openLink(document.location.href.replace('id=','down='));
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?mirrorcreator\.com$/,
     path: /^\/showlink\.php$/,
   },
@@ -2200,10 +2212,10 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^((img(paying|mega))|imzdrop)\.com$/,
+        /^img(paying|mega|zeus)\.com$/,
         /^(www\.)?imgsee\.me$/,
         /^imgclick\.net$/,
-        /^(uploadrr|imageeer)\.com$/,
+        /^(uploadrr|imageeer|imzdrop)\.com$/,
       ],
       path: pathRule,
     },
@@ -2654,7 +2666,7 @@ $.register({
     rule: [
       {
         host: [
-          /^(image(decode|ontime)|(zonezeed|zelje|croft|myhot|dam|bok)image|picstwist|www\.imglemon|ericsony|img(pu|slip)|wpc8)\.com$/,
+          /^(image(decode|ontime)|(zonezeed|zelje|croft|myhot|dam|bok)image|picstwist|www\.imglemon|ericsony|img(pu|slip)|wpc8|uplimg)\.com$/,
           /^(img(serve|coin|fap)|gallerycloud)\.net$/,
           /^hotimages\.eu$/,
           /^(imgstudio|dragimage|imageteam)\.org$/,
