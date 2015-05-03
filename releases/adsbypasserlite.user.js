@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.21.0
+// @version        5.22.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.21.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.22.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -144,7 +144,7 @@
     var result;
     any(this._c, function (value, index, self) {
       var tmp = fn(value, index, self);
-      if (tmp !== _.nop) {
+      if (tmp !== _.none) {
         result = {
           key: index,
           value: value,
@@ -208,6 +208,7 @@
   };
   _.nop = function () {
   };
+  _.none = _.nop;
   function log (method, args) {
     args = Array.prototype.slice.call(args);
     if (typeof args[0] === 'string' || args[0] instanceof String) {
@@ -290,7 +291,7 @@
     var m = $.$$('script', context).find(function (s) {
       var m = s.innerHTML.match(pattern);
       if (!m) {
-        return _.nop;
+        return _.none;
       }
       return m;
     });
@@ -303,7 +304,7 @@
     var m = $.$$('script', context).find(function (s) {
       var m = s.innerHTML.indexOf(pattern);
       if (m < 0) {
-        return _.nop;
+        return _.none;
       }
       return m;
     });
@@ -371,10 +372,19 @@
     var l = document.createElement('a');
     l.href = url;
     var reqHost = l.hostname;
-    headers.Host = reqHost || window.location.host;
-    headers.Origin = window.location.origin;
-    headers.Referer = window.location.href;
-    headers['X-Requested-With'] = 'XMLHttpRequest';
+    var overrideHeaders = {
+      Host: reqHost || window.location.host,
+      Origin: window.location.origin,
+      Referer: window.location.href,
+      'X-Requested-With': 'XMLHttpRequest',
+    };
+    _.C(overrideHeaders).each(function (v, k, c) {
+      if (headers[k] === _.none) {
+        delete headers[k];
+      } else {
+        headers[k] = v;
+      }
+    });
     var xhr = null;
     var promise = _.D(function (resolve, reject) {
       xhr = GM.xmlhttpRequest({
@@ -447,7 +457,7 @@
     var c = _.C(document.cookie.split(';')).find(function (v) {
       var k = v.replace(/^\s*(\w+)=.+$/, '$1');
       if (k !== key) {
-        return _.nop;
+        return _.none;
       }
     });
     if (!c) {
@@ -503,7 +513,7 @@
       } else if (pattern instanceof Array) {
         var r = _.C(pattern).find(function (p) {
           var m = url_6[part].match(p);
-          return m || _.nop;
+          return m || _.none;
         });
         matched[part] = r ? r.payload : null;
       }
@@ -518,7 +528,7 @@
     var tmp = _.C(rules).find(function (rule) {
       var m = dispatch(byLocation, rule, url_1, url_3, url_6);
       if (!m) {
-        return _.nop;
+        return _.none;
       }
       return m;
     });
@@ -607,7 +617,7 @@
     var pattern = _.C(patterns).find(function (pattern) {
       var m = dispatch(byLocation, pattern.rule, url_1, url_3, url_6);
       if (!m) {
-        return _.nop;
+        return _.none;
       }
       return m;
     });
@@ -1577,6 +1587,19 @@ $.register({
 
 $.register({
   rule: {
+    host: /^bk-ddl\.net$/,
+    path: /^\/\w+$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var l = $('a.btn-block.redirect').href;
+    var b64 = l.match(/\?r=(\w+={0,2}?)/);
+    $.openLink(atob(b64[1]));
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?(buz|vzt)url\.com$/,
   },
   ready: function () {
@@ -1974,7 +1997,7 @@ $.register({
     }
     f = $.$$('frame').find(function (frame) {
       if (frame.src.indexOf('interheader.php') < 0) {
-        return _.nop;
+        return _.none;
       }
       return frame.src;
     });
@@ -2400,19 +2423,6 @@ $.register({
 
 $.register({
   rule: {
-    host: /^(www\.)?microtec\.com\.sg$/,
-    path: /^\/short\/\w+$/,
-  },
-  ready: function (m) {
-    'use strict';
-    var l = $('a.btn-block.redirect').href;
-    var b64 = l.match(/\?r=(\w+={0,2}?)/);
-    $.openLink(atob(b64[1]));
-  },
-});
-
-$.register({
-  rule: {
     host: /^www\.mije\.net$/,
     path: /^\/\w+\/(.+)$/,
   },
@@ -2695,7 +2705,10 @@ $.register({
 
 $.register({
   rule: {
-    host: /^segmentnext\.com$/,
+    host: [
+      /^segmentnext\.com$/,
+      /^(www\.)?videogamesblogger.com$/,
+    ],
     path: /^\/interstitial\.html$/,
     query: /return_url=([^&]+)/,
   },
@@ -2765,7 +2778,7 @@ $.register({
         if (r.status == "ok" && r.destinationUrl) {
           clearInterval(i);
           $.removeAllTimer();
-          $.openLink(r.destinationUrl);
+          $.openLinkWithReferer(r.destinationUrl);
         }
       });
     }, 1000);
@@ -3433,7 +3446,11 @@ $.register({
       var paste_id = m.path[1];
       var paste_salt = m.hash[1];
       var API_URL = _.T('https://binbox.io/{0}.json')(paste_id);
-      $.get(API_URL).then(function (pasteInfo) {
+      $.get(API_URL, false, {
+        Origin: _.none,
+        Referer: _.none,
+        'X-Requested-With': _.none,
+      }).then(function (pasteInfo) {
         pasteInfo = JSON.parse(pasteInfo);
         if (!pasteInfo.ok) {
           throw new _.AdsBypasserError("error when getting paste information");
