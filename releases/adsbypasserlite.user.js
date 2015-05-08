@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.22.0
+// @version        5.22.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.22.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.22.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -28,11 +28,23 @@
     var bluebird = require('bluebird');
     module.exports = factory(context, bluebird.Promise);
   } else {
-    factory(context, context.Promise || function (fn) {
-      return context.unsafeWindow.Future.call(this, function (fr) {
-        fn(fr.resolve.bind(fr), fr.reject.bind(fr));
-      });
-    });
+    var P = null;
+    if (context.unsafeWindow.Future) {
+      P = function (fn) {
+        return context.unsafeWindow.Future.call(this, function (fr) {
+          fn(fr.resolve.bind(fr), fr.reject.bind(fr));
+        });
+      };
+    } else if (context.PromiseResolver) {
+      P = function (fn) {
+        return new context.Promise(function (pr) {
+          fn(pr.resolve.bind(pr), pr.reject.bind(pr));
+        });
+      };
+    } else {
+      P = context.Promise;
+    }
+    factory(context, P);
   }
 }(this, function (context, Promise) {
   'use strict';
@@ -776,7 +788,13 @@
         if (key === MAGIC_KEY) {
           return false;
         }
-        target[key] = clone(value);
+        if (target === unsafeWindow && key === 'open') {
+          var d = Object.getOwnPropertyDescriptor(target, key);
+          d.value = clone(value);
+          Object.defineProperty(target, key, d);
+        } else {
+          target[key] = clone(value);
+        }
         return true;
       },
       get: function (target, key) {
