@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.22.1
+// @version        5.23.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.22.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.23.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -222,6 +222,9 @@
   };
   _.none = _.nop;
   function log (method, args) {
+    if (_._quiet) {
+      return;
+    }
     args = Array.prototype.slice.call(args);
     if (typeof args[0] === 'string' || args[0] instanceof String) {
       args[0] = 'AdsBypasser: ' + args[0];
@@ -233,6 +236,7 @@
       f.apply(console, args);
     }
   }
+  _._quiet = false;
   _.info = function () {
     log('info', arguments);
   };
@@ -892,6 +896,12 @@
     get scaleImage () {
       return GM.getValue('scale_image');
     },
+    set logLevel (value) {
+      GM.setValue('log_level', 1 * value);
+    },
+    get logLevel () {
+      return GM.getValue('log_level');
+    },
   };
   fixup($.config);
   function fixup (c) {
@@ -914,6 +924,11 @@
       function (c) {
         if (typeof c.externalServerSupport === 'undefined') {
           c.externalServerSupport = false;
+        }
+      },
+      function (c) {
+        if (typeof c.logLevel === 'undefined') {
+          c.logLevel = 1;
         }
       },
     ];
@@ -975,6 +990,22 @@
               'Send URL information to external server to enhance features (e.g.: captcha resolving). (default: disabled)',
               'Affected sites:',
               'urlz.so (captcha)',
+            ].join('<br/>\n'),
+          },
+          logLevel: {
+            type: 'select',
+            value: $.config.logLevel,
+            menu: [
+              [0, '0 (quiet)'],
+              [1, '1 (default)'],
+              [2, '2 (verbose)'],
+            ],
+            label: 'Log Level',
+            help: [
+              'Log level in developer console. (default: 1)',
+              '0 will not print anything in console.',
+              '1 will only print logs on affected sites.',
+              '2 will print on any sites.',
             ].join('<br/>\n'),
           },
         },
@@ -1331,6 +1362,17 @@ $.register({
     'use strict';
     var a = $('#boton-continuar');
     a.click();
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(awet|sortir)\.in$/,
+  },
+  ready: function () {
+    'use strict';
+    var m = $.searchScripts(/window\.location="([^"]*)";/);
+    $.openLink(m[1]);
   },
 });
 
@@ -3086,30 +3128,6 @@ $.register({
 });
 
 $.register({
-  rule: 'http://urlz.so/l/*',
-  ready: function () {
-    'use strict';
-    var i = $.$('td > a');
-    if (i) {
-      i = i.href;
-      var m = i.match(/javascript:declocation\('(.+)'\);/);
-      if (m) {
-        i = atob(m[1]);
-      }
-      $.openLink(i);
-      return;
-    }
-    i = $('img');
-    $.captcha(i.src, function (a) {
-      var b = $('input[name=captcha]');
-      var c = $('input[name=submit]');
-      b.value = a;
-      c.click();
-    });
-  },
-});
-
-$.register({
   rule: {
     host: /^www\.viidii\.info$/,
   },
@@ -3583,11 +3601,17 @@ $.register({
     });
     var handler = findHandler(true);
     if (handler) {
+      if ($.config.logLevel <= 0) {
+        _._quiet = true;
+      }
       beforeDOMReady(handler);
       waitDOM().then(function () {
         afterDOMReady(handler);
       });
       return;
+    }
+    if ($.config.logLevel < 2) {
+      _._quiet = true;
     }
     _.info('does not match location on `%s`, will try HTML content', window.location.toString());
     waitDOM().then(function () {
