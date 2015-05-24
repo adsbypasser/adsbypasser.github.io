@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.23.0
+// @version        5.24.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.23.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.24.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -217,6 +217,14 @@
   };
   _.D = function (fn) {
     return new Promise(fn);
+  };
+  _.parseJSON = function (json) {
+    try {
+      return JSON.parse(json);
+    } catch (e) {
+      _.warn(e);
+    }
+    return _.none;
   };
   _.nop = function () {
   };
@@ -989,7 +997,7 @@
             help: [
               'Send URL information to external server to enhance features (e.g.: captcha resolving). (default: disabled)',
               'Affected sites:',
-              'urlz.so (captcha)',
+              'setlinks.us (captcha)',
             ].join('<br/>\n'),
           },
           logLevel: {
@@ -1163,7 +1171,7 @@ $.register({
     var url = window.location.pathname + '/skip_timer';
     var i = setInterval(function () {
       $.post(url, m).then(function (text) {
-        var jj = JSON.parse(text);
+        var jj = _.parseJSON(text);
         if (!jj.errors && jj.messages) {
           clearInterval(i);
           $.openLink(jj.messages.url);
@@ -1243,6 +1251,23 @@ $.register({
       var url = script.match(/&url=([^&]+)/);
       url = url[1];
       $.openLinkWithReferer(url);
+    },
+  });
+  $.register({
+    rule: [
+      {
+        host: /vnl\.tuhoctoan\.net/,
+        path: /^\/id\/$/,
+        query: /\?l=([a-zA-Z0-9=]+)/,
+      },{
+        host: /tavor-cooperation\.de/,
+        path: /^\/cheat\/$/,
+        query: /\?link=([a-zA-Z0-9=]+)/
+      },
+    ],
+    start: function (m) {
+      var l = atob(m.query[1]);
+      $.openLink(l);
     },
   });
 })();
@@ -1367,7 +1392,10 @@ $.register({
 
 $.register({
   rule: {
-    host: /^(awet|sortir)\.in$/,
+    host: [
+      /^(awet|sortir)\.in$/,
+      /^st\.benfile\.com$/,
+    ],
   },
   ready: function () {
     'use strict';
@@ -1422,7 +1450,7 @@ $.register({
         if (dirtyFix) {
           text = text.match(/\{.+\}/)[0];
         }
-        var jj = JSON.parse(text);
+        var jj = _.parseJSON(text);
         if (jj.message) {
           clearInterval(i);
           $.openLink(jj.message.url);
@@ -1452,7 +1480,7 @@ $.register({
     function makeLog () {
         make_opts.opt = 'make_log';
         post(make_url, make_opts, function (text) {
-          var data = JSON.parse(text);
+          var data = _.parseJSON(text);
           _.info('make_log', data);
           if (!data.message) {
             checksLog();
@@ -1464,7 +1492,7 @@ $.register({
     function checkLog () {
       make_opts.opt = 'check_log';
       post(make_url, make_opts, function (text) {
-        var data = JSON.parse(text);
+        var data = _.parseJSON(text);
         _.info('check_log', data);
         if (!data.message) {
           checkLog();
@@ -1780,8 +1808,8 @@ $.register({
         throw new _.AdsBypasserError('main frame changed');
       }
       var rExtractLink = /onclick="open_url\('([^']+)',\s*'go'\)/;
-      var innerFrames = $.$$('frameset > frame', docMainFrame).each(function (currFrame) {
-        var currFrameAddr = window.location.origin + '/' + currFrame.getAttribute('src');
+      var innerFrames = $.$$('iframe', docMainFrame).each(function (currFrame) {
+        var currFrameAddr = currFrame.getAttribute('src');
         $.get(currFrameAddr).then(function(currFrameContent) {
           var aRealLink = rExtractLink.exec(currFrameContent);
           if (aRealLink === undefined || aRealLink[1] === undefined) {
@@ -1975,6 +2003,19 @@ $.register({
 
 $.register({
   rule: {
+    host: /^gca\.sh$/,
+    path: /^\/adv\/\w+\/(.*)$/,
+    query: /^(.*)$/,
+    hash: /^(.*)$/,
+  },
+  start: function (m) {
+    'use strict';
+    var l = m.path[1] + m.query[1] + m.hash[1];
+    $.openLink(l);
+  },
+});
+$.register({
+  rule: {
     host: /^gca\.sh|repla\.cr$/,
   },
   ready: function () {
@@ -2096,7 +2137,7 @@ $.register({
   start: function (m) {
     'use strict';
     $.get('/Shortener/API/read/get', {id: m.path[1], type: 'json'}).then(function (text) {
-      var r = JSON.parse(text);
+      var r = _.parseJSON(text);
       if (r.success == true && r.data.full) {
         $.openLink(r.data.full);
       } else {
@@ -2235,7 +2276,7 @@ $.register({
     _.info('sending token: %o', token);
     var i = setInterval(function () {
       $.get('/intermission/loadTargetUrl', token).then(function (text) {
-        var data = JSON.parse(text);
+        var data = _.parseJSON(text);
         _.info('response: %o', data);
         if (!data.Success && data.Errors[0] === 'Invalid token') {
           _.info('got invalid token');
@@ -2578,6 +2619,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?ouo\.io$/,
+    path: /^\/go\/\w+$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var a = $('#btn-main');
+    $.openLink(a.href);
+  },
+});
+
+$.register({
+  rule: {
     host: /^oxyl\.me$/,
   },
   ready: function () {
@@ -2834,7 +2887,7 @@ $.register({
     }
     var i = setInterval(function () {
       $.get('/adSession/callback', data, header).then(function (text) {
-        var r = JSON.parse(text);
+        var r = _.parseJSON(text);
         if (r.status == "ok" && r.destinationUrl) {
           clearInterval(i);
           $.removeAllTimer();
@@ -2888,6 +2941,27 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?shorti\.ga$/,
+    path: [
+      /^\/\w+$/,
+      /^\/url_redirector\.html$/,
+    ],
+  },
+  ready: function () {
+    'use strict';
+    var f = $.$$('frame');
+    var fl = f.find(function(value, key, self) {
+      if (value.getAttribute('class')) {
+        return _.none;
+      }
+      return 'Target frame found';
+    });
+    $.openLink(fl.value.src);
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?similarsites\.com$/,
     path: /^\/goto\/([^?]+)/
   },
@@ -2924,19 +2998,6 @@ $.register({
     var i = url.lastIndexOf('http');
     url = url.substr(i);
     $.openLink(url);
-  },
-});
-
-$.register({
-  rule: {
-    host: /^steamcommunity\.com$/,
-    path: /^\/linkfilter\/(.+)?$/,
-    query: /^(?:\?url=(.+))?$/,
-  },
-  start: function (m) {
-    'use strict';
-    var target = m.path[1]? m.path[1]+document.location.search : m.query[1];
-    $.openLink(target);
   },
 });
 
@@ -2991,6 +3052,19 @@ $.register({
   start: function (m) {
     'use strict';
     $.openLink(decodeURIComponent(m.query[1]));
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?totaldebrid\.org$/,
+    path:/\/l\/(l\.php)?$/,
+    query: /\?ads=([a-zA-Z0-9=]+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    var l = atob(m.query[1]);
+    $.openLink(l);
   },
 });
 
@@ -3333,6 +3407,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^www\.fileproject\.com\.br$/,
+    path: /^\/files\/+/,
+  },
+  ready: function () {
+    'use strict';
+    var m = $.searchScripts(/<a id="down" href="([^"]+)">/);
+    $.openLink(m[1]);
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?(firedrive|putlocker)\.com$/,
     path: /^\/file\/[0-9A-F]+$/,
   },
@@ -3368,7 +3454,7 @@ $.register({
       'slug': slug,
       'hoster': hoster
     }).then(function(response) {
-      var respJSON = JSON.parse(response);
+      var respJSON = _.parseJSON(response);
       $.openLink(respJSON.url);
     });
   },
@@ -3487,7 +3573,7 @@ $.register({
         Referer: _.none,
         'X-Requested-With': _.none,
       }).then(function (pasteInfo) {
-        pasteInfo = JSON.parse(pasteInfo);
+        pasteInfo = _.parseJSON(pasteInfo);
         if (!pasteInfo.ok) {
           throw new _.AdsBypasserError("error when getting paste information");
         }
