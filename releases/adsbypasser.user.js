@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.24.0
+// @version        5.25.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.24.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.24.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.24.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.24.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -234,6 +234,9 @@
     }
     return _.none;
   };
+  _.isString = function (value) {
+    return (typeof value === 'string') || (value instanceof String);
+  };
   _.nop = function () {
   };
   _.none = _.nop;
@@ -242,7 +245,7 @@
       return;
     }
     args = Array.prototype.slice.call(args);
-    if (typeof args[0] === 'string' || args[0] instanceof String) {
+    if (_.isString(args[0])) {
       args[0] = 'AdsBypasser: ' + args[0];
     } else {
       args.unshift('AdsBypasser:');
@@ -348,7 +351,7 @@
   $.searchScripts = function (pattern, context) {
     if (pattern instanceof RegExp) {
       return searchScriptsByRegExp(pattern, context);
-    } else if (typeof pattern === 'string') {
+    } else if (_.isString(pattern)) {
       return searchScriptsByString(pattern, context);
     } else {
       return null;
@@ -626,7 +629,7 @@
     if (rule instanceof RegExp) {
       return dispatchByRegExp(rule, url_1);
     }
-    if (typeof rule === 'string' || rule instanceof String) {
+    if (_.isString(rule)) {
       return dispatchByString(rule, url_3);
     }
     return dispatchByObject(rule, url_6);
@@ -696,33 +699,31 @@
         input.value = value;
         form.appendChild(input);
     });
+    if (!document.body) {
+      document.body = document.createElement('body');
+    }
     document.body.appendChild(form);
     form.submit();
   }
-  $.openLinkByPost = function (url, data) {
-    go(url, data, 'post');
-  };
-  $.openLink = function (to) {
-    if (!to) {
+  $.openLink = function (to, options) {
+    if (!_.isString(to) && !to) {
       _.warn('false URL');
       return;
     }
+    options = options || {};
+    var withReferer = typeof options.referer === 'undefined' ? true : options.referer;
+    var postData = options.post;
     var from = window.location.toString();
     _.info(_.T('{0} -> {1}')(from, to));
+    if (postData) {
+      go(to, postData, 'post');
+      return;
+    }
+    if (withReferer) {
+      go(to, null, 'get');
+      return;
+    }
     window.top.location.replace(to);
-  };
-  $.openLinkWithReferer = function (to) {
-    if (!to) {
-      _.warn('false URL');
-      return;
-    }
-    var from = window.location.toString();
-    _.info(_.T('{0} -> {1}')(from, to));
-    var a = document.createElement('a');
-    a.href = to;
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
   };
   return $;
 }));
@@ -1059,7 +1060,9 @@
   var document = window.document;
   $.openImage = function (imgSrc) {
     if ($.config.redirectImage) {
-      $.openLink(imgSrc);
+      $.openLink(imgSrc, {
+        referer: false,
+      });
     }
   };
   function enableScrolling () {
@@ -1175,6 +1178,18 @@ $.register({
     setTimeout(function() {
         f.submit();
     }, 20000);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?coolrom\.com$/,
+    path: /^\/dlpop\.php$/,
+  },
+  ready: function () {
+    'use strict';
+    var matches = $.searchScripts(/<form method="POST" action="([^"]+)">/);
+    $.openLink(matches[1]);
   },
 });
 
@@ -1312,6 +1327,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?maxmirror\.com$/,
+    path: /^\/redirect\//,
+  },
+  ready: function () {
+    'use strict';
+    var l = $('#download_url > a');
+    $.openLink(l.href);
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?mirrorcreator\.com$/,
     path: /^\/showlink\.php$/,
   },
@@ -1366,6 +1393,19 @@ $.register({
     'use strict';
     var a = $('#main-content a.btn.btn-default');
     $.openLink(a.href);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?upmirror\.info$/,
+  },
+  ready: function () {
+    'use strict';
+    $.setCookie('user', 'ppp');
+    if ($.$('#countDownText')) {
+        $.openLink(document.location.toString());
+    }
   },
 });
 
@@ -1605,6 +1645,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^dailyss\.net$/,
+    path: /^\/image\/.+$/,
+  },
+  ready: function () {
+    'use strict';
+    var i = $('#image-viewer-container img');
+    $.openImage(i.src);
+  },
+});
+
+$.register({
+  rule: {
     host: /^(depic\.me|(www\.)?picamatic\.com)$/,
   },
   ready: function () {
@@ -1633,6 +1685,18 @@ $.register({
     'use strict';
     var i = $('#ImgFrame');
     $.openImage(i.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^www\.empireload\.com$/,
+    path: /^\/images\/v\.php$/,
+    query: /^\?link=(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openImage('/images/link/' + m.query[1]);
   },
 });
 
@@ -1884,8 +1948,10 @@ $.register({
     'use strict';
     var i = $.$('div.t_tips2 div > img');
     if (!i) {
-      $.openLinkByPost('', {
-        _confirm: '',
+      $.openLink('', {
+        post: {
+          _confirm: '',
+        },
       });
       return;
     }
@@ -1932,9 +1998,11 @@ $.register({
     'use strict';
     var a = $.$('a[rel="lightbox"]');
     if (!a) {
-      $.openLinkByPost('', {
-        browser_fingerprint: '',
-        ads: '0',
+      $.openLink('', {
+        post: {
+          browser_fingerprint: '',
+          ads: '0',
+        },
       });
       return;
     }
@@ -2062,10 +2130,7 @@ $.register({
   });
   $.register({
     rule: {
-      host: [
-        /^image(twist|cherry)\.com$/,
-        /^imgtrex\.com$/,
-      ],
+      host: /^image(twist|cherry)\.com$/,
     },
     ready: run,
   });
@@ -2278,11 +2343,13 @@ $.register({
     if (!(next || f) && !i) {
       _.info('do nothing');
     } else if (next || f) {
-      $.openLinkByPost('', {
-        op: 'view',
-        id: id,
-        pre: 1,
-        next: next || f.value,
+      $.openLink('', {
+        post: {
+          op: 'view',
+          id: id,
+          pre: 1,
+          next: next || f.value,
+        },
       });
     } else {
       $.openImage(i.src);
@@ -2291,7 +2358,7 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^img(paying|mega|zeus|monkey)\.com$/,
+        /^img(paying|mega|zeus|monkey|trex)\.com$/,
         /^(www\.)?imgsee\.me$/,
         /^imgclick\.net$/,
         /^(uploadrr|imageeer|imzdrop)\.com$/,
@@ -2329,29 +2396,37 @@ $.register({
     $.openImage(o.src);
   }
   $.register({
-    rule: {
-      host: [
-        /^(img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|seeds|tzar|ban)|image(corn|picsa)|www\.(imagefolks|imgblow)|hosturimage|img-(zone|planet))\.com$/,
-        /^(img(candy|master|-view|run)|imagelaser)\.net$/,
-        /^imgcloud\.co|pixup\.us$/,
-        /^(www\.)?\.imgult\.com$/,
-        /^bulkimg\.info$/,
-        /^(image\.adlock|imgspot|teenshot)\.org$/,
-        /^img\.yt$/,
-        /^vava\.in$/,
-        /^55888\.eu$/,
-        /^pixxx\.me$/,
-        /^(like\.)08lkk\.com$/,
-      ],
-      path: /^\/img-.*\.html$/,
-    },
-    ready: handler,
-  });
-  $.register({
-    rule: {
-      host: /^imgking\.co$/,
-      path: /^\/img-.*\.htmls$/,
-    },
+    rule: [
+      {
+        host: [
+          /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|seeds|tzar|ban)\.com$/,
+          /^image(corn|picsa)\.com$/,
+          /^www\.(imagefolks|imgblow)\.com$/,
+          /^img-(zone|planet)\.com$/,
+          /^(hosturimage|erimge)\.com$/,
+          /^(img(candy|master|-view|run)|imagelaser)\.net$/,
+          /^imgcloud\.co$/,
+          /^pixup\.us$/,
+          /^(www\.)?\.imgult\.com$/,
+          /^bulkimg\.info$/,
+          /^(image\.adlock|imgspot|teenshot)\.org$/,
+          /^img\.yt$/,
+          /^vava\.in$/,
+          /^55888\.eu$/,
+          /^pixxx\.me$/,
+          /^(like\.)08lkk\.com$/,
+        ],
+        path: /^\/img-.*\.html$/,
+      },
+      {
+        host: /^imgking\.co$/,
+        path: /^\/img-.*\.htmls$/,
+      },
+      {
+        host: /^imgtwyti\.com$/,
+        path: /^\/t\/img-.*\.html$/,
+      },
+    ],
     ready: handler,
   });
   $.register({
@@ -2654,6 +2729,21 @@ $.register({
     'use strict';
     var i = $('#picShare_image_container');
     $.openImage(i.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?pimpandhost\.com$/,
+    path: /^\/image\//,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#image_original');
+    var el = document.createElement('div');
+    el.innerHTML = a.value;
+    var img = $('img', el);
+    $.openImage(img.src);
   },
 });
 
@@ -2987,7 +3077,9 @@ $.register({
     'use strict';
     $.removeNodes('iframe');
     $.openLinkByPost(window.location.toString(), {
-      image: 'Skip Ad.',
+      post: {
+        image: 'Skip Ad.',
+      },
     });
   },
 });
@@ -3112,7 +3204,7 @@ $.register({
       if (location.hash) {
         h += location.hash;
       }
-      $.openLinkWithReferer(h);
+      $.openLink(h);
     },
   });
   $.register({
@@ -3123,7 +3215,7 @@ $.register({
       var script = $.searchScripts('var r_url');
       var url = script.match(/&url=([^&]+)/);
       url = url[1];
-      $.openLinkWithReferer(url);
+      $.openLink(url);
     },
   });
   $.register({
@@ -3213,7 +3305,9 @@ $.register({
     while (tmp = p.exec(script)) {
       opt[tmp[1]] = tmp[2];
     }
-    $.openLinkByPost('', opt);
+    $.openLink('', {
+      path: opt,
+    });
   },
 });
 
@@ -3709,6 +3803,23 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?cvc\.la$/,
+    path: /^\/\w+$/,
+  },
+  start: function () {
+    'use strict';
+    $.post(document.location.href, {
+      hidden: 24, // Either 24 or 276, but both seem to work anyway
+      image: ' ',
+    }).then(function (text) {
+      var matches = text.match(/window\.location\.replace\('([^']+)'\);/);
+      $.openLink(matches[1]);
+    });
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?dapat\.in$/,
   },
   ready: function () {
@@ -3874,32 +3985,35 @@ $.register({
   });
 })();
 
-$.register({
-  rule: {
-    host: /^gca\.sh$/,
-    path: /^\/adv\/\w+\/(.*)$/,
-    query: /^(.*)$/,
-    hash: /^(.*)$/,
-  },
-  start: function (m) {
-    'use strict';
-    var l = m.path[1] + m.query[1] + m.hash[1];
-    $.openLink(l);
-  },
-});
-$.register({
-  rule: {
-    host: /^gca\.sh|repla\.cr$/,
-  },
-  ready: function () {
-    'use strict';
-    $.removeNodes('iframe');
-    var jQuery = $.window.$;
-    setTimeout(function () {
-      jQuery("#captcha-dialog").dialog("open");
-    }, 1000);
-  },
-});
+(function () {
+  var hosts = /^gca\.sh|repla\.cr$/;
+  $.register({
+    rule: {
+      host: hosts,
+      path: /^\/adv\/\w+\/(.*)$/,
+      query: /^(.*)$/,
+      hash: /^(.*)$/,
+    },
+    start: function (m) {
+      'use strict';
+      var l = m.path[1] + m.query[1] + m.hash[1];
+      $.openLink(l);
+    },
+  });
+  $.register({
+    rule: {
+      host: hosts,
+    },
+    ready: function () {
+      'use strict';
+      $.removeNodes('iframe');
+      var jQuery = $.window.$;
+      setTimeout(function () {
+        jQuery("#captcha-dialog").dialog("open");
+      }, 1000);
+    },
+  });
+})();
 
 $.register({
   rule: {
@@ -4159,7 +4273,7 @@ $.register({
         }
         if (data.Success && !data.AdBlockSpotted && data.Url) {
           clearInterval(i);
-          $.openLinkWithReferer(data.Url);
+          $.openLink(data.Url);
           return;
         }
       });
@@ -4194,7 +4308,7 @@ $.register({
       if (match && match[1] === 'true') {
         url = Encode(ConvertFromHex(url));
       }
-      $.openLinkWithReferer(url);
+      $.openLink(url);
     }
   });
   $.register({
@@ -4234,17 +4348,42 @@ $.register({
       /^www\.fastdecode\.com$/,
     ],
     path: /^\/$/,
-    query: /^\?.+$/,
+    query: /^\?(.+)$/,
   },
   ready: function (m) {
     'use strict';
     $.removeNodes('iframe');
+    var lnk = m.query[1];
+    if (m.query[1].match(/^https?:\/\//)) {
+    	$.openLink(lnk);
+    	return;
+    }
     var b = $('#m > .Visit_Link');
-    b = b.onclick.toString().match(/\'([^']+)\'/);
+    b = b.onclick.toString().match(/window\.open\(\'([^']+)\'/);
     if (!b) {
       throw new _.AdsBypasser('pattern changed');
     }
+    lnk = b[1].match(/\?(https?:\/\/.*)$/);
+    if (lnk) {
+        $.openLink(lnk[1]);
+        return;
+    }
     $.openLink(b[1]);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?linkdrop\.net$/,
+  },
+  ready: function () {
+    'use strict';
+    var matches = $.searchScripts(/\$\("a\.redirect"\)\.attr\("href","([^"]+)"\)\.text\("Continue"\);/);
+    if (!matches) {
+        return;
+    }
+    var l = matches[1];
+    $.openLink(l);
   },
 });
 
@@ -4260,7 +4399,7 @@ $.register({
       _.warn('pattern changed');
       return;
     }
-    $.openLinkWithReferer(a[1]);
+    $.openLink(a[1]);
   },
 });
 
@@ -4477,6 +4616,17 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?ohleech\.com$/,
+    path: /^\/dl\/$/,
+  },
+  ready: function () {
+    'use strict';
+    $.window.startdl();
+  },
+});
+
+$.register({
+  rule: {
     host: /^www\.oni\.vn$/,
   },
   ready: function () {
@@ -4606,9 +4756,11 @@ $.register({
         return;
       }
     }
-    $.openLinkByPost('', {
-      hidden: '1',
-      image: ' ',
+    $.openLink('', {
+      path: {
+        hidden: '1',
+        image: ' ',
+      },
     });
   },
 });
@@ -4764,7 +4916,7 @@ $.register({
         if (r.status == "ok" && r.destinationUrl) {
           clearInterval(i);
           $.removeAllTimer();
-          $.openLinkWithReferer(r.destinationUrl);
+          $.openLink(r.destinationUrl);
         }
       });
     }, 1000);
@@ -4796,6 +4948,29 @@ $.register({
     },
   });
 })();
+
+$.register({
+  rule: {
+    host: /^(www\.)?shink\.in$/,
+    path: /^\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#skip');
+    if (!$.$('#captcha')) {
+      f.submit();
+      return;
+    }
+    var envio = $("#envio");
+    envio.disabled = false;  
+    envio.style.visibility= "hidden";  
+    envio.style.display='none';
+    var envio2 = $("#envio2");
+    envio2.style.visibility= "visible";  
+    envio2.style.display='block';
+    $.window.$("#myModal").reveal();
+  },
+});
 
 $.register({
   rule: {
@@ -5016,20 +5191,6 @@ $.register({
       $.openLink(matches[1]);
       return;
     }
-  },
-});
-
-$.register({
-  rule: {
-    host: /^(www\.)?(urlcow|miniurl)\.com$/,
-  },
-  ready: function () {
-    'use strict';
-    var m = $.searchScripts(/window\.location = "([^"]+)"/);
-    if (!m) {
-      throw new _.AdsBypasserError('site changed');
-    }
-    $.openLink(m[1]);
   },
 });
 

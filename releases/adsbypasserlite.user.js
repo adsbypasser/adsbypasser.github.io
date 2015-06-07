@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.24.0
+// @version        5.25.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.24.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -226,6 +226,9 @@
     }
     return _.none;
   };
+  _.isString = function (value) {
+    return (typeof value === 'string') || (value instanceof String);
+  };
   _.nop = function () {
   };
   _.none = _.nop;
@@ -234,7 +237,7 @@
       return;
     }
     args = Array.prototype.slice.call(args);
-    if (typeof args[0] === 'string' || args[0] instanceof String) {
+    if (_.isString(args[0])) {
       args[0] = 'AdsBypasser: ' + args[0];
     } else {
       args.unshift('AdsBypasser:');
@@ -340,7 +343,7 @@
   $.searchScripts = function (pattern, context) {
     if (pattern instanceof RegExp) {
       return searchScriptsByRegExp(pattern, context);
-    } else if (typeof pattern === 'string') {
+    } else if (_.isString(pattern)) {
       return searchScriptsByString(pattern, context);
     } else {
       return null;
@@ -618,7 +621,7 @@
     if (rule instanceof RegExp) {
       return dispatchByRegExp(rule, url_1);
     }
-    if (typeof rule === 'string' || rule instanceof String) {
+    if (_.isString(rule)) {
       return dispatchByString(rule, url_3);
     }
     return dispatchByObject(rule, url_6);
@@ -688,33 +691,31 @@
         input.value = value;
         form.appendChild(input);
     });
+    if (!document.body) {
+      document.body = document.createElement('body');
+    }
     document.body.appendChild(form);
     form.submit();
   }
-  $.openLinkByPost = function (url, data) {
-    go(url, data, 'post');
-  };
-  $.openLink = function (to) {
-    if (!to) {
+  $.openLink = function (to, options) {
+    if (!_.isString(to) && !to) {
       _.warn('false URL');
       return;
     }
+    options = options || {};
+    var withReferer = typeof options.referer === 'undefined' ? true : options.referer;
+    var postData = options.post;
     var from = window.location.toString();
     _.info(_.T('{0} -> {1}')(from, to));
+    if (postData) {
+      go(to, postData, 'post');
+      return;
+    }
+    if (withReferer) {
+      go(to, null, 'get');
+      return;
+    }
     window.top.location.replace(to);
-  };
-  $.openLinkWithReferer = function (to) {
-    if (!to) {
-      _.warn('false URL');
-      return;
-    }
-    var from = window.location.toString();
-    _.info(_.T('{0} -> {1}')(from, to));
-    var a = document.createElement('a');
-    a.href = to;
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
   };
   return $;
 }));
@@ -1114,7 +1115,9 @@ $.register({
     'use strict';
     $.removeNodes('iframe');
     $.openLinkByPost(window.location.toString(), {
-      image: 'Skip Ad.',
+      post: {
+        image: 'Skip Ad.',
+      },
     });
   },
 });
@@ -1239,7 +1242,7 @@ $.register({
       if (location.hash) {
         h += location.hash;
       }
-      $.openLinkWithReferer(h);
+      $.openLink(h);
     },
   });
   $.register({
@@ -1250,7 +1253,7 @@ $.register({
       var script = $.searchScripts('var r_url');
       var url = script.match(/&url=([^&]+)/);
       url = url[1];
-      $.openLinkWithReferer(url);
+      $.openLink(url);
     },
   });
   $.register({
@@ -1340,7 +1343,9 @@ $.register({
     while (tmp = p.exec(script)) {
       opt[tmp[1]] = tmp[2];
     }
-    $.openLinkByPost('', opt);
+    $.openLink('', {
+      path: opt,
+    });
   },
 });
 
@@ -1836,6 +1841,23 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?cvc\.la$/,
+    path: /^\/\w+$/,
+  },
+  start: function () {
+    'use strict';
+    $.post(document.location.href, {
+      hidden: 24, // Either 24 or 276, but both seem to work anyway
+      image: ' ',
+    }).then(function (text) {
+      var matches = text.match(/window\.location\.replace\('([^']+)'\);/);
+      $.openLink(matches[1]);
+    });
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?dapat\.in$/,
   },
   ready: function () {
@@ -2001,32 +2023,35 @@ $.register({
   });
 })();
 
-$.register({
-  rule: {
-    host: /^gca\.sh$/,
-    path: /^\/adv\/\w+\/(.*)$/,
-    query: /^(.*)$/,
-    hash: /^(.*)$/,
-  },
-  start: function (m) {
-    'use strict';
-    var l = m.path[1] + m.query[1] + m.hash[1];
-    $.openLink(l);
-  },
-});
-$.register({
-  rule: {
-    host: /^gca\.sh|repla\.cr$/,
-  },
-  ready: function () {
-    'use strict';
-    $.removeNodes('iframe');
-    var jQuery = $.window.$;
-    setTimeout(function () {
-      jQuery("#captcha-dialog").dialog("open");
-    }, 1000);
-  },
-});
+(function () {
+  var hosts = /^gca\.sh|repla\.cr$/;
+  $.register({
+    rule: {
+      host: hosts,
+      path: /^\/adv\/\w+\/(.*)$/,
+      query: /^(.*)$/,
+      hash: /^(.*)$/,
+    },
+    start: function (m) {
+      'use strict';
+      var l = m.path[1] + m.query[1] + m.hash[1];
+      $.openLink(l);
+    },
+  });
+  $.register({
+    rule: {
+      host: hosts,
+    },
+    ready: function () {
+      'use strict';
+      $.removeNodes('iframe');
+      var jQuery = $.window.$;
+      setTimeout(function () {
+        jQuery("#captcha-dialog").dialog("open");
+      }, 1000);
+    },
+  });
+})();
 
 $.register({
   rule: {
@@ -2286,7 +2311,7 @@ $.register({
         }
         if (data.Success && !data.AdBlockSpotted && data.Url) {
           clearInterval(i);
-          $.openLinkWithReferer(data.Url);
+          $.openLink(data.Url);
           return;
         }
       });
@@ -2321,7 +2346,7 @@ $.register({
       if (match && match[1] === 'true') {
         url = Encode(ConvertFromHex(url));
       }
-      $.openLinkWithReferer(url);
+      $.openLink(url);
     }
   });
   $.register({
@@ -2361,17 +2386,42 @@ $.register({
       /^www\.fastdecode\.com$/,
     ],
     path: /^\/$/,
-    query: /^\?.+$/,
+    query: /^\?(.+)$/,
   },
   ready: function (m) {
     'use strict';
     $.removeNodes('iframe');
+    var lnk = m.query[1];
+    if (m.query[1].match(/^https?:\/\//)) {
+    	$.openLink(lnk);
+    	return;
+    }
     var b = $('#m > .Visit_Link');
-    b = b.onclick.toString().match(/\'([^']+)\'/);
+    b = b.onclick.toString().match(/window\.open\(\'([^']+)\'/);
     if (!b) {
       throw new _.AdsBypasser('pattern changed');
     }
+    lnk = b[1].match(/\?(https?:\/\/.*)$/);
+    if (lnk) {
+        $.openLink(lnk[1]);
+        return;
+    }
     $.openLink(b[1]);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?linkdrop\.net$/,
+  },
+  ready: function () {
+    'use strict';
+    var matches = $.searchScripts(/\$\("a\.redirect"\)\.attr\("href","([^"]+)"\)\.text\("Continue"\);/);
+    if (!matches) {
+        return;
+    }
+    var l = matches[1];
+    $.openLink(l);
   },
 });
 
@@ -2387,7 +2437,7 @@ $.register({
       _.warn('pattern changed');
       return;
     }
-    $.openLinkWithReferer(a[1]);
+    $.openLink(a[1]);
   },
 });
 
@@ -2604,6 +2654,17 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?ohleech\.com$/,
+    path: /^\/dl\/$/,
+  },
+  ready: function () {
+    'use strict';
+    $.window.startdl();
+  },
+});
+
+$.register({
+  rule: {
     host: /^www\.oni\.vn$/,
   },
   ready: function () {
@@ -2733,9 +2794,11 @@ $.register({
         return;
       }
     }
-    $.openLinkByPost('', {
-      hidden: '1',
-      image: ' ',
+    $.openLink('', {
+      path: {
+        hidden: '1',
+        image: ' ',
+      },
     });
   },
 });
@@ -2891,7 +2954,7 @@ $.register({
         if (r.status == "ok" && r.destinationUrl) {
           clearInterval(i);
           $.removeAllTimer();
-          $.openLinkWithReferer(r.destinationUrl);
+          $.openLink(r.destinationUrl);
         }
       });
     }, 1000);
@@ -2923,6 +2986,29 @@ $.register({
     },
   });
 })();
+
+$.register({
+  rule: {
+    host: /^(www\.)?shink\.in$/,
+    path: /^\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#skip');
+    if (!$.$('#captcha')) {
+      f.submit();
+      return;
+    }
+    var envio = $("#envio");
+    envio.disabled = false;  
+    envio.style.visibility= "hidden";  
+    envio.style.display='none';
+    var envio2 = $("#envio2");
+    envio2.style.visibility= "visible";  
+    envio2.style.display='block';
+    $.window.$("#myModal").reveal();
+  },
+});
 
 $.register({
   rule: {
@@ -3148,20 +3234,6 @@ $.register({
 
 $.register({
   rule: {
-    host: /^(www\.)?(urlcow|miniurl)\.com$/,
-  },
-  ready: function () {
-    'use strict';
-    var m = $.searchScripts(/window\.location = "([^"]+)"/);
-    if (!m) {
-      throw new _.AdsBypasserError('site changed');
-    }
-    $.openLink(m[1]);
-  },
-});
-
-$.register({
-  rule: {
     host: /^urlinn\.com$/,
   },
   ready: function () {
@@ -3340,6 +3412,18 @@ $.register({
   },
 });
 
+$.register({
+  rule: {
+    host: /^(www\.)?coolrom\.com$/,
+    path: /^\/dlpop\.php$/,
+  },
+  ready: function () {
+    'use strict';
+    var matches = $.searchScripts(/<form method="POST" action="([^"]+)">/);
+    $.openLink(matches[1]);
+  },
+});
+
 (function() {
   'use strict';
   $.register({
@@ -3474,6 +3558,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?maxmirror\.com$/,
+    path: /^\/redirect\//,
+  },
+  ready: function () {
+    'use strict';
+    var l = $('#download_url > a');
+    $.openLink(l.href);
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?mirrorcreator\.com$/,
     path: /^\/showlink\.php$/,
   },
@@ -3528,6 +3624,19 @@ $.register({
     'use strict';
     var a = $('#main-content a.btn.btn-default');
     $.openLink(a.href);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?upmirror\.info$/,
+  },
+  ready: function () {
+    'use strict';
+    $.setCookie('user', 'ppp');
+    if ($.$('#countDownText')) {
+        $.openLink(document.location.toString());
+    }
   },
 });
 
