@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.25.0
+// @version        5.25.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -678,11 +678,22 @@
   var window = context.window;
   var document = window.document;
   var $ = context.$ || {};
-  function go (path, params, method) {
-    method = method || 'post';
+  function prepare (e) {
+    if (!document.body) {
+      document.body = document.createElement('body');
+    }
+    document.body.appendChild(e);
+  }
+  function get (url) {
+    var a = document.createElement('a');
+    a.href = url;
+    prepare(a);
+    a.click();
+  }
+  function post (path, params) {
     params = params || {};
     var form = document.createElement('form');
-    form.method = method;
+    form.method = 'post';
     form.action = path;
     _.C(params).each(function (value, key) {
         var input = document.createElement('input');
@@ -691,10 +702,7 @@
         input.value = value;
         form.appendChild(input);
     });
-    if (!document.body) {
-      document.body = document.createElement('body');
-    }
-    document.body.appendChild(form);
+    prepare(form);
     form.submit();
   }
   $.openLink = function (to, options) {
@@ -708,11 +716,11 @@
     var from = window.location.toString();
     _.info(_.T('{0} -> {1}')(from, to));
     if (postData) {
-      go(to, postData, 'post');
+      post(to, postData);
       return;
     }
     if (withReferer) {
-      go(to, null, 'get');
+      get(to);
       return;
     }
     window.top.location.replace(to);
@@ -957,9 +965,6 @@
         _.C(data).each(function (v, k) {
           $.config[k] = v;
         });
-        setTimeout(function () {
-          save(data);
-        }, 0);
       };
       $.window.render({
         version: $.config.version,
