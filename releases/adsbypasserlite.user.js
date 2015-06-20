@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.25.1
+// @version        5.26.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.26.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -1275,6 +1275,8 @@ $.register({
     ],
     start: function (m) {
       var l = atob(m.query[1]);
+      l = l.match(/=([a-zA-Z0-9=]+)/);
+      l = atob(l[1]);
       $.openLink(l);
     },
   });
@@ -1885,6 +1887,17 @@ $.register({
     }
     var a = $('#btn_open a');
     $.openLink(a.href);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?dereferer\.website$/,
+    query: /^\?(.+)/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink(m.query[1]);
   },
 });
 
@@ -3685,6 +3698,7 @@ $.register({
       $.get(API_URL, false, {
         Origin: _.none,
         Referer: _.none,
+        Cookie: 'referrer=nope',
         'X-Requested-With': _.none,
       }).then(function (pasteInfo) {
         pasteInfo = _.parseJSON(pasteInfo);

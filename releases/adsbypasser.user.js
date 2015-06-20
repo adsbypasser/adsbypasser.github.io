@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.25.1
+// @version        5.26.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.26.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.1/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.1/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.25.1/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.26.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.26.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.26.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1695,13 +1695,13 @@ $.register({
 
 $.register({
   rule: {
-    host: /^www\.empireload\.com$/,
-    path: /^\/images\/v\.php$/,
+    host: /^(www\.)?empireload\.com$/,
+    path: /^(\/images(\/files\/a)?)\/v\.php$/,
     query: /^\?link=(.+)$/,
   },
   start: function (m) {
     'use strict';
-    $.openImage('/images/link/' + m.query[1]);
+    $.openImage(m.path[1] + '/link/' + m.query[1]);
   },
 });
 
@@ -1792,7 +1792,7 @@ $.register({
 
 $.register({
   rule: {
-    host: /^(www\.)?gallerynova\.se$/,
+    host: /^(www\.)?gallery(nova|sense)\.se$/,
     path: /^\/site\/v\//,
   },
   ready: function () {
@@ -1977,7 +1977,7 @@ $.register({
   rule: 'http://www.imagebam.com/image/*',
   ready: function () {
     'use strict';
-    var o = $('#imageContainer img[id]');
+    var o = $('.image-container img[id]');
     $.replace(o.src);
   },
 });
@@ -2242,6 +2242,11 @@ $.register({
   },
   ready: function () {
     'use strict';
+    var i = $.$('input[onclick]');
+    if (i) {
+      $.window.Decode();
+      return;
+    }
     var i = $('#this_image');
     $.openImage(i.src);
   },
@@ -2342,23 +2347,41 @@ $.register({
 (function () {
   'use strict';
   var pathRule = /^\/([0-9a-z]+)(\.|\/|$)/;
-  function helper (id, next) {
-    var f = $.$('form > input[name="next"]');
-    var i = $.$('img.pic');
-    if (!(next || f) && !i) {
-      _.info('do nothing');
-    } else if (next || f) {
-      $.openLink('', {
-        post: {
-          op: 'view',
-          id: id,
-          pre: 1,
-          next: next || f.value,
-        },
-      });
+  function go (id, pre, next) {
+    $.openLink('', {
+      post: {
+        op: 'view',
+        id: id,
+        pre: pre,
+        next: next,
+      },
+    });
+  }
+  function getNext1 (i) {
+    return i.value;
+  }
+  function getNext2 (i) {
+    var next = i.onclick && i.onclick.toString().match(/value='([^']+)'/);
+    if (next) {
+      next = next[1];
+      return next;
     } else {
-      $.openImage(i.src);
+      return i.value;
     }
+  }
+  function helper (id, getNext) {
+    var i = $.$('form > input[name="next"]');
+    if (i) {
+      var next = getNext(i);
+      go(id, $('input[name="pre"]', i.parentNode).value, next);
+      return;
+    }
+    i = $.$('img.pic');
+    if (i) {
+      $.openImage(i.src);
+      return;
+    }
+    _.info('do nothing');
   }
   $.register({
     rule: {
@@ -2367,12 +2390,12 @@ $.register({
         /^(www\.)?imgsee\.me$/,
         /^imgclick\.net$/,
         /^(uploadrr|imageeer|imzdrop)\.com$/,
-        /^chronos\.to$/,
+        /^imgdrive\.co$/,
       ],
       path: pathRule,
     },
     ready: function (m) {
-      helper(m.path[1]);
+      helper(m.path[1], getNext1);
     },
   });
   $.register({
@@ -2381,8 +2404,22 @@ $.register({
       path: pathRule,
     },
     ready: function (m) {
-      var d = $.$('#imageviewir');
-      helper(m.path[1], d ? 'Continue to Image...' : null);
+      var d = $.$('#imageviewir input[type=submit]:not([style])');
+      if (!d) {
+        helper(m.path[1], getNext1);
+        return;
+      }
+      d = d.parentNode;
+      d.submit();
+    },
+  });
+  $.register({
+    rule: {
+      host: /^chronos\.to$/,
+      path: pathRule,
+    },
+    ready: function (m) {
+      helper(m.path[1], getNext2);
     },
   });
 })();
@@ -2404,7 +2441,7 @@ $.register({
     rule: [
       {
         host: [
-          /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|seeds|tzar|ban)\.com$/,
+          /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban)\.com$/,
           /^image(corn|picsa)\.com$/,
           /^www\.(imagefolks|imgblow)\.com$/,
           /^img-(zone|planet)\.com$/,
@@ -2420,6 +2457,7 @@ $.register({
           /^55888\.eu$/,
           /^pixxx\.me$/,
           /^(like\.)08lkk\.com$/,
+          /imgseeds\.com$/,
         ],
         path: /^\/img-.*\.html$/,
       },
@@ -2793,6 +2831,10 @@ $.register({
   },
   ready: function () {
     'use strict';
+    var a = $.$('body > center > a > img');
+    if(a){
+      $.openLink(a.parentNode.href);
+    }
     var i = $('body > center > img');
     $.openImage(i.src);
   },
@@ -3237,6 +3279,8 @@ $.register({
     ],
     start: function (m) {
       var l = atob(m.query[1]);
+      l = l.match(/=([a-zA-Z0-9=]+)/);
+      l = atob(l[1]);
       $.openLink(l);
     },
   });
@@ -3847,6 +3891,17 @@ $.register({
     }
     var a = $('#btn_open a');
     $.openLink(a.href);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^(www\.)?dereferer\.website$/,
+    query: /^\?(.+)/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink(m.query[1]);
   },
 });
 
@@ -5373,6 +5428,7 @@ $.register({
       $.get(API_URL, false, {
         Origin: _.none,
         Referer: _.none,
+        Cookie: 'referrer=nope',
         'X-Requested-With': _.none,
       }).then(function (pasteInfo) {
         pasteInfo = _.parseJSON(pasteInfo);
