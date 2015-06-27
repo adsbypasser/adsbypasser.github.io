@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.26.0
+// @version        5.27.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.26.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.27.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.26.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.26.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.26.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.27.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.27.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.27.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1063,7 +1063,13 @@
   'use strict';
   var window = context.window;
   var document = window.document;
-  $.openImage = function (imgSrc) {
+  $.openImage = function (imgSrc, options) {
+    options = options || {};
+    var replace = !!options.replace;
+    if (replace) {
+      replaceBody(imgSrc);
+      return;
+    }
     if ($.config.redirectImage) {
       $.openLink(imgSrc, {
         referer: false,
@@ -1120,7 +1126,7 @@
     d.id = 'adsbypasser-wrapper';
     i.id = 'adsbypasser-image';
   }
-  $.replace = function (imgSrc) {
+  function replaceBody (imgSrc) {
     if (!$.config.redirectImage) {
       return;
     }
@@ -1978,7 +1984,9 @@ $.register({
   ready: function () {
     'use strict';
     var o = $('.image-container img[id]');
-    $.replace(o.src);
+    $.openImage(o.src, {
+      replace: true,
+    });
   },
 });
 
@@ -2124,7 +2132,9 @@ $.register({
   function run () {
     $.window.jQuery.prototype.append = undefined;
     var i = $('img.pic');
-    $.replace(i.src);
+    $.openImage(i.src, {
+      replace: true,
+    });
   }
   $.register({
     rule: {
@@ -2998,7 +3008,9 @@ $.register({
   ready: function () {
     'use strict';
     var i = $('img');
-    $.replace(i.src);
+    $.openImage(i.src, {
+      replace: true,
+    });
   },
 });
 
@@ -3164,7 +3176,7 @@ $.register({
 
 $.register({
   rule: {
-    host: /^(www\.)?adb\.ug$/,
+    host: /^(www\.)?adb\.ug|(www\.)?lynk\.my$/,
     path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/
   },
   ready: function () {
@@ -3263,25 +3275,6 @@ $.register({
       var url = script.match(/&url=([^&]+)/);
       url = url[1];
       $.openLink(url);
-    },
-  });
-  $.register({
-    rule: [
-      {
-        host: /vnl\.tuhoctoan\.net/,
-        path: /^\/id\/$/,
-        query: /\?l=([a-zA-Z0-9=]+)/,
-      },{
-        host: /tavor-cooperation\.de/,
-        path: /^\/cheat\/$/,
-        query: /\?link=([a-zA-Z0-9=]+)/
-      },
-    ],
-    start: function (m) {
-      var l = atob(m.query[1]);
-      l = l.match(/=([a-zA-Z0-9=]+)/);
-      l = atob(l[1]);
-      $.openLink(l);
     },
   });
 })();
@@ -3704,6 +3697,37 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?boxcash\.net$/,
+    path: /^\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    var m = $.searchScripts(/\'\/ajax_link\.php\',\{key:'(\w+)',url:'(\d+)',t:'(\d+)',r:'(\w*)'\}/);
+    $.post('/ajax_link.php', {
+      key: m[1],
+      url: m[2],
+      t: m[3],
+      r: m[4],
+    }).then(function (response) {
+      var l = response.match(/window(?:.top.window)\.location="([^"]+)"/);
+      $.openLink(l[1]);
+    });
+  },
+});
+$.register({
+  rule: {
+    host: /^(www\.)?boxcash\.net$/,
+    path: /^\/redirect\.html$/,
+    query: /url=(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink(m.query[1]);
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?(buz|vzt)url\.com$/,
   },
   ready: function () {
@@ -3771,34 +3795,6 @@ $.register({
     $.removeNodes('iframe');
     var matches = $.searchScripts(/\$\("\.countdown"\)\.attr\("href","([^"]+)"\)/);
     $.openLink(matches[1]);
-  },
-});
-
-$.register({
-  rule: {
-    host: /^(www\.)?(coin-ads\.com|shortin\.tk)$/,
-    path: /^\/.+/,
-  },
-  ready: function () {
-    'use strict';
-    var m = $.searchScripts(/window\.location\.replace/);
-    if (m) {
-      return;
-    }
-    m = $.searchScripts(/countdownArea\.innerHTML = "([^"]+)"/);
-    if (!m) {
-      throw new _.AdsBypasserError('pattern changed');
-    }
-    m = m[1];
-    var d = $.$('#area');
-    if (d) {
-      d.innerHTML = m;
-      d = $('.skip', d);
-      d.click();
-      return;
-    }
-    d = $('#site');
-    $.openLink(d.src);
   },
 });
 
@@ -4216,6 +4212,22 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?link\.im$/,
+    path: /^\/\w+$/,
+  },
+  start: function () {
+    'use strict';
+    $.post(document.location.href, {
+      image: 'Continue',
+    }).then(function (text) {
+      var m = text.match(/window\.location\.replace\('([^']+)'\)/);
+      $.openLink(m[1]);
+    });
+  },
+});
+
+$.register({
+  rule: {
     host: /\.link2dollar\.com$/,
     path: /^\/\d+$/,
   },
@@ -4303,7 +4315,7 @@ $.register({
       _.warn('pattern changed');
       return null;
     }
-    var m = script.match(/AdPopUrl\s*:\s*'.+\?ref=([\w\d]+)'/);
+    var m = script.match(/AdPopUrl\s*:\s*'.+\?ref\d*=([\w\d]+)'/);
     var token = m[1];
     m = script.match(/=\s*(\d+);/);
     var ak = parseInt(m[1], 10);
@@ -4545,23 +4557,6 @@ $.register({
 });
 
 $.register({
-  rule: {
-    host: /^lynk\.my$/,
-  },
-  ready: function () {
-    'use strict';
-    var i = setInterval(function () {
-      var a = $.$('#continueButton a', window.frames[0].document);
-      if (!a) {
-        return;
-      }
-      clearInterval(i);
-      $.openLink(a.href);
-    }, 100);
-  },
-});
-
-$.register({
   rule: [
     'http://madlink.sk/',
     'http://madlink.sk/*.html',
@@ -4692,11 +4687,14 @@ $.register({
   ready: function () {
     'use strict';
     $.removeNodes('iframe');
-    var url = $.searchScripts(/window\.location='([^']+)'/);
-    if (!url) {
+    var data = $.searchScripts(/data:"([^"]+)"/);
+    if (!data) {
       throw new _.AdsBypasserError('pattern changed');
     }
-    $.openLink(url[1]);
+    data = data[1];
+    $.get('/click.html', data).then(function (url) {
+      $.openLink(url);
+    });
   },
 });
 
@@ -4981,6 +4979,15 @@ $.register({
       });
     }, 1000);
   }
+  $.register({
+    rule: {
+      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com$/,
+      path: /^\/freeze\/(.+)/,
+    },
+    start: function (m) {
+      $.openLink(m.path[1]);
+    },
+  });
   $.register({
     rule: {
       host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com$/,
@@ -5297,6 +5304,23 @@ $.register({
 
 $.register({
   rule: {
+    host: /^(www\.)?victly\.com$/,
+    path: /^\/\w+$/,
+  },
+  start: function () {
+    'use strict';
+    $.post(document.location.href, {
+      hidden: '',
+      image: 'Skip+Ads',
+    }).then(function (text) {
+      var m = text.match(/window\.location\.replace\('([^']+)'\)/);
+      $.openLink(m[1]);
+    });
+  },
+});
+
+$.register({
+  rule: {
     host: /^www\.viidii\.info$/,
   },
   ready: function () {
@@ -5477,48 +5501,47 @@ $.register({
   function disableWindowOpen () {
     $.window.open = _.nop;
   }
-  function disableLeavePrompt () {
+  function disableLeavePrompt (element) {
+    if (!element) {
+      return;
+    }
     var seal = {
       set: function () {
         _.info('blocked onbeforeunload');
       },
     };
-    _.C([$.window, $.window.document.body]).each(function (o) {
-      if (!o) {
+    element.onbeforeunload = undefined;
+    if (isSafari) {
+      element.__defineSetter__('onbeforeunload', seal.set);
+    } else {
+      $.window.Object.defineProperty(element, 'onbeforeunload', {
+        configurable: false,
+        enumerable: false,
+        get: undefined,
+        set: seal.set,
+      });
+    }
+    var oael = element.addEventListener;
+    var nael = function (type) {
+      if (type === 'beforeunload') {
+        _.info('blocked addEventListener onbeforeunload');
         return;
       }
-      o.onbeforeunload = undefined;
-      if (isSafari) {
-        o.__defineSetter__('onbeforeunload', seal.set);
-      } else {
-        $.window.Object.defineProperty(o, 'onbeforeunload', {
-          configurable: false,
-          enumerable: false,
-          get: undefined,
-          set: seal.set,
-        });
-      }
-      var oael = o.addEventListener;
-      var nael = function (type) {
-        if (type === 'beforeunload') {
-          _.info('blocked addEventListener onbeforeunload');
-          return;
-        }
-        return oael.apply(this, arguments);
-      };
-      o.addEventListener = nael;
-    });
+      return oael.apply(this, arguments);
+    };
+    element.addEventListener = nael;
   }
   function changeTitle () {
     document.title += ' - AdsBypasser';
   }
   function beforeDOMReady (handler) {
     _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
+    disableLeavePrompt($.window);
     disableWindowOpen();
     handler.start();
   }
   function afterDOMReady (handler) {
-    disableLeavePrompt();
+    disableLeavePrompt($.window.document.body);
     changeTitle();
     handler.ready();
   }
