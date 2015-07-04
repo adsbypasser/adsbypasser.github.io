@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.27.0
+// @version        5.28.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.27.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.28.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -1264,6 +1264,21 @@ $.register({
 })();
 
 $.register({
+  rule: {
+    host: /^(www\.)?adfe\.es$/,
+    path: /^\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#frmvideo');
+    if (!f.STEP4) {
+      return;
+    }
+    f.submit();
+  },
+});
+
+$.register({
   rule: 'http://adfoc.us/*',
   ready: function () {
     'use strict';
@@ -1706,7 +1721,8 @@ $.register({
   },
   start: function (m) {
     'use strict';
-    $.openLink(m.query[1]);
+    var l = decodeURIComponent(m.query[1]);
+    $.openLink(l);
   },
 });
 
@@ -2938,14 +2954,9 @@ $.register({
   'use strict';
   function afterGotSessionId (sessionId) {
     var X_NewRelic_ID = $.searchScripts(/xpid:"([^"]+)"/);
-    var Fingerprint = $.window.Fingerprint;
-    var browserToken = null;
-    if (Fingerprint) {
-      browserToken = (new Fingerprint({canvas: !0})).get();
-    } else {
-      browserToken = Math.round((new Date()).getTime() / 1000);
-    }
-    var data = "sessionId=" + sessionId + "&browserToken=" + browserToken;
+    var data = {
+      adSessionId: sessionId,
+    };
     var header = {
       Accept: 'application/json, text/javascript',
     };
@@ -2953,7 +2964,7 @@ $.register({
       header['X-NewRelic-ID'] = X_NewRelic_ID;
     }
     var i = setInterval(function () {
-      $.get('/adSession/callback', data, header).then(function (text) {
+      $.get('/shortest-url/end-adsession', data, header).then(function (text) {
         var r = _.parseJSON(text);
         if (r.status == "ok" && r.destinationUrl) {
           clearInterval(i);
@@ -2966,10 +2977,21 @@ $.register({
   $.register({
     rule: {
       host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com$/,
-      path: /^\/freeze\/(.+)/,
+      path: /^\/freeze\/.+/,
     },
-    start: function (m) {
-      $.openLink(m.path[1]);
+    ready: function () {
+      var o = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.target.getAttribute('class').match(/active/)) {
+            o.disconnect();
+            $.openLink(mutation.target.href);
+          }
+        });
+      });
+      o.observe($('#skip_button'), {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
     },
   });
   $.register({
