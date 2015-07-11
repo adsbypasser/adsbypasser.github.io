@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.28.0
+// @version        5.29.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.28.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.29.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -2315,9 +2315,10 @@ $.register({
       _.warn('pattern changed');
       return null;
     }
-    var m = script.match(/AdPopUrl\s*:\s*'.+\?ref\d*=([\w\d]+)'/);
-    var token = m[1];
-    m = script.match(/=\s*(\d+);/);
+    var m1 = script.match(/AdPopUrl\s*:\s*'.+\?re*f\d*=([\w\d]+)'/);
+    var m2 = script.match(/Token\s*:\s*'([\w\d]+)'/);
+    var token = m1[1] || m2[1];
+    var m = script.match(/=\s*(\d+);/);
     var ak = parseInt(m[1], 10);
     var re = /\+\s*(\d+);/g;
     var tmp = null;
@@ -3753,6 +3754,17 @@ $.register({
     },
   });
 })();
+
+$.register({
+  rule: {
+    host: /^(www\.)?pasted\.co$/,
+    path: /^\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('#captcha_overlay');
+  },
+});
 
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {

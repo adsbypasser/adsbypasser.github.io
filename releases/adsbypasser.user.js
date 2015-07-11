@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.28.0
+// @version        5.29.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.28.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.29.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.28.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.28.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.28.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.29.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.29.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.29.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -2434,73 +2434,6 @@ $.register({
   });
 })();
 
-(function () {
-  'use strict';
-  function handler () {
-    $.removeNodes('iframe');
-    var node = $.$('#continuetoimage > form input');
-    if (node) {
-      node.click();
-      node.click();
-      return;
-    }
-    var o = $('img[alt="image"]');
-    $.openImage(o.src);
-  }
-  $.register({
-    rule: [
-      {
-        host: [
-          /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban)\.com$/,
-          /^image(corn|picsa)\.com$/,
-          /^www\.(imagefolks|imgblow)\.com$/,
-          /^img-(zone|planet)\.com$/,
-          /^(hosturimage|erimge)\.com$/,
-          /^(img(candy|master|-view|run)|imagelaser)\.net$/,
-          /^imgcloud\.co$/,
-          /^pixup\.us$/,
-          /^(www\.)?\.imgult\.com$/,
-          /^bulkimg\.info$/,
-          /^(image(\.adlock|on)|imgspot|teenshot)\.org$/,
-          /^img\.yt$/,
-          /^vava\.in$/,
-          /^55888\.eu$/,
-          /^pixxx\.me$/,
-          /^(like\.)08lkk\.com$/,
-          /imgseeds\.com$/,
-        ],
-        path: /^\/img-.*\.html$/,
-      },
-      {
-        host: /^imgking\.co$/,
-        path: /^\/img-.*\.htmls$/,
-      },
-      {
-        host: /^imgtwyti\.com$/,
-        path: /^\/t\/img-.*\.html$/,
-      },
-    ],
-    ready: handler,
-  });
-  $.register({
-    rule: {
-      host: /^08lkk\.com$/,
-      path: /^\/\d+\/img-.*\.html$/,
-    },
-    start: function () {
-      $.window.setTimeout = _.nop;
-      $.get(window.location.toString()).then(function (data) {
-        var a = $.toDOM(data);
-        var bbcode = $.$('#imagecodes input', a);
-        bbcode = bbcode.value.match(/.+\[IMG\]([^\[]+)\[\/IMG\].+/);
-        bbcode = bbcode[1];
-        bbcode = bbcode.replace('small', 'big');
-        $.openImage(bbcode);
-      });
-    },
-  });
-})();
-
 $.register({
   rule: {
     host: /^(imgsure|picexposed)\.com$/,
@@ -2887,6 +2820,13 @@ $.register({
 (function () {
   'use strict';
   function ready () {
+    $.removeNodes('iframe');
+    var node = $.$('#continuetoimage > form input');
+    if (node) {
+      node.click();
+      node.click();
+      return;
+    }
     var i = $('img[class^=centred]');
     $.openImage(i.src);
   }
@@ -2894,18 +2834,40 @@ $.register({
     rule: [
       {
         host: [
-          /^(image(decode|ontime)|(zonezeed|zelje|croft|myhot|dam|bok)image|picstwist|www\.imglemon|ericsony|imgpu|wpc8|uplimg|goimge)\.com$/,
-          /^(img(serve|coin|fap)|gallerycloud)\.net$/,
-          /^hotimages\.eu$/,
-          /^(imgstudio|dragimage|imageteam)\.org$/,
+          /^image(decode|ontime|corn|picsa)\.com$/,
+          /^(zonezeed|zelje|croft|myhot|dam|bok|hostur)image\.com$/,
+          /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu)\.com$/,
+          /^img-(zone|planet)\.com$/,
+          /^www\.(imagefolks|img(blow|lemon))\.com$/,
+          /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus)\.com$/,
           /^((i|hentai)\.)?imgslip\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
+          /^(go|er)imge\.com$/,
+          /^(like\.)08lkk\.com$/,
+          /^(www\.)?\.imgult\.com$/,
+          /imgseeds\.com$/,
+          /^img(serve|coin|fap|candy|master|-view|run)\.net$/,
+          /^(gallerycloud|imagelaser)\.net$/,
+          /^img(studio|spot)\.org$/,
+          /^image(\.adlock|on|team)\.org$/,
+          /^(dragimage|teenshot)\.org$/,
+          /^(hotimages|55888)\.eu$/,
+          /^imgcloud\.co$/,
+          /^pixup\.us$/,
+          /^bulkimg\.info$/,
+          /^img\.yt$/,
+          /^vava\.in$/,
+          /^pixxx\.me$/,
         ],
         path: /^\/img-.*\.html$/,
       },
       {
-        host: /^imgrun\.net$/,
+        host: /^img(run|twyti)\.net$/,
         path: /^\/t\/img-.*\.html$/,
+      },
+      {
+        host: /^imgking\.co$/,
+        path: /^\/img-.*\.htmls$/,
       },
     ],
     ready: ready,
@@ -2925,17 +2887,36 @@ $.register({
     },
     ready: ready,
   });
+  function helper () {
+    $.window.setTimeout = _.nop;
+    return $.get(window.location.toString()).then(function (data) {
+      return $.toDOM(data);
+    });
+  }
   $.register({
     rule: {
       host: /^08lkk\.com$/,
       path: /^\/Photo\/img-.+\.html$/,
     },
     start: function () {
-      $.window.setTimeout = _.nop;
-      $.get(window.location.toString()).then(function (data) {
-        var a = $.toDOM(data);
-        var i = $('img[class^=centred]', a);
+      helper().then(function (page) {
+        var i = $('img[class^=centred]', page);
         $.openImage(i.src);
+      });
+    },
+  });
+  $.register({
+    rule: {
+      host: /^08lkk\.com$/,
+      path: /^\/\d+\/img-.*\.html$/,
+    },
+    start: function () {
+      helper().then(function (page) {
+        var bbcode = $.$('#imagecodes input', page);
+        bbcode = bbcode.value.match(/.+\[IMG\]([^\[]+)\[\/IMG\].+/);
+        bbcode = bbcode[1];
+        bbcode = bbcode.replace('small', 'big');
+        $.openImage(bbcode);
       });
     },
   });
@@ -4331,9 +4312,10 @@ $.register({
       _.warn('pattern changed');
       return null;
     }
-    var m = script.match(/AdPopUrl\s*:\s*'.+\?ref\d*=([\w\d]+)'/);
-    var token = m[1];
-    m = script.match(/=\s*(\d+);/);
+    var m1 = script.match(/AdPopUrl\s*:\s*'.+\?re*f\d*=([\w\d]+)'/);
+    var m2 = script.match(/Token\s*:\s*'([\w\d]+)'/);
+    var token = m1[1] || m2[1];
+    var m = script.match(/=\s*(\d+);/);
     var ak = parseInt(m[1], 10);
     var re = /\+\s*(\d+);/g;
     var tmp = null;
@@ -5495,6 +5477,17 @@ $.register({
     },
   });
 })();
+
+$.register({
+  rule: {
+    host: /^(www\.)?pasted\.co$/,
+    path: /^\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('#captcha_overlay');
+  },
+});
 
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
