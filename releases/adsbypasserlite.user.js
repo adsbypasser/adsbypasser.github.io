@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.29.0
+// @version        5.30.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.29.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.30.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -1403,6 +1403,7 @@ $.register({
     host: [
       /^(awet|sortir)\.in$/,
       /^st\.benfile\.com$/,
+      /^st\.azhie\.net$/,
     ],
   },
   ready: function () {
@@ -1416,7 +1417,10 @@ $.register({
   'use strict';
   $.register({
     rule: {
-      host: /^bc\.vc$/,
+      host: [
+        /^bc\.vc$/,
+        /^linc\.ml$/,
+      ],
       path: /^.+(https?:\/\/.+)$/,
     },
     start: function (m) {
@@ -1578,7 +1582,7 @@ $.register({
         /^(zpoz|ultry)\.net$/,
         /^(wwy|myam)\.me$/,
         /^ssl\.gs$/,
-        /^link\.tl$/,
+        /^lin(c\.ml|k\.tl)$/,
         /^hit\.us$/,
         /^shortit\.in$/,
         /^(adbla|tl7)\.us$/,
@@ -1972,6 +1976,17 @@ $.register({
     'use strict';
     var a = $('#wrapper > [class^="tombo"] > a[target="_blank"]');
     $.openLink(a.href);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^www\.filedais\.com$/,
+    path: /\.php$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#plans_free form');
   },
 });
 
@@ -2581,6 +2596,7 @@ $.register({
     host: [
       /^mant[ae][pb]\.in$/,
       /^st\.oploverz\.net$/,
+      /^minidroid\.net$/,
     ],
   },
   ready: function () {
@@ -2862,25 +2878,29 @@ $.register({
 $.register({
   rule: [
     {
-      host: /^(www\.)?safelinkconverter2\.com$/,
-      path: /^\/decrypt-\d\/$/,
-      query: /id=(\w+=+)/,
+      host: /^(www\.)?(link\.)?safelink(converter2?|s?review)\.com$/,
+      query: /id=(\w+=*)/,
     },
     {
-      host: /^(www\.)?safelinkreview\.com$/,
-      query: /id=(\w+=+)/,
+      host: /^(www\.)?dlneko\.com$/,
+      query: /go=(\w+=*)/,
     },
   ],
   start: function (m) {
     'use strict';
-    $.get('https://decrypt.safelinkconverter.com/index.php' + window.location.search).then(function (html) {
-      var m = html.match(/3;URL=([^"]+)/);
-      if (!m) {
-        _.warn('pattern changed');
-        return;
-      }
-      $.openLink(m[1]);
-    });
+    var l = atob(m.query[1]);
+    $.openLink(l);
+  },
+});
+$.register({
+  rule: {
+    host: /^(www\.)?safelinkreview\.com$/,
+    path: /^\/\w+\/cost\/([\w\.]+)\/?$/,
+  },
+  start: function (m) {
+    'use strict';
+    var l = 'http://' + m.path[1];
+    $.openLink(l);
   },
 });
 
@@ -3660,6 +3680,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^www\.multiupfile\.com$/,
+    path: /^\/f\//,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#yw0');
+    f.submit();
+  },
+});
+
+$.register({
+  rule: {
     host: /^mylinkgen\.com$/,
     path: /^\/p\/(.+)$/,
   },
@@ -3723,7 +3755,7 @@ $.register({
     rule: {
       host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
       path: /\/([a-zA-Z0-9]+)/,
-      hash: /#([a-zA-Z0-9]+)/,
+      hash: /(?:#([a-zA-Z0-9]+))?/,
     },
     ready: function (m) {
       var sjcl = $.window.sjcl;
@@ -3733,12 +3765,16 @@ $.register({
       $.get(API_URL, false, {
         Origin: _.none,
         Referer: _.none,
-        Cookie: 'referrer=nope',
+        Cookie: 'referrer=1',
         'X-Requested-With': _.none,
       }).then(function (pasteInfo) {
         pasteInfo = _.parseJSON(pasteInfo);
         if (!pasteInfo.ok) {
           throw new _.AdsBypasserError("error when getting paste information");
+        }
+        if (pasteInfo.paste.url) {
+          $.openLink(pasteInfo.paste.url);
+          return;
         }
         var raw_paste = sjcl.decrypt(paste_salt, pasteInfo.paste.text);
         if (isLink(raw_paste)) {

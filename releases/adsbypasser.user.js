@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.29.0
+// @version        5.30.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.29.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.30.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.29.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.29.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.29.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.30.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.30.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.30.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1066,13 +1066,14 @@
   $.openImage = function (imgSrc, options) {
     options = options || {};
     var replace = !!options.replace;
+    var referer = !!options.referer;
     if (replace) {
       replaceBody(imgSrc);
       return;
     }
     if ($.config.redirectImage) {
       $.openLink(imgSrc, {
-        referer: false,
+        referer: referer,
       });
     }
   };
@@ -1382,6 +1383,18 @@ $.register({
     accessInput.value = Math.random();
     accessForm.appendChild(accessInput);
     accessForm.submit();
+  },
+});
+
+$.register({
+  rule: {
+    host: /^www\.multiupfile\.com$/,
+    path: /^\/f\//,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#yw0');
+    f.submit();
   },
 });
 
@@ -1702,7 +1715,7 @@ $.register({
 $.register({
   rule: {
     host: /^(www\.)?empireload\.com$/,
-    path: /^(\/images(\/files\/a)?)\/v\.php$/,
+    path: /^(\/images(\/files\/\w)?)\/v\.php$/,
     query: /^\?link=(.+)$/,
   },
   start: function (m) {
@@ -2176,11 +2189,13 @@ $.register({
 $.register({
   rule: {
     host: /^imagezilla\.net$/,
-    path: /^\/show\/(.+)$/,
   },
-  start: function (m) {
+  ready: function () {
     'use strict';
-    $.openImage('/images2/' + m.path[1]);
+    var i = $('#photo');
+    $.openImage(i.src, {
+      referer: true,
+    });
   },
 });
 
@@ -2834,8 +2849,8 @@ $.register({
     rule: [
       {
         host: [
-          /^image(decode|ontime|corn|picsa)\.com$/,
-          /^(zonezeed|zelje|croft|myhot|dam|bok|hostur)image\.com$/,
+          /^image(ontime|corn|picsa)\.com$/,
+          /^(zonezeed|zelje|croft|myhot|bok|hostur)image\.com$/,
           /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
@@ -2846,8 +2861,10 @@ $.register({
           /^(like\.)08lkk\.com$/,
           /^(www\.)?\.imgult\.com$/,
           /imgseeds\.com$/,
+          /damimage\.com$/,
+          /imagedecode\.com$/,
           /^img(serve|coin|fap|candy|master|-view|run)\.net$/,
-          /^(gallerycloud|imagelaser)\.net$/,
+          /^(gallerycloud|imagelaser|project-photo)\.net$/,
           /^img(studio|spot)\.org$/,
           /^image(\.adlock|on|team)\.org$/,
           /^(dragimage|teenshot)\.org$/,
@@ -2862,7 +2879,10 @@ $.register({
         path: /^\/img-.*\.html$/,
       },
       {
-        host: /^img(run|twyti)\.net$/,
+        host: [
+          /^img(run|twyti)\.net$/,
+          /^imgtwyti\.com$/,
+        ],
         path: /^\/t\/img-.*\.html$/,
       },
       {
@@ -3400,6 +3420,7 @@ $.register({
     host: [
       /^(awet|sortir)\.in$/,
       /^st\.benfile\.com$/,
+      /^st\.azhie\.net$/,
     ],
   },
   ready: function () {
@@ -3413,7 +3434,10 @@ $.register({
   'use strict';
   $.register({
     rule: {
-      host: /^bc\.vc$/,
+      host: [
+        /^bc\.vc$/,
+        /^linc\.ml$/,
+      ],
       path: /^.+(https?:\/\/.+)$/,
     },
     start: function (m) {
@@ -3575,7 +3599,7 @@ $.register({
         /^(zpoz|ultry)\.net$/,
         /^(wwy|myam)\.me$/,
         /^ssl\.gs$/,
-        /^link\.tl$/,
+        /^lin(c\.ml|k\.tl)$/,
         /^hit\.us$/,
         /^shortit\.in$/,
         /^(adbla|tl7)\.us$/,
@@ -3969,6 +3993,17 @@ $.register({
     'use strict';
     var a = $('#wrapper > [class^="tombo"] > a[target="_blank"]');
     $.openLink(a.href);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^www\.filedais\.com$/,
+    path: /\.php$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#plans_free form');
   },
 });
 
@@ -4578,6 +4613,7 @@ $.register({
     host: [
       /^mant[ae][pb]\.in$/,
       /^st\.oploverz\.net$/,
+      /^minidroid\.net$/,
     ],
   },
   ready: function () {
@@ -4859,25 +4895,29 @@ $.register({
 $.register({
   rule: [
     {
-      host: /^(www\.)?safelinkconverter2\.com$/,
-      path: /^\/decrypt-\d\/$/,
-      query: /id=(\w+=+)/,
+      host: /^(www\.)?(link\.)?safelink(converter2?|s?review)\.com$/,
+      query: /id=(\w+=*)/,
     },
     {
-      host: /^(www\.)?safelinkreview\.com$/,
-      query: /id=(\w+=+)/,
+      host: /^(www\.)?dlneko\.com$/,
+      query: /go=(\w+=*)/,
     },
   ],
   start: function (m) {
     'use strict';
-    $.get('https://decrypt.safelinkconverter.com/index.php' + window.location.search).then(function (html) {
-      var m = html.match(/3;URL=([^"]+)/);
-      if (!m) {
-        _.warn('pattern changed');
-        return;
-      }
-      $.openLink(m[1]);
-    });
+    var l = atob(m.query[1]);
+    $.openLink(l);
+  },
+});
+$.register({
+  rule: {
+    host: /^(www\.)?safelinkreview\.com$/,
+    path: /^\/\w+\/cost\/([\w\.]+)\/?$/,
+  },
+  start: function (m) {
+    'use strict';
+    var l = 'http://' + m.path[1];
+    $.openLink(l);
   },
 });
 
@@ -5446,7 +5486,7 @@ $.register({
     rule: {
       host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
       path: /\/([a-zA-Z0-9]+)/,
-      hash: /#([a-zA-Z0-9]+)/,
+      hash: /(?:#([a-zA-Z0-9]+))?/,
     },
     ready: function (m) {
       var sjcl = $.window.sjcl;
@@ -5456,12 +5496,16 @@ $.register({
       $.get(API_URL, false, {
         Origin: _.none,
         Referer: _.none,
-        Cookie: 'referrer=nope',
+        Cookie: 'referrer=1',
         'X-Requested-With': _.none,
       }).then(function (pasteInfo) {
         pasteInfo = _.parseJSON(pasteInfo);
         if (!pasteInfo.ok) {
           throw new _.AdsBypasserError("error when getting paste information");
+        }
+        if (pasteInfo.paste.url) {
+          $.openLink(pasteInfo.paste.url);
+          return;
         }
         var raw_paste = sjcl.decrypt(paste_salt, pasteInfo.paste.text);
         if (isLink(raw_paste)) {
