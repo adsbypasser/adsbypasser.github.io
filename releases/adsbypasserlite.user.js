@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.30.0
+// @version        5.31.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.30.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -1981,17 +1981,6 @@ $.register({
 
 $.register({
   rule: {
-    host: /^www\.filedais\.com$/,
-    path: /\.php$/,
-  },
-  ready: function () {
-    'use strict';
-    var f = $('#plans_free form');
-  },
-});
-
-$.register({
-  rule: {
     host: /^(www\.)?filoops.info$/
   },
   ready: function () {
@@ -2482,12 +2471,8 @@ $.register({
   },
   ready: function () {
     'use strict';
-    var a = $.searchScripts(/class="bt" href="([^"]+)"/);
-    if (!a) {
-      _.warn('pattern changed');
-      return;
-    }
-    $.openLink(a[1]);
+    var l = $('#skip .bt');
+    $.openLink(l.href);
   },
 });
 
@@ -2889,6 +2874,16 @@ $.register({
   start: function (m) {
     'use strict';
     var l = atob(m.query[1]);
+    var table = {
+      '!': 'a',
+      ')': 'e',
+      '_': 'i',
+      '(': 'o',
+      '*': 'u',
+    };
+    l = l.replace(/[!)_(*]/g, function (m) {
+      return table[m];
+    });
     $.openLink(l);
   },
 });

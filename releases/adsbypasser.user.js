@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.30.0
+// @version        5.31.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.30.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.30.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.30.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.30.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1715,7 +1715,7 @@ $.register({
 $.register({
   rule: {
     host: /^(www\.)?empireload\.com$/,
-    path: /^(\/images(\/files\/\w)?)\/v\.php$/,
+    path: /^(\/images(\/files\/\w)?)\/.\.php$/,
     query: /^\?link=(.+)$/,
   },
   start: function (m) {
@@ -2085,10 +2085,16 @@ $.register({
 })();
 
 $.register({
-  rule: {
-    host: /^imagescream\.com$/,
-    path: /^\/img\/soft\//,
-  },
+  rule: [
+    {
+      host: /^imagescream\.com$/,
+      path: /^\/img\/soft\//,
+    },
+    {
+      host: /^www\.picturescream\.com$/,
+      path: /^\/x\//,
+    },
+  ],
   ready: function () {
     'use strict';
     var i = $('#shortURL-content img');
@@ -2220,18 +2226,6 @@ $.register({
 });
 
 $.register({
-  rule: {
-    host: /^img\.acianetmedia\.com$/,
-    path: /^\/(image\/)?[^.]+$/,
-  },
-  ready: function () {
-    'use strict';
-    var img = $('#full_image, #shortURL-content img');
-    $.openImage(img.src);
-  },
-});
-
-$.register({
   rule: 'http://img1.imagilive.com/*/*',
   ready: function () {
     'use strict';
@@ -2242,6 +2236,24 @@ $.register({
     }
     var i = $('#page > img:not([id])');
     $.openImage(i.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^img24\.org$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $.$('img.img-polaroid + form');
+    if (f) {
+      f.submit();
+      return;
+    }
+    f = $('img.img-polaroid');
+    $.openImage(f.src, {
+      referer: true,
+    });
   },
 });
 
@@ -2851,15 +2863,16 @@ $.register({
         host: [
           /^image(ontime|corn|picsa)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur)image\.com$/,
-          /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu)\.com$/,
+          /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
           /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus)\.com$/,
           /^((i|hentai)\.)?imgslip\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
           /^(go|er)imge\.com$/,
-          /^(like\.)08lkk\.com$/,
+          /^(like\.)?08lkk\.com$/,
           /^(www\.)?\.imgult\.com$/,
+          /^nudeximg\.com$/,
           /imgseeds\.com$/,
           /damimage\.com$/,
           /imagedecode\.com$/,
@@ -3998,17 +4011,6 @@ $.register({
 
 $.register({
   rule: {
-    host: /^www\.filedais\.com$/,
-    path: /\.php$/,
-  },
-  ready: function () {
-    'use strict';
-    var f = $('#plans_free form');
-  },
-});
-
-$.register({
-  rule: {
     host: /^(www\.)?filoops.info$/
   },
   ready: function () {
@@ -4499,12 +4501,8 @@ $.register({
   },
   ready: function () {
     'use strict';
-    var a = $.searchScripts(/class="bt" href="([^"]+)"/);
-    if (!a) {
-      _.warn('pattern changed');
-      return;
-    }
-    $.openLink(a[1]);
+    var l = $('#skip .bt');
+    $.openLink(l.href);
   },
 });
 
@@ -4906,6 +4904,16 @@ $.register({
   start: function (m) {
     'use strict';
     var l = atob(m.query[1]);
+    var table = {
+      '!': 'a',
+      ')': 'e',
+      '_': 'i',
+      '(': 'o',
+      '*': 'u',
+    };
+    l = l.replace(/[!)_(*]/g, function (m) {
+      return table[m];
+    });
     $.openLink(l);
   },
 });
