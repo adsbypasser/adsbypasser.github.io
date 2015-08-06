@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.31.0
+// @version        5.31.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -1191,6 +1191,10 @@ $.register({
 
 (function () {
   'use strict';
+  function getTokenFromRocketScript () {
+    var a = $.searchScripts(/var eu = '(?!false)(.*)'/);
+    return a ? a[1] : null;
+  }
   $.register({
     rule: {
       path: /\/locked$/,
@@ -1207,14 +1211,20 @@ $.register({
     },
   });
   $.register({
-    rule: function () {
-      var h = $.$('html[id="adfly_html"]');
-      var b = $.$('body[id="home"]');
-      if (h && b) {
-        return true;
-      } else {
-        return null;
-      }
+    rule: [
+      'http://u.shareme.in/*',
+      function () {
+        var h = $.$('html[id="adfly_html"]');
+        var b = $.$('body[id="home"]');
+        if (h && b) {
+          return true;
+        } else {
+          return null;
+        }
+      },
+    ],
+    start: function () {
+      $.window.document.write = _.nop;
     },
     ready: function () {
       var h = $.$('#adfly_html'), b = $.$('#home');
@@ -1223,7 +1233,7 @@ $.register({
       }
       $.removeNodes('iframe');
       $.window.cookieCheck = _.nop;
-      h = $.window.eu;
+      h = $.window.eu || getTokenFromRocketScript();
       if (!h) {
         h = $('#adfly_bar');
         $.window.close_bar();
@@ -3838,7 +3848,7 @@ $.register({
       element.__defineSetter__('onbeforeunload', seal.set);
     } else {
       $.window.Object.defineProperty(element, 'onbeforeunload', {
-        configurable: false,
+        configurable: true,
         enumerable: false,
         get: undefined,
         set: seal.set,
