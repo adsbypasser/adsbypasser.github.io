@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.31.1
+// @version        5.32.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -2021,6 +2021,19 @@ $.register({
 
 $.register({
   rule: {
+    host: /^www\.forbes\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    var o = $.window.ox_zones;
+    if (o) {
+      $.openLink(o.page_url);
+    }
+  },
+});
+
+$.register({
+  rule: {
     host: /^www\.free-tv-video-online\.info$/,
     path: /^\/interstitial2\.html$/,
     query: /lnk=([^&]+)/,
@@ -2304,9 +2317,9 @@ $.register({
     return res;
   };
   var hostRules = [
-    /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz)\.com$/,
+    /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|eafyfsuh)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
     /^(([\w]{8}|www)\.)?hornywood\.tv$/,
@@ -2483,6 +2496,16 @@ $.register({
     'use strict';
     var l = $('#skip .bt');
     $.openLink(l.href);
+  },
+});
+$.register({
+  rule: {
+    host: /^linkshrink\.net$/,
+    path: /=(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink(m.path[1]);
   },
 });
 
@@ -3002,7 +3025,7 @@ $.register({
   }
   $.register({
     rule: {
-      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com$/,
+      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/,
       path: /^\/freeze\/.+/,
     },
     ready: function () {
@@ -3022,7 +3045,7 @@ $.register({
   });
   $.register({
     rule: {
-      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com$/,
+      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/,
       path: /^\/[\d\w]+/,
     },
     ready: function () {
@@ -3104,6 +3127,19 @@ $.register({
       return 'Target frame found';
     });
     $.openLink(fl.value.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^www\.shortskip\.com$/,
+    path: /^\/short\.php$/,
+    query: /i=([^&]+)/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = decodeURIComponent(m.query[1]);
+    $.openLink(url);
   },
 });
 

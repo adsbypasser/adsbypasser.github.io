@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.31.1
+// @version        5.32.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.1/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.1/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.31.1/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -2540,7 +2540,6 @@ $.register({
         /^img\.deli\.sh$/,
         /^image(pong|back)\.info$/,
         /^imgdream\.net$/,
-        /^photoup\.biz$/,
       ],
       path: /^\/viewer\.php$/,
       query: /file=([^&]+)/,
@@ -2877,7 +2876,7 @@ $.register({
           /damimage\.com$/,
           /imagedecode\.com$/,
           /^img(serve|coin|fap|candy|master|-view|run)\.net$/,
-          /^(gallerycloud|imagelaser|project-photo)\.net$/,
+          /^(gallerycloud|imagelaser|project-photo|pix-link)\.net$/,
           /^img(studio|spot)\.org$/,
           /^image(\.adlock|on|team)\.org$/,
           /^(dragimage|teenshot)\.org$/,
@@ -4051,6 +4050,19 @@ $.register({
 
 $.register({
   rule: {
+    host: /^www\.forbes\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    var o = $.window.ox_zones;
+    if (o) {
+      $.openLink(o.page_url);
+    }
+  },
+});
+
+$.register({
+  rule: {
     host: /^www\.free-tv-video-online\.info$/,
     path: /^\/interstitial2\.html$/,
     query: /lnk=([^&]+)/,
@@ -4334,9 +4346,9 @@ $.register({
     return res;
   };
   var hostRules = [
-    /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz)\.com$/,
+    /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|eafyfsuh)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
     /^(([\w]{8}|www)\.)?hornywood\.tv$/,
@@ -4513,6 +4525,16 @@ $.register({
     'use strict';
     var l = $('#skip .bt');
     $.openLink(l.href);
+  },
+});
+$.register({
+  rule: {
+    host: /^linkshrink\.net$/,
+    path: /=(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink(m.path[1]);
   },
 });
 
@@ -5032,7 +5054,7 @@ $.register({
   }
   $.register({
     rule: {
-      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com$/,
+      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/,
       path: /^\/freeze\/.+/,
     },
     ready: function () {
@@ -5052,7 +5074,7 @@ $.register({
   });
   $.register({
     rule: {
-      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com$/,
+      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/,
       path: /^\/[\d\w]+/,
     },
     ready: function () {
@@ -5134,6 +5156,19 @@ $.register({
       return 'Target frame found';
     });
     $.openLink(fl.value.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^www\.shortskip\.com$/,
+    path: /^\/short\.php$/,
+    query: /i=([^&]+)/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = decodeURIComponent(m.query[1]);
+    $.openLink(url);
   },
 });
 
