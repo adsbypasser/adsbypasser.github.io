@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.32.0
+// @version        5.32.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.1/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.1/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.1/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -883,85 +883,118 @@
   }
 }(this, function (context, GM, _, $) {
   'use strict';
+  var MANIFEST = [
+    {
+      name: 'version',
+      key: 'version',
+      default_: 0,
+      verify: function (v) {
+        return typeof v === 'number' && v >= 0;
+      },
+    },
+    {
+      name: 'alignCenter',
+      key: 'align_center',
+      default_: true,
+      verify: isBoolean,
+    },
+    {
+      name: 'changeBackground',
+      key: 'change_background',
+      default_: true,
+      verify: isBoolean,
+    },
+    {
+      name: 'externalServerSupport',
+      key: 'external_server_support',
+      default_: false,
+      verify: isBoolean,
+    },
+    {
+      name: 'redirectImage',
+      key: 'redirect_image',
+      default_: true,
+      verify: isBoolean,
+    },
+    {
+      name: 'scaleImage',
+      key: 'scale_image',
+      default_: true,
+      verify: isBoolean,
+    },
+    {
+      name: 'logLevel',
+      key: 'log_level',
+      default_: 1,
+      verify: function (v) {
+        return typeof v === 'number' && v >= 0 && v <= 2;
+      },
+    },
+  ];
+  var PATCHES = [
+    function (c) {
+      var ac = typeof c.alignCenter === 'boolean';
+      if (typeof c.changeBackground !== 'boolean') {
+        c.changeBackground = ac ? c.alignCenter : true;
+      }
+      if (typeof c.scaleImage !== 'boolean') {
+        c.scaleImage = ac ? c.alignCenter : true;
+      }
+      if (!ac) {
+        c.alignCenter = true;
+      }
+      if (typeof c.redirectImage !== 'boolean') {
+        c.redirectImage = true;
+      }
+    },
+    function (c) {
+      if (typeof c.externalServerSupport !== 'boolean') {
+        c.externalServerSupport = false;
+      }
+    },
+    function (c) {
+      if (typeof c.logLevel !== 'number') {
+        c.logLevel = 1;
+      }
+    },
+  ];
   var window = context.window;
-  $.config = {
-    set version (value) {
-      GM.setValue('version', value);
-    },
-    get version () {
-      return GM.getValue('version', 0);
-    },
-    set alignCenter (value) {
-      GM.setValue('align_center', value);
-    },
-    get alignCenter () {
-      return GM.getValue('align_center');
-    },
-    set changeBackground (value) {
-      GM.setValue('change_background', value);
-    },
-    get changeBackground () {
-      return GM.getValue('change_background');
-    },
-    set externalServerSupport (value) {
-      GM.setValue('external_server_support', value);
-    },
-    get externalServerSupport () {
-      return GM.getValue('external_server_support');
-    },
-    set redirectImage (value) {
-      GM.setValue('redirect_image', value);
-    },
-    get redirectImage () {
-      return GM.getValue('redirect_image');
-    },
-    set scaleImage (value) {
-      GM.setValue('scale_image', value);
-    },
-    get scaleImage () {
-      return GM.getValue('scale_image');
-    },
-    set logLevel (value) {
-      GM.setValue('log_level', 1 * value);
-    },
-    get logLevel () {
-      return GM.getValue('log_level');
-    },
-  };
-  fixup($.config);
-  function fixup (c) {
-    var patches = [
-      function (c) {
-        var ac = typeof c.alignCenter !== 'undefined';
-        if (typeof c.changeBackground === 'undefined') {
-          c.changeBackground = ac ? c.alignCenter : true;
-        }
-        if (typeof c.scaleImage === 'undefined') {
-          c.scaleImage = ac ? c.alignCenter : true;
-        }
-        if (!ac) {
-          c.alignCenter = true;
-        }
-        if (typeof c.redirectImage === 'undefined') {
-          c.redirectImage = true;
-        }
-      },
-      function (c) {
-        if (typeof c.externalServerSupport === 'undefined') {
-          c.externalServerSupport = false;
-        }
-      },
-      function (c) {
-        if (typeof c.logLevel === 'undefined') {
-          c.logLevel = 1;
-        }
-      },
-    ];
-    while (c.version < patches.length) {
-      patches[c.version](c);
+  function isBoolean(v) {
+    return typeof v === 'boolean';
+  }
+  function createConfig () {
+    var c = {};
+    _.C(MANIFEST).each(function (m) {
+      Object.defineProperty(c, m.name, {
+        configurable: true,
+        enumerable: true,
+        get: function () {
+          return GM.getValue(m.key, m.default_);
+        },
+        set: function (v) {
+          GM.setValue(m.key, v);
+        },
+      });
+    });
+    return c;
+  }
+  function senityCheck (c) {
+    var ok = _.C(MANIFEST).all(function (m) {
+      return m.verify(c[m.name]);
+    });
+    if (!ok) {
+      c.version = 0;
+    }
+    return c;
+  }
+  function migrate (c) {
+    while (c.version < PATCHES.length) {
+      PATCHES[c.version](c);
       ++c.version;
     }
+    return c;
   }
+  $.config = migrate(senityCheck(createConfig()));
   $.register({
     rule: {
       host: /^adsbypasser\.github\.io$/,
@@ -4371,7 +4404,7 @@ $.register({
       _.warn('pattern changed');
       return null;
     }
-    var m1 = script.match(/AdPopUrl\s*:\s*'.+\?re*f\d*=([\w\d]+)'/);
+    var m1 = script.match(/AdPopUrl\s*:\s*'.+\?[^=]+=([\w\d]+)'/);
     var m2 = script.match(/Token\s*:\s*'([\w\d]+)'/);
     var token = m1[1] || m2[1];
     var m = script.match(/=\s*(\d+);/);
@@ -5647,7 +5680,7 @@ $.register({
     document.title += ' - AdsBypasser';
   }
   function beforeDOMReady (handler) {
-    _.info('working on\n%s \nwith\n%o', window.location.toString(), $.config);
+    _.info('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify($.config));
     disableLeavePrompt($.window);
     disableWindowOpen();
     handler.start();
