@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.32.1
+// @version        5.33.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.33.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.1/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.1/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.1/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.33.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.33.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.33.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1575,6 +1575,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^avenuexxx\.com$/,
+    path: /^\/archives\//,
+  },
+  ready: function () {
+    'use strict';
+    var i = $('#content img');
+    $.openImage(i.src);
+  },
+});
+
+$.register({
+  rule: {
     host: /^freeimgup\.com$/,
     path: /^\/xxx/,
     query: /^\?v=([^&]+)/,
@@ -2127,6 +2139,9 @@ $.register({
       host: /^www\.picturescream\.com$/,
       path: /^\/x\//,
     },
+    {
+      host: /^picturescream\.asia$/,
+    },
   ],
   ready: function () {
     'use strict';
@@ -2440,10 +2455,10 @@ $.register({
     }
   }
   function helper (id, getNext) {
-    var i = $.$('form > input[name="next"]');
+    var i = $.$('form input[name="next"]');
     if (i) {
       var next = getNext(i);
-      go(id, $('input[name="pre"]', i.parentNode).value, next);
+      go(id, $('form input[name="pre"]').value, next);
       return;
     }
     i = $.$('img.pic');
@@ -2461,6 +2476,8 @@ $.register({
         /^imgclick\.net$/,
         /^(uploadrr|imageeer|imzdrop)\.com$/,
         /^imgdrive\.co$/,
+        /^cuteimg\.cc$/,
+        /^imgtiger\.org$/,
       ],
       path: pathRule,
     },
@@ -2573,6 +2590,7 @@ $.register({
         /^img\.deli\.sh$/,
         /^image(pong|back)\.info$/,
         /^imgdream\.net$/,
+        /^imgsicily\.it$/,
       ],
       path: /^\/viewer\.php$/,
       query: /file=([^&]+)/,
@@ -2591,7 +2609,7 @@ $.register({
   });
   $.register({
     rule: {
-      host: /imageview\.me|244pix\.com|imgnip\.com|postimg\.net$/,
+      host: /imageview\.me|244pix\.com|imgnip\.com|postimg\.net|imgcentral\.com$/,
       path: /^\/viewerr.*\.php$/,
       query: /file=([^&]+)/,
     },
@@ -2894,11 +2912,11 @@ $.register({
       {
         host: [
           /^image(ontime|corn|picsa)\.com$/,
-          /^(zonezeed|zelje|croft|myhot|bok|hostur)image\.com$/,
+          /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy)image\.com$/,
           /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
-          /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus)\.com$/,
+          /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus|nimplus|newimagepost)\.com$/,
           /^((i|hentai)\.)?imgslip\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
           /^(go|er)imge\.com$/,
@@ -2909,10 +2927,10 @@ $.register({
           /damimage\.com$/,
           /imagedecode\.com$/,
           /^img(serve|coin|fap|candy|master|-view|run)\.net$/,
-          /^(gallerycloud|imagelaser|project-photo|pix-link)\.net$/,
+          /^(gallerycloud|imagelaser|project-photo|pix-link|funimg)\.net$/,
           /^img(studio|spot)\.org$/,
           /^image(\.adlock|on|team)\.org$/,
-          /^(dragimage|teenshot)\.org$/,
+          /^(dragimage|teenshot|teenimage)\.org$/,
           /^(hotimages|55888)\.eu$/,
           /^imgcloud\.co$/,
           /^pixup\.us$/,
@@ -2920,6 +2938,7 @@ $.register({
           /^img\.yt$/,
           /^vava\.in$/,
           /^pixxx\.me$/,
+          /^porno-pirat\.ru$/,
         ],
         path: /^\/img-.*\.html$/,
       },
@@ -2932,7 +2951,7 @@ $.register({
       },
       {
         host: /^imgking\.co$/,
-        path: /^\/img-.*\.htmls$/,
+        path: /^\/img-.*\.htmls?$/,
       },
     ],
     ready: ready,
@@ -4520,7 +4539,12 @@ $.register({
     	$.openLink(lnk);
     	return;
     }
-    var b = $('#m > .Visit_Link');
+    var b = $.$('#popup');
+    if (b && b.href) {
+      $.openLink(b.href);
+      return;
+    }
+    b = $('#m > .Visit_Link');
     b = b.onclick.toString().match(/window\.open\(\'([^']+)\'/);
     if (!b) {
       throw new _.AdsBypasser('pattern changed');
@@ -5085,9 +5109,10 @@ $.register({
       });
     }, 1000);
   }
+  var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/;
   $.register({
     rule: {
-      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/,
+      host: hostRules,
       path: /^\/freeze\/.+/,
     },
     ready: function () {
@@ -5107,7 +5132,7 @@ $.register({
   });
   $.register({
     rule: {
-      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/,
+      host: hostRules,
       path: /^\/[\d\w]+/,
     },
     ready: function () {

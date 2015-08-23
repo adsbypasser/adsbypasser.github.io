@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.32.1
+// @version        5.33.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.32.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.33.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -2491,7 +2491,12 @@ $.register({
     	$.openLink(lnk);
     	return;
     }
-    var b = $('#m > .Visit_Link');
+    var b = $.$('#popup');
+    if (b && b.href) {
+      $.openLink(b.href);
+      return;
+    }
+    b = $('#m > .Visit_Link');
     b = b.onclick.toString().match(/window\.open\(\'([^']+)\'/);
     if (!b) {
       throw new _.AdsBypasser('pattern changed');
@@ -3056,9 +3061,10 @@ $.register({
       });
     }, 1000);
   }
+  var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/;
   $.register({
     rule: {
-      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/,
+      host: hostRules,
       path: /^\/freeze\/.+/,
     },
     ready: function () {
@@ -3078,7 +3084,7 @@ $.register({
   });
   $.register({
     rule: {
-      host: /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/,
+      host: hostRules,
       path: /^\/[\d\w]+/,
     },
     ready: function () {
