@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.33.0
+// @version        5.34.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.33.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.34.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.33.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.33.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.33.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.34.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.34.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.34.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1770,10 +1770,16 @@ $.register({
 });
 
 $.register({
-  rule: {
-    host: /^emptypix\.com|overdream\.cz$/,
-    path: /^\/image\//,
-  },
+  rule: [
+    {
+      host: /^emptypix\.com|overdream\.cz$/,
+      path: /^\/image\//,
+    },
+    {
+      host: /^10\.imageleon\.com$/,
+      path: /^\/img-(.+)\.html$/,
+    },
+  ],
   ready: function () {
     'use strict';
     var img = $('#full_image');
@@ -2387,7 +2393,7 @@ $.register({
 
 (function () {
   'use strict';
-  var host = /^(img(fantasy|leech)|imagedomino)\.com$/;
+  var host = /^(img(fantasy|leech|\.pornleech)|imagedomino)\.com$/;
   $.register({
     rule: {
       host: host,
@@ -2455,10 +2461,10 @@ $.register({
     }
   }
   function helper (id, getNext) {
-    var i = $.$('form input[name="next"]');
+    var i = $.$('input[name="next"]');
     if (i) {
       var next = getNext(i);
-      go(id, $('form input[name="pre"]').value, next);
+      go(id, $('input[name="pre"]').value, next);
       return;
     }
     i = $.$('img.pic');
@@ -2474,7 +2480,7 @@ $.register({
         /^img(paying|mega|zeus|monkey|trex)\.com$/,
         /^(www\.)?imgsee\.me$/,
         /^imgclick\.net$/,
-        /^(uploadrr|imageeer|imzdrop)\.com$/,
+        /^(uploadrr|imageeer|imzdrop|www\.uimgshare)\.com$/,
         /^imgdrive\.co$/,
         /^cuteimg\.cc$/,
         /^imgtiger\.org$/,
@@ -2913,7 +2919,7 @@ $.register({
         host: [
           /^image(ontime|corn|picsa)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy)image\.com$/,
-          /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer)\.com$/,
+          /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
           /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus|nimplus|newimagepost)\.com$/,
@@ -2938,7 +2944,7 @@ $.register({
           /^img\.yt$/,
           /^vava\.in$/,
           /^pixxx\.me$/,
-          /^porno-pirat\.ru$/,
+          /^(porno-pirat|24avarii)\.ru$/,
         ],
         path: /^\/img-.*\.html$/,
       },
@@ -2953,21 +2959,33 @@ $.register({
         host: /^imgking\.co$/,
         path: /^\/img-.*\.htmls?$/,
       },
+      {
+        host: /^imgbb\.net$/,
+        path: /^\/.-.+$/,
+      },
     ],
     ready: ready,
   });
   $.register({
     rule: {
-      host: /^www.img(adult|taxi).com$/,
+      host: [
+        /^www\.img(taxi|adult)\.com$/,
+        /^www\.imgdrive\.net$/,
+      ],
       path: /^\/img-.*\.html$/,
     },
     start: function () {
-      var c = $.getCookie('user');
+      var c = $.getCookie('img_c_d') || $.getCookie('img_p_d');
       if (c) {
         return;
       }
-      $.setCookie('user', 'true');
-      window.location.reload();
+      $.post(window.location.href.toString(), {
+        cti: 1,
+        ref: '',
+        rc: 1,
+      }).then(function (data) {
+        window.location.reload();
+      });
     },
     ready: ready,
   });
