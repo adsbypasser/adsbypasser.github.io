@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.34.0
+// @version        5.35.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.34.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.35.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.34.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.34.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.34.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.35.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.35.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.35.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1329,6 +1329,17 @@ $.register({
 
 $.register({
   rule: {
+    host: /^iori\.us$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#wrapper .tombol a');
+    $.openLink(a.href);
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?jheberg\.net$/,
     path: /^\/captcha\//,
   },
@@ -1714,7 +1725,10 @@ $.register({
 
 $.register({
   rule: {
-    host: /^dailyss\.net$/,
+    host: [
+      /^dailyss\.net$/,
+      /^daily-img\.com$/,
+    ],
     path: /^\/image\/.+$/,
   },
   ready: function () {
@@ -1778,6 +1792,10 @@ $.register({
     {
       host: /^10\.imageleon\.com$/,
       path: /^\/img-(.+)\.html$/,
+    },
+    {
+      host: /^sexyxpixels\.com$/,
+      query: /^\?v=/,
     },
   ],
   ready: function () {
@@ -2393,7 +2411,10 @@ $.register({
 
 (function () {
   'use strict';
-  var host = /^(img(fantasy|leech|\.pornleech)|imagedomino)\.com$/;
+  var host = [
+    /^(img(fantasy|leech|\.pornleech)|imagedomino)\.com$/,
+    /^imageporn\.eu$/,
+  ];
   $.register({
     rule: {
       host: host,
@@ -2594,7 +2615,7 @@ $.register({
         /^imagecurl\.(com|org)$/,
         /^imagevau\.eu$/,
         /^img\.deli\.sh$/,
-        /^image(pong|back)\.info$/,
+        /^imagepong\.info$/,
         /^imgdream\.net$/,
         /^imgsicily\.it$/,
       ],
@@ -2919,7 +2940,7 @@ $.register({
         host: [
           /^image(ontime|corn|picsa)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy)image\.com$/,
-          /^img(rill|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet)\.com$/,
+          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
           /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus|nimplus|newimagepost)\.com$/,
@@ -2943,7 +2964,7 @@ $.register({
           /^bulkimg\.info$/,
           /^img\.yt$/,
           /^vava\.in$/,
-          /^pixxx\.me$/,
+          /^(pixxx|picspornfree)\.me$/,
           /^(porno-pirat|24avarii)\.ru$/,
         ],
         path: /^\/img-.*\.html$/,
@@ -3312,6 +3333,7 @@ $.register({
   $.register({
     rule: [
       'http://u.shareme.in/*',
+      'http://server.sbenny.com/*',
       function () {
         var h = $.$('html[id="adfly_html"]');
         var b = $.$('body[id="home"]');

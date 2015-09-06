@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.34.0
+// @version        5.35.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.34.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.35.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -1246,6 +1246,7 @@ $.register({
   $.register({
     rule: [
       'http://u.shareme.in/*',
+      'http://server.sbenny.com/*',
       function () {
         var h = $.$('html[id="adfly_html"]');
         var b = $.$('body[id="home"]');
@@ -3663,6 +3664,17 @@ $.register({
     'use strict';
     var c = $('#confirm_form');
     c.submit();
+  },
+});
+
+$.register({
+  rule: {
+    host: /^iori\.us$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#wrapper .tombol a');
+    $.openLink(a.href);
   },
 });
 
