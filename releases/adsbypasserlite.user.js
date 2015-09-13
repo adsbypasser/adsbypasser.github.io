@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.35.0
+// @version        5.36.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.35.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.36.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -1193,7 +1193,11 @@ $.register({
 
 $.register({
   rule: {
-    host: /^(www\.)?adb\.ug|(www\.)?lynk\.my$/,
+    host: [
+      /^(www\.)?adb\.ug$/,
+      /^(www\.)?lynk\.my$/,
+      /^adyou\.me$/,
+    ],
     path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/
   },
   ready: function () {
@@ -1204,7 +1208,7 @@ $.register({
       $.openLink(m[1]);
       return;
     }
-    m = $.searchScripts(/\{_args.+\}\}/);
+    m = $.searchScripts(/\{_args.+\}/);
     if (!m) {
       throw new _.AdsBypasserError('script content changed');
     }
@@ -1416,6 +1420,19 @@ $.register({
     'use strict';
     var l = $('iframe#yourls-frame');
     $.openLink(l.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^al\.ly$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var a = $('#close');
+    a.disabled = false;
+    a.click();
   },
 });
 
@@ -3554,6 +3571,23 @@ $.register({
 
 $.register({
   rule: {
+    host: /^www\.anafile\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    var b = $.$('#btn_download');
+    if (b) {
+      b.disabled = false;
+      $.removeNodes('div[align=center]');
+      return;
+    }
+    b = $('#plans_free form [type=submit]');
+    b.click();
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?arab\.sh$/,
     path: /^\/\w+$/,
   },
@@ -3920,6 +3954,8 @@ $.register({
   var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
   function disableWindowOpen () {
     $.window.open = _.nop;
+    $.window.alert = _.nop;
+    $.window.confirm = _.nop;
   }
   function disableLeavePrompt (element) {
     if (!element) {

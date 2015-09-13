@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.35.0
+// @version        5.36.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.35.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.36.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.35.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.35.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.35.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.36.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.36.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.36.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1214,6 +1214,23 @@ $.register({
 
 $.register({
   rule: {
+    host: /^www\.anafile\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    var b = $.$('#btn_download');
+    if (b) {
+      b.disabled = false;
+      $.removeNodes('div[align=center]');
+      return;
+    }
+    b = $('#plans_free form [type=submit]');
+    b.click();
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?arab\.sh$/,
     path: /^\/\w+$/,
   },
@@ -1728,6 +1745,7 @@ $.register({
     host: [
       /^dailyss\.net$/,
       /^daily-img\.com$/,
+      /^img-365\.com$/,
     ],
     path: /^\/image\/.+$/,
   },
@@ -1786,7 +1804,10 @@ $.register({
 $.register({
   rule: [
     {
-      host: /^emptypix\.com|overdream\.cz$/,
+      host: [
+        /^emptypix\.com|overdream\.cz$/,
+        /^www\.sexseeimage\.com$/,
+      ],
       path: /^\/image\//,
     },
     {
@@ -1813,7 +1834,9 @@ $.register({
   ready: function () {
     'use strict';
     var img = $('#picContainer #image');
-    $.openImage(img.src);
+    $.openImage(img.src, {
+      referer: true,
+    });
   },
 });
 
@@ -2164,7 +2187,10 @@ $.register({
       path: /^\/x\//,
     },
     {
-      host: /^picturescream\.asia$/,
+      host: [
+        /^picturescream\.asia$/,
+        /^uploadimage\.eu$/,
+      ],
     },
   ],
   ready: function () {
@@ -2505,6 +2531,7 @@ $.register({
         /^imgdrive\.co$/,
         /^cuteimg\.cc$/,
         /^imgtiger\.org$/,
+        /^myimg\.club$/,
       ],
       path: pathRule,
     },
@@ -2610,7 +2637,7 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^(hentai-hosting|miragepics|funextra\.hostzi|imgrex|daily-img)\.com$/,
+        /^(hentai-hosting|miragepics|funextra\.hostzi|imgrex)\.com$/,
         /^bilder\.nixhelp\.de$/,
         /^imagecurl\.(com|org)$/,
         /^imagevau\.eu$/,
@@ -2618,6 +2645,7 @@ $.register({
         /^imagepong\.info$/,
         /^imgdream\.net$/,
         /^imgsicily\.it$/,
+        /^www\.imghere\.net$/,
       ],
       path: /^\/viewer\.php$/,
       query: /file=([^&]+)/,
@@ -2763,6 +2791,7 @@ $.register({
     'http://npicture.net/share-*.html',
     'http://www.onlinepic.net/share.php?id=*',
     'http://www.pixsor.com/share.php?id=*',
+    'http://holdthemoan.net/x/share-*.html',
   ],
   ready: function () {
     'use strict';
@@ -2943,7 +2972,7 @@ $.register({
           /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
-          /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus|nimplus|newimagepost)\.com$/,
+          /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus|nimplus|newimagepost|xxximagenow)\.com$/,
           /^((i|hentai)\.)?imgslip\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
           /^(go|er)imge\.com$/,
@@ -2964,8 +2993,9 @@ $.register({
           /^bulkimg\.info$/,
           /^img\.yt$/,
           /^vava\.in$/,
-          /^(pixxx|picspornfree)\.me$/,
+          /^(pixxx|picspornfree|imgload)\.me$/,
           /^(porno-pirat|24avarii)\.ru$/,
+          /^hotimage\.uk$/,
         ],
         path: /^\/img-.*\.html$/,
       },
@@ -3008,7 +3038,18 @@ $.register({
         window.location.reload();
       });
     },
-    ready: ready,
+    ready: function () {
+      $.removeNodes('iframe');
+      var node = $.$('#continuetoimage > form input');
+      if (node) {
+        node.click();
+        node.click();
+        return;
+      }
+      $.resetCookies();
+      var i = $('img[class^=centred]');
+      $.openImage(i.src);
+    },
   });
   function helper () {
     $.window.setTimeout = _.nop;
@@ -3280,7 +3321,11 @@ $.register({
 
 $.register({
   rule: {
-    host: /^(www\.)?adb\.ug|(www\.)?lynk\.my$/,
+    host: [
+      /^(www\.)?adb\.ug$/,
+      /^(www\.)?lynk\.my$/,
+      /^adyou\.me$/,
+    ],
     path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/
   },
   ready: function () {
@@ -3291,7 +3336,7 @@ $.register({
       $.openLink(m[1]);
       return;
     }
-    m = $.searchScripts(/\{_args.+\}\}/);
+    m = $.searchScripts(/\{_args.+\}/);
     if (!m) {
       throw new _.AdsBypasserError('script content changed');
     }
@@ -3503,6 +3548,19 @@ $.register({
     'use strict';
     var l = $('iframe#yourls-frame');
     $.openLink(l.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^al\.ly$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var a = $('#close');
+    a.disabled = false;
+    a.click();
   },
 });
 
@@ -5710,6 +5768,8 @@ $.register({
   var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
   function disableWindowOpen () {
     $.window.open = _.nop;
+    $.window.alert = _.nop;
+    $.window.confirm = _.nop;
   }
   function disableLeavePrompt (element) {
     if (!element) {
