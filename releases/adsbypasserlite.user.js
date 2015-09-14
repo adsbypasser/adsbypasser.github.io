@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.36.0
+// @version        5.36.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.36.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.36.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -2411,24 +2411,24 @@ $.register({
   }
   function sendRequest (token) {
     'use strict';
-    _.info('sending token: %o', token);
-    var i = setInterval(function () {
+    token.ab = false;
+    _.info('waiting the interval');
+    setTimeout(function () {
+      _.info('sending token: %o', token);
       $.get('/intermission/loadTargetUrl', token).then(function (text) {
         var data = _.parseJSON(text);
         _.info('response: %o', data);
         if (!data.Success && data.Errors[0] === 'Invalid token') {
           _.info('got invalid token');
-          clearInterval(i);
           retry();
           return;
         }
         if (data.Success && !data.AdBlockSpotted && data.Url) {
-          clearInterval(i);
           $.openLink(data.Url);
           return;
         }
       });
-    }, 1000);
+    }, 6000);
   }
   function retry () {
     'use strict';
