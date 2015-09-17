@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.36.2
+// @version        5.36.3
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.36.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.36.3/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -477,8 +477,8 @@
   $.setCookie = function (key, value) {
     var now = new Date();
     now.setTime(now.getTime() + 3600 * 1000);
-    var tpl = _.T('{0}={1};path=/;');
-    document.cookie = tpl(key, value, now.toUTCString());
+    var tpl = _.T('{0}={1};path={2};');
+    document.cookie = tpl(key, value, window.location.pathname, now.toUTCString());
   };
   $.getCookie = function (key) {
     var c = _.C(document.cookie.split(';')).find(function (v) {
@@ -2406,7 +2406,18 @@ $.register({
       dummy.id = 'content';
       document.body.appendChild(dummy);
       dummy = $.window.document.querySelector('#content');
-      dummy.src = adurl;
+      Object.defineProperty(dummy, 'tagName', {
+        configurable: true,
+        enumerable: false,
+        value: 'iframe',
+        writable: false,
+      });
+      Object.defineProperty(dummy, 'src', {
+        configurable: true,
+        enumerable: false,
+        value: adurl,
+        writable: false,
+      });
     }
     var ci = (typeof cloneInto !== 'function') ? function (o) {
       return o;
@@ -2492,6 +2503,7 @@ $.register({
           return;
         }
         injectFakeFrame(adurl);
+        $.get(adurl);
       },
     });
     $.register({
