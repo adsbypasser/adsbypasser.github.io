@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.36.3
+// @version        5.37.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.36.3/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -1765,11 +1765,14 @@ $.register({
 $.register({
   rule: {
     host: /^(www\.)?boxcash\.net$/,
-    path: /^\/\w+$/,
+    path: /^\/[\w~]+$/,
   },
   ready: function () {
     'use strict';
-    var m = $.searchScripts(/\'\/ajax_link\.php\',\{key:'(\w+)',url:'(\d+)',t:'(\d+)',r:'(\w*)'\}/);
+    var m = $.searchScripts(/\'\/ajax_link\.php\',\s*\{key:\s*'(\w+)',\s*url:\s*'(\d+)',\s*t:\s*'(\d+)',\s*r:\s*'(\w*)'\}/);
+    if (!m) {
+      return;
+    }
     $.post('/ajax_link.php', {
       key: m[1],
       url: m[2],
@@ -2976,45 +2979,6 @@ $.register({
 });
 
 $.register({
-  rule: [
-    {
-      host: /^(www\.)?(link\.)?safelink(converter2?|s?review)\.com$/,
-      query: /id=(\w+=*)/,
-    },
-    {
-      host: /^(www\.)?dlneko\.com$/,
-      query: /go=(\w+=*)/,
-    },
-  ],
-  start: function (m) {
-    'use strict';
-    var l = atob(m.query[1]);
-    var table = {
-      '!': 'a',
-      ')': 'e',
-      '_': 'i',
-      '(': 'o',
-      '*': 'u',
-    };
-    l = l.replace(/[!)_(*]/g, function (m) {
-      return table[m];
-    });
-    $.openLink(l);
-  },
-});
-$.register({
-  rule: {
-    host: /^(www\.)?safelinkreview\.com$/,
-    path: /^\/\w+\/cost\/([\w\.]+)\/?$/,
-  },
-  start: function (m) {
-    'use strict';
-    var l = 'http://' + m.path[1];
-    $.openLink(l);
-  },
-});
-
-$.register({
   rule: {
     host: /^(www\.)?safeurl\.eu$/,
     path: /\/\w+/,
@@ -3106,6 +3070,18 @@ $.register({
     }, 1000);
   }
   var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/;
+  $.register({
+    rule: {
+      host: hostRules,
+      path: /https?:\/\//,
+    },
+    start: function () {
+      var url = window.location.pathname + window.location.search + window.location.hash;
+      url = url.match(/(https?:\/\/.*)$/);
+      url = url[1];
+      $.openLink(url);
+    },
+  });
   $.register({
     rule: {
       host: hostRules,
@@ -3243,19 +3219,6 @@ $.register({
 
 $.register({
   rule: {
-    host: /^(www\.)?safelinkair\.com$/,
-    path: /^\/code$/,
-    query: /(?:\?|&)link=([a-zA-Z0-9=]+)(?:$|&)/,
-  },
-  start: function (m) {
-    'use strict';
-    var l = atob(m.query[1])
-    $.openLink(l);
-  },
-});
-
-$.register({
-  rule: {
     host: /^stash-coins\.com$/,
   },
   start: function () {
@@ -3282,7 +3245,10 @@ $.register({
 $.register({
   rule: [
     {
-      host: /^(www\.)?sylnk\.net$/,
+      host: [
+        /^(www\.)?sylnk\.net$/,
+        /^dlneko\.com$/,
+      ],
       query: /link=([^&]+)/,
     },
     {
@@ -3290,11 +3256,57 @@ $.register({
       path: /^\/n\.php$/,
       query: /v=([^&]+)/,
     },
+    {
+      host: /^(www\.)?safelinkair\.com$/,
+      path: /^\/code$/,
+      query: /(?:\?|&)link=([a-zA-Z0-9=]+)(?:$|&)/,
+    },
   ],
   start: function (m) {
     'use strict';
     var rawLink = atob(m.query[1]);
     $.openLink(rawLink);
+  },
+});
+$.register({
+  rule: [
+    {
+      host: /^(www\.)?(link\.)?safelink(converter2?|s?review)\.com$/,
+      query: /id=(\w+=*)/,
+    },
+    {
+      host: [
+        /^(www\.)?dlneko\.com$/,
+        /^satuasia\.com$/,
+      ],
+      query: /go=(\w+=*)/,
+    },
+  ],
+  start: function (m) {
+    'use strict';
+    var l = atob(m.query[1]);
+    var table = {
+      '!': 'a',
+      ')': 'e',
+      '_': 'i',
+      '(': 'o',
+      '*': 'u',
+    };
+    l = l.replace(/[!)_(*]/g, function (m) {
+      return table[m];
+    });
+    $.openLink(l);
+  },
+});
+$.register({
+  rule: {
+    host: /^(www\.)?safelinkreview\.com$/,
+    path: /^\/\w+\/cost\/([\w\.]+)\/?$/,
+  },
+  start: function (m) {
+    'use strict';
+    var l = 'http://' + m.path[1];
+    $.openLink(l);
   },
 });
 
