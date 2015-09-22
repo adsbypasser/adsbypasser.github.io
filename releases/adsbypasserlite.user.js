@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.37.0
+// @version        5.37.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -2444,7 +2444,7 @@ $.register({
         var xhr = new XHR();
         var resolver = null;
         var rejecter = null;
-        var p = new Promise(function (resolve, reject) {
+        var p = _.D(function (resolve, reject) {
           resolver = resolve;
           rejecter = reject;
         });
@@ -3111,7 +3111,6 @@ $.register({
       $.removeNodes('iframe');
       var m = $.searchScripts(/sessionId: "([\d\w]+)",/);
       if (m) {
-        afterGotSessionId(m[1]);
         return;
       }
       var o = new MutationObserver(function (mutations) {
@@ -3119,7 +3118,6 @@ $.register({
           var m = $.searchScripts(/sessionId: "([\d\w]+)",/);
           if (m) {
             o.disconnect();
-            afterGotSessionId(m[1]);
           }
         });
       });
