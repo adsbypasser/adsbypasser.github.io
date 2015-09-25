@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.37.1
+// @version        5.37.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.1/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.1/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.1/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.2/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.2/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.2/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -2805,6 +2805,7 @@ $.register({
     'http://npicture.net/share-*.html',
     'http://www.onlinepic.net/share.php?id=*',
     'http://www.pixsor.com/share.php?id=*',
+    'http://www.pixsor.com/share-*.html',
     'http://holdthemoan.net/x/share-*.html',
   ],
   ready: function () {
@@ -4593,6 +4594,7 @@ $.register({
           rejecter = reject;
         });
         p.then(function (data) {
+          _.info(data);
           data = JSON.parse(data);
           if (data.Success) {
             $.openLink(data.Url);
@@ -5217,18 +5219,6 @@ $.register({
   $.register({
     rule: {
       host: hostRules,
-      path: /https?:\/\//,
-    },
-    start: function () {
-      var url = window.location.pathname + window.location.search + window.location.hash;
-      url = url.match(/(https?:\/\/.*)$/);
-      url = url[1];
-      $.openLink(url);
-    },
-  });
-  $.register({
-    rule: {
-      host: hostRules,
       path: /^\/freeze\/.+/,
     },
     ready: function () {
@@ -5249,12 +5239,26 @@ $.register({
   $.register({
     rule: {
       host: hostRules,
+      path: /https?:\/\//,
+    },
+    start: function () {
+      var url = window.location.pathname + window.location.search + window.location.hash;
+      url = url.match(/(https?:\/\/.*)$/);
+      url = url[1];
+      $.openLink(url);
+    },
+  });
+  $.register({
+    rule: {
+      host: hostRules,
       path: /^\/[\d\w]+/,
     },
     ready: function () {
       $.removeNodes('iframe');
+      $.removeAllTimer();
       var m = $.searchScripts(/sessionId: "([\d\w]+)",/);
       if (m) {
+        afterGotSessionId(m[1]);
         return;
       }
       var o = new MutationObserver(function (mutations) {
@@ -5262,6 +5266,7 @@ $.register({
           var m = $.searchScripts(/sessionId: "([\d\w]+)",/);
           if (m) {
             o.disconnect();
+            afterGotSessionId(m[1]);
           }
         });
       });

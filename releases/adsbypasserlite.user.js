@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.37.1
+// @version        5.37.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -2449,6 +2449,7 @@ $.register({
           rejecter = reject;
         });
         p.then(function (data) {
+          _.info(data);
           data = JSON.parse(data);
           if (data.Success) {
             $.openLink(data.Url);
@@ -3073,18 +3074,6 @@ $.register({
   $.register({
     rule: {
       host: hostRules,
-      path: /https?:\/\//,
-    },
-    start: function () {
-      var url = window.location.pathname + window.location.search + window.location.hash;
-      url = url.match(/(https?:\/\/.*)$/);
-      url = url[1];
-      $.openLink(url);
-    },
-  });
-  $.register({
-    rule: {
-      host: hostRules,
       path: /^\/freeze\/.+/,
     },
     ready: function () {
@@ -3105,12 +3094,26 @@ $.register({
   $.register({
     rule: {
       host: hostRules,
+      path: /https?:\/\//,
+    },
+    start: function () {
+      var url = window.location.pathname + window.location.search + window.location.hash;
+      url = url.match(/(https?:\/\/.*)$/);
+      url = url[1];
+      $.openLink(url);
+    },
+  });
+  $.register({
+    rule: {
+      host: hostRules,
       path: /^\/[\d\w]+/,
     },
     ready: function () {
       $.removeNodes('iframe');
+      $.removeAllTimer();
       var m = $.searchScripts(/sessionId: "([\d\w]+)",/);
       if (m) {
+        afterGotSessionId(m[1]);
         return;
       }
       var o = new MutationObserver(function (mutations) {
@@ -3118,6 +3121,7 @@ $.register({
           var m = $.searchScripts(/sessionId: "([\d\w]+)",/);
           if (m) {
             o.disconnect();
+            afterGotSessionId(m[1]);
           }
         });
       });
