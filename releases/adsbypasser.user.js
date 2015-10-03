@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.37.2
+// @version        5.38.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.38.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.2/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.2/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.37.2/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.38.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.38.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.38.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -2985,7 +2985,7 @@ $.register({
         host: [
           /^image(ontime|corn|picsa)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy)image\.com$/,
-          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks)\.com$/,
+          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
           /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus|nimplus|newimagepost|xxximagenow)\.com$/,
@@ -3003,7 +3003,8 @@ $.register({
           /^shotimg\.org$/,
           /^img(studio|spot)\.org$/,
           /^image(\.adlock|on|team)\.org$/,
-          /^(dragimage|teenshot|teenimage)\.org$/,
+          /^(drag|teen|mega)image\.org$/,
+          /^teenshot\.org$/,
           /^(hotimages|55888)\.eu$/,
           /^imgcloud\.co$/,
           /^pixup\.us$/,
@@ -4601,13 +4602,21 @@ $.register({
           } else {
             _.warn('invalid request');
           }
+        }, function () {
+          _.warn('request failed', xhr);
         });
         that.open = ef(function (method, url, async, user, password) {
+          _.info('open AJAX with', method, url, async, user, password);
           return xhr.open(method, url, async, user, password);
         });
         that.send = ef(function (arg) {
+          _.info('send AJAX with', arg);
           var r = xhr.send(arg);
-          resolver(xhr.responseText);
+          if (xhr.status === 200) {
+            resolver(xhr.responseText);
+          } else {
+            rejecter(xhr);
+          }
           return r;
         });
         return that;
@@ -4722,6 +4731,10 @@ $.register({
   rule: {
     host: /^linkshrink\.net$/,
     path: /^\/[a-zA-Z0-9]+$/,
+  },
+  start: function () {
+    'use strict';
+    $.window._impspcabe = 0;
   },
   ready: function () {
     'use strict';
@@ -5252,6 +5265,9 @@ $.register({
     rule: {
       host: hostRules,
       path: /^\/[\d\w]+/,
+    },
+    start: function () {
+      $.window._impspcabe = 0;
     },
     ready: function () {
       $.removeNodes('iframe');
