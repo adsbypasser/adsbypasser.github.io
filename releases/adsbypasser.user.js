@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.38.0
+// @version        5.39.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.38.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.39.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.38.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.38.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.38.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.39.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.39.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.39.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -2985,7 +2985,7 @@ $.register({
         host: [
           /^image(ontime|corn|picsa)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy)image\.com$/,
-          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay)\.com$/,
+          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
           /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus|nimplus|newimagepost|xxximagenow)\.com$/,
@@ -3578,10 +3578,13 @@ $.register({
   },
   ready: function () {
     'use strict';
-    $.removeNodes('iframe');
-    var a = $('#close');
-    a.disabled = false;
-    a.click();
+    $.removeNodes('iframe, #CashSlideDiv, #ct_catfish');
+    var a = document.querySelector('#modal-shadow');
+    a.style.display = 'block';
+    a = document.querySelector('#modal-alert');
+    a.style.left = 0;
+    a.style.top = 80;
+    a.style.display = 'block';
   },
 });
 
@@ -4360,6 +4363,18 @@ $.register({
 
 $.register({
   rule: {
+    host: /^itw\.me$/,
+    path: /^\/r\//,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('.go-form');
+    f.submit();
+  },
+});
+
+$.register({
+  rule: {
     host: /^ity\.im$/,
   },
   ready: function () {
@@ -4437,6 +4452,19 @@ $.register({
     'use strict';
     var f = $('form[style="font-weight:normal;font-size:12;font-family:Verdana;"]');
     $.openLink(f.action);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^link\.animagz\.org$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('.redirect');
+    a = a.href.match(/\?r=(.+)$/);
+    a = atob(a[1]);
+    $.openLink(a);
   },
 });
 
