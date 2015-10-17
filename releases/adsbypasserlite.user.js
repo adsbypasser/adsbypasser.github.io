@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.39.0
+// @version        5.40.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.39.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.40.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -232,6 +232,11 @@
   _.nop = function () {
   };
   _.none = _.nop;
+  _.wait = function (msDelay) {
+    return _.D(function (resolve, reject) {
+      setTimeout(resolve, msDelay);
+    });
+  };
   function log (method, args) {
     if (_._quiet) {
       return;
@@ -1433,9 +1438,9 @@ $.register({
   ready: function () {
     'use strict';
     $.removeNodes('iframe, #CashSlideDiv, #ct_catfish');
-    var a = document.querySelector('#modal-shadow');
+    var a = $('#modal-shadow');
     a.style.display = 'block';
-    a = document.querySelector('#modal-alert');
+    a = $('#modal-alert');
     a.style.left = 0;
     a.style.top = 80;
     a.style.display = 'block';
@@ -2421,88 +2426,72 @@ $.register({
         return Math.floor(Math.random() * 256);
       }).join('.');
     }
-    function findAdUrl () {
-      var script = $.searchScripts('window[\'init\' + \'Lb\' + \'js\' + \'\']');
+    function findToken (context) {
+      var script = $.searchScripts('    var f = window[\'init\' + \'Lb\' + \'js\' + \'\']', context);
       if (!script) {
+        _.warn('pattern changed');
         return null;
       }
-      var m = script.match(/AdUrl\s*:\s*'([^']+)'/);
-      if (!m) {
+      var adurl = script.match(/AdUrl\s*:\s*'([^']+)'/);
+      if (!adurl) {
         return null;
       }
-      return m[1];
-    }
-    function injectFakeFrame (adurl) {
-      var dummy = document.createElement('div');
-      dummy.id = 'content';
-      document.body.appendChild(dummy);
-      dummy = $.window.document.querySelector('#content');
-      Object.defineProperty(dummy, 'tagName', {
-        configurable: true,
-        enumerable: false,
-        value: 'iframe',
-        writable: false,
-      });
-      Object.defineProperty(dummy, 'src', {
-        configurable: true,
-        enumerable: false,
-        value: adurl,
-        writable: false,
-      });
-    }
-    var ci = (typeof cloneInto !== 'function') ? function (o) {
-      return o;
-    } : function (o) {
-      return cloneInto(o, unsafeWindow, {
-        cloneFunctions: true,
-        wrapReflectors: true,
-      });
-    };
-    var ef = (typeof exportFunction !== 'function') ? function (fn) {
-      return fn;
-    } : function (fn) {
-      return exportFunction(fn, unsafeWindow, {
-        allowCrossOriginArguments: true,
-      });
-    };
-    function inspectAjax () {
-      var XHR = $.window.XMLHttpRequest;
-      $.window.XMLHttpRequest = function () {
-        var that = ci({});
-        var xhr = new XHR();
-        var resolver = null;
-        var rejecter = null;
-        var p = _.D(function (resolve, reject) {
-          resolver = resolve;
-          rejecter = reject;
-        });
-        p.then(function (data) {
-          _.info(data);
-          data = JSON.parse(data);
-          if (data.Success) {
-            $.openLink(data.Url);
-          } else {
-            _.warn('invalid request');
-          }
-        }, function () {
-          _.warn('request failed', xhr);
-        });
-        that.open = ef(function (method, url, async, user, password) {
-          _.info('open AJAX with', method, url, async, user, password);
-          return xhr.open(method, url, async, user, password);
-        });
-        that.send = ef(function (arg) {
-          _.info('send AJAX with', arg);
-          var r = xhr.send(arg);
-          if (xhr.status === 200) {
-            resolver(xhr.responseText);
-          } else {
-            rejecter(xhr);
-          }
-          return r;
-        });
-        return that;
+      adurl = adurl[1];
+      var m1 = script.match(/AdPopUrl\s*:\s*'.+\?[^=]+=([\w\d]+)'/);
+      var m2 = script.match(/Token\s*:\s*'([\w\d]+)'/);
+      var token = m1[1] || m2[1];
+      var m = script.match(/=\s*(\d+);/);
+      var ak = parseInt(m[1], 10);
+      var re = /\+\s*(\d+);/g;
+      var tmp = null;
+      while((m = re.exec(script)) !== null) {
+        tmp = m[1];
+      }
+      ak += parseInt(tmp, 10);
+      return {
+        t: token,
+        aK: ak,
+        adurl: adurl,
       };
+    }
+    function sendRequest (token) {
+      $.get(token.adurl);
+      delete token.adurl;
+      token.a_b = false;
+      _.info('waiting the interval');
+      return _.wait(5000).then(function () {
+        _.info('sending token: %o', token);
+        return $.get('/intermission/loadTargetUrl', token, {
+          'X-Requested-With': _.none,
+          Origin: _.none,
+        });
+      }).then(function (text) {
+        var data = _.parseJSON(text);
+        _.info('response: %o', data);
+        if (!data.Success && data.Errors[0] === 'Invalid token') {
+          _.warn('got invalid token');
+          return retry();
+        }
+        if (data.AdBlockSpotted) {
+          _.warn('adblock spotted');
+          return;
+        }
+        if (data.Success && !data.AdBlockSpotted && data.Url) {
+          return data.Url;
+        }
+      });
+    }
+    function retry () {
+      return $.get(window.location.toString(), {}, {
+        'X-Forwarded-For': generateRandomIP(),
+      }).then(function (text) {
+        var d = $.toDOM(text);
+        var t = findToken(d);
+        if (!t) {
+          return _.wait(1000).then(retry);
+        }
+        return sendRequest(t);
+      });
     }
     $.register({
       rule: {
@@ -2526,7 +2515,7 @@ $.register({
         host: hostRules,
       },
       start: function () {
-        inspectAjax();
+        $.window.XMLHttpRequest = _.nop;
       },
       ready: function () {
         $.removeAllTimer();
@@ -2537,13 +2526,10 @@ $.register({
           $.openLink(path);
           return;
         }
-        var adurl = findAdUrl();
-        if (!adurl) {
-          _.warn('pattern changed');
-          return;
-        }
-        injectFakeFrame(adurl);
-        $.get(adurl);
+        var token = findToken(document);
+        sendRequest(token).then(function (url) {
+          $.openLink(url);
+        });
       },
     });
     $.register({
