@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.40.0
+// @version        5.41.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.40.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.41.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.40.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.40.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.40.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.41.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.41.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.41.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1753,7 +1753,7 @@ $.register({
     host: [
       /^dailyss\.net$/,
       /^(www\.)daily-img\.com$/,
-      /^img-365\.com$/,
+      /^(www\.)img-365\.com$/,
     ],
     path: /^\/image\/.+$/,
   },
@@ -2452,7 +2452,7 @@ $.register({
 (function () {
   'use strict';
   var host = [
-    /^(img(fantasy|leech|\.pornleech|smile|say)|imagedomino)\.com$/,
+    /^(img(fantasy|leech|\.pornleech|smile|say|nemo)|imagedomino)\.com$/,
     /^imageporn\.eu$/,
     /^0img\.net$/,
   ];
@@ -2811,6 +2811,7 @@ $.register({
     'http://www.onlinepic.net/share.php?id=*',
     'http://www.pixsor.com/share.php?id=*',
     'http://www.pixsor.com/share-*.html',
+    'http://pixsor.com/XXX/share-*.html',
     'http://holdthemoan.net/x/share-*.html',
   ],
   ready: function () {
@@ -2990,7 +2991,7 @@ $.register({
         host: [
           /^image(ontime|corn|picsa)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy)image\.com$/,
-          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz)\.com$/,
+          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz|binbou)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
           /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus|nimplus|newimagepost|xxximagenow)\.com$/,
@@ -3011,13 +3012,13 @@ $.register({
           /^(drag|teen|mega)image\.org$/,
           /^teenshot\.org$/,
           /^(hotimages|55888)\.eu$/,
-          /^imgcloud\.co$/,
+          /^img(cloud|mag)\.co$/,
           /^pixup\.us$/,
           /^bulkimg\.info$/,
           /^img\.yt$/,
           /^vava\.in$/,
           /^(pixxx|picspornfree|imgload)\.me$/,
-          /^(porno-pirat|24avarii)\.ru$/,
+          /^(porno-pirat|24avarii|loftlm)\.ru$/,
           /^hotimage\.uk$/,
           /^imgease\.re$/,
           /^goimg\.xyz$/,
@@ -5454,7 +5455,7 @@ $.register({
     {
       host: [
         /^(www\.)?dlneko\.com$/,
-        /^satuasia\.com$/,
+        /^(satuasia|tawaku)\.com$/,
       ],
       query: /go=(\w+=*)/,
     },
