@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.41.0
+// @version        5.42.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.41.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.42.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -2374,6 +2374,39 @@ $.register({
   },
 });
 
+(function () {
+  'use strict';
+  function sendRequest (opts) {
+    return $.post('/ajax/r.php', opts).then(function (data) {
+      if (data.length <= 1) {
+        return sendRequest(opts);
+      }
+      var a = $.toDOM(data);
+      a = $('a', a);
+      return a.href;
+    });
+  }
+  $.register({
+    rule: {
+      host: /^link5s\.com$/,
+      path: /^\/([^\/]+)$/,
+    },
+    ready: function (m) {
+      $.window.$ = null;
+      var i = $('#iframeID');
+      var opts = {
+        page: m.path[1],
+        advID: i.dataset.cmp,
+        u: i.dataset.u,
+      };
+      $.removeNodes('iframe');
+      sendRequest(opts).then(function (url) {
+        $.openLink(url);
+      });
+    },
+  });
+})();
+
 (function() {
   function ConvertFromHex (str) {
     var result = [];
@@ -3278,7 +3311,7 @@ $.register({
     {
       host: [
         /^(www\.)?sylnk\.net$/,
-        /^dlneko\.com$/,
+        /^dlneko\.(com|net)$/,
       ],
       query: /link=([^&]+)/,
     },
@@ -3309,6 +3342,7 @@ $.register({
       host: [
         /^(www\.)?dlneko\.com$/,
         /^(satuasia|tawaku)\.com$/,
+        /^ww3\.manteb\.in$/,
       ],
       query: /go=(\w+=*)/,
     },

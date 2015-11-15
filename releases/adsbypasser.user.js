@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.41.0
+// @version        5.42.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.41.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.42.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.41.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.41.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.41.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.42.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.42.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.42.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1530,9 +1530,10 @@ $.register({
   ],
   ready: function () {
     'use strict';
-    var a = $('div.tor a, div.i-h a');
-    a.removeAttribute('target');
-    a.click();
+    var a = $('.main-l a');
+    $.openImage(a.href, {
+      referer: true,
+    });
   },
 });
 
@@ -1754,6 +1755,7 @@ $.register({
       /^dailyss\.net$/,
       /^(www\.)daily-img\.com$/,
       /^(www\.)img-365\.com$/,
+      /^365-img\.com$/,
     ],
     path: /^\/image\/.+$/,
   },
@@ -2683,7 +2685,10 @@ $.register({
   });
   $.register({
     rule: {
-      host: /imageview\.me|244pix\.com|imgnip\.com|postimg\.net|imgcentral\.com$/,
+      host: [
+        /img(nip|central|cream)\.com$/,
+        /imageview\.me|244pix\.com|postimg\.net$/,
+      ],
       path: /^\/viewerr.*\.php$/,
       query: /file=([^&]+)/,
     },
@@ -3014,7 +3019,7 @@ $.register({
           /^(hotimages|55888)\.eu$/,
           /^img(cloud|mag)\.co$/,
           /^pixup\.us$/,
-          /^bulkimg\.info$/,
+          /^(bulkimg|photo-up)\.info$/,
           /^img\.yt$/,
           /^vava\.in$/,
           /^(pixxx|picspornfree|imgload)\.me$/,
@@ -4521,6 +4526,39 @@ $.register({
   },
 });
 
+(function () {
+  'use strict';
+  function sendRequest (opts) {
+    return $.post('/ajax/r.php', opts).then(function (data) {
+      if (data.length <= 1) {
+        return sendRequest(opts);
+      }
+      var a = $.toDOM(data);
+      a = $('a', a);
+      return a.href;
+    });
+  }
+  $.register({
+    rule: {
+      host: /^link5s\.com$/,
+      path: /^\/([^\/]+)$/,
+    },
+    ready: function (m) {
+      $.window.$ = null;
+      var i = $('#iframeID');
+      var opts = {
+        page: m.path[1],
+        advID: i.dataset.cmp,
+        u: i.dataset.u,
+      };
+      $.removeNodes('iframe');
+      sendRequest(opts).then(function (url) {
+        $.openLink(url);
+      });
+    },
+  });
+})();
+
 (function() {
   function ConvertFromHex (str) {
     var result = [];
@@ -5425,7 +5463,7 @@ $.register({
     {
       host: [
         /^(www\.)?sylnk\.net$/,
-        /^dlneko\.com$/,
+        /^dlneko\.(com|net)$/,
       ],
       query: /link=([^&]+)/,
     },
@@ -5456,6 +5494,7 @@ $.register({
       host: [
         /^(www\.)?dlneko\.com$/,
         /^(satuasia|tawaku)\.com$/,
+        /^ww3\.manteb\.in$/,
       ],
       query: /go=(\w+=*)/,
     },
