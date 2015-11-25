@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.42.0
+// @version        5.43.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.42.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.43.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -3268,6 +3268,19 @@ $.register({
 
 $.register({
   rule: {
+    host: /^sht\.io$/,
+    path: /^\/\d+\/(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = atob(m.path[1]);
+    url = url.match(/\{sht-io\}(.+)$/);
+    $.openLink(url[1]);
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?similarsites\.com$/,
     path: /^\/goto\/([^?]+)/
   },
@@ -3655,19 +3668,19 @@ $.register({
 
 $.register({
   rule: {
-    host: /^www\.4shared\.com$/,
-    path: /^\/(mp3|get|rar|zip|file|android|software|program)\//,
+    host: /^akoam\.com$/,
+    path: /^\/download\//,
   },
-  ready: function () {
+  start: function () {
     'use strict';
-    $.get('http://www.4server.info/find.php', {
-      data: window.location.href,
-    }).then(function (data) {
-      var d = $.toDOM(data);
-      var c = $('meta[http-equiv=refresh]', d);
-      var b = c.content.match(/URL=(.+)$/);
-      var a = b[1];
-      $.openLink(a);
+    var location_link = location.hash;
+    $.post(location_link).then(function (data) {
+      data = JSON.parse(data);
+      if (!data.hash_data) {
+        _.warn('rule changed');
+        return;
+      }
+      $.openLink(data.direct_link);
     });
   },
 });

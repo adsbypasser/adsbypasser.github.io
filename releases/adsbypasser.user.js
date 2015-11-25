@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.42.0
+// @version        5.43.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.42.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.43.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.42.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.42.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.42.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.43.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.43.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.43.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1203,19 +1203,19 @@
 
 $.register({
   rule: {
-    host: /^www\.4shared\.com$/,
-    path: /^\/(mp3|get|rar|zip|file|android|software|program)\//,
+    host: /^akoam\.com$/,
+    path: /^\/download\//,
   },
-  ready: function () {
+  start: function () {
     'use strict';
-    $.get('http://www.4server.info/find.php', {
-      data: window.location.href,
-    }).then(function (data) {
-      var d = $.toDOM(data);
-      var c = $('meta[http-equiv=refresh]', d);
-      var b = c.content.match(/URL=(.+)$/);
-      var a = b[1];
-      $.openLink(a);
+    var location_link = location.hash;
+    $.post(location_link).then(function (data) {
+      data = JSON.parse(data);
+      if (!data.hash_data) {
+        _.warn('rule changed');
+        return;
+      }
+      $.openLink(data.direct_link);
     });
   },
 });
@@ -1737,6 +1737,17 @@ $.register({
     }
     var o = $('#show_image');
     $.openImage(o.src);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^crd\.ht$/,
+  },
+  ready: function () {
+    'use strict';
+    var i = $('.continue > form > input[name=link]');
+    $.openImage(i.value);
   },
 });
 
@@ -2454,7 +2465,7 @@ $.register({
 (function () {
   'use strict';
   var host = [
-    /^(img(fantasy|leech|\.pornleech|smile|say|nemo)|imagedomino)\.com$/,
+    /^(img(fantasy|leech|\.pornleech|smile|say|nemo)|imagedomino|lovechix)\.com$/,
     /^imageporn\.eu$/,
     /^0img\.net$/,
   ];
@@ -2996,10 +3007,11 @@ $.register({
         host: [
           /^image(ontime|corn|picsa)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy)image\.com$/,
-          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz|binbou)\.com$/,
+          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz|binbou|2share)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
-          /^(picstwist|ericsony|wpc8|uplimg|xxx\.pornprimehd|lexiit|thumbnailus|nimplus|newimagepost|xxximagenow)\.com$/,
+          /^xxx(\.pornprimehd|imagenow|screens)\.com$/,
+          /^(picstwist|ericsony|wpc8|uplimg|lexiit|thumbnailus|nimplus|newimagepost)\.com$/,
           /^((i|hentai)\.)?imgslip\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
           /^(go|er)imge\.com$/,
@@ -3009,7 +3021,7 @@ $.register({
           /imgseeds\.com$/,
           /damimage\.com$/,
           /imagedecode\.com$/,
-          /^img(serve|coin|fap|candy|master|-view|run|boom)\.net$/,
+          /^img(serve|coin|fap|candy|master|-view|run|boom|project|python)\.net$/,
           /^(gallerycloud|imagelaser|project-photo|pix-link|funimg|golfpit)\.net$/,
           /^shotimg\.org$/,
           /^img(studio|spot)\.org$/,
@@ -5415,6 +5427,19 @@ $.register({
     'use strict';
     var url = decodeURIComponent(m.query[1]);
     $.openLink(url);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^sht\.io$/,
+    path: /^\/\d+\/(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = atob(m.path[1]);
+    url = url.match(/\{sht-io\}(.+)$/);
+    $.openLink(url[1]);
   },
 });
 
