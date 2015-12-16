@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.43.0
+// @version        5.44.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.43.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.44.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -487,7 +487,7 @@
   };
   $.getCookie = function (key) {
     var c = _.C(document.cookie.split(';')).find(function (v) {
-      var k = v.replace(/^\s*(\w+)=.+$/, '$1');
+      var k = v.replace(/^\s*([a-zA-Z0-9-_]+)=.+$/, '$1');
       if (k !== key) {
         return _.none;
       }
@@ -495,7 +495,7 @@
     if (!c) {
       return null;
     }
-    c = c.value.replace(/^\s*\w+=([^;]+).+$/, '$1');
+    c = c.value.replace(/^\s*[a-zA-Z0-9-_]+=([^;]+).?$/, '$1');
     if (!c) {
       return null;
     }
@@ -758,6 +758,11 @@
     while (handle > 0) {
       window.clearTimeout(handle--);
     }
+  };
+  $.generateRandomIP = function () {
+    return [0,0,0,0].map(function () {
+      return Math.floor(Math.random() * 256);
+    }).join('.');
   };
   $.captcha = function (imgSrc, cb) {
     if (!$.config.externalServerSupport) {
@@ -1165,6 +1170,22 @@ $.register({
         image: 'Skip Ad.',
       },
     });
+  },
+});
+
+$.register({
+  rule: {
+    host: /^ad4\.fr$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var s = $.searchScripts(/"src", "([^"]+)"/);
+    if (!s) {
+      _.warn('changed');
+      return;
+    }
+    $.openLink(s[1]);
   },
 });
 
@@ -1927,6 +1948,19 @@ $.register({
 
 $.register({
   rule: {
+    host: /^www\.cuzle\.com$/,
+    path: /^\/$/,
+    query: /^\?(.+)=$/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = atob(m.query[1]);
+    $.openLink(url);
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?cvc\.la$/,
     path: /^\/\w+$/,
   },
@@ -2374,6 +2408,28 @@ $.register({
   },
 });
 
+$.register({
+  rule: {
+    host: /^link(4ad|ajc)\.com$/,
+    path: /^\/(.+)$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var d = $('div[id^=module_]');
+    d = d.id.match(/module_(\d+)/);
+    d = d[1];
+    $.post('form.php?block_id=' + d, {
+      cmd: 'get_source',
+      act: 'waiting',
+      id: m.path[1],
+    }).then(function (url) {
+      $.openLink(url);
+    }).catch(function (e) {
+      _.warn(e);
+    });
+  },
+});
+
 (function () {
   'use strict';
   function sendRequest (opts) {
@@ -2454,11 +2510,6 @@ $.register({
   ];
   (function () {
     'use strict';
-    function generateRandomIP () {
-      return [0,0,0,0].map(function () {
-        return Math.floor(Math.random() * 256);
-      }).join('.');
-    }
     function findToken (context) {
       var script = $.searchScripts('    var f = window[\'init\' + \'Lb\' + \'js\' + \'\']', context);
       if (!script) {
@@ -2516,7 +2567,7 @@ $.register({
     }
     function retry () {
       return $.get(window.location.toString(), {}, {
-        'X-Forwarded-For': generateRandomIP(),
+        'X-Forwarded-For': $.generateRandomIP(),
       }).then(function (text) {
         var d = $.toDOM(text);
         var t = findToken(d);
@@ -2625,6 +2676,31 @@ $.register({
     }
     var l = matches[1];
     $.openLink(l);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^linksas\.us$/,
+    path: /^(\/\w+)$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var token = $.getCookie('XSRF-TOKEN');
+    var payload = JSON.stringify({
+      ipAddress: $.generateRandomIP(),
+      country: '',
+      recaptcha: '',
+    });
+    $.post('/go' + m.path[1], payload, {
+      'Content-Type': 'application/json',
+      'X-XSRF-TOKEN': token,
+    }).then(function (data) {
+      data = JSON.parse(data);
+      $.openLink(data.message);
+    }).catch(function (e) {
+      _.warn(e);
+    });
   },
 });
 
@@ -3303,6 +3379,19 @@ $.register({
     var url = window.location.toString();
     var i = url.lastIndexOf('http');
     url = url.substr(i);
+    $.openLink(url);
+  },
+});
+
+$.register({
+  rule: {
+    host: /^streamingfrench\.net$/,
+    path: /^\/$/,
+    query: /^\?xb=(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = decodeURIComponent(m.query[1]);
     $.openLink(url);
   },
 });
