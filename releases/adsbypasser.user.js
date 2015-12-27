@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.44.0
+// @version        5.45.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.44.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.45.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.44.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.44.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.44.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.45.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.45.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.45.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -230,7 +230,7 @@
     try {
       return JSON.parse(json);
     } catch (e) {
-      _.warn(e);
+      _.warn(e, json);
     }
     return _.none;
   };
@@ -243,6 +243,17 @@
   _.wait = function (msDelay) {
     return _.D(function (resolve, reject) {
       setTimeout(resolve, msDelay);
+    });
+  };
+  _.try = function (msInterval, fn) {
+    return _.D(function (resolve, reject) {
+      var handle = setInterval(function () {
+        var result = fn();
+        if (result !== _.none) {
+          clearInterval(handle);
+          resolve(result);
+        }
+      }, msInterval);
     });
   };
   function log (method, args) {
@@ -425,6 +436,14 @@
         headers[k] = v;
       }
     });
+    if (data) {
+      if (headers['Content-Type'].indexOf('json') >= 0) {
+        data = JSON.stringify(data);
+      } else {
+        data = toQuery(data);
+      }
+      headers['Content-Length'] = data.length;
+    }
     var xhr = null;
     var promise = _.D(function (resolve, reject) {
       xhr = GM.xmlhttpRequest({
@@ -458,10 +477,8 @@
     return ajax('GET', url + data, '', headers);
   };
   $.post = function (url, data, headers) {
-    data = toQuery(data);
     var h = {
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      'Content-Length': data.length,
     };
     if (headers) {
       _.C(headers).each(function (v, k) {
@@ -1496,6 +1513,20 @@ $.register({
 
 $.register({
   rule: {
+    host: /^uplea\.com$/,
+    path: /^\/step\//,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('.button-download');
+    _.wait(10000).then(function () {
+      $.openLink(a.href);
+    });
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?upmirror\.info$/,
   },
   ready: function () {
@@ -1535,7 +1566,7 @@ $.register({
   ],
   ready: function () {
     'use strict';
-    var a = $('.main-l a');
+    var a = $('.main a, .main-l a');
     $.openImage(a.href, {
       referer: true,
     });
@@ -1593,25 +1624,12 @@ $.register({
     'http://*.abload.de/image.php?img=*',
     'http://www.imageup.ru/*/*/*.html',
     'http://itmages.ru/image/view/*/*',  // different layout same handler
+    'http://www.imagepearl.com/view/*',  // different layout same handler
   ],
   ready: function () {
     'use strict';
     var i = $('#image');
     $.openImage(i.src);
-  },
-});
-
-$.register({
-  rule: {
-    host: /alabout\.com$/,
-  },
-  ready: function () {
-    'use strict';
-    $.$$('a').each(function (a) {
-      if (/http:\/\/(www\.)?alabout\.com\/j\.phtml\?url=/.test(a.href)) {
-        a.href = a.textContent;
-      }
-    });
   },
 });
 
@@ -3021,10 +3039,12 @@ $.register({
     $.removeNodes('iframe, #adblock_detect');
     var node = $.$('#continuetoimage > form input');
     if (node) {
-      setTimeout(function () {
+      _.wait(500).then(function () {
         node.removeAttribute('disabled');
+        return _.wait(500);
+      }).then(function () {
         node.click();
-      }, 1000);
+      });
       return;
     }
     var i = $('img[class^=centred]');
@@ -3040,18 +3060,19 @@ $.register({
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
           /^xxx(\.pornprimehd|imagenow|screens)\.com$/,
-          /^(picstwist|ericsony|wpc8|uplimg|lexiit|thumbnailus|nimplus|newimagepost)\.com$/,
+          /^(picstwist|ericsony|wpc8|uplimg|lexiit|thumbnailus|newimagepost|fapingpics)\.com$/,
           /^((i|hentai)\.)?imgslip\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
           /^(go|er)imge\.com$/,
           /^(like\.)?08lkk\.com$/,
           /^(www\.)?\.imgult\.com$/,
+          /^nim(plus|zshare)\.com$/,
           /^nudeximg\.com$/,
           /imgseeds\.com$/,
           /damimage\.com$/,
           /imagedecode\.com$/,
           /^img(serve|coin|fap|candy|master|-view|run|boom|project|python)\.net$/,
-          /^(gallerycloud|imagelaser|project-photo|pix-link|funimg|golfpit)\.net$/,
+          /^(gallerycloud|imagelaser|project-photo|pix-link|funimg|golfpit|xximg)\.net$/,
           /^shotimg\.org$/,
           /^img(studio|spot)\.org$/,
           /^image(\.adlock|on|team)\.org$/,
@@ -3069,6 +3090,8 @@ $.register({
           /^imgease\.re$/,
           /^goimg\.xyz$/,
           /^pic2pic\.site$/,
+          /^darpix\.ga$/,
+          /^sxpics\.nl$/,
         ],
         path: /^\/img-.*\.html$/,
       },
@@ -4205,6 +4228,23 @@ $.register({
 
 $.register({
   rule: {
+    host: /^www\.dewaurl\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('.framedRedirectTopFrame');
+    $.get(f.src).then(function (html) {
+      html = $.toDOM(html);
+      var a = $('#continueButton > a', html);
+      $.openLink(a.href);
+    }).catch(function (e) {
+      _.warn(e);
+    });
+  },
+});
+
+$.register({
+  rule: {
     host: /^dikit\.in$/,
   },
   ready: function () {
@@ -4875,17 +4915,34 @@ $.register({
   },
   ready: function (m) {
     'use strict';
-    var token = $.getCookie('XSRF-TOKEN');
-    var payload = JSON.stringify({
-      ipAddress: $.generateRandomIP(),
-      country: '',
-      recaptcha: '',
-    });
-    $.post('/go' + m.path[1], payload, {
-      'Content-Type': 'application/json',
-      'X-XSRF-TOKEN': token,
+    _.try(1000, function () {
+      var recaptcha = $('#g-recaptcha-response');
+      if (!recaptcha) {
+        return null;
+      }
+      if (!recaptcha.value) {
+        return _.none;
+      }
+      return recaptcha.value;
+    }).then(function (recaptcha) {
+      var url = _.T('http://ipinfo.io/{0}/json')($.generateRandomIP());
+      return $.get(url).then(function (ipinfo) {
+        ipinfo = _.parseJSON(ipinfo);
+        return {
+          codeAds: 1,
+          country: ipinfo.country,
+          ipAddress: ipinfo.ip,
+          recaptcha: recaptcha,
+        };
+      });
+    }).then(function (payload) {
+      var token = $.getCookie('XSRF-TOKEN');
+      return $.post('/go' + m.path[1], payload, {
+        'Content-Type': 'application/json',
+        'X-XSRF-TOKEN': token,
+      });
     }).then(function (data) {
-      data = JSON.parse(data);
+      data = _.parseJSON(data);
       $.openLink(data.message);
     }).catch(function (e) {
       _.warn(e);
@@ -5389,7 +5446,8 @@ $.register({
         if (r.status == "ok" && r.destinationUrl) {
           clearInterval(i);
           $.removeAllTimer();
-          $.openLink(r.destinationUrl);
+          var url = decodeURIComponent(r.destinationUrl);
+          $.openLink(url);
         }
       });
     }, 1000);
