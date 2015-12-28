@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.45.0
+// @version        5.45.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.45.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.45.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -4092,20 +4092,6 @@ $.register({
     'use strict';
     var a = $('#main-content a.btn.btn-default');
     $.openLink(a.href);
-  },
-});
-
-$.register({
-  rule: {
-    host: /^uplea\.com$/,
-    path: /^\/step\//,
-  },
-  ready: function () {
-    'use strict';
-    var a = $('.button-download');
-    _.wait(10000).then(function () {
-      $.openLink(a.href);
-    });
   },
 });
 
