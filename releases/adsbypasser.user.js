@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.45.1
+// @version        5.46.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.45.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.46.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.45.1/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.45.1/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.45.1/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.46.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.46.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.46.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -1605,19 +1605,34 @@ $.register({
   },
 });
 
-$.register({
-  rule: [
-    'http://*.abload.de/image.php?img=*',
-    'http://www.imageup.ru/*/*/*.html',
-    'http://itmages.ru/image/view/*/*',  // different layout same handler
-    'http://www.imagepearl.com/view/*',  // different layout same handler
-  ],
-  ready: function () {
-    'use strict';
+(function () {
+  'use strict';
+  function run () {
     var i = $('#image');
     $.openImage(i.src);
-  },
-});
+  }
+  $.register({
+    rule: {
+      host: /^www\.imagepearl\.com$/,
+      path: /^\/verify\/(.+)$/,
+    },
+    start: function (m) {
+      $.openLink('/image/' + m.path[1], {
+        referer: false,
+      });
+    },
+  });
+  $.register({
+    rule: [
+      'http://*.abload.de/image.php?img=*',
+      'http://www.imageup.ru/*/*/*.html',
+      'http://itmages.ru/image/view/*/*',  // different layout same handler
+      'http://www.imagepearl.com/view/*',  // different layout same handler
+      'http://www.imagepearl.com/image/*',  // different layout same handler
+    ],
+    ready: run,
+  });
+})();
 
 $.register({
   rule: {
@@ -2474,7 +2489,8 @@ $.register({
 (function () {
   'use strict';
   var host = [
-    /^(img(fantasy|leech|\.pornleech|smile|say|nemo)|imagedomino|lovechix)\.com$/,
+    /^img(fantasy|leech|\.pornleech|smile|say|nemo|sense)\.com$/,
+    /^imagedomino|lovechix\.com$/,
     /^imageporn\.eu$/,
     /^0img\.net$/,
   ];
@@ -2522,7 +2538,7 @@ $.register({
 $.register({
   rule: {
     host: /^imgnova\.xyz$/,
-    path: /^\/i\/v\.php$/,
+    path: /^\/i\/(v|x)\.php$/,
     query: /f=(.+)$/,
   },
   start: function (m) {
@@ -2557,6 +2573,11 @@ $.register({
     }
   }
   function helper (id, getNext) {
+    var recaptcha = $.$('#recaptcha_widget');
+    if (recaptcha) {
+      _.info('stop because recaptcha');
+      return;
+    }
     var i = $.$('input[name="next"]');
     if (i) {
       var next = getNext(i);
@@ -2573,13 +2594,13 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^img(paying|mega|zeus|monkey|trex)\.com$/,
+        /^img(paying|mega|zeus|monkey|trex|ve)\.com$/,
         /^(www\.)?imgsee\.me$/,
         /^imgclick\.net$/,
         /^(uploadrr|imageeer|imzdrop|www\.uimgshare)\.com$/,
         /^imgdrive\.co$/,
         /^cuteimg\.cc$/,
-        /^imgtiger\.org$/,
+        /^img(tiger|gold)\.org$/,
         /^myimg\.club$/,
         /^foxyimg\.link$/,
         /^hulkimge\.com$/,
@@ -3042,11 +3063,11 @@ $.register({
         host: [
           /^image(ontime|corn|picsa)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy)image\.com$/,
-          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz|binbou|2share|22)\.com$/,
+          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz|binbou|2share|22|cover)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
           /^xxx(\.pornprimehd|imagenow|screens)\.com$/,
-          /^(picstwist|ericsony|wpc8|uplimg|lexiit|thumbnailus|newimagepost|fapingpics)\.com$/,
+          /^(picstwist|ericsony|wpc8|uplimg|lexiit|thumbnailus|newimagepost|fapingpics|dimtus)\.com$/,
           /^((i|hentai)\.)?imgslip\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
           /^(go|er)imge\.com$/,
@@ -3071,7 +3092,7 @@ $.register({
           /^img\.yt$/,
           /^vava\.in$/,
           /^(pixxx|picspornfree|imgload)\.me$/,
-          /^(porno-pirat|24avarii|loftlm)\.ru$/,
+          /^(porno-pirat|24avarii|loftlm|18pron)\.ru$/,
           /^hotimage\.uk$/,
           /^imgease\.re$/,
           /^goimg\.xyz$/,
@@ -3641,6 +3662,20 @@ $.register({
 
 $.register({
   rule: {
+    host: /^ah\.pe$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var url = $.window.url;
+    $.get(url).then(function (url) {
+      $.openLink(url);
+    });
+  },
+});
+
+$.register({
+  rule: {
     host: /^aka\.gr$/
   },
   ready: function () {
@@ -3779,6 +3814,7 @@ $.register({
     };
     var matches = script.match(/\$.post\('([^']*)'[^{]+(\{opt:'make_log'[^}]+\}\}),/i);
     var make_url = matches[1];
+    var tZ, cW, cH, sW, sH;
     var make_opts = eval('(' + matches[2] + ')');
     function makeLog () {
         make_opts.opt = 'make_log';
@@ -4713,7 +4749,7 @@ $.register({
   var hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|eafyfsuh)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|eafyfsuh|sasontnwc)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
     /^(([\w]{8}|www)\.)?hornywood\.tv$/,
