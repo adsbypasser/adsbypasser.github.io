@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.46.0
+// @version        5.47.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.46.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.47.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -1344,17 +1344,6 @@ $.register({
       $.openLink(h);
     },
   });
-  $.register({
-    rule: 'http://ad7.biz/*',
-    ready: function () {
-      $.removeNodes('iframe');
-      $.resetCookies();
-      var script = $.searchScripts('var r_url');
-      var url = script.match(/&url=([^&]+)/);
-      url = url[1];
-      $.openLink(url);
-    },
-  });
 })();
 
 $.register({
@@ -1717,6 +1706,7 @@ $.register({
         /^miniurl\.tk$/,
         /^vizzy\.es$/,
         /^kazan\.vc$/,
+        /^linkcash\.ml$/,
       ],
       path: /^\/.+/,
     },
@@ -1810,18 +1800,40 @@ $.register({
   },
 });
 
-$.register({
-  rule: {
-    host: /^bk-ddl\.net$/,
-    path: /^\/\w+$/,
-  },
-  ready: function (m) {
-    'use strict';
-    var l = $('a.btn-block.redirect').href;
-    var b64 = l.match(/\?r=(\w+={0,2}?)/);
-    $.openLink(atob(b64[1]));
-  },
-});
+(function () {
+  'use strict';
+  var hostMapper = {
+    'bk-ddl.net': function () {
+      var a = $('a.btn-block.redirect');
+      return a.href;
+    },
+    'link.animagz.org': function () {
+      var a = $('a.redirect');
+      a = a.onclick.toString();
+      a = a.match(/window\.open \('([^']+)'\)/);
+      return a[1];
+    },
+    'coeg.in': function () {
+      var a = $('.link a');
+      return a.href;
+    },
+  };
+  $.register({
+    rule: {
+      host: [
+        /^bk-ddl\.net$/,
+        /^link\.animagz\.org$/,
+        /^coeg\.in$/,
+      ],
+      path: /^\/\w+$/,
+    },
+    ready: function (m) {
+      var mapper = hostMapper[m.host[0]];
+      var b64 = mapper().match(/\?r=(\w+={0,2}?)/);
+      $.openLink(atob(b64[1]));
+    },
+  });
+})();
 
 $.register({
   rule: {
@@ -2399,19 +2411,6 @@ $.register({
 
 $.register({
   rule: {
-    host: /^link\.animagz\.org$/,
-  },
-  ready: function () {
-    'use strict';
-    var a = $('.redirect');
-    a = a.href.match(/\?r=(.+)$/);
-    a = atob(a[1]);
-    $.openLink(a);
-  },
-});
-
-$.register({
-  rule: {
     host: /^(www\.)?link\.im$/,
     path: /^\/\w+$/,
   },
@@ -2511,6 +2510,17 @@ $.register({
     },
   });
 })();
+
+$.register({
+  rule: {
+    host: /^www\.linkarus\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#skip-ad');
+    $.openLink(a.href);
+  },
+});
 
 (function() {
   function ConvertFromHex (str) {
@@ -2727,6 +2737,17 @@ $.register({
     $.openLink(l);
   },
 });
+
+$.register({
+  rule: {
+    host: /^(www\.)?linkplugapp\.com$/,
+  },
+  ready: function () {
+    'use strict'
+    var a = $('#mc_embed_signup_scroll a')
+    $.openLink(a.href)
+  },
+})
 
 $.register({
   rule: {
@@ -3170,6 +3191,23 @@ $.register({
 
 $.register({
   rule: {
+    host: /^www\.ron\.vn$/,
+  },
+  ready: function () {
+    'use strict';
+    var script = $.searchScripts('linknexttop');
+    var data = script.match(/data:"([^"]+)"/);
+    var url = $.window.domain + 'click.html?' + data[1];
+    $.get(url, {}, {
+      'Content-Type': 'application/json; charset=utf-8',
+    }).then(function (url) {
+      $.openLink(url);
+    });
+  },
+});
+
+$.register({
+  rule: {
     host: /^(www\.)?sa\.ae$/,
     path: /^\/\w+\/$/,
   },
@@ -3493,6 +3531,11 @@ $.register({
       host: /^(www\.)?safelinkair\.com$/,
       path: /^\/code$/,
       query: /(?:\?|&)link=([a-zA-Z0-9=]+)(?:$|&)/,
+    },
+    {
+      host: /^link\.filmku\.net$/,
+      path: /^\/p\/go\.html$/,
+      query: /^\?url=([a-zA-Z0-9=]+)$/,
     },
   ],
   start: function (m) {
