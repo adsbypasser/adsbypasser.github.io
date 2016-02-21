@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.47.0
+// @version        5.48.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.47.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.48.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -23,9 +23,9 @@
 // @grant          GM_setValue
 // @run-at         document-start
 
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.47.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.47.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.47.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.48.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.48.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.48.0/img/imagedoc-darknoise.png
 
 // @include        http://*
 // @include        https://*
@@ -2486,39 +2486,26 @@ $.register({
   },
 });
 
-(function () {
-  'use strict';
-  var host = [
-    /^img(fantasy|leech|\.pornleech|smile|say|nemo|sense)\.com$/,
-    /^imagedomino|lovechix\.com$/,
-    /^imageporn\.eu$/,
-    /^0img\.net$/,
-  ];
-  $.register({
-    rule: {
-      host: host,
-      query: /^\?p=/,
-    },
-    ready: function () {
-      var i = $('#container-home img');
-      $.openImage(i.src);
-    },
-  });
-  $.register({
-    rule: {
-      host: host,
-      query: /^\?v=/,
-    },
-    ready: function () {
-      if ($.window.confirmAge) {
-        $.window.confirmAge(1);
-        return;
-      }
-      var i = $('#container-home img');
-      $.openImage(i.src);
-    },
-  });
-})();
+$.register({
+  rule: {
+    host: [
+      /^img(fantasy|leech|\.pornleech|smile|say|nemo|sense)\.com$/,
+      /^(imagedomino|lovechix)\.com$/,
+      /^imageporn\.eu$/,
+      /^0img\.net$/,
+    ],
+    query: /^\?(p|v)=/,
+  },
+  ready: function () {
+    'use strict';
+    if ($.window.confirmAge) {
+      $.window.confirmAge(1);
+      return;
+    }
+    var i = $('#container-home img[onclick]');
+    $.openImage(i.src);
+  },
+});
 
 $.register({
   rule: {
@@ -2537,8 +2524,11 @@ $.register({
 
 $.register({
   rule: {
-    host: /^imgnova\.xyz$/,
-    path: /^\/i\/(v|x|o)\.php$/,
+    host: [
+      /^imgnova\.xyz$/,
+      /^www\.hentai-hot\.xyz$/,
+    ],
+    path: /^\/i\/(v|x|o|r)\.php$/,
     query: /f=(.+)$/,
   },
   start: function (m) {
@@ -2626,6 +2616,7 @@ $.register({
         /^myimg\.club$/,
         /^foxyimg\.link$/,
         /^hulkimge\.com$/,
+        /^coreimg\.net$/,
       ],
       path: pathRule,
     },
@@ -2641,7 +2632,7 @@ $.register({
       ],
       path: pathRule,
     },
-    ready: function (m) {
+    ready: function () {
       var i = $.$('img.pic');
       if (i) {
         $.openImage(i.src);
@@ -2664,6 +2655,19 @@ $.register({
     },
     ready: function (m) {
       helper(m.path[1], getNext2);
+    },
+  });
+  $.register({
+    rule: 'http://imgview.net/tpind.php',
+    ready: function () {
+      var i = $.$('img.pic');
+      if (i) {
+        $.openImage(i.src, {replace: true});
+        return;
+      }
+      var d = $('div[id^="imageviewi"] input[type="submit"][style=""]');
+      d = d.parentNode;
+      d.submit();
     },
   });
 })();
@@ -3108,7 +3112,7 @@ $.register({
         host: [
           /^image(ontime|corn|picsa)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy)image\.com$/,
-          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz|binbou|2share|22|cover)\.com$/,
+          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz|binbou|2share|22|cover|hit|main)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
           /^xxx(\.pornprimehd|imagenow|screens)\.com$/,
@@ -3120,7 +3124,7 @@ $.register({
           /^(www\.)?\.imgult\.com$/,
           /^nim(plus|zshare)\.com$/,
           /^nudeximg\.com$/,
-          /imgseeds\.com$/,
+          /imgseeds?\.com$/,
           /damimage\.com$/,
           /imagedecode\.com$/,
           /^img(serve|coin|fap|candy|master|-view|run|boom|project|python)\.net$/,
@@ -3133,7 +3137,7 @@ $.register({
           /^(hotimages|55888)\.eu$/,
           /^img(cloud|mag)\.co$/,
           /^pixup\.us$/,
-          /^(bulkimg|photo-up)\.info$/,
+          /^(bulkimg|photo-up|myimg)\.info$/,
           /^img\.yt$/,
           /^vava\.in$/,
           /^(pixxx|picspornfree|imgload)\.me$/,
@@ -3145,18 +3149,18 @@ $.register({
           /^darpix\.ga$/,
           /^sxpics\.nl$/,
         ],
-        path: /^\/img-.*\.html$/,
+        path: /^\/img-.*\.html/,
       },
       {
         host: [
           /^img(run|twyti)\.net$/,
           /^imgtwyti\.com$/,
         ],
-        path: /^\/t\/img-.*\.html$/,
+        path: /^\/t\/img-.*\.html/,
       },
       {
         host: /^imgking\.co$/,
-        path: /^\/img-.*\.htmls?$/,
+        path: /^\/img-.*\.html/,
       },
       {
         host: /^imgbb\.net$/,
@@ -4049,33 +4053,42 @@ $.register({
 
 (function () {
   'use strict';
-  var hostMapper = {
-    'bk-ddl.net': function () {
-      var a = $('a.btn-block.redirect');
-      return a.href;
-    },
-    'link.animagz.org': function () {
-      var a = $('a.redirect');
-      a = a.onclick.toString();
-      a = a.match(/window\.open \('([^']+)'\)/);
-      return a[1];
-    },
-    'coeg.in': function () {
-      var a = $('.link a');
-      return a.href;
-    },
-  };
+  function hostMapper (host) {
+    switch (host) {
+    case 'bk-ddl.net':
+    case 'disingkat.in':
+      return function () {
+        var a = $('a.btn-block.redirect');
+        return a.href;
+      };
+    case 'link.animagz.org':
+      return function () {
+        var a = $('a.redirect');
+        a = a.onclick.toString();
+        a = a.match(/window\.open \('([^']+)'\)/);
+        return a[1];
+      };
+    case 'coeg.in':
+      return function () {
+        var a = $('.link a');
+        return a.href;
+      };
+    default:
+      return null;
+    }
+  }
   $.register({
     rule: {
       host: [
         /^bk-ddl\.net$/,
         /^link\.animagz\.org$/,
         /^coeg\.in$/,
+        /^disingkat\.in$/,
       ],
       path: /^\/\w+$/,
     },
     ready: function (m) {
-      var mapper = hostMapper[m.host[0]];
+      var mapper = hostMapper(m.host[0]);
       var b64 = mapper().match(/\?r=(\w+={0,2}?)/);
       $.openLink(atob(b64[1]));
     },
@@ -4761,11 +4774,30 @@ $.register({
 $.register({
   rule: {
     host: /^www\.linkarus\.com$/,
+    path: /^\/skip\//,
   },
   ready: function () {
     'use strict';
-    var a = $('#skip-ad');
-    $.openLink(a.href);
+    $.removeNodes('iframe');
+    var m = $.searchScripts(/action="([^"]+)"/);
+    m = m[1];
+    $.openLink(m);
+  },
+});
+$.register({
+  rule: {
+    host: /^www\.linkarus\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var m = $.searchScripts(/var counter = (\d+);/);
+    m = parseInt(m[1], 10);
+    m = m * 1000 + 500;
+    _.wait(m).then(function () {
+      var a = $('#skip-ad');
+      $.openLink(a.href);
+    });
   },
 });
 
@@ -5765,7 +5797,7 @@ $.register({
     {
       host: [
         /^(www\.)?sylnk\.net$/,
-        /^dlneko\.(com|net)$/,
+        /^dlneko\.(com|net|org)$/,
       ],
       query: /link=([^&]+)/,
     },
@@ -5794,7 +5826,10 @@ $.register({
 $.register({
   rule: [
     {
-      host: /^(www\.)?(link\.)?safelink(converter2?|s?review)\.com$/,
+      host: [
+        /^(www\.)?(link\.)?safelink(converter2?|s?review)\.com$/,
+        /^susutin\.com$/,
+      ],
       query: /id=(\w+=*)/,
     },
     {
@@ -5802,6 +5837,7 @@ $.register({
         /^(www\.)?dlneko\.com$/,
         /^(satuasia|tawaku)\.com$/,
         /^ww3\.manteb\.in$/,
+        /^link\.filmku\.net$/,
       ],
       query: /go=(\w+=*)/,
     },

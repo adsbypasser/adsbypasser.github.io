@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.47.0
+// @version        5.48.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.47.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.48.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 
@@ -1802,33 +1802,42 @@ $.register({
 
 (function () {
   'use strict';
-  var hostMapper = {
-    'bk-ddl.net': function () {
-      var a = $('a.btn-block.redirect');
-      return a.href;
-    },
-    'link.animagz.org': function () {
-      var a = $('a.redirect');
-      a = a.onclick.toString();
-      a = a.match(/window\.open \('([^']+)'\)/);
-      return a[1];
-    },
-    'coeg.in': function () {
-      var a = $('.link a');
-      return a.href;
-    },
-  };
+  function hostMapper (host) {
+    switch (host) {
+    case 'bk-ddl.net':
+    case 'disingkat.in':
+      return function () {
+        var a = $('a.btn-block.redirect');
+        return a.href;
+      };
+    case 'link.animagz.org':
+      return function () {
+        var a = $('a.redirect');
+        a = a.onclick.toString();
+        a = a.match(/window\.open \('([^']+)'\)/);
+        return a[1];
+      };
+    case 'coeg.in':
+      return function () {
+        var a = $('.link a');
+        return a.href;
+      };
+    default:
+      return null;
+    }
+  }
   $.register({
     rule: {
       host: [
         /^bk-ddl\.net$/,
         /^link\.animagz\.org$/,
         /^coeg\.in$/,
+        /^disingkat\.in$/,
       ],
       path: /^\/\w+$/,
     },
     ready: function (m) {
-      var mapper = hostMapper[m.host[0]];
+      var mapper = hostMapper(m.host[0]);
       var b64 = mapper().match(/\?r=(\w+={0,2}?)/);
       $.openLink(atob(b64[1]));
     },
@@ -2514,11 +2523,30 @@ $.register({
 $.register({
   rule: {
     host: /^www\.linkarus\.com$/,
+    path: /^\/skip\//,
   },
   ready: function () {
     'use strict';
-    var a = $('#skip-ad');
-    $.openLink(a.href);
+    $.removeNodes('iframe');
+    var m = $.searchScripts(/action="([^"]+)"/);
+    m = m[1];
+    $.openLink(m);
+  },
+});
+$.register({
+  rule: {
+    host: /^www\.linkarus\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var m = $.searchScripts(/var counter = (\d+);/);
+    m = parseInt(m[1], 10);
+    m = m * 1000 + 500;
+    _.wait(m).then(function () {
+      var a = $('#skip-ad');
+      $.openLink(a.href);
+    });
   },
 });
 
@@ -3518,7 +3546,7 @@ $.register({
     {
       host: [
         /^(www\.)?sylnk\.net$/,
-        /^dlneko\.(com|net)$/,
+        /^dlneko\.(com|net|org)$/,
       ],
       query: /link=([^&]+)/,
     },
@@ -3547,7 +3575,10 @@ $.register({
 $.register({
   rule: [
     {
-      host: /^(www\.)?(link\.)?safelink(converter2?|s?review)\.com$/,
+      host: [
+        /^(www\.)?(link\.)?safelink(converter2?|s?review)\.com$/,
+        /^susutin\.com$/,
+      ],
       query: /id=(\w+=*)/,
     },
     {
@@ -3555,6 +3586,7 @@ $.register({
         /^(www\.)?dlneko\.com$/,
         /^(satuasia|tawaku)\.com$/,
         /^ww3\.manteb\.in$/,
+        /^link\.filmku\.net$/,
       ],
       query: /go=(\w+=*)/,
     },
