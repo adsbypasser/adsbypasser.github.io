@@ -111,7 +111,7 @@ header ul.links {
   background: linear-gradient(top, #f8f8f8 0%, #dddddd 100%);
   border-radius: 5px;
   border: 1px solid #d2d2d2;
-  box-shadow: inset #ffffff 0 1px 0, inset rgba(0, 0, 0, 0.03) 0 -1px 0;
+  box-shadow: inset #fff 0 1px 0, inset rgba(0, 0, 0, 0.03) 0 -1px 0;
   width: 270px;
 }
 header ul.links li {
@@ -240,7 +240,7 @@ header div.links > a {
   margin-bottom: 5px;
   border-radius: 5px;
   border: 1px solid #d2d2d2;
-  box-shadow: inset #ffffff 0 1px 0, inset rgba(0, 0, 0, 0.03) 0 -1px 0;
+  box-shadow: inset #fff 0 1px 0, inset rgba(0, 0, 0, 0.03) 0 -1px 0;
   background: #eee;
   background: -webkit-linear-gradient(top, #f8f8f8 0%, #dddddd 100%);
   background: -moz-linear-gradient(top, #f8f8f8 0%, #dddddd 100%);

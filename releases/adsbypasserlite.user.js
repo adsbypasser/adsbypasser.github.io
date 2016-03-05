@@ -3,26 +3,23 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.48.0
+// @version        5.49.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.48.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.49.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
-
 // @grant          GM_getValue
 // @grant          GM_openInTab
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
-
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
     var bluebird = require('bluebird');
@@ -272,7 +269,6 @@
   };
   return _;
 }));
-
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = function (context) {
@@ -367,7 +363,6 @@
   };
   return $;
 }));
-
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = function (context, GM) {
@@ -481,7 +476,6 @@
   };
   return $;
 }));
-
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = function (context) {
@@ -535,7 +529,6 @@
   };
   return $;
 }));
-
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = function (context) {
@@ -685,7 +678,6 @@
   };
   return $;
 }));
-
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = function (context) {
@@ -749,7 +741,6 @@
   };
   return $;
 }));
-
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = function (context) {
@@ -883,7 +874,6 @@
   })();
   return $;
 }));
-
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = function (context, GM) {
@@ -1091,7 +1081,250 @@
   });
   return $;
 }));
-
+(function (context, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = function (context, GM) {
+      var _ = require('lodash');
+      var core = require('./core.js');
+      var dom = require('./dom.js');
+      var config = require('./config.js');
+      var link = require('./link.js');
+      var misc = require('./misc.js');
+      var modules = [dom, config, link, misc].map(function (v) {
+        return v.call(null, context, GM);
+      });
+      var $ = _.assign.apply(_, modules);
+      return factory(context, GM, core, $);
+    };
+  } else {
+    factory(context, {
+      getResourceText: GM_getResourceText,
+      addStyle: GM_addStyle,
+      getResourceURL: GM_getResourceURL,
+    }, context._, context.$);
+  }
+}(this, function (context, GM, _, $) {
+  'use strict';
+  var window = context.window;
+  var document = window.document;
+  $.openImage = function (imgSrc, options) {
+    options = options || {};
+    var replace = !!options.replace;
+    var referer = !!options.referer;
+    if (replace) {
+      replaceBody(imgSrc);
+      return;
+    }
+    if ($.config.redirectImage) {
+      $.openLink(imgSrc, {
+        referer: referer,
+      });
+    }
+  };
+  function enableScrolling () {
+    var o = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
+    o.style.overflow = '';
+  };
+  function toggleShrinking () {
+    this.classList.toggle('adsbypasser-shrinked');
+  }
+  function checkScaling () {
+    var nw = this.naturalWidth;
+    var nh = this.naturalHeight;
+    var cw = document.documentElement.clientWidth;
+    var ch = document.documentElement.clientHeight;
+    if ((nw > cw || nh > ch) && !this.classList.contains('adsbypasser-resizable')) {
+      this.classList.add('adsbypasser-resizable');
+      this.classList.add('adsbypasser-shrinked');
+      this.addEventListener('click', toggleShrinking);
+    } else {
+      this.removeEventListener('click', toggleShrinking);
+      this.classList.remove('adsbypasser-shrinked');
+      this.classList.remove('adsbypasser-resizable');
+    }
+  }
+  function scaleImage (i) {
+    var style = GM.getResourceText('scaleImage');
+    GM.addStyle(style);
+    if (i.naturalWidth && i.naturalHeight) {
+      checkScaling.call(i);
+    } else {
+      i.addEventListener('load', checkScaling);
+    }
+    var h;
+    window.addEventListener('resize', function () {
+      window.clearTimeout(h);
+      h = window.setTimeout(checkScaling.bind(i), 100);
+    });
+  }
+  function changeBackground () {
+    var bgImage = GM.getResourceURL('bgImage');
+    document.body.style.backgroundColor = '#222222';
+    document.body.style.backgroundImage = _.T('url(\'{0}\')')(bgImage);
+  }
+  function alignCenter () {
+    var style = GM.getResourceText('alignCenter');
+    GM.addStyle(style);
+  }
+  function injectStyle (d, i) {
+    $.removeNodes('style, link[rel=stylesheet]');
+    d.id = 'adsbypasser-wrapper';
+    i.id = 'adsbypasser-image';
+  }
+  function replaceBody (imgSrc) {
+    if (!$.config.redirectImage) {
+      return;
+    }
+    if (!imgSrc) {
+      _.warn('false url');
+      return;
+    }
+    _.info(_.T('replacing body with `{0}` ...')(imgSrc));
+    $.removeAllTimer();
+    enableScrolling();
+    document.body = document.createElement('body');
+    var d = document.createElement('div');
+    document.body.appendChild(d);
+    var i = document.createElement('img');
+    i.src = imgSrc;
+    d.appendChild(i);
+    if ($.config.alignCenter || $.config.scaleImage) {
+      injectStyle(d, i);
+    }
+    if ($.config.alignCenter) {
+      alignCenter();
+    }
+    if ($.config.changeBackground) {
+      changeBackground();
+    }
+    if ($.config.scaleImage) {
+      scaleImage(i);
+    }
+  };
+  return $;
+}));
+(function (context, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = function (context, GM) {
+      var _ = require('lodash');
+      var core = require('./core.js');
+      var misc = require('./misc.js');
+      var dispatcher = require('./dispatcher.js');
+      var modules = [misc, dispatcher].map(function (v) {
+        return v.call(null, context, GM);
+      });
+      var $ = _.assign.apply(_, modules);
+      return factory(context, GM, core, $);
+    };
+  } else {
+    factory(context, {
+      openInTab: GM_openInTab,
+      registerMenuCommand: GM_registerMenuCommand,
+    }, context._, context.$);
+  }
+}(this, function (context, GM, _, $) {
+  'use strict';
+  var window = context.window;
+  var document = window.document;
+  var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+  function disableWindowOpen () {
+    $.window.open = _.nop;
+    $.window.alert = _.nop;
+    $.window.confirm = _.nop;
+  }
+  function disableLeavePrompt (element) {
+    if (!element) {
+      return;
+    }
+    var seal = {
+      set: function () {
+        _.info('blocked onbeforeunload');
+      },
+    };
+    element.onbeforeunload = undefined;
+    if (isSafari) {
+      element.__defineSetter__('onbeforeunload', seal.set);
+    } else {
+      $.window.Object.defineProperty(element, 'onbeforeunload', {
+        configurable: true,
+        enumerable: false,
+        get: undefined,
+        set: seal.set,
+      });
+    }
+    var oael = element.addEventListener;
+    var nael = function (type) {
+      if (type === 'beforeunload') {
+        _.info('blocked addEventListener onbeforeunload');
+        return;
+      }
+      return oael.apply(this, arguments);
+    };
+    element.addEventListener = nael;
+  }
+  function changeTitle () {
+    document.title += ' - AdsBypasser';
+  }
+  function beforeDOMReady (handler) {
+    _.info('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify($.config));
+    disableLeavePrompt($.window);
+    disableWindowOpen();
+    handler.start();
+  }
+  function afterDOMReady (handler) {
+    disableLeavePrompt($.window.document.body);
+    changeTitle();
+    handler.ready();
+  }
+  function waitDOM () {
+    return _.D(function (resolve, reject) {
+      if (document.readyState !== 'loading') {
+        resolve();
+        return;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        resolve();
+      });
+    });
+  }
+  $._main = function () {
+    var findHandler = $._findHandler;
+    delete $._main;
+    delete $._findHandler;
+    if (window.top !== window.self) {
+      return;
+    }
+    GM.registerMenuCommand('AdsBypasser - Configure', function () {
+      GM.openInTab('https://adsbypasser.github.io/configure.html');
+    });
+    var handler = findHandler(true);
+    if (handler) {
+      if ($.config.logLevel <= 0) {
+        _._quiet = true;
+      }
+      beforeDOMReady(handler);
+      waitDOM().then(function () {
+        afterDOMReady(handler);
+      });
+      return;
+    }
+    if ($.config.logLevel < 2) {
+      _._quiet = true;
+    }
+    _.info('does not match location on `%s`, will try HTML content', window.location.toString());
+    waitDOM().then(function () {
+      handler = findHandler(false);
+      if (!handler) {
+        _.info('does not match HTML content on `%s`', window.location.toString());
+        return;
+      }
+      beforeDOMReady(handler);
+      afterDOMReady(handler);
+    });
+  };
+  return $;
+}));
+$._main();
 $.register({
   rule: {
     host: /^01\.nl$/,
@@ -1102,7 +1335,6 @@ $.register({
     $.openLink(f.src);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?1be\.biz$/,
@@ -1114,7 +1346,6 @@ $.register({
     $.openLink(m.query[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?1tiny\.net$/,
@@ -1129,7 +1360,6 @@ $.register({
     $.openLink(directUrl[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^2ty\.cc$/,
@@ -1142,7 +1372,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?3ra\.be$/,
@@ -1162,7 +1391,6 @@ $.register({
     $.openLink(f[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?4fun\.tw$/,
@@ -1173,7 +1401,6 @@ $.register({
     $.openLink(i.value);
   },
 });
-
 $.register({
   rule: {
     host: /^ad2links\.com$/,
@@ -1189,7 +1416,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^ad4\.fr$/,
@@ -1205,7 +1431,6 @@ $.register({
     $.openLink(s[1]);
   },
 });
-
 (function () {
   'use strict';
   $.register({
@@ -1236,7 +1461,6 @@ $.register({
     },
   });
 })();
-
 $.register({
   rule: {
     host: [
@@ -1271,7 +1495,6 @@ $.register({
     }, 1000);
   },
 });
-
 (function () {
   'use strict';
   function getTokenFromRocketScript () {
@@ -1345,7 +1568,6 @@ $.register({
     },
   });
 })();
-
 $.register({
   rule: {
     host: /^(www\.)?adfe\.es$/,
@@ -1360,7 +1582,6 @@ $.register({
     f.submit();
   },
 });
-
 $.register({
   rule: 'http://adfoc.us/*',
   ready: function () {
@@ -1380,7 +1601,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?adjet\.biz$/,
@@ -1394,7 +1614,6 @@ $.register({
     $.openLink(m[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^adlock\.org$/,
@@ -1412,7 +1631,6 @@ $.register({
     }
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?adlot\.us$/,
@@ -1434,7 +1652,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?ah-informatique\.com$/,
@@ -1446,7 +1663,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^ah\.pe$/,
@@ -1460,7 +1676,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^aka\.gr$/
@@ -1471,7 +1686,6 @@ $.register({
     $.openLink(l.src);
   },
 });
-
 $.register({
   rule: {
     host: /^al\.ly$/,
@@ -1487,7 +1701,6 @@ $.register({
     a.style.display = 'block';
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?allkeyshop\.com$/,
@@ -1499,7 +1712,6 @@ $.register({
     $.removeAllTimer();
   },
 });
-
 $.register({
   rule: {
     host: /^anonymbucks\.com$/,
@@ -1510,7 +1722,6 @@ $.register({
     a.click();
   },
 });
-
 $.register({
   rule: {
     host: [
@@ -1525,7 +1736,6 @@ $.register({
     $.openLink(m[1]);
   },
 });
-
 (function () {
   'use strict';
   $.register({
@@ -1758,7 +1968,6 @@ $.register({
     },
   });
 })();
-
 $.register({
   rule: {
     host: /^(www\.)?biglistofwebsites\.com$/,
@@ -1769,7 +1978,6 @@ $.register({
     $.openLink('http://' + m.path[1]);
   },
 });
-
 $.register({
   rule: 'http://www.bild.me/bild.php?file=*',
   ready: function () {
@@ -1778,7 +1986,6 @@ $.register({
     $.openLink(i.src);
   },
 });
-
 $.register({
   rule: 'http://bildr.no/view/*',
   ready: function () {
@@ -1787,7 +1994,6 @@ $.register({
     $.openLink(i.src);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
@@ -1799,7 +2005,6 @@ $.register({
     $.openLink(direct_link);
   },
 });
-
 (function () {
   'use strict';
   function hostMapper (host) {
@@ -1843,7 +2048,6 @@ $.register({
     },
   });
 })();
-
 $.register({
   rule: {
     host: /^(www\.)?boxcash\.net$/,
@@ -1878,7 +2082,6 @@ $.register({
     $.openLink(l);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?(buz|vzt)url\.com$/,
@@ -1889,7 +2092,6 @@ $.register({
     $.openLink(frame.src);
   },
 });
-
 $.register({
   rule: {
     host: /^(cf|ex|xt)\d\.(me|co)$/,
@@ -1901,7 +2103,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^cf\.ly$/,
@@ -1913,7 +2114,6 @@ $.register({
     $.openLink('/skip' + m.path[0]);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?cli\.gs$/,
@@ -1924,7 +2124,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?clictune\.com$/,
@@ -1935,10 +2134,9 @@ $.register({
     $.removeNodes('iframe');
     var matches = $.searchScripts(/<a href="http:\/\/(?:www.)?clictune\.com\/redirect\.php\?url=([^&]+)&/);
     var url = decodeURIComponent(matches[1]);
-    $.openLink(url);
+        $.openLink(url);
   },
 });
-
 $.register({
   rule: {
     host: /^clk\.im$/,
@@ -1950,7 +2148,6 @@ $.register({
     $.openLink(matches[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^(?:(\w+)\.)?(coinurl\.com|cur\.lv)$/,
@@ -1987,7 +2184,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^comyonet\.com$/,
@@ -1998,7 +2194,6 @@ $.register({
     input.click();
   },
 });
-
 $.register({
   rule: {
     host: /^www\.cuzle\.com$/,
@@ -2011,7 +2206,6 @@ $.register({
     $.openLink(url);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?cvc\.la$/,
@@ -2020,7 +2214,7 @@ $.register({
   start: function () {
     'use strict';
     $.post(document.location.href, {
-      hidden: 24, // Either 24 or 276, but both seem to work anyway
+      hidden: 24, 
       image: ' ',
     }).then(function (text) {
       var matches = text.match(/window\.location\.replace\('([^']+)'\);/);
@@ -2028,7 +2222,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?dapat\.in$/,
@@ -2039,7 +2232,6 @@ $.register({
     $.openLink(f.src);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?dd\.ma$/,
@@ -2055,7 +2247,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?dereferer\.website$/,
@@ -2066,7 +2257,6 @@ $.register({
     $.openLink(m.query[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^www\.dewaurl\.com$/,
@@ -2083,7 +2273,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^dikit\.in$/,
@@ -2095,7 +2284,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: 'http://www.dumppix.com/viewer.php?*',
   ready: function () {
@@ -2109,7 +2297,6 @@ $.register({
     $.openLink(i.href);
   },
 });
-
 $.register({
   rule: {
     host: /^durl\.me$/,
@@ -2120,7 +2307,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /easyurl\.net|(atu|clickthru|redirects|readthis)\.ca|goshrink\.com$/,
@@ -2131,7 +2317,6 @@ $.register({
     $.openLink(f.src);
   },
 });
-
 $.register({
   rule: {
     host: /empireload\.com$/,
@@ -2142,7 +2327,6 @@ $.register({
     $.openLink(m.query[1]);
   },
 });
-
 $.register({
   rule: {
     host: [
@@ -2157,7 +2341,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?filoops.info$/
@@ -2168,7 +2351,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^fit\.sh$/,
@@ -2187,7 +2369,6 @@ $.register({
     }, 6000);
   },
 });
-
 $.register({
   rule: {
     host: /^www\.forbes\.com$/,
@@ -2200,7 +2381,6 @@ $.register({
     }
   },
 });
-
 $.register({
   rule: {
     host: /^www\.free-tv-video-online\.info$/,
@@ -2213,7 +2393,6 @@ $.register({
     $.openLink(url);
   },
 });
-
 (function () {
   'use strict';
   $.register({
@@ -2236,7 +2415,6 @@ $.register({
     },
   });
 })();
-
 (function () {
   var hosts = /^gca\.sh|repla\.cr$/;
   $.register({
@@ -2266,7 +2444,6 @@ $.register({
     },
   });
 })();
-
 $.register({
   rule: {
     host: /^gkurl\.us$/,
@@ -2277,7 +2454,6 @@ $.register({
     $.openLink(iframe.src);
   },
 });
-
 $.register({
   rule: {
     host: /^u\.go2\.me$/,
@@ -2288,7 +2464,6 @@ $.register({
     $.openLink(iframe.src);
   },
 });
-
 $.register({
   rule: {
     host: /^hotshorturl\.com$/,
@@ -2299,7 +2474,6 @@ $.register({
     $.openLink(frame.src);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?(ilix\.in|priva\.us)$/,
@@ -2323,7 +2497,6 @@ $.register({
     }
   },
 });
-
 $.register({
   rule: {
     host: /^itw\.me$/,
@@ -2335,7 +2508,6 @@ $.register({
     f.submit();
   },
 });
-
 $.register({
   rule: {
     host: /^ity\.im$/,
@@ -2368,7 +2540,6 @@ $.register({
     }
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?kingofshrink\.com$/,
@@ -2379,7 +2550,6 @@ $.register({
     $.openLink(l.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?leechbd\.tk$/,
@@ -2397,7 +2567,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: 'http://www.lienscash.com/l/*',
   ready: function () {
@@ -2406,7 +2575,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?\w+\.link-protector\.com$/,
@@ -2417,7 +2585,6 @@ $.register({
     $.openLink(f.action);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?link\.im$/,
@@ -2433,7 +2600,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /\.link2dollar\.com$/,
@@ -2449,7 +2615,6 @@ $.register({
     $.openLink(m);
   },
 });
-
 $.register({
   rule: {
     host: /^link2you\.ru$/,
@@ -2464,7 +2629,6 @@ $.register({
     $.openLink(url);
   },
 });
-
 $.register({
   rule: {
     host: /^link(4ad|ajc)\.com$/,
@@ -2486,7 +2650,6 @@ $.register({
     });
   },
 });
-
 (function () {
   'use strict';
   function sendRequest (opts) {
@@ -2519,7 +2682,6 @@ $.register({
     },
   });
 })();
-
 $.register({
   rule: {
     host: /^www\.linkarus\.com$/,
@@ -2549,7 +2711,6 @@ $.register({
     });
   },
 });
-
 (function() {
   function ConvertFromHex (str) {
     var result = [];
@@ -2585,7 +2746,7 @@ $.register({
   var hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|eafyfsuh|sasontnwc)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|eafyfsuh|sasontnwc|zatnawqy)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
     /^(([\w]{8}|www)\.)?hornywood\.tv$/,
@@ -2714,7 +2875,6 @@ $.register({
     });
   })();
 })();
-
 $.register({
   rule: {
     host: [
@@ -2750,22 +2910,21 @@ $.register({
     $.openLink(b[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?linkdrop\.net$/,
   },
   ready: function () {
     'use strict';
-    var matches = $.searchScripts(/\$\("a\.redirect"\)\.attr\("href","([^"]+)"\)\.text\("Continue"\);/);
+    $.removeNodes('iframe');
+    var matches = $.searchScripts(/\$\("a\.redirect"\)\.attr\("href","([^"]+)"\)\.text/);
     if (!matches) {
-        return;
+      return;
     }
     var l = matches[1];
     $.openLink(l);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?linkplugapp\.com$/,
@@ -2776,7 +2935,6 @@ $.register({
     $.openLink(a.href)
   },
 })
-
 $.register({
   rule: {
     host: /^linksas\.us$/,
@@ -2818,7 +2976,30 @@ $.register({
     });
   },
 });
-
+$.register({
+  rule: {
+    host: /^linksas\.us$/,
+    path: /^\/go\//,
+  },
+  ready: function () {
+    'use strict';
+    var a = $.$('#btnSubmit');
+    if (!a) {
+      return;
+    }
+    var url = a.href;
+    var pattern = /https?:\/\//g;
+    var lastURL = '';
+    while (true) {
+      var matched = pattern.exec(url);
+      if (!matched) {
+        break;
+      }
+      lastURL = matched + url.substring(pattern.lastIndex);
+    }
+    $.openLink(lastURL);
+  },
+});
 $.register({
   rule: {
     host: /^linkshrink\.net$/,
@@ -2844,7 +3025,6 @@ $.register({
     $.openLink(m.path[1]);
   },
 });
-
 $.register({
   rule: 'http://lix.in/-*',
   ready: function () {
@@ -2862,7 +3042,6 @@ $.register({
     $.openLink(i.src);
   },
 });
-
 $.register({
   rule: {
     host: /^lnk\.in$/,
@@ -2873,7 +3052,6 @@ $.register({
     $.openLink(a.innerHTML);
   },
 });
-
 $.register({
   rule: {
     host: /^(rd?)lnk\.co|reducelnk\.com$/,
@@ -2902,7 +3080,6 @@ $.register({
     $.openLink(o);
   },
 });
-
 $.register({
   rule: {
     host: /^lnx\.lu|url\.fm|z\.gs$/,
@@ -2913,7 +3090,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?loook\.ga$/,
@@ -2925,7 +3101,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: [
     'http://madlink.sk/',
@@ -2944,7 +3119,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: [
@@ -2959,7 +3133,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^www\.mije\.net$/,
@@ -2971,7 +3144,6 @@ $.register({
     $.openLink(url);
   },
 });
-
 $.register({
   rule: {
     host: [
@@ -2986,7 +3158,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^mt0\.org$/,
@@ -3006,7 +3177,6 @@ $.register({
     }, 1000);
   },
 });
-
 $.register({
   rule: 'http://my-link.pro/*',
   ready: function () {
@@ -3017,7 +3187,6 @@ $.register({
     }
   },
 });
-
 $.register({
   rule: {
     host: /^nsfw\.in$/,
@@ -3028,7 +3197,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^nutshellurl\.com$/,
@@ -3039,7 +3207,6 @@ $.register({
     $.openLink(iframe.src);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?ohleech\.com$/,
@@ -3050,7 +3217,6 @@ $.register({
     $.window.startdl();
   },
 });
-
 $.register({
   rule: {
     host: /^www\.oni\.vn$/,
@@ -3068,7 +3234,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?ouo\.io$/,
@@ -3080,7 +3245,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^oxyl\.me$/,
@@ -3094,7 +3258,6 @@ $.register({
     $.openLink(l.at(0).href);
   },
 });
-
 $.register({
   rule: {
     host: /^p\.pw$/,
@@ -3107,7 +3270,6 @@ $.register({
     $.openLink(m);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?\w+\.rapeit\.net$/,
@@ -3119,7 +3281,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: 'http://reffbux.com/refflinx/view/*',
   ready: function () {
@@ -3144,7 +3305,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: 'http://richlink.com/app/webscr?cmd=_click&key=*',
   ready: function () {
@@ -3161,7 +3321,6 @@ $.register({
     $.openLink(f);
   },
 });
-
 $.register({
   rule: 'http://rijaliti.info/*.php',
   ready: function () {
@@ -3170,7 +3329,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^riurl\.com$/,
@@ -3193,7 +3351,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^preview\.rlu\.ru$/,
@@ -3204,7 +3361,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^robo\.us$/,
@@ -3216,7 +3372,6 @@ $.register({
     $.openLink(url);
   },
 });
-
 $.register({
   rule: {
     host: /^www\.ron\.vn$/,
@@ -3233,7 +3388,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?sa\.ae$/,
@@ -3245,7 +3399,6 @@ $.register({
     $.openLink(m[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?safeurl\.eu$/,
@@ -3261,7 +3414,6 @@ $.register({
     $.openLink(directUrl);
   },
 });
-
 $.register({
   rule: {
     host: [
@@ -3276,7 +3428,6 @@ $.register({
     $.openLink(decodeURIComponent(m.query[1]));
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?(apploadz\.ru|seomafia\.net)$/
@@ -3288,7 +3439,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: /http:\/\/setlinks\.us\/(p|t|d).*/,
   ready: function () {
@@ -3312,7 +3462,6 @@ $.register({
     });
   },
 });
-
 (function () {
   'use strict';
   function afterGotSessionId (sessionId) {
@@ -3402,7 +3551,6 @@ $.register({
     },
   });
 })();
-
 $.register({
   rule: {
     host: /^(www\.)?shink\.in$/,
@@ -3425,7 +3573,6 @@ $.register({
     $.window.$("#myModal").reveal();
   },
 });
-
 $.register({
   rule: {
     host: [
@@ -3440,7 +3587,6 @@ $.register({
     $.openLink(l.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?shorti\.ga$/,
@@ -3461,7 +3607,6 @@ $.register({
     $.openLink(fl.value.src);
   },
 });
-
 $.register({
   rule: {
     host: /^www\.shortskip\.com$/,
@@ -3474,7 +3619,6 @@ $.register({
     $.openLink(url);
   },
 });
-
 $.register({
   rule: {
     host: /^sht\.io$/,
@@ -3487,7 +3631,6 @@ $.register({
     $.openLink(url[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?similarsites\.com$/,
@@ -3502,7 +3645,47 @@ $.register({
     $.openLink(l);
   },
 });
-
+$.register({
+  rule: {
+    host: /^srnk\.co$/,
+    path: /^\/i\//,
+  },
+  ready: function () {
+    'use strict';
+    var a = $.$('#btn-with-link');
+    if (!a) {
+      return;
+    }
+    var href = a.href;
+    var method = a.dataset.method;
+    if (method) {
+      var csrfParam = $('meta[name="csrf-param"]').content;
+      var csrfToken = $('meta[name="csrf-token"]').content;
+      var form = document.createElement('form');
+      form.method = 'post';
+      form.action = href;
+      var input = document.createElement('input');
+      input.name = '_method';
+      input.value = method;
+      form.appendChild(input);
+      input = document.createElement('input');
+      input.name = csrfParam;
+      input.value = csrfToken;
+      form.appendChild(input);
+      document.body.appendChild(form);
+      form.submit();
+      return;
+    }
+    $.post(location.pathname + '.js').then(function (script) {
+      var m = script.match(/var link = "([^"]+)";/);
+      if (!m) {
+        _.warn('script changed');
+        return;
+      }
+      $.openLink(m[1]);
+    });
+  },
+});
 $.register({
   rule: {
     host: /^stash-coins\.com$/,
@@ -3515,7 +3698,6 @@ $.register({
     $.openLink(url);
   },
 });
-
 $.register({
   rule: {
     host: /^streamingfrench\.net$/,
@@ -3528,7 +3710,6 @@ $.register({
     $.openLink(url);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?supercheats\.com$/,
@@ -3540,13 +3721,13 @@ $.register({
     $.openLink(m.query[1]);
   },
 });
-
 $.register({
   rule: [
     {
       host: [
         /^(www\.)?sylnk\.net$/,
         /^dlneko\.(com|net|org)$/,
+        /^rumahsimpel\.com$/,
       ],
       query: /link=([^&]+)/,
     },
@@ -3587,6 +3768,7 @@ $.register({
         /^(satuasia|tawaku)\.com$/,
         /^ww3\.manteb\.in$/,
         /^link\.filmku\.net$/,
+        /^www\.muucih\.com$/,
       ],
       query: /go=(\w+=*)/,
     },
@@ -3618,7 +3800,6 @@ $.register({
     $.openLink(l);
   },
 });
-
 $.register({
   rule: {
     host: /^thinfi\.com$/,
@@ -3629,7 +3810,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^tinyarrows\.com$/,
@@ -3641,7 +3821,6 @@ $.register({
     $.openLink(decodeURIComponent(m.query[1]));
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?totaldebrid\.org$/,
@@ -3654,7 +3833,6 @@ $.register({
     $.openLink(l);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?typ\.me$/,
@@ -3665,7 +3843,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?ultshare\.com$/,
@@ -3679,7 +3856,6 @@ $.register({
     $.openLink(directLink);
   },
 });
-
 $.register({
   rule: {
     host: /^unfake\.it$/,
@@ -3691,7 +3867,6 @@ $.register({
     $.openLink(frame.src.substr(i));
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?(upan|gxp)\.so$/,
@@ -3703,7 +3878,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^url\.ie$/,
@@ -3714,7 +3888,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /urlcash\.(com|net|org)|(bat5|detonating|celebclk|eightteen|smilinglinks|peekatmygirlfriend|pornyhost|clb1|urlgalleries)\.com|looble\.net|xxxs\.org$/,
@@ -3732,7 +3905,6 @@ $.register({
     }
   },
 });
-
 $.register({
   rule: {
     host: /^urlinn\.com$/,
@@ -3745,7 +3917,6 @@ $.register({
     }
   },
 });
-
 $.register({
   rule: {
     host: /^urlms\.com$/,
@@ -3756,7 +3927,6 @@ $.register({
     $.openLink(iframe.src);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?urlv2\.com$/,
@@ -3773,7 +3943,6 @@ $.register({
     window.setTimeout(function() {$.openLink(l)}, 5000);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?victly\.com$/,
@@ -3790,7 +3959,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^www\.viidii\.info$/,
@@ -3801,7 +3969,6 @@ $.register({
     $.openLink(o.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?vir\.al$/,
@@ -3815,7 +3982,6 @@ $.register({
     $.openLink(m[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?wzzq\.me$/,
@@ -3829,7 +3995,6 @@ $.register({
     }
   },
 });
-
 $.register({
   rule: {
     host: /^xlink.me$/
@@ -3841,7 +4006,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: 'http://yep.it/preview.php?p=*',
   ready: function () {
@@ -3850,7 +4014,6 @@ $.register({
     $.openLink(link);
   },
 });
-
 $.register({
   rule: 'http://www.yooclick.com/l/*',
   ready: function () {
@@ -3873,7 +4036,17 @@ $.register({
     getURL();
   },
 });
-
+$.register({
+  rule: {
+    host: /^ysf\.pl$/,
+    path: /^\/3\/(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = atob(m.path[1]);
+    $.openLink(url);
+  },
+});
 $.register({
   rule: 'http://zo.mu/redirector/process?link=*',
   ready: function () {
@@ -3882,7 +4055,6 @@ $.register({
     window.location.reload();
   },
 });
-
 $.register({
   rule: {
     host: /^zzz\.gl$/,
@@ -3896,7 +4068,6 @@ $.register({
     $.openLink(m[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^akoam\.com$/,
@@ -3915,7 +4086,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^www\.anafile\.com$/,
@@ -3932,7 +4102,6 @@ $.register({
     b.click();
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?arab\.sh$/,
@@ -3946,7 +4115,6 @@ $.register({
     }, 20000);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?coolrom\.com$/,
@@ -3958,7 +4126,6 @@ $.register({
     $.openLink(matches[1]);
   },
 });
-
 (function() {
   'use strict';
   $.register({
@@ -4010,7 +4177,6 @@ $.register({
     return !$.$('form[name=ccerure]').onsubmit && !$.$('form[name=ccerure] input[name=pwd]');
   }
 })();
-
 $.register({
   rule: {
     host: /^(www\.)?embedupload\.com$/,
@@ -4023,7 +4189,6 @@ $.register({
     $.openLink(downloadPage);
   },
 });
-
 $.register({
   rule: {
     host: /^www\.fileproject\.com\.br$/,
@@ -4035,7 +4200,6 @@ $.register({
     $.openLink(m[1]);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?(firedrive|putlocker)\.com$/,
@@ -4047,7 +4211,6 @@ $.register({
     c.submit();
   },
 });
-
 $.register({
   rule: {
     host: /^iori\.us$/,
@@ -4058,7 +4221,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?jheberg\.net$/,
@@ -4089,7 +4251,6 @@ $.register({
     });
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?larashare\.com$/,
@@ -4101,7 +4262,6 @@ $.register({
     $.openLink(document.location.href.replace('id=','down='));
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?maxmirror\.com$/,
@@ -4113,7 +4273,6 @@ $.register({
     $.openLink(l.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?mirrorcreator\.com$/,
@@ -4134,7 +4293,6 @@ $.register({
     $.openLink(a);
   },
 });
-
 $.register({
   rule: {
     host: /^www.mirrorupload.net$/,
@@ -4150,7 +4308,6 @@ $.register({
     accessForm.submit();
   },
 });
-
 $.register({
   rule: {
     host: /^www\.multiupfile\.com$/,
@@ -4162,7 +4319,6 @@ $.register({
     f.submit();
   },
 });
-
 $.register({
   rule: {
     host: /^mylinkgen\.com$/,
@@ -4184,7 +4340,6 @@ $.register({
     $.openLink(a.href);
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?upmirror\.info$/,
@@ -4197,7 +4352,6 @@ $.register({
     }
   },
 });
-
 $.register({
   rule: {
     host: /^(www\.)?vidto\.me$/,
@@ -4210,7 +4364,6 @@ $.register({
     }, 6000);
   },
 });
-
 (function () {
   'use strict';
   var sUrl = '(\\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])';
@@ -4263,7 +4416,6 @@ $.register({
     },
   });
 })();
-
 $.register({
   rule: {
     host: /^(www\.)?pasted\.co$/,
@@ -4274,126 +4426,3 @@ $.register({
     $.removeNodes('#captcha_overlay');
   },
 });
-
-(function (context, factory) {
-  if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = function (context, GM) {
-      var _ = require('lodash');
-      var core = require('./core.js');
-      var misc = require('./misc.js');
-      var dispatcher = require('./dispatcher.js');
-      var modules = [misc, dispatcher].map(function (v) {
-        return v.call(null, context, GM);
-      });
-      var $ = _.assign.apply(_, modules);
-      return factory(context, GM, core, $);
-    };
-  } else {
-    factory(context, {
-      openInTab: GM_openInTab,
-      registerMenuCommand: GM_registerMenuCommand,
-    }, context._, context.$);
-  }
-}(this, function (context, GM, _, $) {
-  'use strict';
-  var window = context.window;
-  var document = window.document;
-  var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-  function disableWindowOpen () {
-    $.window.open = _.nop;
-    $.window.alert = _.nop;
-    $.window.confirm = _.nop;
-  }
-  function disableLeavePrompt (element) {
-    if (!element) {
-      return;
-    }
-    var seal = {
-      set: function () {
-        _.info('blocked onbeforeunload');
-      },
-    };
-    element.onbeforeunload = undefined;
-    if (isSafari) {
-      element.__defineSetter__('onbeforeunload', seal.set);
-    } else {
-      $.window.Object.defineProperty(element, 'onbeforeunload', {
-        configurable: true,
-        enumerable: false,
-        get: undefined,
-        set: seal.set,
-      });
-    }
-    var oael = element.addEventListener;
-    var nael = function (type) {
-      if (type === 'beforeunload') {
-        _.info('blocked addEventListener onbeforeunload');
-        return;
-      }
-      return oael.apply(this, arguments);
-    };
-    element.addEventListener = nael;
-  }
-  function changeTitle () {
-    document.title += ' - AdsBypasser';
-  }
-  function beforeDOMReady (handler) {
-    _.info('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify($.config));
-    disableLeavePrompt($.window);
-    disableWindowOpen();
-    handler.start();
-  }
-  function afterDOMReady (handler) {
-    disableLeavePrompt($.window.document.body);
-    changeTitle();
-    handler.ready();
-  }
-  function waitDOM () {
-    return _.D(function (resolve, reject) {
-      if (document.readyState !== 'loading') {
-        resolve();
-        return;
-      }
-      document.addEventListener('DOMContentLoaded', function () {
-        resolve();
-      });
-    });
-  }
-  $._main = function () {
-    var findHandler = $._findHandler;
-    delete $._main;
-    delete $._findHandler;
-    if (window.top !== window.self) {
-      return;
-    }
-    GM.registerMenuCommand('AdsBypasser - Configure', function () {
-      GM.openInTab('https://adsbypasser.github.io/configure.html');
-    });
-    var handler = findHandler(true);
-    if (handler) {
-      if ($.config.logLevel <= 0) {
-        _._quiet = true;
-      }
-      beforeDOMReady(handler);
-      waitDOM().then(function () {
-        afterDOMReady(handler);
-      });
-      return;
-    }
-    if ($.config.logLevel < 2) {
-      _._quiet = true;
-    }
-    _.info('does not match location on `%s`, will try HTML content', window.location.toString());
-    waitDOM().then(function () {
-      handler = findHandler(false);
-      if (!handler) {
-        _.info('does not match HTML content on `%s`', window.location.toString());
-        return;
-      }
-      beforeDOMReady(handler);
-      afterDOMReady(handler);
-    });
-  };
-  return $;
-}));
-$._main();
