@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.49.0
+// @version        5.49.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.49.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.49.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -1081,250 +1081,6 @@
   });
   return $;
 }));
-(function (context, factory) {
-  if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = function (context, GM) {
-      var _ = require('lodash');
-      var core = require('./core.js');
-      var dom = require('./dom.js');
-      var config = require('./config.js');
-      var link = require('./link.js');
-      var misc = require('./misc.js');
-      var modules = [dom, config, link, misc].map(function (v) {
-        return v.call(null, context, GM);
-      });
-      var $ = _.assign.apply(_, modules);
-      return factory(context, GM, core, $);
-    };
-  } else {
-    factory(context, {
-      getResourceText: GM_getResourceText,
-      addStyle: GM_addStyle,
-      getResourceURL: GM_getResourceURL,
-    }, context._, context.$);
-  }
-}(this, function (context, GM, _, $) {
-  'use strict';
-  var window = context.window;
-  var document = window.document;
-  $.openImage = function (imgSrc, options) {
-    options = options || {};
-    var replace = !!options.replace;
-    var referer = !!options.referer;
-    if (replace) {
-      replaceBody(imgSrc);
-      return;
-    }
-    if ($.config.redirectImage) {
-      $.openLink(imgSrc, {
-        referer: referer,
-      });
-    }
-  };
-  function enableScrolling () {
-    var o = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
-    o.style.overflow = '';
-  };
-  function toggleShrinking () {
-    this.classList.toggle('adsbypasser-shrinked');
-  }
-  function checkScaling () {
-    var nw = this.naturalWidth;
-    var nh = this.naturalHeight;
-    var cw = document.documentElement.clientWidth;
-    var ch = document.documentElement.clientHeight;
-    if ((nw > cw || nh > ch) && !this.classList.contains('adsbypasser-resizable')) {
-      this.classList.add('adsbypasser-resizable');
-      this.classList.add('adsbypasser-shrinked');
-      this.addEventListener('click', toggleShrinking);
-    } else {
-      this.removeEventListener('click', toggleShrinking);
-      this.classList.remove('adsbypasser-shrinked');
-      this.classList.remove('adsbypasser-resizable');
-    }
-  }
-  function scaleImage (i) {
-    var style = GM.getResourceText('scaleImage');
-    GM.addStyle(style);
-    if (i.naturalWidth && i.naturalHeight) {
-      checkScaling.call(i);
-    } else {
-      i.addEventListener('load', checkScaling);
-    }
-    var h;
-    window.addEventListener('resize', function () {
-      window.clearTimeout(h);
-      h = window.setTimeout(checkScaling.bind(i), 100);
-    });
-  }
-  function changeBackground () {
-    var bgImage = GM.getResourceURL('bgImage');
-    document.body.style.backgroundColor = '#222222';
-    document.body.style.backgroundImage = _.T('url(\'{0}\')')(bgImage);
-  }
-  function alignCenter () {
-    var style = GM.getResourceText('alignCenter');
-    GM.addStyle(style);
-  }
-  function injectStyle (d, i) {
-    $.removeNodes('style, link[rel=stylesheet]');
-    d.id = 'adsbypasser-wrapper';
-    i.id = 'adsbypasser-image';
-  }
-  function replaceBody (imgSrc) {
-    if (!$.config.redirectImage) {
-      return;
-    }
-    if (!imgSrc) {
-      _.warn('false url');
-      return;
-    }
-    _.info(_.T('replacing body with `{0}` ...')(imgSrc));
-    $.removeAllTimer();
-    enableScrolling();
-    document.body = document.createElement('body');
-    var d = document.createElement('div');
-    document.body.appendChild(d);
-    var i = document.createElement('img');
-    i.src = imgSrc;
-    d.appendChild(i);
-    if ($.config.alignCenter || $.config.scaleImage) {
-      injectStyle(d, i);
-    }
-    if ($.config.alignCenter) {
-      alignCenter();
-    }
-    if ($.config.changeBackground) {
-      changeBackground();
-    }
-    if ($.config.scaleImage) {
-      scaleImage(i);
-    }
-  };
-  return $;
-}));
-(function (context, factory) {
-  if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = function (context, GM) {
-      var _ = require('lodash');
-      var core = require('./core.js');
-      var misc = require('./misc.js');
-      var dispatcher = require('./dispatcher.js');
-      var modules = [misc, dispatcher].map(function (v) {
-        return v.call(null, context, GM);
-      });
-      var $ = _.assign.apply(_, modules);
-      return factory(context, GM, core, $);
-    };
-  } else {
-    factory(context, {
-      openInTab: GM_openInTab,
-      registerMenuCommand: GM_registerMenuCommand,
-    }, context._, context.$);
-  }
-}(this, function (context, GM, _, $) {
-  'use strict';
-  var window = context.window;
-  var document = window.document;
-  var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-  function disableWindowOpen () {
-    $.window.open = _.nop;
-    $.window.alert = _.nop;
-    $.window.confirm = _.nop;
-  }
-  function disableLeavePrompt (element) {
-    if (!element) {
-      return;
-    }
-    var seal = {
-      set: function () {
-        _.info('blocked onbeforeunload');
-      },
-    };
-    element.onbeforeunload = undefined;
-    if (isSafari) {
-      element.__defineSetter__('onbeforeunload', seal.set);
-    } else {
-      $.window.Object.defineProperty(element, 'onbeforeunload', {
-        configurable: true,
-        enumerable: false,
-        get: undefined,
-        set: seal.set,
-      });
-    }
-    var oael = element.addEventListener;
-    var nael = function (type) {
-      if (type === 'beforeunload') {
-        _.info('blocked addEventListener onbeforeunload');
-        return;
-      }
-      return oael.apply(this, arguments);
-    };
-    element.addEventListener = nael;
-  }
-  function changeTitle () {
-    document.title += ' - AdsBypasser';
-  }
-  function beforeDOMReady (handler) {
-    _.info('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify($.config));
-    disableLeavePrompt($.window);
-    disableWindowOpen();
-    handler.start();
-  }
-  function afterDOMReady (handler) {
-    disableLeavePrompt($.window.document.body);
-    changeTitle();
-    handler.ready();
-  }
-  function waitDOM () {
-    return _.D(function (resolve, reject) {
-      if (document.readyState !== 'loading') {
-        resolve();
-        return;
-      }
-      document.addEventListener('DOMContentLoaded', function () {
-        resolve();
-      });
-    });
-  }
-  $._main = function () {
-    var findHandler = $._findHandler;
-    delete $._main;
-    delete $._findHandler;
-    if (window.top !== window.self) {
-      return;
-    }
-    GM.registerMenuCommand('AdsBypasser - Configure', function () {
-      GM.openInTab('https://adsbypasser.github.io/configure.html');
-    });
-    var handler = findHandler(true);
-    if (handler) {
-      if ($.config.logLevel <= 0) {
-        _._quiet = true;
-      }
-      beforeDOMReady(handler);
-      waitDOM().then(function () {
-        afterDOMReady(handler);
-      });
-      return;
-    }
-    if ($.config.logLevel < 2) {
-      _._quiet = true;
-    }
-    _.info('does not match location on `%s`, will try HTML content', window.location.toString());
-    waitDOM().then(function () {
-      handler = findHandler(false);
-      if (!handler) {
-        _.info('does not match HTML content on `%s`', window.location.toString());
-        return;
-      }
-      beforeDOMReady(handler);
-      afterDOMReady(handler);
-    });
-  };
-  return $;
-}));
-$._main();
 $.register({
   rule: {
     host: /^01\.nl$/,
@@ -4426,3 +4182,125 @@ $.register({
     $.removeNodes('#captcha_overlay');
   },
 });
+(function (context, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = function (context, GM) {
+      var _ = require('lodash');
+      var core = require('./core.js');
+      var misc = require('./misc.js');
+      var dispatcher = require('./dispatcher.js');
+      var modules = [misc, dispatcher].map(function (v) {
+        return v.call(null, context, GM);
+      });
+      var $ = _.assign.apply(_, modules);
+      return factory(context, GM, core, $);
+    };
+  } else {
+    factory(context, {
+      openInTab: GM_openInTab,
+      registerMenuCommand: GM_registerMenuCommand,
+    }, context._, context.$);
+  }
+}(this, function (context, GM, _, $) {
+  'use strict';
+  var window = context.window;
+  var document = window.document;
+  var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+  function disableWindowOpen () {
+    $.window.open = _.nop;
+    $.window.alert = _.nop;
+    $.window.confirm = _.nop;
+  }
+  function disableLeavePrompt (element) {
+    if (!element) {
+      return;
+    }
+    var seal = {
+      set: function () {
+        _.info('blocked onbeforeunload');
+      },
+    };
+    element.onbeforeunload = undefined;
+    if (isSafari) {
+      element.__defineSetter__('onbeforeunload', seal.set);
+    } else {
+      $.window.Object.defineProperty(element, 'onbeforeunload', {
+        configurable: true,
+        enumerable: false,
+        get: undefined,
+        set: seal.set,
+      });
+    }
+    var oael = element.addEventListener;
+    var nael = function (type) {
+      if (type === 'beforeunload') {
+        _.info('blocked addEventListener onbeforeunload');
+        return;
+      }
+      return oael.apply(this, arguments);
+    };
+    element.addEventListener = nael;
+  }
+  function changeTitle () {
+    document.title += ' - AdsBypasser';
+  }
+  function beforeDOMReady (handler) {
+    _.info('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify($.config));
+    disableLeavePrompt($.window);
+    disableWindowOpen();
+    handler.start();
+  }
+  function afterDOMReady (handler) {
+    disableLeavePrompt($.window.document.body);
+    changeTitle();
+    handler.ready();
+  }
+  function waitDOM () {
+    return _.D(function (resolve, reject) {
+      if (document.readyState !== 'loading') {
+        resolve();
+        return;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        resolve();
+      });
+    });
+  }
+  $._main = function () {
+    var findHandler = $._findHandler;
+    delete $._main;
+    delete $._findHandler;
+    if (window.top !== window.self) {
+      return;
+    }
+    GM.registerMenuCommand('AdsBypasser - Configure', function () {
+      GM.openInTab('https://adsbypasser.github.io/configure.html');
+    });
+    var handler = findHandler(true);
+    if (handler) {
+      if ($.config.logLevel <= 0) {
+        _._quiet = true;
+      }
+      beforeDOMReady(handler);
+      waitDOM().then(function () {
+        afterDOMReady(handler);
+      });
+      return;
+    }
+    if ($.config.logLevel < 2) {
+      _._quiet = true;
+    }
+    _.info('does not match location on `%s`, will try HTML content', window.location.toString());
+    waitDOM().then(function () {
+      handler = findHandler(false);
+      if (!handler) {
+        _.info('does not match HTML content on `%s`', window.location.toString());
+        return;
+      }
+      beforeDOMReady(handler);
+      afterDOMReady(handler);
+    });
+  };
+  return $;
+}));
+$._main();
