@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.49.1
+// @version        5.49.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.49.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.49.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -1277,7 +1277,7 @@ $.register({
       'http://u.shareme.in/*',
       'http://server.sbenny.com/*',
       function () {
-        var h = $.$('html[id="adfly_html"]');
+        var h = $.$('html[id="main_html"]');
         var b = $.$('body[id="home"]');
         if (h && b) {
           return true;
@@ -1290,7 +1290,7 @@ $.register({
       $.window.document.write = _.nop;
     },
     ready: function () {
-      var h = $.$('#adfly_html'), b = $.$('#home');
+      var h = $.$('#main_html'), b = $.$('#home');
       if (!h || !b || h.nodeName !== 'HTML' || b.nodeName !== 'BODY') {
         return;
       }
