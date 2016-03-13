@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.49.2
+// @version        5.50.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.49.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.50.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.49.2/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.49.2/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.49.2/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.50.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.50.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.50.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -2132,6 +2132,15 @@ $.register({
   },
 });
 $.register({
+  rule:{
+    host:/^(www\.)?fiuxy\.net$/,
+    path:/^\/link\/\?.*$/
+  },
+  ready:function(){
+    $.openLink($('a.btn.a').href);
+  }
+});
+$.register({
   rule: {
     host: /^www\.forbes\.com$/,
   },
@@ -4024,7 +4033,7 @@ $.register({
   }
   $.register({
     rule: {
-      host: /^www\.imagepearl\.com$/,
+      host: /^(www\.)?imagepearl\.com$/,
       path: /^\/verify\/(.+)$/,
     },
     start: function (m) {
@@ -4037,9 +4046,11 @@ $.register({
     rule: [
       'http://*.abload.de/image.php?img=*',
       'http://www.imageup.ru/*/*/*.html',
-      'http://itmages.ru/image/view/*/*',  
-      'http://www.imagepearl.com/view/*',  
-      'http://www.imagepearl.com/image/*',  
+      'http://itmages.ru/image/view/*/*',
+      {
+        host: /^(www\.)?imagepearl\.com$/,
+        path: /^\/(view|image)\//,
+      },
     ],
     ready: run,
   });
@@ -4956,10 +4967,10 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^img(paying|mega|zeus|monkey|trex|ve|dew|outlet)\.com$/,
+        /^img(universal|paying|mega|zeus|monkey|trex|ve|dew|outlet)\.com$/,
         /^(www\.)?imgsee\.me$/,
         /^img(click|maid)\.net$/,
-        /^(uploadrr|imageeer|imzdrop|www\.uimgshare)\.com$/,
+        /^(uploadrr|imageeer|imzdrop|www\.uimgshare|pic-maniac)\.com$/,
         /^imgdrive\.co$/,
         /^cuteimg\.cc$/,
         /^img(tiger|gold)\.org$/,
@@ -5431,9 +5442,9 @@ $.register({
     rule: [
       {
         host: [
-          /^image(ontime|corn|picsa)\.com$/,
+          /^image(ontime|corn|picsa|horse)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy)image\.com$/,
-          /^img(next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz|binbou|2share|22|cover|hit|main)\.com$/,
+          /^img(icy|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz|binbou|2share|22|cover|hit|main)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.(imagefolks|img(blow|lemon))\.com$/,
           /^xxx(\.pornprimehd|imagenow|screens)\.com$/,
@@ -5449,9 +5460,9 @@ $.register({
           /xxxsparrow?\.com$/,
           /damimage\.com$/,
           /imagedecode\.com$/,
-          /^img(serve|coin|fap|candy|master|-view|run|boom|project|python)\.net$/,
-          /^(gallerycloud|imagelaser|project-photo|pix-link|funimg|golfpit|xximg)\.net$/,
-          /^shotimg\.org$/,
+          /^img(serve|coin|fap|candy|master|-view|run|boom|project|python|pics)\.net$/,
+          /^(gallerycloud|imagelaser|picture-bang|project-photo|pix-link|funimg|golfpit|xximg)\.net$/,
+          /^(shot|adult)img\.org$/,
           /^img(studio|spot)\.org$/,
           /^image(\.adlock|on|team)\.org$/,
           /^(drag|teen|mega)image\.org$/,
@@ -5945,6 +5956,22 @@ $.register({
     var a = $('#main-content a.btn.btn-default');
     $.openLink(a.href);
   },
+});
+$.register({
+  rule: {
+    host: /^openload\.co$/,
+    path: /^\/f\/.*/,
+  },
+  start: function (m) {
+    $.window.adblock = false;
+    $.window.adblock2 = false;
+  },
+  ready: function () {
+    var a = $('#realdl>a');
+    if (a.href) {
+      $.openLink(a.href);
+    }
+  }
 });
 $.register({
   rule: {

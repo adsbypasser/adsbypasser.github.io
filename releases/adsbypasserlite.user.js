@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.49.2
+// @version        5.50.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.49.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.50.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -2126,6 +2126,15 @@ $.register({
   },
 });
 $.register({
+  rule:{
+    host:/^(www\.)?fiuxy\.net$/,
+    path:/^\/link\/\?.*$/
+  },
+  ready:function(){
+    $.openLink($('a.btn.a').href);
+  }
+});
+$.register({
   rule: {
     host: /^www\.forbes\.com$/,
   },
@@ -4095,6 +4104,22 @@ $.register({
     var a = $('#main-content a.btn.btn-default');
     $.openLink(a.href);
   },
+});
+$.register({
+  rule: {
+    host: /^openload\.co$/,
+    path: /^\/f\/.*/,
+  },
+  start: function (m) {
+    $.window.adblock = false;
+    $.window.adblock2 = false;
+  },
+  ready: function () {
+    var a = $('#realdl>a');
+    if (a.href) {
+      $.openLink(a.href);
+    }
+  }
 });
 $.register({
   rule: {
