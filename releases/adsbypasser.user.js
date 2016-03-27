@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.50.0
+// @version        5.51.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.50.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.51.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.50.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.50.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.50.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.51.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.51.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.51.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -2896,6 +2896,8 @@ $.register({
       /^mant[ae][pb]\.in$/,
       /^st\.oploverz\.net$/,
       /^minidroid\.net$/,
+      /^susutin\.com$/,
+      /^ww3\.awaremmxv\.com$/,
     ],
   },
   ready: function () {
@@ -5119,8 +5121,8 @@ $.register({
         /^imagecurl\.(com|org)$/,
         /^imagevau\.eu$/,
         /^img\.deli\.sh$/,
-        /^imagepong\.info$/,
         /^imgdream\.net$/,
+        /^img(dream|soo)\.net$/,
         /^imgsicily\.it$/,
         /^www\.imghere\.net$/,
       ],
@@ -5431,6 +5433,7 @@ $.register({
         node.removeAttribute('disabled');
         return _.wait(500);
       }).then(function () {
+        node.focus();
         node.click();
       });
       return;
@@ -5505,7 +5508,7 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^www\.img(taxi|adult)\.com$/,
+        /^www\.img(taxi|adult|wallet)\.com$/,
         /^www\.imgdrive\.net$/,
       ],
       path: /^\/img-.*\.html$/,
@@ -5592,13 +5595,10 @@ $.register({
   $.register({
     rule: {
       host: /^www\.imagesnake\.com$/,
-      path: /^\/index\.php$/,
+      path: /^\/show\.php$/,
       query: /^\?/,
     },
-    ready: function () {
-      var a = $('#tablewraper a:nth-child(2)');
-      $.openImage(a.href);
-    },
+    ready: run,
   });
   function run () {
     var i = $('#img_obj');
@@ -5606,14 +5606,14 @@ $.register({
   }
   $.register({
     rule: {
-      host: /^www\.(imagesnake|freebunker|imgcarry)\.com$/,
+      host: /^www\.(freebunker|imgcarry)\.com$/,
       path: /^\/show\//,
     },
     ready: run,
   });
   $.register({
     rule: {
-      host: /^www\.imagefruit\.com$/,
+      host: /^www\.(imagesnake|imagefruit)\.com$/,
       path: /^\/(img|show)\/.+/,
     },
     ready: run,
