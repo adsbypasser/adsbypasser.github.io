@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.51.0
+// @version        5.52.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.51.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.52.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -2333,6 +2333,19 @@ $.register({
   },
 });
 $.register({
+  rule: {
+    host: /^leechpremium\.space$/,
+    path: /^\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#btn-main');
+    var i = a.href.lastIndexOf('http');
+    a = a.href.substr(i);
+    $.openLink(a);
+  },
+});
+$.register({
   rule: 'http://www.lienscash.com/l/*',
   ready: function () {
     'use strict';
@@ -3330,14 +3343,25 @@ $.register({
       f.submit();
       return;
     }
-    var envio = $("#envio");
-    envio.disabled = false;  
-    envio.style.visibility= "hidden";  
-    envio.style.display='none';
-    var envio2 = $("#envio2");
-    envio2.style.visibility= "visible";  
-    envio2.style.display='block';
-    $.window.$("#myModal").reveal();
+    var envio = $('#envio');
+    envio.disabled = false;
+    envio.style.visibility = 'hidden';
+    envio.style.display = 'none';
+    var envio2 = $('#envio2');
+    envio2.style.visibility = 'visible';
+    envio2.style.display = 'block';
+    $.window.$('#myModal').reveal();
+  },
+});
+$.register({
+  rule: {
+    host: /^(www\.)?shink\.in$/,
+    path: /^\/go\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#btn-main');
+    $.openLink(a.href);
   },
 });
 $.register({
@@ -3410,6 +3434,17 @@ $.register({
       l = 'http://' + l;
     }
     $.openLink(l);
+  },
+});
+$.register({
+  rule: {
+    host: /^www\.spaste\.com$/,
+    path: /^\/go\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#linkZone a');
+    $.openLink(a.href);
   },
 });
 $.register({
@@ -3513,6 +3548,13 @@ $.register({
       path: /^\/p\/go\.html$/,
       query: /^\?url=([a-zA-Z0-9=]+)$/,
     },
+    {
+      host: [
+        /^(gadget|auto)14\.pw$/,
+        /^nar-04\.tk$/,
+      ],
+      query: /^\?d=([a-zA-Z0-9=]+)$/,
+    },
   ],
   start: function (m) {
     'use strict';
@@ -3536,6 +3578,7 @@ $.register({
         /^ww3\.manteb\.in$/,
         /^link\.filmku\.net$/,
         /^www\.muucih\.com$/,
+        /^naisho\.lompat\.in$/,
       ],
       query: /go=(\w+=*)/,
     },
