@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.52.0
+// @version        5.53.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.52.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.53.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -3443,7 +3443,7 @@ $.register({
   },
   ready: function () {
     'use strict';
-    var a = $('#linkZone a');
+    var a = $('[id^=linkZone] a');
     $.openLink(a.href);
   },
 });
@@ -3854,6 +3854,19 @@ $.register({
   start: function (m) {
     'use strict';
     var url = atob(m.path[1]);
+    $.openLink(url);
+  },
+});
+$.register({
+  rule: {
+    host: /^ysf\.pl$/,
+    path: /^\/2\/(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = m.path[1].match(/.{2}/g).map(function (h) {
+      return String.fromCharCode(parseInt(h, 16));
+    }).join('');
     $.openLink(url);
   },
 });
