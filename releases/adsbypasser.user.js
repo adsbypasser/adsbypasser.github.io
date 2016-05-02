@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.53.0
+// @version        5.54.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.53.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.54.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.53.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.53.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.53.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.54.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.54.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.54.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -3445,12 +3445,15 @@ $.register({
 $.register({
   rule: {
     host: /^www\.spaste\.com$/,
-    path: /^\/go\/\w+$/,
+    path: /^\/go\/(\w+)$/,
   },
-  ready: function () {
+  start: function (m) {
     'use strict';
-    var a = $('[id^=linkZone] a');
-    $.openLink(a.href);
+    $.post('/site/getRedirectLink', {
+      code: m.path[1],
+    }).then(function (url) {
+      $.openLink(url);
+    });
   },
 });
 $.register({
@@ -4092,10 +4095,10 @@ $.register({
   $.register({
     rule: {
       host: /^(www\.)?imagepearl\.com$/,
-      path: /^\/verify\/(.+)$/,
+      path: /^\/(verify|view)\/(.+)$/,
     },
     start: function (m) {
-      $.openLink('/image/' + m.path[1], {
+      $.openLink('/image/' + m.path[2], {
         referer: false,
       });
     },
@@ -4116,7 +4119,7 @@ $.register({
       'http://itmages.ru/image/view/*/*',
       {
         host: /^(www\.)?imagepearl\.com$/,
-        path: /^\/(view|image)\//,
+        path: /^\/image\//,
       },
       {
         host: /^www\.imageberyl\.com$/,
@@ -4271,6 +4274,7 @@ $.register({
       /daily-img\.com$/,
       /img-365\.com$/,
       /^365-img\.com$/,
+      /^i\.hentai-ddl\.org$/,
     ],
     path: /^\/image\/.+$/,
   },
@@ -4366,24 +4370,6 @@ $.register({
     $.openImage(i.src);
   },
 });
-(function () {
-  'use strict';
-  function run () {
-    var i = $('#img_obj');
-    $.openImage(i.src);
-  }
-  $.register({
-    rule: 'http://fotoo.pl/show.php?img=*.html',
-    ready: run,
-  });
-  $.register({
-    rule: {
-      host: /^www\.(fotoszok\.pl|imagestime)\.com$/,
-      path: /^\/show\.php\/.*\.html$/,
-    },
-    ready: run,
-  });
-})();
 $.register({
   rule: 'http://www.fotosik.pl/pokaz_obrazek/pelny/*.html',
   ready: function () {
@@ -4609,17 +4595,6 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^imageban\.(ru|net)$/,
-    path: /^\/show\/\d{4}\/\d{2}\/\d{2}\/.+/,
-  },
-  ready: function () {
-    'use strict';
-    var i = $('#img_obj');
-    $.openImage(i.src);
-  },
-});
-$.register({
-  rule: {
     host: /^imageheli\.com|imgtube\.net|pixliv\.com$/,
     path: /^\/img-([a-zA-Z0-9\-]+)\..+$/,
   },
@@ -4758,6 +4733,53 @@ $.register({
     $.openImage(a.href);
   },
 });
+(function () {
+  'use strict';
+  function run () {
+    var i = $('#img_obj');
+    $.openImage(i.src);
+  }
+  function run2 () {
+    var i = $('#img_obj');
+    $.openImage(i.src, {
+      replace: true,
+    });
+  }
+  $.register({
+    rule: [
+      {
+        host: /^www\.(freebunker|imagesnake|imgcarry|imgshots)\.com$/,
+        path: /^\/show\.php$/,
+        query: /^\?/,
+      },
+      {
+        host: /^www\.freebunker\.com$/,
+        path: /^\/show\//,
+      },
+      {
+        host: /^www\.(imagesnake|imagefruit)\.com$/,
+        path: /^\/(img|show)\/.+/,
+      },
+      {
+        host: /^imageban\.(ru|net)$/,
+        path: /^\/show\/\d{4}\/\d{2}\/\d{2}\/.+/,
+      },
+      'http://fotoo.pl/show.php?img=*.html',
+      {
+        host: /^www\.(fotoszok\.pl|imagestime)\.com$/,
+        path: /^\/show\.php\/.*\.html$/,
+      },
+    ],
+    ready: run,
+  });
+  $.register({
+    rule: {
+      host: /^www\.imgcarry\.com$/,
+      path: /^\/show\//,
+    },
+    ready: run2,
+  });
+})();
 (function () {
   'use strict';
   function run (rp) {
@@ -4950,6 +4972,7 @@ $.register({
       /^imageporn\.eu$/,
       /^0img\.net$/,
       /^daily-img\.com$/,
+      /^picangel\.in$/,
     ],
     query: /^\?[pv]=/,
   },
@@ -4982,6 +5005,7 @@ $.register({
     host: [
       /^imgnova\.xyz$/,
       /^www\.hentai-hot\.xyz$/,
+      /^www\.hentai-king\.online$/,
     ],
     path: /^\/i\/.+\.php$/,
     query: /f=(.+)$/,
@@ -5415,10 +5439,13 @@ $.register({
   },
 });
 $.register({
-  rule: 'http://picstate.com.alsohe.com/view/full/*',
+  rule: {
+    host: /^picstream\.tv$/,
+    path: /^\/.*\/.*\.html$/,
+  },
   ready: function () {
     'use strict';
-    var img = $('#image_container img');
+    var img = $('#view1 > div:nth-child(1) > a:nth-child(1) > img:nth-child(1)');
     $.openImage(img.src);
   },
 });
@@ -5555,7 +5582,7 @@ $.register({
           /damimage\.com$/,
           /imagedecode\.com$/,
           /^img(serve|coin|fap|candy|master|-view|run|boom|project|python|pics)\.net$/,
-          /^(gallerycloud|imagelaser|picture-bang|project-photo|pix-link|funimg|golfpit|xximg)\.net$/,
+          /^(naughtygate|gallerycloud|imagelaser|picture-bang|project-photo|pix-link|funimg|golfpit|xximg)\.net$/,
           /^(shot|adult)img\.org$/,
           /^img(studio|spot)\.org$/,
           /^image(\.adlock|on|team)\.org$/,
@@ -5694,35 +5721,6 @@ $.register({
       },
     ],
     ready: ready,
-  });
-})();
-(function () {
-  'use strict';
-  $.register({
-    rule: {
-      host: /^www\.(freebunker|imagesnake|imgcarry)\.com$/,
-      path: /^\/show\.php$/,
-      query: /^\?/,
-    },
-    ready: run,
-  });
-  function run () {
-    var i = $('#img_obj');
-    $.openImage(i.src);
-  }
-  $.register({
-    rule: {
-      host: /^www\.freebunker\.com$/,
-      path: /^\/show\//,
-    },
-    ready: run,
-  });
-  $.register({
-    rule: {
-      host: /^www\.(imagesnake|imagefruit)\.com$/,
-      path: /^\/(img|show)\/.+/,
-    },
-    ready: run,
   });
 })();
 $.register({
