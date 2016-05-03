@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.54.0
+// @version        5.54.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.54.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.54.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -3439,14 +3439,17 @@ $.register({
 $.register({
   rule: {
     host: /^www\.spaste\.com$/,
-    path: /^\/go\/(\w+)$/,
+    path: /^\/go\/\w+$/,
   },
-  start: function (m) {
+  ready: function () {
     'use strict';
-    $.post('/site/getRedirectLink', {
-      code: m.path[1],
-    }).then(function (url) {
-      $.openLink(url);
+    var id = $.searchScripts(/\{id:'(\d+)'\}/);
+    _.wait(2000).then(function () {
+      return $.post('/site/getRedirectLink', {
+        id: id,
+      }).then(function (url) {
+        $.openLink(url);
+      });
     });
   },
 });
