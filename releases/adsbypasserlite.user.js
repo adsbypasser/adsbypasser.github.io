@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.54.2
+// @version        5.55.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.54.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.55.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -1783,6 +1783,11 @@ $.register({
         var a = $('.link a');
         return a.href;
       };
+    case 'gunting.in':
+      return function () {
+        var a = $('div.col-sm-6:nth-child(1) > center:nth-child(1) > a:nth-child(1)');
+        return a.href;
+      };
     default:
       return null;
     }
@@ -1794,6 +1799,7 @@ $.register({
         /^link\.animagz\.org$/,
         /^coeg\.in$/,
         /^disingkat\.in$/,
+        /^gunting\.in$/,
       ],
       path: /^\/\w+$/,
     },
@@ -3557,9 +3563,16 @@ $.register({
     {
       host: [
         /^(gadget|auto)14\.pw$/,
+        /^motosport\.pw$/,
         /^nar-04\.tk$/,
+        /^lindung\.in$/,
       ],
       query: /^\?d=([a-zA-Z0-9=]+)$/,
+    },
+    {
+      host: /^www\.anisubsia\.tk$/,
+      path: /^\/p\/link\.html$/,
+      query: /^\?url=([a-zA-Z0-9=]+)$/,
     },
   ],
   start: function (m) {
@@ -3584,7 +3597,7 @@ $.register({
         /^ww3\.manteb\.in$/,
         /^link\.filmku\.net$/,
         /^www\.muucih\.com$/,
-        /^naisho\.lompat\.in$/,
+        /^(naisho|filmku)\.lompat\.in$/,
       ],
       query: /go=(\w+=*)/,
     },
