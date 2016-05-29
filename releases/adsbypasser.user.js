@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.55.0
+// @version        5.56.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.55.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.55.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.55.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.55.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -1006,6 +1006,9 @@
     return c;
   }
   function migrate (c) {
+    if (typeof c.version !== 'number' || c.version < 0) {
+      throw new _.AdsBypasserError('wrong config version: ' + c.version);
+    }
     while (c.version < PATCHES.length) {
       PATCHES[c.version](c);
       ++c.version;
@@ -1767,55 +1770,6 @@ $.register({
     $.openLink(direct_link);
   },
 });
-(function () {
-  'use strict';
-  function hostMapper (host) {
-    switch (host) {
-    case 'bk-ddl.net':
-    case 'disingkat.in':
-      return function () {
-        var a = $('a.btn-block.redirect');
-        return a.href;
-      };
-    case 'link.animagz.org':
-      return function () {
-        var a = $('a.redirect');
-        a = a.onclick.toString();
-        a = a.match(/window\.open \('([^']+)'\)/);
-        return a[1];
-      };
-    case 'coeg.in':
-      return function () {
-        var a = $('.link a');
-        return a.href;
-      };
-    case 'gunting.in':
-      return function () {
-        var a = $('div.col-sm-6:nth-child(1) > center:nth-child(1) > a:nth-child(1)');
-        return a.href;
-      };
-    default:
-      return null;
-    }
-  }
-  $.register({
-    rule: {
-      host: [
-        /^bk-ddl\.net$/,
-        /^link\.animagz\.org$/,
-        /^coeg\.in$/,
-        /^disingkat\.in$/,
-        /^gunting\.in$/,
-      ],
-      path: /^\/\w+$/,
-    },
-    ready: function (m) {
-      var mapper = hostMapper(m.host[0]);
-      var b64 = mapper().match(/\?r=(\w+={0,2}?)/);
-      $.openLink(atob(b64[1]));
-    },
-  });
-})();
 $.register({
   rule: {
     host: /^(www\.)?boxcash\.net$/,
@@ -1916,6 +1870,68 @@ $.register({
     $.openLink(matches[1]);
   },
 });
+(function () {
+  'use strict';
+  function hostMapper (host) {
+    switch (host) {
+    case 'disingkat.in':
+      return function () {
+        var a = $('a.btn-block.redirect');
+        return a.href;
+      };
+    case 'link.animagz.org':
+      return function () {
+        var a = $('a.redirect');
+        a = a.onclick.toString();
+        a = a.match(/window\.open \('([^']+)'\)/);
+        return a[1];
+      };
+    case 'coeg.in':
+      return function () {
+        var a = $('.link a');
+        return a.href;
+      };
+    case 'gunting.in':
+      return function () {
+        var a = $('div.col-sm-6:nth-child(1) > center:nth-child(1) > a:nth-child(1)');
+        return a.href;
+      };
+    default:
+      return null;
+    }
+  }
+  $.register({
+    rule: {
+      host: [
+        /^link\.animagz\.org$/,
+        /^coeg\.in$/,
+        /^disingkat\.in$/,
+        /^gunting\.in$/,
+      ],
+      path: /^\/\w+$/,
+    },
+    ready: function (m) {
+      var mapper = hostMapper(m.host[0]);
+      var b64 = mapper().match(/\?r=(\w+={0,2}?)/);
+      $.openLink(atob(b64[1]));
+    },
+  });
+  $.register({
+    rule: {
+      host: /^sipkur\.net$/,
+      path: [
+        /^\/\w+$/,
+        /^\/menujulink\//,
+      ],
+    },
+    ready: function () {
+      var d = $('#testapk > div');
+      d = d.onclick.toString();
+      d = d.match(/window\.open\('([^']+)'/);
+      $.openLink(d[1]);
+    },
+  });
+})();
 $.register({
   rule: {
     host: /^(?:(\w+)\.)?(coinurl\.com|cur\.lv)$/,
@@ -2050,6 +2066,17 @@ $.register({
     $.removeNodes('iframe');
     var a = $('.disclaimer a');
     $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
+    host: /^dmus\.in$/,
+    path: /[a-zA-Z0-9]+/,
+  },
+  ready: function () {
+    'use strict';
+    var i = $('a[class$=redirect]');
+    $.openLink(i.href);
   },
 });
 $.register({
@@ -2243,12 +2270,34 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^goto\.loncat\.in$/,
+    query: /open=(.+)/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = atob(atob(m.query[1]));
+    $.openLink(url);
+  },
+});
+$.register({
+  rule: {
     host: /^hotshorturl\.com$/,
   },
   ready: function () {
     'use strict';
     var frame = $('frame[scrolling=yes]');
     $.openLink(frame.src);
+  },
+});
+$.register({
+  rule: {
+    host: /^igg-games\.com$/,
+    query: /^\?xurl=(.*)$/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = 'http' + decodeURIComponent(m.query[1]);
+    $.openLink(url);
   },
 });
 $.register({
@@ -3028,7 +3077,7 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^(www\.)?ouo\.io$/,
+    host: /^(www\.)?ouo\.(io|press)$/,
     path: /^\/go\/\w+$/,
   },
   ready: function (m) {
@@ -3456,7 +3505,7 @@ $.register({
   ready: function () {
     'use strict';
     var id = $.searchScripts(/\{id:'(\d+)'\}/);
-    _.wait(2000).then(function () {
+    _.wait(3000).then(function () {
       return $.post('/site/getRedirectLink', {
         id: id,
       }).then(function (url) {
@@ -3548,6 +3597,7 @@ $.register({
         /^(www\.)?sylnk\.net$/,
         /^dlneko\.(com|net|org)$/,
         /^rumahsimpel\.com$/,
+        /^designinghomey\.com$/,
       ],
       query: /link=([^&]+)/,
     },
@@ -3593,6 +3643,7 @@ $.register({
       host: [
         /^(www\.)?(link\.)?safelink(converter2?|s?review)\.com$/,
         /^susutin\.com$/,
+        /^getcomics\.gq$/,
       ],
       query: /id=(\w+=*)/,
     },
@@ -3604,6 +3655,7 @@ $.register({
         /^link\.filmku\.net$/,
         /^www\.muucih\.com$/,
         /^(naisho|filmku)\.lompat\.in$/,
+        /^edogawa\.lon\.pw$/,
       ],
       query: /go=(\w+=*)/,
     },
@@ -4111,12 +4163,10 @@ $.register({
   $.register({
     rule: {
       host: /^(www\.)?image(pearl|beryl)\.com$/,
-      path: /^\/(verify|view)\/(.+)$/,
+      path: /^\/verify\/(.+)$/,
     },
     start: function (m) {
-      $.openLink('/image/' + m.path[2], {
-        referer: false,
-      });
+      $.openLink('/view/' + m.path[1]);
     },
   });
   $.register({
@@ -4126,7 +4176,7 @@ $.register({
       'http://itmages.ru/image/view/*/*',
       {
         host: /^(www\.)?image(pearl|beryl)\.com$/,
-        path: /^\/image\//,
+        path: /^\/view\//,
       },
     ],
     ready: run,
@@ -4352,15 +4402,24 @@ $.register({
       host: /^10\.imageleon\.com$/,
       path: /^\/img-(.+)\.html$/,
     },
-    {
-      host: /^sexyxpixels\.com$/,
-      query: /^\?v=/,
-    },
   ],
   ready: function () {
     'use strict';
     var img = $('#full_image');
     $.openImage(img.src);
+  },
+});
+$.register({
+  rule: {
+    host: /^sexyxpixels\.com$/,
+    query: /^\?v=/,
+  },
+  ready: function () {
+    'use strict';
+    var img = $('#full_image');
+    $.openImage(img.src, {
+      referer: true,
+    });
   },
 });
 $.register({
@@ -4755,7 +4814,9 @@ $.register({
   'use strict';
   function run () {
     var i = $('#img_obj');
-    $.openImage(i.src);
+    $.openImage(i.src, {
+      referer: true,
+    });
   }
   function run2 () {
     var i = $('#img_obj');
@@ -5125,7 +5186,7 @@ $.register({
         /^myimg\.club$/,
         /^foxyimg\.link$/,
         /^hulkimge\.com$/,
-        /^coreimg\.net$/,
+        /^(core|iron)img\.net$/,
       ],
       path: pathRule,
     },
@@ -5414,6 +5475,7 @@ $.register({
     'http://pixsor.com/XXX/share-*.html',
     'http://holdthemoan.net/x/share-*.html',
     'http://imgurx.net/x/share-*.html',
+    'http://www.imgz.pw/share-*.html',
   ],
   ready: function () {
     'use strict';
@@ -5594,9 +5656,9 @@ $.register({
 });
 (function () {
   'use strict';
-  function ready () {
+  function action (firstSelector, secondSelector) {
     $.removeNodes('iframe, #adblock_detect, .popupOverlay');
-    var node = $.$('#continuetoimage > form input');
+    var node = $.$(firstSelector);
     if (node) {
       _.wait(500).then(function () {
         node.removeAttribute('disabled');
@@ -5608,16 +5670,17 @@ $.register({
       });
       return;
     }
-    var i = $('img[class^=centred]');
+    var i = $(secondSelector);
     $.openImage(i.src);
   }
+  var defaultAction = _.P(action, '#continuetoimage > form input', 'img[class^=centred]');
   $.register({
     rule: [
       {
         host: [
           /^image(ontime|corn|picsa|horse)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy)image\.com$/,
-          /^img(icy|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz|binbou|2share|22|cover|hit|main|trial)\.com$/,
+          /^img(icy|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|-pay|nimz|binbou|2share|22|cover|hit|main|trial|blank)\.com$/,
           /^img-(zone|planet)\.com$/,
           /^www\.img(blow|lemon|4sharing)\.com$/,
           /^www\.imagefolks\.com$/,
@@ -5648,7 +5711,7 @@ $.register({
           /^img\.yt$/,
           /^vava\.in$/,
           /^(pixxx|picspornfree|imgload|fapat)\.me$/,
-          /^(pic2pic|porno-pirat|24avarii|loftlm|18pron|imgplus)\.ru$/,
+          /^(domaink|pic2pic|porno-pirat|24avarii|loftlm|18pron|imgplus)\.ru$/,
           /^www\.hotimage\.uk$/,
           /^imgease\.re$/,
           /^goimg\.xyz$/,
@@ -5681,7 +5744,14 @@ $.register({
         path: /^\/img\/.+$/,
       },
     ],
-    ready: ready,
+    ready: defaultAction,
+  });
+  $.register({
+    rule: {
+      host: /^imgrat\.com$/,
+      path: /^\/img-.*\.html/,
+    },
+    ready: _.P(action, '#close', '#main_image img.center-block.img-responsive'),
   });
   $.register({
     rule: {
@@ -5777,7 +5847,7 @@ $.register({
         path: /^\/img2-.*\.html/,
       },
     ],
-    ready: ready,
+    ready: defaultAction,
   });
 })();
 $.register({

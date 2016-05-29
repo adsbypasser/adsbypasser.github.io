@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.55.0
+// @version        5.56.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.55.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -1000,6 +1000,9 @@
     return c;
   }
   function migrate (c) {
+    if (typeof c.version !== 'number' || c.version < 0) {
+      throw new _.AdsBypasserError('wrong config version: ' + c.version);
+    }
     while (c.version < PATCHES.length) {
       PATCHES[c.version](c);
       ++c.version;
@@ -1761,55 +1764,6 @@ $.register({
     $.openLink(direct_link);
   },
 });
-(function () {
-  'use strict';
-  function hostMapper (host) {
-    switch (host) {
-    case 'bk-ddl.net':
-    case 'disingkat.in':
-      return function () {
-        var a = $('a.btn-block.redirect');
-        return a.href;
-      };
-    case 'link.animagz.org':
-      return function () {
-        var a = $('a.redirect');
-        a = a.onclick.toString();
-        a = a.match(/window\.open \('([^']+)'\)/);
-        return a[1];
-      };
-    case 'coeg.in':
-      return function () {
-        var a = $('.link a');
-        return a.href;
-      };
-    case 'gunting.in':
-      return function () {
-        var a = $('div.col-sm-6:nth-child(1) > center:nth-child(1) > a:nth-child(1)');
-        return a.href;
-      };
-    default:
-      return null;
-    }
-  }
-  $.register({
-    rule: {
-      host: [
-        /^bk-ddl\.net$/,
-        /^link\.animagz\.org$/,
-        /^coeg\.in$/,
-        /^disingkat\.in$/,
-        /^gunting\.in$/,
-      ],
-      path: /^\/\w+$/,
-    },
-    ready: function (m) {
-      var mapper = hostMapper(m.host[0]);
-      var b64 = mapper().match(/\?r=(\w+={0,2}?)/);
-      $.openLink(atob(b64[1]));
-    },
-  });
-})();
 $.register({
   rule: {
     host: /^(www\.)?boxcash\.net$/,
@@ -1910,6 +1864,68 @@ $.register({
     $.openLink(matches[1]);
   },
 });
+(function () {
+  'use strict';
+  function hostMapper (host) {
+    switch (host) {
+    case 'disingkat.in':
+      return function () {
+        var a = $('a.btn-block.redirect');
+        return a.href;
+      };
+    case 'link.animagz.org':
+      return function () {
+        var a = $('a.redirect');
+        a = a.onclick.toString();
+        a = a.match(/window\.open \('([^']+)'\)/);
+        return a[1];
+      };
+    case 'coeg.in':
+      return function () {
+        var a = $('.link a');
+        return a.href;
+      };
+    case 'gunting.in':
+      return function () {
+        var a = $('div.col-sm-6:nth-child(1) > center:nth-child(1) > a:nth-child(1)');
+        return a.href;
+      };
+    default:
+      return null;
+    }
+  }
+  $.register({
+    rule: {
+      host: [
+        /^link\.animagz\.org$/,
+        /^coeg\.in$/,
+        /^disingkat\.in$/,
+        /^gunting\.in$/,
+      ],
+      path: /^\/\w+$/,
+    },
+    ready: function (m) {
+      var mapper = hostMapper(m.host[0]);
+      var b64 = mapper().match(/\?r=(\w+={0,2}?)/);
+      $.openLink(atob(b64[1]));
+    },
+  });
+  $.register({
+    rule: {
+      host: /^sipkur\.net$/,
+      path: [
+        /^\/\w+$/,
+        /^\/menujulink\//,
+      ],
+    },
+    ready: function () {
+      var d = $('#testapk > div');
+      d = d.onclick.toString();
+      d = d.match(/window\.open\('([^']+)'/);
+      $.openLink(d[1]);
+    },
+  });
+})();
 $.register({
   rule: {
     host: /^(?:(\w+)\.)?(coinurl\.com|cur\.lv)$/,
@@ -2044,6 +2060,17 @@ $.register({
     $.removeNodes('iframe');
     var a = $('.disclaimer a');
     $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
+    host: /^dmus\.in$/,
+    path: /[a-zA-Z0-9]+/,
+  },
+  ready: function () {
+    'use strict';
+    var i = $('a[class$=redirect]');
+    $.openLink(i.href);
   },
 });
 $.register({
@@ -2237,12 +2264,34 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^goto\.loncat\.in$/,
+    query: /open=(.+)/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = atob(atob(m.query[1]));
+    $.openLink(url);
+  },
+});
+$.register({
+  rule: {
     host: /^hotshorturl\.com$/,
   },
   ready: function () {
     'use strict';
     var frame = $('frame[scrolling=yes]');
     $.openLink(frame.src);
+  },
+});
+$.register({
+  rule: {
+    host: /^igg-games\.com$/,
+    query: /^\?xurl=(.*)$/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = 'http' + decodeURIComponent(m.query[1]);
+    $.openLink(url);
   },
 });
 $.register({
@@ -3022,7 +3071,7 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^(www\.)?ouo\.io$/,
+    host: /^(www\.)?ouo\.(io|press)$/,
     path: /^\/go\/\w+$/,
   },
   ready: function (m) {
@@ -3450,7 +3499,7 @@ $.register({
   ready: function () {
     'use strict';
     var id = $.searchScripts(/\{id:'(\d+)'\}/);
-    _.wait(2000).then(function () {
+    _.wait(3000).then(function () {
       return $.post('/site/getRedirectLink', {
         id: id,
       }).then(function (url) {
@@ -3542,6 +3591,7 @@ $.register({
         /^(www\.)?sylnk\.net$/,
         /^dlneko\.(com|net|org)$/,
         /^rumahsimpel\.com$/,
+        /^designinghomey\.com$/,
       ],
       query: /link=([^&]+)/,
     },
@@ -3587,6 +3637,7 @@ $.register({
       host: [
         /^(www\.)?(link\.)?safelink(converter2?|s?review)\.com$/,
         /^susutin\.com$/,
+        /^getcomics\.gq$/,
       ],
       query: /id=(\w+=*)/,
     },
@@ -3598,6 +3649,7 @@ $.register({
         /^link\.filmku\.net$/,
         /^www\.muucih\.com$/,
         /^(naisho|filmku)\.lompat\.in$/,
+        /^edogawa\.lon\.pw$/,
       ],
       query: /go=(\w+=*)/,
     },
