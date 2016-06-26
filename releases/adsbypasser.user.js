@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.56.0
+// @version        5.56.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.1/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.1/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.1/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // ==/UserScript==
@@ -1297,6 +1297,7 @@ $.register({
     ],
     start: function () {
       $.window.document.write = _.nop;
+      $.window.btoa = _.nop;
     },
     ready: function () {
       var h = $.$('#main_html'), b = $.$('#home');
@@ -4768,17 +4769,6 @@ $.register({
     $.openImage(i.src);
   },
 });
-$.register({
-  rule: {
-    host: /^bunnyforum\.org$/,
-    query: /^\?v=/,
-  },
-  ready: function () {
-    'use strict';
-    var i = $('img[title^=Click]');
-    $.openImage(i.src);
-  },
-});
 (function () {
   'use strict';
   var host = /^imageshack\.us$/;
@@ -5060,11 +5050,11 @@ $.register({
       host: [
         /^img(fantasy|leech|\.pornleech|smile|nemo|sense)\.com$/,
         /^(imagedomino|lovechix)\.com$/,
-        /^imageporn\.eu$/,
         /^0img\.net$/,
         /^daily-img\.com$/,
         /^picangel\.in$/,
         /^imagebic\.com$/,
+        /^bunnyforum\.org$/,
       ],
       query: /^\?[pv]=/,
     },
@@ -5139,6 +5129,7 @@ $.register({
         id: id,
         pre: pre,
         next: next,
+        adb: '0',
       },
     });
   }
@@ -5235,9 +5226,11 @@ $.register({
         $.openImage(i.src, {replace: true});
         return;
       }
-      var d = $('div[id^="imageviewi"] input[type="submit"][style=""]');
-      d = d.parentNode;
-      d.submit();
+      _.wait(500).then(function () {
+        var d = $('div[id^="imageviewi"] input[type="submit"][style=""]');
+        d = d.parentNode;
+        d.submit();
+      });
     },
   });
 })();
@@ -5667,6 +5660,7 @@ $.register({
         node.focus();
         node.click();
         node.click();
+        node.click();
       });
       return;
     }
@@ -5752,6 +5746,16 @@ $.register({
       path: /^\/img-.*\.html/,
     },
     ready: _.P(action, '#close', '#main_image img.center-block.img-responsive'),
+  });
+  $.register({
+    rule: {
+      host: /^imageporn\.eu$/,
+      path: /^\/img-.*\.html/,
+    },
+    start: function () {
+      $.window.document.createElement = null;
+    },
+    ready: defaultAction,
   });
   $.register({
     rule: {
