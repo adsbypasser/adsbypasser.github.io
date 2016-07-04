@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.56.1
+// @version        5.56.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -19,6 +19,7 @@
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
+// @connect        *
 // ==/UserScript==
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
@@ -2075,19 +2076,6 @@ $.register({
   },
 });
 $.register({
-  rule: 'http://www.dumppix.com/viewer.php?*',
-  ready: function () {
-    'use strict';
-    var i = $.$('#boring');
-    if (i) {
-      $.openLink(i.src);
-      return;
-    }
-    i = $('table td:nth-child(1) a');
-    $.openLink(i.href);
-  },
-});
-$.register({
   rule: {
     host: /^durl\.me$/,
   },
@@ -3474,7 +3462,7 @@ $.register({
   start: function (m) {
     'use strict';
     var url = atob(m.path[1]);
-    url = url.match(/\{sht-io\}(.+)$/);
+    url = url.match(/\{sht-io\}(.+)\{sht-io\}.*\{sht-io\}/);
     $.openLink(url[1]);
   },
 });

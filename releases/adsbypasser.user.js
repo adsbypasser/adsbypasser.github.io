@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.56.1
+// @version        5.56.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,11 +20,12 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.1/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.1/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.1/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.2/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.2/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.2/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
+// @connect        *
 // ==/UserScript==
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
@@ -2081,19 +2082,6 @@ $.register({
   },
 });
 $.register({
-  rule: 'http://www.dumppix.com/viewer.php?*',
-  ready: function () {
-    'use strict';
-    var i = $.$('#boring');
-    if (i) {
-      $.openLink(i.src);
-      return;
-    }
-    i = $('table td:nth-child(1) a');
-    $.openLink(i.href);
-  },
-});
-$.register({
   rule: {
     host: /^durl\.me$/,
   },
@@ -3480,7 +3468,7 @@ $.register({
   start: function (m) {
     'use strict';
     var url = atob(m.path[1]);
-    url = url.match(/\{sht-io\}(.+)$/);
+    url = url.match(/\{sht-io\}(.+)\{sht-io\}.*\{sht-io\}/);
     $.openLink(url[1]);
   },
 });
@@ -5369,6 +5357,18 @@ $.register({
       $.openImage('files/' + m.query[1]);
     },
   });
+  $.register({
+    rule: {
+      host: /^dumppix\.com$/,
+      path: /^\/viewer\.php$/,
+      query: /file=([^&]+)/,
+    },
+    start: function (m) {
+      $.openImage('/images/' + m.query[1], {
+        referer: true,
+      });
+    },
+  });
 })();
 $.register({
   rule: {
@@ -5531,7 +5531,7 @@ $.register({
   },
   ready: function () {
     'use strict';
-    var img = $('#view1 > div:nth-child(1) > a:nth-child(1) > img:nth-child(1)');
+    var img = $('#view1 > div:nth-child(1) > img:nth-child(1)');
     $.openImage(img.src);
   },
 });
