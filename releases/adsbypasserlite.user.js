@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.56.2
+// @version        5.57.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.56.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.57.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -1415,6 +1415,16 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^admy\.link$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('form.edit_link');
+    f.submit();
+  },
+});
+$.register({
+  rule: {
     host: /^(www\.)?ah-informatique\.com$/,
     path: /^\/ZipUrl/,
   },
@@ -2097,6 +2107,19 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^elde\.me$/,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe:not([name=undefined])');
+    var a = $('#modal-alert');
+    a.style.display = 'block';
+    a.style.top = 0;
+    a.style.left = 0;
+  },
+});
+$.register({
+  rule: {
     host: /empireload\.com$/,
     path: /^\/plugin\.php$/,
     query: /^\?id=linkout&url=([^&]+)$/,
@@ -2357,6 +2380,27 @@ $.register({
     'use strict';
     var l = $('#textresult > a');
     $.openLink(l.href);
+  },
+});
+$.register({
+  rule: {
+    host: /^st\.kurogaze\.net$/,
+    query: /r=(.+)/,
+  },
+  start: function (m) {
+    'use strict';
+    var r = atob(m.query[1]);
+    $.openLink(r);
+  },
+});
+$.register({
+  rule: {
+    host: /^st\.kurogaze\.net$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('a.redirect');
+    $.openLink(a.href);
   },
 });
 $.register({
@@ -2749,6 +2793,17 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^linkpaid\.net$/,
+    path: /^\/go\//,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#btn-main');
+    f.click();
+  },
+});
+$.register({
+  rule: {
     host: /^(www\.)?linkplugapp\.com$/,
   },
   ready: function () {
@@ -2914,6 +2969,16 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^www\.lolinez\.com$/,
+    query: /\?(.+)/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink(m.query[1]);
+  },
+});
+$.register({
+  rule: {
     host: /^(www\.)?loook\.ga$/,
     path: /^\/\d+$/
   },
@@ -2984,6 +3049,20 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^moesubs\.com$/,
+    path: /^\/url\//,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('body > div:nth-child(4) > i:nth-child(1)');
+    a = a.textContent;
+    var i = a.lastIndexOf('http');
+    a = a.substr(i);
+    $.openLink(a);
+  },
+});
+$.register({
+  rule: {
     host: /^mt0\.org$/,
     path: /^\/[^\/]+\/$/,
   },
@@ -3009,6 +3088,17 @@ $.register({
     if (i) {
       $.openLink(i.src);
     }
+  },
+});
+$.register({
+  rule: {
+    host: /^nmac\.to$/,
+    path: /^\/download\/(.+)/,
+  },
+  start: function (m) {
+    'use strict';
+    var url = atob(m.path[1]);
+    $.openLink(url);
   },
 });
 $.register({
@@ -3377,7 +3467,10 @@ $.register({
 })();
 $.register({
   rule: {
-    host: /^(www\.)?shink\.in$/,
+    host: [
+      /^(www\.)?shink\.in$/,
+      /^fas\.li$/,
+    ],
     path: /^\/\w+$/,
   },
   ready: function () {
@@ -3399,13 +3492,18 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^(www\.)?shink\.in$/,
+    host: [
+      /^(www\.)?shink\.in$/,
+      /^fas\.li$/,
+    ],
     path: /^\/go\/\w+$/,
   },
   ready: function () {
     'use strict';
     var a = $('#btn-main');
-    $.openLink(a.href);
+    var i = a.href.lastIndexOf('http');
+    a = a.href.substr(i);
+    $.openLink(a);
   },
 });
 $.register({
@@ -3580,7 +3678,6 @@ $.register({
         /^(www\.)?sylnk\.net$/,
         /^dlneko\.(com|net|org)$/,
         /^rumahsimpel\.com$/,
-        /^designinghomey\.com$/,
       ],
       query: /link=([^&]+)/,
     },
@@ -3592,26 +3689,34 @@ $.register({
     {
       host: /^(www\.)?safelinkair\.com$/,
       path: /^\/code$/,
-      query: /(?:\?|&)link=([a-zA-Z0-9=]+)(?:$|&)/,
-    },
-    {
-      host: /^link\.filmku\.net$/,
-      path: /^\/p\/go\.html$/,
-      query: /^\?url=([a-zA-Z0-9=]+)$/,
+      query: /(?:\?|&)link=([a-zA-Z0-9\/=]+)(?:$|&)/,
     },
     {
       host: [
-        /^(gadget|auto)14\.pw$/,
+        /^link\.filmku\.net$/,
+        /^www\.healthygress24\.ga$/,
+      ],
+      path: /^\/p\/(go|healty-lie)\.html$/,
+      query: /^\?url=([a-zA-Z0-9\/=]+)$/,
+    },
+    {
+      host: [
+        /^(gadget|auto|sports)14\.pw$/,
         /^motosport\.pw$/,
         /^nar-04\.tk$/,
         /^lindung\.in$/,
+        /^motonews\.club$/,
       ],
-      query: /^\?d=([a-zA-Z0-9=]+)$/,
+      query: /^\?d=([a-zA-Z0-9\/=]+)$/,
     },
     {
       host: /^www\.anisubsia\.tk$/,
       path: /^\/p\/link\.html$/,
-      query: /^\?url=([a-zA-Z0-9=]+)$/,
+      query: /^\?url=([a-zA-Z0-9\/=]+)$/,
+    },
+    {
+      host: /^www\.insurance1\.tech$/,
+      query: /^\?site=([a-zA-Z0-9\/=]+)/,
     },
   ],
   start: function (m) {
@@ -3668,6 +3773,17 @@ $.register({
     'use strict';
     var l = 'http://' + m.path[1];
     $.openLink(l);
+  },
+});
+$.register({
+  rule: {
+    host: /^designinghomey\.com$/,
+    query: /get=/,
+  },
+  ready: function () {
+    'use strict';
+    var s = $.searchScripts(/var a='([^']+)'/);
+    $.openLink(s[1]);
   },
 });
 $.register({
@@ -4231,11 +4347,30 @@ $.register({
   start: function (m) {
     $.window.adblock = false;
     $.window.adblock2 = false;
+    $.window.popAdsLoaded = true;
   },
   ready: function () {
-    var a = $('#realdl>a');
-    if (a.href) {
-      $.openLink(a.href);
+    'use strict';
+    var timer = $('#downloadTimer');
+    timer.style.display = 'none';
+    var dlCtn = $('#realdl');
+    dlCtn.style.display = 'inline-block';
+    var dlBtn = $('a', dlCtn);
+    dlBtn.href = $.window.realdllink;
+    var videoCtn = $.$('.videocontainer');
+    if (videoCtn) {
+      var overlay = $('#videooverlay', videoCtn);
+      overlay.click();
+      dlBtn.addEventListener('click', function (evt) {
+        evt.preventDefault();
+        var iframe = document.createElement('iframe');
+        iframe.src = dlBtn.href;
+        document.body.appendChild(iframe);
+      });
+      _.info(_.T('{0} -> {1}')(window.location, dlBtn.href));
+      dlBtn.click();
+    } else {
+      $.openLink(dlBtn.href);
     }
   }
 });
