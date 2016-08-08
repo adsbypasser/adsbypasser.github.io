@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.57.0
+// @version        5.58.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.57.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.58.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -1677,7 +1677,6 @@ $.register({
         /^(zpoz|ultry)\.net$/,
         /^(wwy|myam)\.me$/,
         /^ssl\.gs$/,
-        /^lin(c\.ml|k\.tl)$/,
         /^hit\.us$/,
         /^shortit\.in$/,
         /^(adbla|tl7)\.us$/,
@@ -1894,7 +1893,7 @@ $.register({
       };
     case 'coeg.in':
       return function () {
-        var a = $('.link a');
+        var a = $('.download-link a');
         return a.href;
       };
     case 'gunting.in':
@@ -2464,6 +2463,27 @@ $.register({
       var m = text.match(/window\.location\.replace\('([^']+)'\)/);
       $.openLink(m[1]);
     });
+  },
+});
+$.register({
+  rule: {
+    host: /^link\.tl$/,
+    path: /^\/fly\/go\.php$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('.skip_btn2 a');
+    $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
+    host: /^link\.tl$/,
+    path: /^\/(.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink('/fly/go.php?to=' + m.path[1]);
   },
 });
 $.register({
@@ -3511,6 +3531,7 @@ $.register({
     host: [
       /^(www\.)?shortenurl\.tk$/,
       /^(www\.)?pengaman\.link$/,
+      /^urlgo\.gs$/,
     ],
     path: /^\/\w+$/,
   },
@@ -3695,6 +3716,7 @@ $.register({
       host: [
         /^link\.filmku\.net$/,
         /^www\.healthygress24\.ga$/,
+        /^kombatch\.amankan\.link$/,
       ],
       path: /^\/p\/(go|healty-lie)\.html$/,
       query: /^\?url=([a-zA-Z0-9\/=]+)$/,
@@ -3927,6 +3949,17 @@ $.register({
     var m = $.searchScripts(/jeton=([\w]+)/);
     var l = 'http://urlv2.com/algo.php?action=passer&px=0&so=1&jeton=' + m[1];
     window.setTimeout(function() {$.openLink(l)}, 5000);
+  },
+});
+$.register({
+  rule: {
+    host: /^(www\.)?uskip\.me$/,
+    path: /^\/go\/\w+$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var a = $('#btn-main');
+    $.openLink(a.href);
   },
 });
 $.register({
@@ -4351,27 +4384,30 @@ $.register({
   },
   ready: function () {
     'use strict';
-    var timer = $('#downloadTimer');
-    timer.style.display = 'none';
-    var dlCtn = $('#realdl');
-    dlCtn.style.display = 'inline-block';
-    var dlBtn = $('a', dlCtn);
-    dlBtn.href = $.window.realdllink;
-    var videoCtn = $.$('.videocontainer');
-    if (videoCtn) {
-      var overlay = $('#videooverlay', videoCtn);
-      overlay.click();
-      dlBtn.addEventListener('click', function (evt) {
-        evt.preventDefault();
-        var iframe = document.createElement('iframe');
-        iframe.src = dlBtn.href;
-        document.body.appendChild(iframe);
-      });
-      _.info(_.T('{0} -> {1}')(window.location, dlBtn.href));
-      dlBtn.click();
-    } else {
-      $.openLink(dlBtn.href);
-    }
+        setTimeout(function () {
+      var timer = $('#downloadTimer');
+      timer.style.display = 'none';
+      var dlCtn = $('#realdl');
+      dlCtn.style.display = 'inline-block';
+      var dlBtn = $('a', dlCtn);
+      var ePath = $('#streamurl');
+      dlBtn.href = "/stream/" + ePath.textContent;
+      var videoCtn = $.$('.videocontainer');
+      if (videoCtn) {
+        var overlay = $('#videooverlay', videoCtn);
+        overlay.click();
+        dlBtn.addEventListener('click', function (evt) {
+          evt.preventDefault();
+          var iframe = document.createElement('iframe');
+          iframe.src = dlBtn.href;
+          document.body.appendChild(iframe);
+        });
+        _.info(_.T('{0} -> {1}')(window.location, dlBtn.href));
+        dlBtn.click();
+      } else {
+        $.openLink(dlBtn.href);
+      }
+    }, 500);
   }
 });
 $.register({
