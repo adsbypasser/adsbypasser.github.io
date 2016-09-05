@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.58.0
+// @version        5.59.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.58.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.59.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.58.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.58.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.58.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.59.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.59.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.59.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -1383,6 +1383,29 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^adlink\.guru$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#go-link');
+    var args = {};
+    $.$$('input', f).each(function (v) {
+      args[v.name] = v.value;
+    });
+    $.post(f.getAttribute('action'), args).then(function (data) {
+      data = JSON.parse(data);
+      if (data && data.url) {
+        $.openLink(data.url);
+      } else {
+        _.warn('wrong data');
+      }
+    }).catch(function (e) {
+      _.warn(e);
+    });
+  },
+});
+$.register({
+  rule: {
     host: /^adlock\.org$/,
   },
   ready: function () {
@@ -1497,20 +1520,6 @@ $.register({
     'use strict';
     var a = $('#boton-continuar');
     a.click();
-  },
-});
-$.register({
-  rule: {
-    host: [
-      /^(awet|sortir)\.in$/,
-      /^st\.benfile\.com$/,
-      /^st\.azhie\.net$/,
-    ],
-  },
-  ready: function () {
-    'use strict';
-    var m = $.searchScripts(/window\.location="([^"]*)";/);
-    $.openLink(m[1]);
   },
 });
 (function () {
@@ -1945,6 +1954,17 @@ $.register({
 })();
 $.register({
   rule: {
+    host: /^coinlink\.co$/,
+    path: /^\/i\//,
+  },
+  ready: function (m) {
+    'use strict';
+    var a = $('#btn-main');
+    $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
     host: /^(?:(\w+)\.)?(coinurl\.com|cur\.lv)$/,
     path: /^\/([-\w]+)$/
   },
@@ -1981,6 +2001,17 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^www\.comicon\.com\.br$/,
+    path: /^\/redir\.php$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#link');
+    $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
     host: /^comyonet\.com$/,
   },
   ready: function () {
@@ -1991,7 +2022,10 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^www\.cuzle\.com$/,
+    host: [
+      /^www\.cuzle\.com$/,
+      /^shorten\.id$/,
+    ],
     path: /^\/$/,
     query: /^\?(.+)=$/,
   },
@@ -2638,7 +2672,7 @@ $.register({
   var hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|eafyfsuh|sasontnwc|zatnawqy)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|eafyfsuh|sasontnwc|zatnawqy|zytpirwai)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
     /^(([\w]{8}|www)\.)?hornywood\.tv$/,
@@ -3212,6 +3246,16 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^ww3\.picnictrans\.com$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var a = $('div.kiri > center > a');
+    $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
     host: /^(www\.)?\w+\.rapeit\.net$/,
     path: /^\/(go|prepair|request|collect|analyze)\/[a-f0-9]+$/,
   },
@@ -3496,6 +3540,7 @@ $.register({
     host: [
       /^(www\.)?shink\.in$/,
       /^fas\.li$/,
+      /^croco\.me$/,
     ],
     path: /^\/\w+$/,
   },
@@ -3517,19 +3562,40 @@ $.register({
   },
 });
 $.register({
-  rule: {
-    host: [
-      /^(www\.)?shink\.in$/,
-      /^fas\.li$/,
-    ],
-    path: /^\/go\/\w+$/,
-  },
+  rule: [
+    {
+      host: [
+        /^(www\.)?shink\.in$/,
+        /^fas\.li$/,
+      ],
+      path: /^\/go\/\w+$/,
+    },
+    {
+      host: /^croco\.me$/,
+      path: /^\/ok\/\w+$/,
+    },
+  ],
   ready: function () {
     'use strict';
     var a = $('#btn-main');
     var i = a.href.lastIndexOf('http');
     a = a.href.substr(i);
     $.openLink(a);
+  },
+});
+$.register({
+  rule: {
+    host: /^short.am$/,
+  },
+  ready: function () {
+    'use strict';
+    _.wait(5000).then(function () {
+      $.openLink('', {
+        post: {
+          image: 'Continue',
+        },
+      });
+    });
   },
 });
 $.register({
@@ -3603,6 +3669,16 @@ $.register({
       l = 'http://' + l;
     }
     $.openLink(l);
+  },
+});
+$.register({
+  rule: {
+    host: /^smll\.io$/,
+  },
+  ready: function () {
+    'use strict';
+    var m = $.searchScripts(/window\.location="([^"]*)";/);
+    $.openLink(m[1]);
   },
 });
 $.register({
@@ -3743,8 +3819,15 @@ $.register({
       query: /^\?url=([a-zA-Z0-9\/=]+)$/,
     },
     {
-      host: /^www\.insurance1\.tech$/,
+      host: [
+        /^www\.insurance1\.tech$/,
+        /^www\.freeanimeonline\.xyz$/,
+      ],
       query: /^\?site=([a-zA-Z0-9\/=]+)/,
+    },
+    {
+      host: /^i\.gtaind\.com$/,
+      query: /^\?([a-zA-Z0-9\/=]+)$/,
     },
   ],
   start: function (m) {
@@ -3805,7 +3888,10 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^designinghomey\.com$/,
+    host: [
+      /^designinghomey\.com$/,
+      /^motonews\.club$/,
+    ],
     query: /get=/,
   },
   ready: function () {
@@ -4231,7 +4317,7 @@ $.register({
 $.register({
   rule: [
     {
-      host: /^1dl\.biz$/,
+      host: /^1(dl|be)\.biz$/,
       path: /^\/\w\.php$/,
       query: /^\?\w\/\d+$/,
     },
@@ -4349,6 +4435,16 @@ $.register({
   start: function (m) {
     'use strict';
     $.openImage('/images/' + m.query[1]);
+  },
+});
+$.register({
+  rule: {
+    host: /^imagep2p\.com$/,
+    query: /^\?v=([^&]+)/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openImage('/images/' + m.query[1] + '.jpeg');
   },
 });
 $.register({
@@ -5206,7 +5302,7 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^img(fantasy|leech|\.pornleech|smile|nemo|sense)\.com$/,
+        /^img(fantasy|leech|\.pornleech|smile|nemo|sense|curl)\.com$/,
         /^(imagedomino|lovechix)\.com$/,
         /^0img\.net$/,
         /^daily-img\.com$/,
@@ -5346,7 +5442,7 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^img(rock|town)\.net$/,
+        /^img(rock|town|view)\.net$/,
         /^img(maze|outlet)\.com$/,
       ],
       path: pathRule,
@@ -5474,7 +5570,7 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^(hentai-hosting|miragepics|funextra\.hostzi|imgrex|cdn\.javtotal)\.com$/,
+        /^(hentai-hosting|miragepics|funextra\.hostzi|imgrex|cdn\.javtotal|img3x)\.com$/,
         /^bilder\.nixhelp\.de$/,
         /^imagecurl\.(com|org)$/,
         /^imagevau\.eu$/,
@@ -5849,7 +5945,7 @@ $.register({
           /^www\.img(blow|lemon|4sharing)\.com$/,
           /^www\.imagefolks\.com$/,
           /^xxx(imagenow|screens)\.com$/,
-          /^(picstwist|ericsony|wpc8|uplimg|lexiit|thumbnailus|newimagepost|fapingpics|dimtus|tinizo)\.com$/,
+          /^(playimg|picstwist|ericsony|wpc8|uplimg|lexiit|thumbnailus|newimagepost|fapingpics|dimtus|tinizo)\.com$/,
           /^((i|hentai)\.)?imgslip\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
           /^(go|er)imge\.com$/,
@@ -5867,7 +5963,7 @@ $.register({
           /^(shot|adult)img\.org$/,
           /^img(studio|spot)\.org$/,
           /^image(\.adlock|on|team)\.org$/,
-          /^(drag|teen|mega)image\.org$/,
+          /^(voyeur|drag|teen|mega)image\.org$/,
           /^teenshot\.org$/,
           /^(hotimages|55888)\.eu$/,
           /^img(cloud|mag)\.co$/,
@@ -5913,8 +6009,22 @@ $.register({
         host: /^cdn\.javtotal\.com$/,
         path: /^\/img\/.+$/,
       },
+      {
+        host: /^imgtor\.pw$/,
+        path: /^\/img2\/.+$/,
+      },
     ],
     ready: defaultAction,
+  });
+  $.register({
+    rule: {
+        host: /^imgtor\.pw$/,
+        path: /^\/img\/.*$/,
+    },
+    start: function (m) {
+      var imageUrl = 'http://' + m.host[0] + m.path[0].replace("img","img2");
+      $.openLink(imageUrl);
+    },
   });
   $.register({
     rule: {

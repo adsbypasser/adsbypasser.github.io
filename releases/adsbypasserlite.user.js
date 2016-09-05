@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.58.0
+// @version        5.59.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.58.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.59.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -1377,6 +1377,29 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^adlink\.guru$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#go-link');
+    var args = {};
+    $.$$('input', f).each(function (v) {
+      args[v.name] = v.value;
+    });
+    $.post(f.getAttribute('action'), args).then(function (data) {
+      data = JSON.parse(data);
+      if (data && data.url) {
+        $.openLink(data.url);
+      } else {
+        _.warn('wrong data');
+      }
+    }).catch(function (e) {
+      _.warn(e);
+    });
+  },
+});
+$.register({
+  rule: {
     host: /^adlock\.org$/,
   },
   ready: function () {
@@ -1491,20 +1514,6 @@ $.register({
     'use strict';
     var a = $('#boton-continuar');
     a.click();
-  },
-});
-$.register({
-  rule: {
-    host: [
-      /^(awet|sortir)\.in$/,
-      /^st\.benfile\.com$/,
-      /^st\.azhie\.net$/,
-    ],
-  },
-  ready: function () {
-    'use strict';
-    var m = $.searchScripts(/window\.location="([^"]*)";/);
-    $.openLink(m[1]);
   },
 });
 (function () {
@@ -1939,6 +1948,17 @@ $.register({
 })();
 $.register({
   rule: {
+    host: /^coinlink\.co$/,
+    path: /^\/i\//,
+  },
+  ready: function (m) {
+    'use strict';
+    var a = $('#btn-main');
+    $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
     host: /^(?:(\w+)\.)?(coinurl\.com|cur\.lv)$/,
     path: /^\/([-\w]+)$/
   },
@@ -1975,6 +1995,17 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^www\.comicon\.com\.br$/,
+    path: /^\/redir\.php$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#link');
+    $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
     host: /^comyonet\.com$/,
   },
   ready: function () {
@@ -1985,7 +2016,10 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^www\.cuzle\.com$/,
+    host: [
+      /^www\.cuzle\.com$/,
+      /^shorten\.id$/,
+    ],
     path: /^\/$/,
     query: /^\?(.+)=$/,
   },
@@ -2632,7 +2666,7 @@ $.register({
   var hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|eafyfsuh|sasontnwc|zatnawqy)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|eafyfsuh|sasontnwc|zatnawqy|zytpirwai)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
     /^(([\w]{8}|www)\.)?hornywood\.tv$/,
@@ -3206,6 +3240,16 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^ww3\.picnictrans\.com$/,
+  },
+  ready: function (m) {
+    'use strict';
+    var a = $('div.kiri > center > a');
+    $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
     host: /^(www\.)?\w+\.rapeit\.net$/,
     path: /^\/(go|prepair|request|collect|analyze)\/[a-f0-9]+$/,
   },
@@ -3490,6 +3534,7 @@ $.register({
     host: [
       /^(www\.)?shink\.in$/,
       /^fas\.li$/,
+      /^croco\.me$/,
     ],
     path: /^\/\w+$/,
   },
@@ -3511,19 +3556,40 @@ $.register({
   },
 });
 $.register({
-  rule: {
-    host: [
-      /^(www\.)?shink\.in$/,
-      /^fas\.li$/,
-    ],
-    path: /^\/go\/\w+$/,
-  },
+  rule: [
+    {
+      host: [
+        /^(www\.)?shink\.in$/,
+        /^fas\.li$/,
+      ],
+      path: /^\/go\/\w+$/,
+    },
+    {
+      host: /^croco\.me$/,
+      path: /^\/ok\/\w+$/,
+    },
+  ],
   ready: function () {
     'use strict';
     var a = $('#btn-main');
     var i = a.href.lastIndexOf('http');
     a = a.href.substr(i);
     $.openLink(a);
+  },
+});
+$.register({
+  rule: {
+    host: /^short.am$/,
+  },
+  ready: function () {
+    'use strict';
+    _.wait(5000).then(function () {
+      $.openLink('', {
+        post: {
+          image: 'Continue',
+        },
+      });
+    });
   },
 });
 $.register({
@@ -3597,6 +3663,16 @@ $.register({
       l = 'http://' + l;
     }
     $.openLink(l);
+  },
+});
+$.register({
+  rule: {
+    host: /^smll\.io$/,
+  },
+  ready: function () {
+    'use strict';
+    var m = $.searchScripts(/window\.location="([^"]*)";/);
+    $.openLink(m[1]);
   },
 });
 $.register({
@@ -3737,8 +3813,15 @@ $.register({
       query: /^\?url=([a-zA-Z0-9\/=]+)$/,
     },
     {
-      host: /^www\.insurance1\.tech$/,
+      host: [
+        /^www\.insurance1\.tech$/,
+        /^www\.freeanimeonline\.xyz$/,
+      ],
       query: /^\?site=([a-zA-Z0-9\/=]+)/,
+    },
+    {
+      host: /^i\.gtaind\.com$/,
+      query: /^\?([a-zA-Z0-9\/=]+)$/,
     },
   ],
   start: function (m) {
@@ -3799,7 +3882,10 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^designinghomey\.com$/,
+    host: [
+      /^designinghomey\.com$/,
+      /^motonews\.club$/,
+    ],
     query: /get=/,
   },
   ready: function () {
