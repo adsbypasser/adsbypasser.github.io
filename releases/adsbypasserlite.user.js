@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.59.0
+// @version        5.60.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.59.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -702,8 +702,15 @@
   function get (url) {
     var a = document.createElement('a');
     a.href = url;
+    a.addEventListener('click', function (event) {
+      event.stopPropagation();
+    });
     prepare(a);
     a.click();
+    setInterval(function () {
+      _.warn('previous click does not work');
+      a.click();
+    }, 1000);
   }
   function post (path, params) {
     params = params || {};
@@ -1377,7 +1384,10 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^adlink\.guru$/,
+    host: [
+      /^adlink\.guru$/,
+      /^cypt\.ga$/,
+    ],
   },
   ready: function () {
     'use strict';
@@ -1884,6 +1894,16 @@ $.register({
     $.openLink(matches[1]);
   },
 });
+$.register({
+  rule: {
+    host: /^cocoleech\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#download');
+    $.openLink(a.href);
+  },
+});
 (function () {
   'use strict';
   function hostMapper (host) {
@@ -1953,7 +1973,7 @@ $.register({
   },
   ready: function (m) {
     'use strict';
-    var a = $('#btn-main');
+    var a = $('a.btn.btn-block.btn-warning');
     $.openLink(a.href);
   },
 });
@@ -3834,7 +3854,7 @@ $.register({
   rule: [
     {
       host: [
-        /^(www\.)?(link\.)?safelink(converter2?|s?review)\.com$/,
+        /^(www\.)?(link\.)?safelink(converter2?|s?review(er?))\.com$/,
         /^susutin\.com$/,
         /^getcomics\.gq$/,
       ],
@@ -3886,12 +3906,17 @@ $.register({
       /^designinghomey\.com$/,
       /^motonews\.club$/,
     ],
-    query: /get=/,
+    query: /get=([^&]+)/,
   },
-  ready: function () {
+  ready: function (m) {
     'use strict';
     var s = $.searchScripts(/var a='([^']+)'/);
-    $.openLink(s[1]);
+    if (s) {
+      $.openLink(s[1]);
+      return;
+    }
+    s = atob(m.query[1]);
+    $.openLink(s);
   },
 });
 $.register({
