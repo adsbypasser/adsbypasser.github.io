@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.60.1
+// @version        5.60.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.1/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.1/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.1/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.2/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.2/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.2/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -916,36 +916,42 @@
       verify: function (v) {
         return typeof v === 'number' && v >= 0;
       },
+      normalize: toNumber,
     },
     {
       name: 'alignCenter',
       key: 'align_center',
       default_: true,
       verify: isBoolean,
+      normalize: toBoolean,
     },
     {
       name: 'changeBackground',
       key: 'change_background',
       default_: true,
       verify: isBoolean,
+      normalize: toBoolean,
     },
     {
       name: 'externalServerSupport',
       key: 'external_server_support',
       default_: false,
       verify: isBoolean,
+      normalize: toBoolean,
     },
     {
       name: 'redirectImage',
       key: 'redirect_image',
       default_: true,
       verify: isBoolean,
+      normalize: toBoolean,
     },
     {
       name: 'scaleImage',
       key: 'scale_image',
       default_: true,
       verify: isBoolean,
+      normalize: toBoolean,
     },
     {
       name: 'logLevel',
@@ -954,6 +960,7 @@
       verify: function (v) {
         return typeof v === 'number' && v >= 0 && v <= 2;
       },
+      normalize: toNumber,
     },
   ];
   var PATCHES = [
@@ -984,8 +991,14 @@
     },
   ];
   var window = context.window;
-  function isBoolean(v) {
+  function isBoolean (v) {
     return typeof v === 'boolean';
+  }
+  function toBoolean (v) {
+    return !!v;
+  }
+  function toNumber (v) {
+    return parseInt(v, 10);
   }
   function createConfig () {
     var c = {};
@@ -1533,6 +1546,7 @@ $.register({
 });
 (function () {
   'use strict';
+  var ajaxPattern = /\$.post\('([^']*)'[^{]+(\{\s*opt:\s*'make_log'[^}]+\}\s*\}),/i;
   $.register({
     rule: {
       host: [
@@ -1550,6 +1564,9 @@ $.register({
       return script;
     }
     var matches = script.match(/eval(.*)/);
+    if (!matches) {
+      throw new _.AdsBypasserError('no script matches /eval(.*)/');
+    }
     matches = matches[1];
     script = eval(matches);
     return script;
@@ -1572,7 +1589,10 @@ $.register({
     throw _.AdsBypasserError('script changed');
   }
   function knockServer (script, dirtyFix) {
-    var matches = script.match(/\$.post\('([^']*)'[^{]+(\{opt:'make_log'[^}]+\}\}),/i);
+    var matches = script.match(ajaxPattern);
+    if (!matches) {
+      throw new _.AdsBypasserError('(in knock server) no script matches $.post');
+    }
     var make_url = matches[1];
     var make_opts = eval('(' + matches[2] + ')');
     var i = setInterval(function () {
@@ -1604,7 +1624,10 @@ $.register({
         c(JSON.stringify(data));
       }, 1000);
     };
-    var matches = script.match(/\$.post\('([^']*)'[^{]+(\{opt:'make_log'[^}]+\}\}),/i);
+    var matches = script.match(ajaxPattern);
+    if (!matches) {
+      throw new _.AdsBypasserError('(in knock server 2) no script matches $.post');
+    }
     var make_url = matches[1];
     var tZ, cW, cH, sW, sH;
     var make_opts = eval('(' + matches[2] + ')');
