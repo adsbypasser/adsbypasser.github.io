@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.60.2
+// @version        5.60.3
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.3/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -773,6 +773,9 @@
     while (handle > 0) {
       window.clearTimeout(handle--);
     }
+  };
+  $.nuke = function () {
+    document.write('nuked by AdsBypasser');
   };
   $.generateRandomIP = function () {
     return [0,0,0,0].map(function () {
@@ -2822,6 +2825,7 @@ $.register({
         }
         var token = findToken(document);
         sendRequest(token).then(function (url) {
+          $.nuke();
           $.openLink(url);
         });
       },
