@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.60.3
+// @version        5.60.4
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.3/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.4/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -775,7 +775,11 @@
     }
   };
   $.nuke = function () {
-    document.write('nuked by AdsBypasser');
+    try {
+      $.window.document.write('nuked by AdsBypasser');
+    } catch (e) {
+      _.warn('nuke failed', e);
+    }
   };
   $.generateRandomIP = function () {
     return [0,0,0,0].map(function () {
@@ -867,6 +871,9 @@
           args[1] = Array.prototype.slice.call(args[1]);
         }
         if (target === unsafeWindow.document.querySelector) {
+          self = self[MAGIC_KEY];
+        }
+        if (target === unsafeWindow.document.write) {
           self = self[MAGIC_KEY];
         }
         var usargs = clone(args);
