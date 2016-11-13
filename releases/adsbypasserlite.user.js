@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.60.5
+// @version        5.60.6
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.5/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.6/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -698,17 +698,29 @@
       document.body = document.createElement('body');
     }
     document.body.appendChild(e);
+    return _.wait(0);
   }
   function get (url) {
     var a = document.createElement('a');
     a.href = url;
+    var clicked = false;
     a.addEventListener('click', function (event) {
       event.stopPropagation();
+      clicked = true;
     });
-    prepare(a);
-    a.click();
-    _.wait(10 * 1000).then(function () {
-      _.warn('previous click does not work');
+    function loop () {
+      a.click();
+      return _.wait(1000).then(function () {
+        if (clicked) {
+          _.info('already clicked');
+          return Promise.resolve();
+        }
+        _.info('try again');
+        return loop();
+      });
+    }
+    prepare(a).then(() => {
+      return loop();
     });
   }
   function post (path, params) {
@@ -1292,6 +1304,16 @@ $.register({
   }
   $.register({
     rule: {
+      host: /^adf\.ly$/,
+      path: /^\/redirecting\/(.+)$/,
+    },
+    start: function (m) {
+      var url = atob(m.path[1]);
+      $.openLink(url);
+    },
+  });
+  $.register({
+    rule: {
       path: /\/locked$/,
       query: /url=([^&]+)/,
     },
@@ -1330,7 +1352,7 @@ $.register({
       }
       $.removeNodes('iframe');
       $.window.cookieCheck = _.nop;
-      h = $.window.eu || getTokenFromRocketScript();
+      h = getTokenFromRocketScript();
       if (!h) {
         h = $('#adfly_bar');
         $.window.close_bar();
@@ -1489,19 +1511,35 @@ $.register({
     $.openLink(a.href);
   },
 });
-$.register({
-  rule: {
-    host: /^ah\.pe$/,
-  },
-  ready: function () {
-    'use strict';
-    $.removeNodes('iframe');
-    var url = $.window.url;
-    $.get(url).then(function (url) {
-      $.openLink(url);
-    });
-  },
-});
+(function () {
+  'use strict';
+  function decodeScript (encoded) {
+    var a = encoded.match(/^\s*;eval\((.+)\);\s*$/);
+    a = a[1];
+    var b = a.match(/^(.+)\('([^']+)','([^']+)','([^']+)','([^']+)'\)$/);
+    var c = eval('(' + b[1] + ')');
+    return c(b[2], b[3], b[4], b[5]);
+  }
+  $.register({
+    rule: {
+      host: /^ah\.pe$/,
+    },
+    ready: function () {
+      $.removeNodes('iframe');
+      var script = $.searchScripts('eval');
+      script = decodeScript(script);
+      script = decodeScript(script);
+      script = decodeScript(script);
+      var path = script.match(/'(g\/[^']+)'/);
+      path = path[1];
+      _.wait(3000).then(function () {
+        $.get(path).then(function (url) {
+          $.openLink(url);
+        });
+      });
+    },
+  });
+})();
 $.register({
   rule: {
     host: /^aka\.gr$/
@@ -2157,17 +2195,6 @@ $.register({
     $.removeNodes('iframe');
     var a = $('.disclaimer a');
     $.openLink(a.href);
-  },
-});
-$.register({
-  rule: {
-    host: /^dmus\.in$/,
-    path: /[a-zA-Z0-9]+/,
-  },
-  ready: function () {
-    'use strict';
-    var i = $('a[class$=redirect]');
-    $.openLink(i.href);
   },
 });
 $.register({
@@ -2885,17 +2912,35 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^(www\.)?linkdrop\.net$/,
+    host: [
+      /^(www\.)?linkdrop\.net$/,
+      /^dmus\.in$/,
+    ],
   },
   ready: function () {
     'use strict';
     $.removeNodes('iframe');
-    var matches = $.searchScripts(/\$\("a\.redirect"\)\.attr\("href","([^"]+)"\)\.text/);
-    if (!matches) {
+    var jQuery = $.window.$;
+    var f = jQuery('#go-link');
+    if (f.length <= 0) {
       return;
     }
-    var l = matches[1];
-    $.openLink(l);
+    jQuery.ajax({
+      dataType: 'json',
+      type: 'POST',
+      url: f.attr('action'),
+      data: f.serialize(),
+      success: function (result, status, xhr) {
+        if (result.url) {
+          $.openLink(result.url);
+        } else {
+          _.warn(result.message);
+        }
+      },
+      error: function (xhr, status, error) {
+        _.warn(xhr, status, error);
+      },
+    });
   },
 });
 $.register({
@@ -3833,7 +3878,7 @@ $.register({
     },
     {
       host: /^(www\.)?compul\.in$/,
-      path: /^\/n\.php$/,
+      path: /^\/[np]\.php$/,
       query: /v=([^&]+)/,
     },
     {
@@ -4452,7 +4497,7 @@ $.register({
 $.register({
   rule: {
     host: /^(www\.)?mirrorcreator\.com$/,
-    path: /^\/showlink\.php$/,
+    path: /^\/showurl\.php$/,
   },
   ready: function () {
     'use strict';
