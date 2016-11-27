@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.60.6
+// @version        5.61.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.60.6/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.61.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -708,19 +708,17 @@
       event.stopPropagation();
       clicked = true;
     });
-    function loop () {
+    prepare(a).then(() => {
       a.click();
-      return _.wait(1000).then(function () {
+      var tick = setInterval(function () {
         if (clicked) {
           _.info('already clicked');
-          return Promise.resolve();
+          clearInterval(tick);
+          return;
         }
         _.info('try again');
-        return loop();
-      });
-    }
-    prepare(a).then(() => {
-      return loop();
+        a.click();
+      }, 50);
     });
   }
   function post (path, params) {
@@ -786,12 +784,16 @@
       window.clearTimeout(handle--);
     }
   };
-  $.nuke = function () {
+  $.nuke = function (url) {
     try {
-      $.window.document.write('nuked by AdsBypasser');
+      $.window.document.write('nuked by AdsBypasser, leading to ...<br/>');
     } catch (e) {
       _.warn('nuke failed', e);
     }
+    var a = document.createElement('a');
+    a.href = url;
+    a.textContent = url;
+    document.body.appendChild(a);
   };
   $.generateRandomIP = function () {
     return [0,0,0,0].map(function () {
@@ -2859,7 +2861,7 @@ $.register({
         }
         var token = findToken(document);
         sendRequest(token).then(function (url) {
-          $.nuke();
+          $.nuke(url);
           $.openLink(url);
         });
       },
@@ -2915,13 +2917,14 @@ $.register({
     host: [
       /^(www\.)?linkdrop\.net$/,
       /^dmus\.in$/,
+      /^ulshare\.net$/,
     ],
   },
   ready: function () {
     'use strict';
     $.removeNodes('iframe');
     var jQuery = $.window.$;
-    var f = jQuery('#go-link');
+    var f = jQuery('form.hidden[action="/links/go"]');
     if (f.length <= 0) {
       return;
     }
@@ -3338,16 +3341,6 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^ww3\.picnictrans\.com$/,
-  },
-  ready: function (m) {
-    'use strict';
-    var a = $('div.kiri > center > a');
-    $.openLink(a.href);
-  },
-});
-$.register({
-  rule: {
     host: /^(www\.)?\w+\.rapeit\.net$/,
     path: /^\/(go|prepair|request|collect|analyze)\/[a-f0-9]+$/,
   },
@@ -3563,7 +3556,7 @@ $.register({
       });
     }, 1000);
   }
-  var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0)\.com|digg\.to$/;
+  var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0|qaafa)\.com|digg\.to|viid\.me|short\.est$/;
   $.register({
     rule: {
       host: hostRules,
@@ -3902,6 +3895,8 @@ $.register({
         /^nar-04\.tk$/,
         /^lindung\.in$/,
         /^motonews\.club$/,
+        /^ww[23]\.picnictrans\.com$/,
+        /^gadget13\.com$/,
       ],
       query: /^\?d=([a-zA-Z0-9\/=]+)$/,
     },
@@ -3921,6 +3916,10 @@ $.register({
       host: /^i\.gtaind\.com$/,
       query: /^\?([a-zA-Z0-9\/=]+)$/,
     },
+    {
+      host: /\.blogspot\.com?/,
+      query: /^\?url=([a-zA-Z0-9\/=]+)$/,
+    },
   ],
   start: function (m) {
     'use strict';
@@ -3932,9 +3931,10 @@ $.register({
   rule: [
     {
       host: [
-        /^(www\.)?(link\.)?safelink(converter2?|s?review(er?))\.com$/,
+        /(^|\.)safelinkconverter2?\.com$/,
+        /^safelink(s?review(er)?)\.com?$/,
         /^susutin\.com$/,
-        /^getcomics\.gq$/,
+        /^(getcomics|miuitutorial)\.gq$/,
       ],
       query: /id=(\w+=*)/,
     },
@@ -3983,6 +3983,7 @@ $.register({
     host: [
       /^designinghomey\.com$/,
       /^motonews\.club$/,
+      /^(autofans|landscapenature)\.pw$/,
     ],
     query: /get=([^&]+)/,
   },
@@ -3995,6 +3996,28 @@ $.register({
     }
     s = atob(m.query[1]);
     $.openLink(s);
+  },
+});
+$.register({
+  rule: {
+    host: /^kombatch\.loncat\.pw$/,
+  },
+  ready: function () {
+    'use strict';
+    var s = $.searchScripts(/\.open\("([^"]+)",/);
+    s = s[1].match(/go=([^&]+)/);
+    s = atob(s[1]);
+    $.openLink(s);
+  },
+});
+$.register({
+  rule: {
+    host: /^ww[23]\.picnictrans\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('div.kiri > center > a');
+    $.openLink(a.href);
   },
 });
 $.register({
@@ -4149,6 +4172,16 @@ $.register({
     'use strict';
     var a = $('#btn-main');
     $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
+    host: /^vavi\.co$/,
+  },
+  ready: function () {
+    'use strict';
+    var l = $('#goLink');
+    $.openLink(l.href);
   },
 });
 $.register({
