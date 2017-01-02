@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.61.2
+// @version        5.62.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.61.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.61.2/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.61.2/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.61.2/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -1270,31 +1270,62 @@ $.register({
     },
   });
 })();
-$.register({
-  rule: {
-    host: [
-      /^(www\.)?adb\.ug$/,
-      /^(www\.)?lynk\.my$/,
-      /^adyou\.me$/,
-    ],
-    path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/
-  },
-  ready: function () {
-    'use strict';
-    $.removeNodes('iframe');
-    var m = $.searchScripts(/top\.location\.href="([^"]+)"/);
-    if (m) {
-      $.openLink(m[1]);
-      return;
-    }
-    m = $.searchScripts(/\{\s*_args[^}]+\}\s+\}/);
-    if (!m) {
-      throw new _.AdsBypasserError('script content changed');
-    }
-    m = eval('(' + m[0] + ')');
+(function () {
+  'use strict';
+  $.register({
+    rule: {
+      host: [
+        /^(www\.)?adb\.ug$/,
+        /^(www\.)?lynk\.my$/,
+        /^adyou\.me$/,
+      ],
+      path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/
+    },
+    ready: function () {
+      'use strict';
+      $.removeNodes('iframe');
+      var m = $.searchScripts(/top\.location\.href="([^"]+)"/);
+      if (m) {
+        $.openLink(m[1]);
+        return;
+      }
+      getArguments().then(function (args) {
+        tryLink(args);
+      });
+    },
+  });
+  function getArguments () {
+    var PATTERN = /\{_args[^}]+\}[^}]+\}/;
+    return _.D(function (resolve, reject) {
+      var m = $.searchScripts(PATTERN);
+      if (m) {
+        resolve(m);
+        return;
+      }
+      var observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          mutation.addedNodes.forEach(function (node) {
+            if (node.localName === 'script') {
+              var m = node.textContent.match(PATTERN);
+              if (m) {
+                resolve(m);
+                observer.disconnect();
+              }
+            }
+          });
+        });
+      });
+      observer.observe(document.body, {
+        childList: true,
+      });
+    }).then(function (m) {
+      return eval('(' + m[0] + ')');
+    });
+  }
+  function tryLink (args) {
     var url = window.location.pathname + '/skip_timer';
     var i = setInterval(function () {
-      $.post(url, m).then(function (text) {
+      $.post(url, args).then(function (text) {
         var jj = _.parseJSON(text);
         if (!jj.errors && jj.messages) {
           clearInterval(i);
@@ -1302,8 +1333,8 @@ $.register({
         }
       });
     }, 1000);
-  },
-});
+  }
+})();
 (function () {
   'use strict';
   function getTokenFromRocketScript () {
@@ -1434,32 +1465,63 @@ $.register({
     $.openLink(m[1]);
   },
 });
-$.register({
-  rule: {
-    host: [
-      /^adlink\.guru$/,
-      /^cypt\.ga$/,
-    ],
-  },
-  ready: function () {
-    'use strict';
-    var f = $('#go-link');
-    var args = {};
-    $.$$('input', f).each(function (v) {
-      args[v.name] = v.value;
+(function () {
+  'use strict';
+  $.register({
+    rule: {
+      host: [
+        /^adlink\.guru$/,
+        /^cypt\.ga$/,
+        /^filesbucks\.com$/,
+        /^elink\.link$/,
+        /^payurl\.me$/,
+      ],
+    },
+    ready: function () {
+      firstStage().then(function (page) {
+        return secondStage(page);
+      }).then(function (url) {
+        $.openLink(url);
+      }).catch(function (e) {
+        _.warn(e);
+      });
+    },
+  });
+  function firstStage () {
+    return _.D(function (resolve, reject) {
+      var f = $.$('#link-view');
+      if (!f) {
+        resolve(document);
+        return;
+      }
+      var args = extractArgument(f);
+      var url = f.getAttribute('action');
+      var p = $.post(url, args).then(function (data) {
+        return $.toDOM(data);
+      });
+      resolve(p);
     });
-    $.post(f.getAttribute('action'), args).then(function (data) {
+  }
+  function secondStage (page) {
+    var f = $('#go-link', page);
+    var args = extractArgument(f);
+    var url = f.getAttribute('action');
+    return $.post(url, args).then(function (data) {
       data = JSON.parse(data);
       if (data && data.url) {
-        $.openLink(data.url);
-      } else {
-        _.warn('wrong data');
+        return data.url;
       }
-    }).catch(function (e) {
-      _.warn(e);
+      throw new _.AdsBypasserError('wrong data');
     });
-  },
-});
+  }
+  function extractArgument (form) {
+    var args = {};
+    $.$$('input', form).each(function (v) {
+      args[v.name] = v.value;
+    });
+    return args;
+  }
+})();
 $.register({
   rule: {
     host: /^adlock\.org$/,
@@ -1924,6 +1986,16 @@ $.register({
     'use strict';
     $.removeNodes('iframe');
     var a = $('#skip_button');
+    $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
+    host: /^catcut\.net$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#rbs');
     $.openLink(a.href);
   },
 });
@@ -2407,6 +2479,22 @@ $.register({
 });
 $.register({
   rule: {
+    host: [
+      /^gsurl\.me$/,
+      /^g5u\.pw$/,
+    ],
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('#container');
+    var a = $('#link');
+    _.wait(5000).then(function () {
+      $.openLink(a.href);
+    });
+  },
+});
+$.register({
+  rule: {
     host: /^hotshorturl\.com$/,
   },
   ready: function () {
@@ -2753,7 +2841,7 @@ $.register({
   var hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|eafyfsuh|sasontnwc|zatnawqy|zytpirwai)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|zytpirwai)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
     /^(([\w]{8}|www)\.)?hornywood\.tv$/,
@@ -2924,6 +3012,8 @@ $.register({
       /^(www\.)?linkdrop\.net$/,
       /^dmus\.in$/,
       /^ulshare\.net$/,
+      /^adurl\.id$/,
+      /^goolink\.me$/,
     ],
   },
   ready: function () {
@@ -3695,6 +3785,7 @@ $.register({
       /^(www\.)?shortenurl\.tk$/,
       /^(www\.)?pengaman\.link$/,
       /^urlgo\.gs$/,
+      /^gunting\.web\.id$/,
     ],
     path: /^\/\w+$/,
   },
@@ -3903,6 +3994,7 @@ $.register({
         /^motonews\.club$/,
         /^ww[23]\.picnictrans\.com$/,
         /^gadget13\.com$/,
+        /^azhie\.net$/,
       ],
       query: /^\?d=([a-zA-Z0-9\/=]+)$/,
     },
@@ -3990,6 +4082,7 @@ $.register({
       /^designinghomey\.com$/,
       /^motonews\.club$/,
       /^(autofans|landscapenature)\.pw$/,
+      /^ani-share\.com$/,
     ],
     query: /get=([^&]+)/,
   },
@@ -4657,7 +4750,10 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^imgchili\.(com|net)|www\.pixhost\.org$/,
+    host: [
+      /^imgchili\.(com|net)$/,
+      /^(www\.)?pixhost\.org$/,
+    ],
     path: /^\/show\//,
   },
   ready: function () {
@@ -4667,7 +4763,7 @@ $.register({
       $('#all').style.display = '';
     } catch (e) {
     }
-    var o = $('#show_image');
+    var o = $('#show_image, #image');
     $.openImage(o.src);
   },
 });
@@ -6152,7 +6248,8 @@ $.register({
           /^darpix\.desi$/,
           /^pic4you\.top$/,
           /^imgsen\.se$/,
-          /^ipicture\.su$/
+          /^ipicture\.su$/,
+          /^img\.yt$/,
         ],
         path: /^\/img-.*\.html/,
       },
@@ -6325,13 +6422,6 @@ $.register({
       var i = $('img[alt]');
       $.openImage(i.src);
     },
-  });
-  $.register({
-    rule: {
-      host: /^img\.yt$/,
-      path: /^\/img-.*\.html/,
-    },
-    ready: _.P(action, '#continuebutton', 'img[class^=centred]'),
   });
 })();
 $.register({
