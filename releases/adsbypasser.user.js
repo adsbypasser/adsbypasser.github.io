@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.62.0
+// @version        5.62.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.1/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.1/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.1/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -1295,7 +1295,7 @@ $.register({
     },
   });
   function getArguments () {
-    var PATTERN = /\{_args[^}]+\}[^}]+\}/;
+    var PATTERN = /\{\s*_args[^}]+\}[^}]+\}/;
     return _.D(function (resolve, reject) {
       var m = $.searchScripts(PATTERN);
       if (m) {
@@ -5674,7 +5674,7 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^img(rock|town|view)\.net$/,
+        /^img(town|view)\.net$/,
         /^img(maze|outlet)\.com$/,
       ],
       path: pathRule,
@@ -5688,6 +5688,27 @@ $.register({
       var d = $('div[id^="imageviewi"]');
       waitDOM(d, function (node) {
         return node.nodeName === 'FORM' && $.$('input[name="id"]', node);
+      }).then(function (node) {
+        node.submit();
+      }).catch(function (e) {
+        _.warn(e);
+      });
+    },
+  });
+  $.register({
+    rule: {
+      host: /^imgrock\.net$/,
+      path: pathRule,
+    },
+    ready: function () {
+      var i = $.$('img.pic');
+      if (i) {
+        $.openImage(i.src);
+        return;
+      }
+      var d = $.$$('div[id]').at(1);
+      waitDOM(d, function (node) {
+        return node.nodeName === 'FORM' && $.$('input[name="next"]:not([style])', node);
       }).then(function (node) {
         node.submit();
       }).catch(function (e) {
