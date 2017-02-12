@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.62.1
+// @version        5.63.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -1140,6 +1140,16 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^10co\.(biz|xyz|co|me)$/,
+  },
+  ready: function () {
+    'use strict';
+    var d = $('.go');
+    $.openLink(d.dataset.href);
+  },
+});
+$.register({
+  rule: {
     host: /^(www\.)?1be\.biz$/,
     path: /^\/s\.php$/,
     query: /^\?(.+)/,
@@ -1468,13 +1478,19 @@ $.register({
         /^cypt\.ga$/,
         /^filesbucks\.com$/,
         /^elink\.link$/,
-        /^payurl\.me$/,
+        /^(payurl|urlst)\.me$/,
+        /^www\.worldhack\.net$/,
+        /^123link\.top$/,
+        /^pir\.im$/,
+        /^bol\.tl$/,
       ],
     },
     ready: function () {
+      $.removeNodes('iframe', '.BJPPopAdsOverlay');
       firstStage().then(function (page) {
         return secondStage(page);
       }).then(function (url) {
+        $.nuke(url);
         $.openLink(url);
       }).catch(function (e) {
         _.warn(e);
@@ -2117,7 +2133,7 @@ $.register({
   },
   ready: function (m) {
     'use strict';
-    var a = $('a#btn-main');
+    var a = $('a#btn-main, a.btn.btn-block.btn-warning');
     $.openLink(a.href);
   },
 });
@@ -2529,6 +2545,26 @@ $.register({
     if (!$.$('img#captcha')) {
       $('form[name=frm]').submit();
     }
+  },
+});
+$.register({
+  rule: {
+    host: /^ilovebanten\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    var p = $('.notblocked');
+    $.openLink(p.textContent);
+  },
+});
+$.register({
+  rule: {
+    host: /^indexmovie\.me$/,
+    path: /^\/([^\/]+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink('/get/' + m.path[1]);
   },
 });
 $.register({
@@ -3002,22 +3038,74 @@ $.register({
 });
 $.register({
   rule: {
-    host: [
-      /^(www\.)?linkdrop\.net$/,
-      /^dmus\.in$/,
-      /^ulshare\.net$/,
-      /^adurl\.id$/,
-      /^goolink\.me$/,
-    ],
+    host: /^linkdolar\.xyz$/,
   },
   ready: function () {
     'use strict';
     $.removeNodes('iframe');
-    var jQuery = $.window.$;
-    var f = jQuery('form.hidden[action="/links/go"]');
-    if (f.length <= 0) {
+    var s = $.searchScripts(/^\s*eval\((.+)\)\s*$/);
+    if (!s) {
+      _.warn('site changed');
       return;
     }
+    s = eval('(' + s[1] + ')');
+    s = s.match(/\$\.post\('([^']+)',(\{.+\}),function/);
+    if (!s) {
+      _.warn('site changed');
+    }
+    var url = s[1];
+    var args = eval('(' + s[2] + ')');
+    $.post(url, args).then(function (target) {
+      $.openLink(target);
+    });
+  },
+});
+(function () {
+  'use strict';
+  $.register({
+    rule: {
+      host: [
+        /^(www\.)?linkdrop\.net$/,
+        /^dmus\.in$/,
+        /^ulshare\.net$/,
+        /^adurl\.id$/,
+        /^goolink\.me$/,
+      ],
+    },
+    ready: function () {
+      $.removeNodes('iframe');
+      var f = getForm();
+      if (!f) {
+        return;
+      }
+      sendRequest(f);
+    },
+  });
+  $.register({
+    rule: {
+      host: /^sflnk\.me$/,
+    },
+    ready: function () {
+      $.removeNodes('iframe');
+      var f = getForm();
+      if (!f) {
+        f = $('#link-view');
+        f.submit();
+        return;
+      }
+      sendRequest(f);
+    },
+  });
+  function getForm () {
+    var jQuery = $.window.$;
+    var f = jQuery('form[action="/links/go"]');
+    if (f.length > 0) {
+      return f;
+    }
+    return null;
+  }
+  function sendRequest (f) {
+    var jQuery = $.window.$;
     jQuery.ajax({
       dataType: 'json',
       type: 'POST',
@@ -3034,8 +3122,8 @@ $.register({
         _.warn(xhr, status, error);
       },
     });
-  },
-});
+  }
+})();
 $.register({
   rule: {
     host: /^linkpaid\.net$/,
@@ -4012,6 +4100,10 @@ $.register({
       host: /\.blogspot\.com?/,
       query: /^\?url=([a-zA-Z0-9\/=]+)$/,
     },
+    {
+      host: /^sehatlega\.com$/,
+      query: /^\?lanjut=([a-zA-Z0-9\/=]+)$/,
+    },
   ],
   start: function (m) {
     'use strict';
@@ -4392,6 +4484,17 @@ $.register({
       return String.fromCharCode(parseInt(h, 16));
     }).join('');
     $.openLink(url);
+  },
+});
+$.register({
+  rule: {
+    host: /^www\.zintata\.com$/,
+    path: /^\/link\/$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#one > center:nth-child(3) > a:nth-child(1)');
+    $.openLink(a.href);
   },
 });
 $.register({
@@ -4840,47 +4943,23 @@ $.register({
     $.window.alert = _.nop;
     $.window.confirm = _.nop;
   }
-  function disableLeavePrompt (element) {
-    if (!element) {
-      return;
-    }
-    var seal = {
-      set: function () {
-        _.info('blocked onbeforeunload');
-      },
-    };
-    element.onbeforeunload = undefined;
-    if (isSafari) {
-      element.__defineSetter__('onbeforeunload', seal.set);
-    } else {
-      $.window.Object.defineProperty(element, 'onbeforeunload', {
-        configurable: true,
-        enumerable: false,
-        get: undefined,
-        set: seal.set,
-      });
-    }
-    var oael = element.addEventListener;
-    var nael = function (type) {
-      if (type === 'beforeunload') {
-        _.info('blocked addEventListener onbeforeunload');
-        return;
-      }
-      return oael.apply(this, arguments);
-    };
-    element.addEventListener = nael;
-  }
   function changeTitle () {
     document.title += ' - AdsBypasser';
   }
   function beforeDOMReady (handler) {
     _.info('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify($.config));
-    disableLeavePrompt($.window);
+    hijackEvents({
+      'beforeunload': [$.window],
+      'click': [$.window.document],
+    });
     disableWindowOpen();
     handler.start();
   }
   function afterDOMReady (handler) {
-    disableLeavePrompt($.window.document.body);
+    hijackEvents({
+      'beforeunload': [$.window.document.body],
+      'click': [$.window.document.body],
+    });
     changeTitle();
     handler.ready();
   }
@@ -4894,6 +4973,47 @@ $.register({
         resolve();
       });
     });
+  }
+  function hijackEvents (blackList) {
+    hijackOnProperties(blackList);
+    hijackAddEventListener(blackList);
+  }
+  function hijackOnProperties (blackList) {
+    Object.keys(blackList).forEach(function (type) {
+      var propertyName = 'on' + type;
+      blackList[type].forEach(function (element) {
+        element[propertyName] = undefined;
+        if (isSafari) {
+          element.__defineSetter__(propertyName, seal.set);
+        } else {
+          $.window.Object.defineProperty(element, propertyName, {
+            configurable: true,
+            enumerable: false,
+            get: undefined,
+            set: function (handler) {
+              _.info('blocked', type, this, handler);
+              return false;
+            },
+          });
+        }
+      });
+    });
+  }
+  function hijackAddEventListener (blackList) {
+    var oael = unsafeWindow.EventTarget.prototype.addEventListener;
+    var wrapper = function (type, handler, useCapture) {
+      if (blackList.hasOwnProperty(type) && blackList[type].indexOf(this)) {
+        _.info('blocked', type, this, handler);
+        return;
+      }
+      return oael.call(this, type, handler, useCapture);
+    };
+    if (typeof exportFunction === 'function') {
+      wrapper = exportFunction(wrapper, unsafeWindow, {
+        allowCrossOriginArguments: true,
+      });
+    }
+    unsafeWindow.EventTarget.prototype.addEventListener = wrapper;
   }
   $._main = function () {
     var findHandler = $._findHandler;

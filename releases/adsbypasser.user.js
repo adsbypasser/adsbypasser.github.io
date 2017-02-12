@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.62.1
+// @version        5.63.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.1/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.1/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.62.1/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -1146,6 +1146,16 @@ $.register({
 });
 $.register({
   rule: {
+    host: /^10co\.(biz|xyz|co|me)$/,
+  },
+  ready: function () {
+    'use strict';
+    var d = $('.go');
+    $.openLink(d.dataset.href);
+  },
+});
+$.register({
+  rule: {
     host: /^(www\.)?1be\.biz$/,
     path: /^\/s\.php$/,
     query: /^\?(.+)/,
@@ -1474,13 +1484,19 @@ $.register({
         /^cypt\.ga$/,
         /^filesbucks\.com$/,
         /^elink\.link$/,
-        /^payurl\.me$/,
+        /^(payurl|urlst)\.me$/,
+        /^www\.worldhack\.net$/,
+        /^123link\.top$/,
+        /^pir\.im$/,
+        /^bol\.tl$/,
       ],
     },
     ready: function () {
+      $.removeNodes('iframe', '.BJPPopAdsOverlay');
       firstStage().then(function (page) {
         return secondStage(page);
       }).then(function (url) {
+        $.nuke(url);
         $.openLink(url);
       }).catch(function (e) {
         _.warn(e);
@@ -2123,7 +2139,7 @@ $.register({
   },
   ready: function (m) {
     'use strict';
-    var a = $('a#btn-main');
+    var a = $('a#btn-main, a.btn.btn-block.btn-warning');
     $.openLink(a.href);
   },
 });
@@ -2535,6 +2551,26 @@ $.register({
     if (!$.$('img#captcha')) {
       $('form[name=frm]').submit();
     }
+  },
+});
+$.register({
+  rule: {
+    host: /^ilovebanten\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    var p = $('.notblocked');
+    $.openLink(p.textContent);
+  },
+});
+$.register({
+  rule: {
+    host: /^indexmovie\.me$/,
+    path: /^\/([^\/]+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink('/get/' + m.path[1]);
   },
 });
 $.register({
@@ -3008,22 +3044,74 @@ $.register({
 });
 $.register({
   rule: {
-    host: [
-      /^(www\.)?linkdrop\.net$/,
-      /^dmus\.in$/,
-      /^ulshare\.net$/,
-      /^adurl\.id$/,
-      /^goolink\.me$/,
-    ],
+    host: /^linkdolar\.xyz$/,
   },
   ready: function () {
     'use strict';
     $.removeNodes('iframe');
-    var jQuery = $.window.$;
-    var f = jQuery('form.hidden[action="/links/go"]');
-    if (f.length <= 0) {
+    var s = $.searchScripts(/^\s*eval\((.+)\)\s*$/);
+    if (!s) {
+      _.warn('site changed');
       return;
     }
+    s = eval('(' + s[1] + ')');
+    s = s.match(/\$\.post\('([^']+)',(\{.+\}),function/);
+    if (!s) {
+      _.warn('site changed');
+    }
+    var url = s[1];
+    var args = eval('(' + s[2] + ')');
+    $.post(url, args).then(function (target) {
+      $.openLink(target);
+    });
+  },
+});
+(function () {
+  'use strict';
+  $.register({
+    rule: {
+      host: [
+        /^(www\.)?linkdrop\.net$/,
+        /^dmus\.in$/,
+        /^ulshare\.net$/,
+        /^adurl\.id$/,
+        /^goolink\.me$/,
+      ],
+    },
+    ready: function () {
+      $.removeNodes('iframe');
+      var f = getForm();
+      if (!f) {
+        return;
+      }
+      sendRequest(f);
+    },
+  });
+  $.register({
+    rule: {
+      host: /^sflnk\.me$/,
+    },
+    ready: function () {
+      $.removeNodes('iframe');
+      var f = getForm();
+      if (!f) {
+        f = $('#link-view');
+        f.submit();
+        return;
+      }
+      sendRequest(f);
+    },
+  });
+  function getForm () {
+    var jQuery = $.window.$;
+    var f = jQuery('form[action="/links/go"]');
+    if (f.length > 0) {
+      return f;
+    }
+    return null;
+  }
+  function sendRequest (f) {
+    var jQuery = $.window.$;
     jQuery.ajax({
       dataType: 'json',
       type: 'POST',
@@ -3040,8 +3128,8 @@ $.register({
         _.warn(xhr, status, error);
       },
     });
-  },
-});
+  }
+})();
 $.register({
   rule: {
     host: /^linkpaid\.net$/,
@@ -4018,6 +4106,10 @@ $.register({
       host: /\.blogspot\.com?/,
       query: /^\?url=([a-zA-Z0-9\/=]+)$/,
     },
+    {
+      host: /^sehatlega\.com$/,
+      query: /^\?lanjut=([a-zA-Z0-9\/=]+)$/,
+    },
   ],
   start: function (m) {
     'use strict';
@@ -4398,6 +4490,17 @@ $.register({
       return String.fromCharCode(parseInt(h, 16));
     }).join('');
     $.openLink(url);
+  },
+});
+$.register({
+  rule: {
+    host: /^www\.zintata\.com$/,
+    path: /^\/link\/$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('#one > center:nth-child(3) > a:nth-child(1)');
+    $.openLink(a.href);
   },
 });
 $.register({
@@ -4940,7 +5043,7 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^freeimgup\.com$/,
+    host: /^(www\.)freeimgup\.com$/,
     path: /^\/xxx\//,
   },
   ready: function () {
@@ -5585,6 +5688,126 @@ $.register({
 });
 (function () {
   'use strict';
+  var PATH_RULE = /^\/([0-9a-zA-Z]+)(\.|\/|$)/;
+  $.register({
+    rule: {
+      host: [
+        /^img(universal|paying|mega|zeus|monkey|trex|ve|dew|diamond)\.com$/,
+        /^(www\.)?imgsee\.me$/,
+        /^img(click|maid)\.net$/,
+        /^(uploadrr|imageeer|imzdrop|www\.uimgshare|pic-maniac)\.com$/,
+        /^imgdrive\.co$/,
+        /^cuteimg\.cc$/,
+        /^img(tiger|gold)\.org$/,
+        /^myimg\.club$/,
+        /^foxyimg\.link$/,
+        /^hulkimge\.com$/,
+        /^(core|iron)img\.net$/,
+      ],
+      path: PATH_RULE,
+    },
+    ready: function (m) {
+      helper(m.path[1], getNext1);
+    },
+  });
+  $.register({
+    rule: {
+      host: [
+        /^img(town|view)\.net$/,
+        /^img(maze|outlet)\.com$/,
+      ],
+      path: PATH_RULE,
+    },
+    ready: function () {
+      var i = $.$('img.pic');
+      if (i) {
+        $.openImage(i.src);
+        return;
+      }
+      var d = $('div[id^="imageviewi"]');
+      waitDOM(d, function (node) {
+        return node.nodeName === 'FORM' && $.$('input[name="id"]', node);
+      }).then(function (node) {
+        node.submit();
+      }).catch(function (e) {
+        _.warn(e);
+      });
+    },
+  });
+  $.register({
+    rule: {
+      host: /^imgrock\.net$/,
+      path: PATH_RULE,
+    },
+    ready: function () {
+      var i = $.$('img.pic');
+      if (i) {
+        $.openImage(i.src);
+        return;
+      }
+      var d = $.$$('div[id]').at(1);
+      waitDOM(d, function (node) {
+        return node.nodeName === 'FORM' && node.offsetParent !== null;
+      }).then(function (node) {
+        node.submit();
+      }).catch(function (e) {
+        _.warn(e);
+      });
+    },
+  });
+  $.register({
+    rule: {
+      host: /^chronos\.to$/,
+      path: PATH_RULE,
+    },
+    ready: function (m) {
+      helper(m.path[1], getNext2);
+    },
+  });
+  $.register({
+    rule: {
+      host: /^imgfiles\.org$/,
+      path: PATH_RULE,
+    },
+    ready: function (m) {
+      var i = $.$('img.pic');
+      if (i) {
+        $.openImage(i.src);
+        return;
+      }
+      var f = $('form');
+      f.submit();
+    },
+  });
+  $.register({
+    rule: 'http://imgview.net/tpind.php',
+    ready: function () {
+      var i = $.$('img.pic');
+      if (i) {
+        $.openImage(i.src, {replace: true});
+        return;
+      }
+      _.wait(500).then(function () {
+        var d = $('div[id^="imageviewi"] input[type="submit"][style=""]');
+        d = d.parentNode;
+        d.submit();
+      });
+    },
+  });
+  $.register({
+    rule: /^http:\/\/imgdragon\.com\/(getfil\.php|dl)$/,
+    ready: function () {
+      var i = $.$('img.pic');
+      if (i) {
+        $.openImage(i.src);
+        return;
+      }
+      _.wait(500).then(function () {
+        var f = $('#ContinueFRM');
+        f.submit();
+      });
+    },
+  });
   function waitDOM (element, fn) {
     return _.D(function (resolve, reject) {
       var observer = new MutationObserver(function (mutations) {
@@ -5607,7 +5830,6 @@ $.register({
       });
     });
   }
-  var pathRule = /^\/([0-9a-zA-Z]+)(\.|\/|$)/;
   function go (id, pre, next) {
     $.openLink('', {
       post: {
@@ -5650,125 +5872,6 @@ $.register({
     }
     _.info('do nothing');
   }
-  $.register({
-    rule: {
-      host: [
-        /^img(universal|paying|mega|zeus|monkey|trex|ve|dew|diamond)\.com$/,
-        /^(www\.)?imgsee\.me$/,
-        /^img(click|maid)\.net$/,
-        /^(uploadrr|imageeer|imzdrop|www\.uimgshare|pic-maniac)\.com$/,
-        /^imgdrive\.co$/,
-        /^cuteimg\.cc$/,
-        /^img(tiger|gold)\.org$/,
-        /^myimg\.club$/,
-        /^foxyimg\.link$/,
-        /^hulkimge\.com$/,
-        /^(core|iron)img\.net$/,
-      ],
-      path: pathRule,
-    },
-    ready: function (m) {
-      helper(m.path[1], getNext1);
-    },
-  });
-  $.register({
-    rule: {
-      host: [
-        /^img(town|view)\.net$/,
-        /^img(maze|outlet)\.com$/,
-      ],
-      path: pathRule,
-    },
-    ready: function () {
-      var i = $.$('img.pic');
-      if (i) {
-        $.openImage(i.src);
-        return;
-      }
-      var d = $('div[id^="imageviewi"]');
-      waitDOM(d, function (node) {
-        return node.nodeName === 'FORM' && $.$('input[name="id"]', node);
-      }).then(function (node) {
-        node.submit();
-      }).catch(function (e) {
-        _.warn(e);
-      });
-    },
-  });
-  $.register({
-    rule: {
-      host: /^imgrock\.net$/,
-      path: pathRule,
-    },
-    ready: function () {
-      var i = $.$('img.pic');
-      if (i) {
-        $.openImage(i.src);
-        return;
-      }
-      var d = $.$$('div[id]').at(1);
-      waitDOM(d, function (node) {
-        return node.nodeName === 'FORM' && $.$('input[name="next"]:not([style])', node);
-      }).then(function (node) {
-        node.submit();
-      }).catch(function (e) {
-        _.warn(e);
-      });
-    },
-  });
-  $.register({
-    rule: {
-      host: /^chronos\.to$/,
-      path: pathRule,
-    },
-    ready: function (m) {
-      helper(m.path[1], getNext2);
-    },
-  });
-  $.register({
-    rule: {
-      host: /^imgfiles\.org$/,
-      path: pathRule,
-    },
-    ready: function (m) {
-      var i = $.$('img.pic');
-      if (i) {
-        $.openImage(i.src);
-        return;
-      }
-      var f = $('form');
-      f.submit();
-    },
-  });
-  $.register({
-    rule: 'http://imgview.net/tpind.php',
-    ready: function () {
-      var i = $.$('img.pic');
-      if (i) {
-        $.openImage(i.src, {replace: true});
-        return;
-      }
-      _.wait(500).then(function () {
-        var d = $('div[id^="imageviewi"] input[type="submit"][style=""]');
-        d = d.parentNode;
-        d.submit();
-      });
-    },
-  });
-  $.register({
-    rule: /^http:\/\/imgdragon\.com\/(getfil\.php|dl)$/,
-    ready: function () {
-      var i = $.$('img.pic');
-      if (i) {
-        $.openImage(i.src);
-        return;
-      }
-      _.wait(500).then(function () {
-        var f = $('#ContinueFRM');
-        f.submit();
-      });
-    },
-  });
 })();
 $.register({
   rule: {
@@ -6145,8 +6248,8 @@ $.register({
   },
   ready: function () {
     'use strict';
-    var i = $('#myUniqueImg');
-    $.openLink(i.src);
+    var a = $('#myUniqueImg').parentNode;
+    $.openLink(a.href);
   },
 });
 $.register({
@@ -6199,6 +6302,17 @@ $.register({
   start: function (m) {
     'use strict';
     $.openImage(m.path[1]);
+  },
+});
+$.register({
+  rule: {
+    host: /^radikal\.ru$/,
+    path: /^\/big\//,
+  },
+  ready: function () {
+    'use strict';
+    var i = $.$('.base-page_center > div:nth-child(2) > img:nth-child(1)');
+    $.openImage(i.src);
   },
 });
 (function () {
@@ -6269,8 +6383,7 @@ $.register({
           /^darpix\.desi$/,
           /^pic4you\.top$/,
           /^imgsen\.se$/,
-          /^ipicture\.su$/,
-          /^img\.yt$/,
+          /^ipicture\.su$/
         ],
         path: /^\/img-.*\.html/,
       },
@@ -6410,7 +6523,7 @@ $.register({
       },
       {
         host: [
-          /^imgkings\.com$/,
+          /^img(kings|prime)\.com$/,
           /^imagerar\.com$/,
         ],
         path: /^\/img-.*\.html/,
@@ -6438,11 +6551,22 @@ $.register({
         host: /^imgking\.co$/,
         path: /^\/img[v3]-.*\.html/,
       },
+      {
+        host: /^imgprime\.com$/,
+        path: /^\/img3-.*\.html$/,
+      },
     ],
     ready: function () {
       var i = $('img[alt]');
       $.openImage(i.src);
     },
+  });
+  $.register({
+    rule: {
+      host: /^img\.yt$/,
+      path: /^\/img-.*\.html/,
+    },
+    ready: _.P(action, '#continuebutton', 'img[class^=centred]'),
   });
 })();
 $.register({
@@ -6936,47 +7060,23 @@ $.register({
     $.window.alert = _.nop;
     $.window.confirm = _.nop;
   }
-  function disableLeavePrompt (element) {
-    if (!element) {
-      return;
-    }
-    var seal = {
-      set: function () {
-        _.info('blocked onbeforeunload');
-      },
-    };
-    element.onbeforeunload = undefined;
-    if (isSafari) {
-      element.__defineSetter__('onbeforeunload', seal.set);
-    } else {
-      $.window.Object.defineProperty(element, 'onbeforeunload', {
-        configurable: true,
-        enumerable: false,
-        get: undefined,
-        set: seal.set,
-      });
-    }
-    var oael = element.addEventListener;
-    var nael = function (type) {
-      if (type === 'beforeunload') {
-        _.info('blocked addEventListener onbeforeunload');
-        return;
-      }
-      return oael.apply(this, arguments);
-    };
-    element.addEventListener = nael;
-  }
   function changeTitle () {
     document.title += ' - AdsBypasser';
   }
   function beforeDOMReady (handler) {
     _.info('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify($.config));
-    disableLeavePrompt($.window);
+    hijackEvents({
+      'beforeunload': [$.window],
+      'click': [$.window.document],
+    });
     disableWindowOpen();
     handler.start();
   }
   function afterDOMReady (handler) {
-    disableLeavePrompt($.window.document.body);
+    hijackEvents({
+      'beforeunload': [$.window.document.body],
+      'click': [$.window.document.body],
+    });
     changeTitle();
     handler.ready();
   }
@@ -6990,6 +7090,47 @@ $.register({
         resolve();
       });
     });
+  }
+  function hijackEvents (blackList) {
+    hijackOnProperties(blackList);
+    hijackAddEventListener(blackList);
+  }
+  function hijackOnProperties (blackList) {
+    Object.keys(blackList).forEach(function (type) {
+      var propertyName = 'on' + type;
+      blackList[type].forEach(function (element) {
+        element[propertyName] = undefined;
+        if (isSafari) {
+          element.__defineSetter__(propertyName, seal.set);
+        } else {
+          $.window.Object.defineProperty(element, propertyName, {
+            configurable: true,
+            enumerable: false,
+            get: undefined,
+            set: function (handler) {
+              _.info('blocked', type, this, handler);
+              return false;
+            },
+          });
+        }
+      });
+    });
+  }
+  function hijackAddEventListener (blackList) {
+    var oael = unsafeWindow.EventTarget.prototype.addEventListener;
+    var wrapper = function (type, handler, useCapture) {
+      if (blackList.hasOwnProperty(type) && blackList[type].indexOf(this)) {
+        _.info('blocked', type, this, handler);
+        return;
+      }
+      return oael.call(this, type, handler, useCapture);
+    };
+    if (typeof exportFunction === 'function') {
+      wrapper = exportFunction(wrapper, unsafeWindow, {
+        allowCrossOriginArguments: true,
+      });
+    }
+    unsafeWindow.EventTarget.prototype.addEventListener = wrapper;
   }
   $._main = function () {
     var findHandler = $._findHandler;
