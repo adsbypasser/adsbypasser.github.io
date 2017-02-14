@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.63.1
+// @version        5.63.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.1/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.1/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.1/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.2/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.2/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.2/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -7060,23 +7060,47 @@ $.register({
     $.window.alert = _.nop;
     $.window.confirm = _.nop;
   }
+  function disableLeavePrompt (element) {
+    if (!element) {
+      return;
+    }
+    var seal = {
+      set: function () {
+        _.info('blocked onbeforeunload');
+      },
+    };
+    element.onbeforeunload = undefined;
+    if (isSafari) {
+      element.__defineSetter__('onbeforeunload', seal.set);
+    } else {
+      $.window.Object.defineProperty(element, 'onbeforeunload', {
+        configurable: true,
+        enumerable: false,
+        get: undefined,
+        set: seal.set,
+      });
+    }
+    var oael = element.addEventListener;
+    var nael = function (type) {
+      if (type === 'beforeunload') {
+        _.info('blocked addEventListener onbeforeunload');
+        return;
+      }
+      return oael.apply(this, arguments);
+    };
+    element.addEventListener = nael;
+  }
   function changeTitle () {
     document.title += ' - AdsBypasser';
   }
   function beforeDOMReady (handler) {
     _.info('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify($.config));
-    hijackEvents({
-      'beforeunload': [$.window],
-      'click': [$.window.document],
-    });
+    disableLeavePrompt($.window);
     disableWindowOpen();
     handler.start();
   }
   function afterDOMReady (handler) {
-    hijackEvents({
-      'beforeunload': [$.window.document.body],
-      'click': [$.window.document.body],
-    });
+    disableLeavePrompt($.window.document.body);
     changeTitle();
     handler.ready();
   }
@@ -7090,47 +7114,6 @@ $.register({
         resolve();
       });
     });
-  }
-  function hijackEvents (blackList) {
-    hijackOnProperties(blackList);
-    hijackAddEventListener(blackList);
-  }
-  function hijackOnProperties (blackList) {
-    Object.keys(blackList).forEach(function (type) {
-      var propertyName = 'on' + type;
-      blackList[type].forEach(function (element) {
-        element[propertyName] = undefined;
-        if (isSafari) {
-          element.__defineSetter__(propertyName, seal.set);
-        } else {
-          $.window.Object.defineProperty(element, propertyName, {
-            configurable: true,
-            enumerable: false,
-            get: undefined,
-            set: function (handler) {
-              _.info('blocked', type, this, handler);
-              return false;
-            },
-          });
-        }
-      });
-    });
-  }
-  function hijackAddEventListener (blackList) {
-    var oael = unsafeWindow.EventTarget.prototype.addEventListener;
-    var wrapper = function (type, handler, useCapture) {
-      if (blackList.hasOwnProperty(type) && (blackList[type].indexOf(this) >= 0)) {
-        _.info('blocked', type, this, handler);
-        return;
-      }
-      return oael.call(this, type, handler, useCapture);
-    };
-    if (typeof exportFunction === 'function') {
-      wrapper = exportFunction(wrapper, unsafeWindow, {
-        allowCrossOriginArguments: true,
-      });
-    }
-    unsafeWindow.EventTarget.prototype.addEventListener = wrapper;
   }
   $._main = function () {
     var findHandler = $._findHandler;
