@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.63.2
+// @version        5.64.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.64.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.2/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.2/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.2/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.64.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.64.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.64.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -2118,7 +2118,7 @@ $.register({
   });
   $.register({
     rule: {
-      host: /^sipkur\.net$/,
+      host: /^sipkur\.(net|us)$/,
       path: [
         /^\/\w+$/,
         /^\/menujulink\//,
@@ -2139,7 +2139,7 @@ $.register({
   },
   ready: function (m) {
     'use strict';
-    var a = $('a#btn-main, a.btn.btn-block.btn-warning');
+    var a = $('a#btn-main, a.btn.btn-block.btn-warning, a.btn.btn-block.btn-success');
     $.openLink(a.href);
   },
 });
@@ -2379,11 +2379,11 @@ $.register({
   },
 });
 $.register({
-  rule:{
-    host:/^(www\.)?fiuxy\.net$/,
-    path:/^\/link\/\?.*$/
+  rule: {
+    host: /^(www\.)?fiuxy\.co$/,
+    path: /^\/links?\/$/,
   },
-  ready:function(){
+  ready: function () {
     $.openLink($('a.btn.a').href);
   }
 });
@@ -3104,7 +3104,7 @@ $.register({
   });
   function getForm () {
     var jQuery = $.window.$;
-    var f = jQuery('form[action="/links/go"]');
+    var f = jQuery('form[action="/links/go"], form[action="/links/linkdropgo"]');
     if (f.length > 0) {
       return f;
     }
@@ -3740,7 +3740,7 @@ $.register({
       });
     }, 1000);
   }
-  var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0|qaafa)\.com|digg\.to|viid\.me|short\.est$/;
+  var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0|qaafa|xiw34)\.com|digg\.to|viid\.me|short\.est$/;
   $.register({
     rule: {
       host: hostRules,
@@ -3809,7 +3809,7 @@ $.register({
     host: [
       /^(www\.)?shink\.in$/,
       /^fas\.li$/,
-      /^croco\.me$/,
+      /^(www\.)?croco\.(me|site)$/,
     ],
     path: /^\/\w+$/,
   },
@@ -3820,14 +3820,6 @@ $.register({
       f.submit();
       return;
     }
-    var envio = $('#envio');
-    envio.disabled = false;
-    envio.style.visibility = 'hidden';
-    envio.style.display = 'none';
-    var envio2 = $('#envio2');
-    envio2.style.visibility = 'visible';
-    envio2.style.display = 'block';
-    $.window.$('#myModal').reveal();
   },
 });
 $.register({
@@ -3840,7 +3832,7 @@ $.register({
       path: /^\/go\/\w+$/,
     },
     {
-      host: /^croco\.me$/,
+      host: /^(www\.)?croco\.(me|site)$/,
       path: /^\/ok\/\w+$/,
     },
   ],
@@ -4750,18 +4742,7 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^freeimgup\.com$/,
-    path: /^\/xxx/,
-    query: /^\?v=([^&]+)/,
-  },
-  start: function (m) {
-    'use strict';
-    $.openImage('/xxx/images/' + m.query[1]);
-  },
-});
-$.register({
-  rule: {
-    host: /^(b4he|freeimgup|fullimg)\.com|fastpics\.net|ifap\.co$/,
+    host: /^(b4he|fullimg)\.com|fastpics\.net|ifap\.co$/,
     query: /^\?v=([^&]+)/,
   },
   start: function (m) {
@@ -4974,6 +4955,7 @@ $.register({
       host: [
         /^emptypix\.com|overdream\.cz$/,
         /^www\.sexseeimage\.com$/,
+        /^imgdomino\.com$/,
       ],
       path: /^\/image\//,
     },
@@ -5043,7 +5025,7 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^(www\.)freeimgup\.com$/,
+    host: /^(www\.)?freeimgup\.com$/,
     path: /^\/xxx\//,
   },
   ready: function () {
@@ -5406,7 +5388,10 @@ $.register({
   $.register({
     rule: [
       {
-        host: /^www\.(freebunker|imagesnake|imgcarry|imgshots)\.com$/,
+        host: [
+          /^www\.(freebunker|imgcarry|imgshots)\.com$/,
+          /^www\.imagesnake\.(com|org)$/,
+        ],
         path: /^\/show\.php$/,
         query: /^\?/,
       },
@@ -5415,7 +5400,10 @@ $.register({
         path: /^\/show\//,
       },
       {
-        host: /^www\.(imagesnake|imagefruit)\.com$/,
+        host: [
+          /^www\.imagesnake\.(com|org)$/,
+          /^www\.imagefruit\.com$/,
+        ],
         path: /^\/(img|show)\/.+/,
       },
       {
@@ -5713,7 +5701,7 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^img(town|view)\.net$/,
+        /^imgview\.net$/,
         /^img(maze|outlet)\.com$/,
       ],
       path: PATH_RULE,
@@ -5736,7 +5724,7 @@ $.register({
   });
   $.register({
     rule: {
-      host: /^imgrock\.net$/,
+      host: /^img(rock|town)\.net$/,
       path: PATH_RULE,
     },
     ready: function () {
@@ -5746,8 +5734,18 @@ $.register({
         return;
       }
       var d = $.$$('div[id]').at(1);
+      var visibleClasses = null;
       waitDOM(d, function (node) {
-        return node.nodeName === 'FORM' && node.offsetParent !== null;
+        if (node.nodeName === 'STYLE') {
+          visibleClasses = parseStyle(node);
+          return false;
+        }
+        if (node.nodeName === 'FORM' && node.offsetParent !== null) {
+          return visibleClasses.some(function (class_) {
+            return node.classList.contains(class_);
+          });
+        }
+        return false;
       }).then(function (node) {
         node.submit();
       }).catch(function (e) {
@@ -5829,6 +5827,16 @@ $.register({
         childList: true,
       });
     });
+  }
+  function parseStyle (style) {
+    style = style.textContent;
+    var pattern = /\.(\w+)\{visibility:initial;\}/g;
+    var rv = null;
+    var classes = [];
+    while ((rv = pattern.exec(style)) !== null) {
+      classes.push(rv[1]);
+    }
+    return classes;
   }
   function go (id, pre, next) {
     $.openLink('', {
@@ -6234,17 +6242,7 @@ $.register({
 $.register({
   rule: {
     host: /^www\.pixsense\.net$/,
-    path: /^\/site\/v\/(\d+)$/,
-  },
-  start: function (m) {
-    'use strict';
-    $.openLink('/site/viewFinalImage/' + m.path[1]);
-  },
-});
-$.register({
-  rule: {
-    host: /^www\.pixsense\.net$/,
-    path: /^\/site\/viewFinalImage\/\d+$/,
+    path: /^\/site\/v\/\d+$/,
   },
   ready: function () {
     'use strict';

@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.63.2
+// @version        5.64.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.63.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.64.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -2112,7 +2112,7 @@ $.register({
   });
   $.register({
     rule: {
-      host: /^sipkur\.net$/,
+      host: /^sipkur\.(net|us)$/,
       path: [
         /^\/\w+$/,
         /^\/menujulink\//,
@@ -2133,7 +2133,7 @@ $.register({
   },
   ready: function (m) {
     'use strict';
-    var a = $('a#btn-main, a.btn.btn-block.btn-warning');
+    var a = $('a#btn-main, a.btn.btn-block.btn-warning, a.btn.btn-block.btn-success');
     $.openLink(a.href);
   },
 });
@@ -2373,11 +2373,11 @@ $.register({
   },
 });
 $.register({
-  rule:{
-    host:/^(www\.)?fiuxy\.net$/,
-    path:/^\/link\/\?.*$/
+  rule: {
+    host: /^(www\.)?fiuxy\.co$/,
+    path: /^\/links?\/$/,
   },
-  ready:function(){
+  ready: function () {
     $.openLink($('a.btn.a').href);
   }
 });
@@ -3098,7 +3098,7 @@ $.register({
   });
   function getForm () {
     var jQuery = $.window.$;
-    var f = jQuery('form[action="/links/go"]');
+    var f = jQuery('form[action="/links/go"], form[action="/links/linkdropgo"]');
     if (f.length > 0) {
       return f;
     }
@@ -3734,7 +3734,7 @@ $.register({
       });
     }, 1000);
   }
-  var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0|qaafa)\.com|digg\.to|viid\.me|short\.est$/;
+  var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0|qaafa|xiw34)\.com|digg\.to|viid\.me|short\.est$/;
   $.register({
     rule: {
       host: hostRules,
@@ -3803,7 +3803,7 @@ $.register({
     host: [
       /^(www\.)?shink\.in$/,
       /^fas\.li$/,
-      /^croco\.me$/,
+      /^(www\.)?croco\.(me|site)$/,
     ],
     path: /^\/\w+$/,
   },
@@ -3814,14 +3814,6 @@ $.register({
       f.submit();
       return;
     }
-    var envio = $('#envio');
-    envio.disabled = false;
-    envio.style.visibility = 'hidden';
-    envio.style.display = 'none';
-    var envio2 = $('#envio2');
-    envio2.style.visibility = 'visible';
-    envio2.style.display = 'block';
-    $.window.$('#myModal').reveal();
   },
 });
 $.register({
@@ -3834,7 +3826,7 @@ $.register({
       path: /^\/go\/\w+$/,
     },
     {
-      host: /^croco\.me$/,
+      host: /^(www\.)?croco\.(me|site)$/,
       path: /^\/ok\/\w+$/,
     },
   ],
