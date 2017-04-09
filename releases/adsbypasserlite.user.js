@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.65.0
+// @version        5.66.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.65.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.66.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -23,8 +23,7 @@
 // ==/UserScript==
 (function (context, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    var bluebird = require('bluebird');
-    module.exports = factory(context, bluebird.Promise);
+    module.exports = factory(context, Promise);
   } else {
     var P = null;
     if (context.unsafeWindow.Future) {
@@ -1484,11 +1483,14 @@ $.register({
         /^(payurl|urlst)\.me$/,
         /^url\.ht$/,
         /^urle\.co$/,
+        /^cut-urls\.com$/,
+        /^hashe\.in$/,
         /^www\.worldhack\.net$/,
         /^123link\.top$/,
         /^pir\.im$/,
         /^bol\.tl$/,
         /^tl\.tc$/,
+        /^tmearn\.com$/,
       ],
     },
     ready: function () {
@@ -2053,7 +2055,7 @@ $.register({
     $.removeNodes('iframe');
     var matches = $.searchScripts(/<a href="http:\/\/(?:www.)?clictune\.com\/redirect\.php\?url=([^&]+)&/);
     var url = decodeURIComponent(matches[1]);
-        $.openLink(url);
+    $.openLink(url);
   },
 });
 $.register({
@@ -3537,8 +3539,7 @@ $.register({
   },
   ready: function (m) {
     'use strict';
-    var a = $('#btn-main');
-    $.openLink(a.href);
+    $('form').submit();
   },
 });
 $.register({
