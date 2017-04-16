@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.66.0
+// @version        5.67.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.66.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.67.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.66.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.66.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.66.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.67.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.67.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.67.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -1653,13 +1653,22 @@ $.register({
   },
   ready: function () {
     'use strict';
-    $.removeNodes('iframe, #CashSlideDiv, #ct_catfish');
-    var a = $('#modal-shadow');
-    a.style.display = 'block';
-    a = $('#modal-alert');
-    a.style.left = 0;
-    a.style.top = 80;
-    a.style.display = 'block';
+    var i = $.$('body > section > iframe');
+    if (i) {
+      i.src = 'about:blank';
+      _.wait(3000).then(function () {
+        var a = $('a.redirect');
+        a.click();
+      });
+      return;
+    }
+    i = $.searchScripts(/"href","([^"]+)"\)\.remove/);
+    if (!i) {
+      _.warn('site changed');
+      return;
+    }
+    i = i[1];
+    $.openLink(i);
   },
 });
 $.register({
@@ -3801,7 +3810,7 @@ $.register({
       });
     }, 1000);
   }
-  var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0|qaafa|xiw34)\.com|digg\.to|viid\.me|short\.est$/;
+  var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0|qaafa|xiw34|cllkme)\.com|digg\.to|viid\.me|short\.est$/;
   $.register({
     rule: {
       host: hostRules,
@@ -3881,6 +3890,22 @@ $.register({
       f.submit();
       return;
     }
+    var o = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.localName === 'div') {
+            if (node.style.zIndex === '2147483647') {
+              node.parentNode.removeChild(node);
+              return;
+            }
+          }
+        });
+      });
+    });
+    o.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
   },
 });
 $.register({
@@ -3984,9 +4009,21 @@ $.register({
     host: /^www\.shrink-service\.it$/,
     path: /^\/shrinked\//,
   },
-  ready: function (m) {
+  ready: function () {
     'use strict';
     var i = $('input[id][name]');
+    $.openLink(i.value);
+  },
+});
+$.register({
+  rule: {
+    host: /^www\.shrink-service\.it$/,
+    path: /^\/s\//,
+  },
+  ready: function () {
+    'use strict';
+    $.removeNodes('iframe');
+    var i = $('body > input[id][name]');
     $.openLink(i.value);
   },
 });
@@ -5829,7 +5866,7 @@ $.register({
         $.openImage(i.src);
         return;
       }
-      var d = $.$$('div[id]').at(1);
+      var d = $('td:nth-child(2) > center > div[id]');
       var visibleClasses = null;
       waitDOM(d, function (node) {
         if (node.nodeName === 'STYLE') {
@@ -6543,8 +6580,9 @@ $.register({
   $.register({
     rule: {
       host: [
-        /^www\.img(taxi|adult|wallet)\.com$/,
+        /^www\.img(adult|wallet)\.com$/,
         /^www\.imgdrive\.net$/,
+        /^(www\.)?imgtaxi\.com$/,
       ],
       path: /^\/img-.*\.html$/,
     },
