@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.67.0
+// @version        5.68.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.67.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.68.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -1374,8 +1374,14 @@ $.register({
   });
   $.register({
     rule: [
-      'http://u.shareme.in/*',
-      'http://server.sbenny.com/*',
+      {
+        host: [
+          /^adf\.ly$/,
+          /^u\.shareme\.in$/,
+          /^server\.sbenny\.com$/,
+          /^bluenik\.com$/,
+        ],
+      },
       function () {
         var h = $.$('html[id="main_html"]');
         var b = $.$('body[id="home"]');
@@ -1389,6 +1395,12 @@ $.register({
     start: function () {
       $.window.document.write = _.nop;
       $.window.btoa = _.nop;
+      waitToken().then(function (token) {
+        var url = decodeToken(token);
+        $.openLink(url);
+      }).catch(function (e) {
+        _.warn(e);
+      });
     },
     ready: function () {
       var h = $.$('#main_html'), b = $.$('#home');
@@ -1403,27 +1415,51 @@ $.register({
         $.window.close_bar();
         return;
       }
-      var a = h.indexOf('!HiTommy');
-      if (a >= 0) {
-        h = h.substring(0, a);
-      }
-      a = '';
-      b = '';
-      for (var i = 0; i < h.length; ++i) {
-        if (i % 2 === 0) {
-          a = a + h.charAt(i);
-        } else {
-          b = h.charAt(i) + b;
-        }
-      }
-      h = atob(a + b);
-      h = h.substr(2);
-      if (location.hash) {
-        h += location.hash;
-      }
+      h = decodeToken(h);
       $.openLink(h);
     },
   });
+  function waitToken () {
+    return _.D(function (resolve) {
+      var o = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          _.C(mutation.addedNodes).each(function (node) {
+            if (node.localName === 'script') {
+              var m = node.textContent.match(/var ysmm = '([^']+)'/);
+              if (m) {
+                o.disconnect();
+                resolve(m[1]);
+              }
+            }
+          });
+        });
+      });
+      o.observe(document.head, {
+        childList: true,
+      });
+    });
+  }
+  function decodeToken (token) {
+    var a = token.indexOf('!HiTommy');
+    if (a >= 0) {
+      token = token.substring(0, a);
+    }
+    a = '';
+    var b = '';
+    for (var i = 0; i < token.length; ++i) {
+      if (i % 2 === 0) {
+        a = a + token.charAt(i);
+      } else {
+        b = token.charAt(i) + b;
+      }
+    }
+    token = atob(a + b);
+    token = token.substr(2);
+    if (location.hash) {
+      token += location.hash;
+    }
+    return token;
+  }
 })();
 $.register({
   rule: {
@@ -1484,13 +1520,17 @@ $.register({
         /^url\.ht$/,
         /^urle\.co$/,
         /^cut-urls\.com$/,
-        /^hashe\.in$/,
+        /^(hashe|trlink)\.in$/,
         /^www\.worldhack\.net$/,
         /^123link\.top$/,
         /^pir\.im$/,
         /^bol\.tl$/,
         /^tl\.tc$/,
         /^tmearn\.com$/,
+        /^adfu\.us$/,
+        /^short\.pastewma\.com$/,
+        /^adfly\.tc$/,
+        /^linkfly\.gaosmedia\.com$/,
       ],
     },
     ready: function () {
@@ -2514,7 +2554,7 @@ $.register({
 $.register({
   rule: {
     host: [
-      /^gsurl\.me$/,
+      /^gsurl\.(me|in)$/,
       /^g5u\.pw$/,
     ],
   },
@@ -2731,12 +2771,23 @@ $.register({
 $.register({
   rule: {
     host: /^link\.tl$/,
-    path: /^\/fly\/go\.php$/,
+    path: /^\/fly\/site\.php$/,
+    query: /^\?to=(.+)$/,
   },
   ready: function () {
     'use strict';
-    var a = $('.skip_btn2 a');
+    var a = $('.skip > .btn');
     $.openLink(a.href);
+  },
+});
+$.register({
+  rule: {
+    host: /^link\.tl$/,
+    path: /[^^](https?:\/\/.+)$/,
+  },
+  start: function (m) {
+    'use strict';
+    $.openLink(m.path[1]);
   },
 });
 $.register({
@@ -2746,7 +2797,7 @@ $.register({
   },
   start: function (m) {
     'use strict';
-    $.openLink('/fly/go.php?to=' + m.path[1]);
+    $.openLink('/fly/site.php?to=' + m.path[1]);
   },
 });
 $.register({
@@ -3397,6 +3448,7 @@ $.register({
       /^st\.oploverz\.net$/,
       /^minidroid\.net$/,
       /^ww3\.awaremmxv\.com$/,
+      /^linkpoi\.in$/,
     ],
   },
   ready: function () {
@@ -3424,6 +3476,26 @@ $.register({
     'use strict';
     var url = atob(m.path[1]);
     $.openLink(url);
+  },
+});
+$.register({
+  rule: {
+    host: /^mirrorfilehost\.com$/,
+  },
+  ready: function () {
+    'use strict';
+    _.wait(3 * 1000).then(function () {
+      var frame = frames[0];
+      var form = frame.document.createElement('form');
+      form.target = '_parent';
+      form.action = location.toString();
+      var input = frame.document.createElement('input');
+      input.value = 'Download';
+      input.type = 'submit';
+      form.appendChild(input);
+      frame.document.body.appendChild(form);
+      input.click();
+    });
   },
 });
 $.register({
@@ -3804,7 +3876,13 @@ $.register({
       });
     }, 1000);
   }
-  var hostRules = /^sh\.st|(dh10thbvu|u2ks|jnw0|qaafa|xiw34|cllkme)\.com|digg\.to|viid\.me|short\.est$/;
+  var hostRules = [
+    /^sh\.st$/,
+    /^(dh10thbvu|u2ks|jnw0|qaafa|xiw34|cllkme)\.com$/,
+    /^digg\.to$/,
+    /^([vw]iid|clkme)\.me$/,
+    /^short\.est$/,
+  ];
   $.register({
     rule: {
       host: hostRules,
@@ -3874,6 +3952,7 @@ $.register({
       /^(www\.)?shink\.in$/,
       /^fas\.li$/,
       /^(www\.)?croco\.(me|site)$/,
+      /^cpmlink\.net$/,
     ],
     path: /^\/\w+$/,
   },
@@ -3908,6 +3987,7 @@ $.register({
       host: [
         /^(www\.)?shink\.in$/,
         /^fas\.li$/,
+        /^cpmlink\.net$/,
       ],
       path: /^\/go\/\w+$/,
     },
@@ -4189,6 +4269,7 @@ $.register({
         /^ww[23]\.picnictrans\.com$/,
         /^gadget13\.com$/,
         /^azhie\.net$/,
+        /^ww2\.awsubs\.co$/,
       ],
       query: /^\?d=([a-zA-Z0-9\/=]+)$/,
     },
@@ -4210,7 +4291,10 @@ $.register({
     },
     {
       host: /\.blogspot\.com?/,
-      query: /^\?url=([a-zA-Z0-9\/=]+)$/,
+      query: [
+        /^\?url=([a-zA-Z0-9\/=]+)$/,
+        /^\?id=([a-zA-Z0-9\/=]+)$/,
+      ],
     },
     {
       host: /^sehatlega\.com$/,
@@ -4244,6 +4328,7 @@ $.register({
         /^www\.muucih\.com$/,
         /^(naisho|filmku)\.lompat\.in$/,
         /^edogawa\.lon\.pw$/,
+        /^telolet\.in$/,
       ],
       query: /go=(\w+=*)/,
     },
@@ -4283,7 +4368,7 @@ $.register({
       /^(autofans|landscapenature)\.pw$/,
       /^ani-share\.com$/,
       /^sinopsisfilmku\.com$/,
-      /^sidespace\.net$/,
+      /^(sidespace|erogedownload)\.net$/,
     ],
     query: /get=([^&]+)/,
   },
@@ -4313,6 +4398,7 @@ $.register({
 $.register({
   rule: {
     host: /^ww[23]\.picnictrans\.com$/,
+    host: /^short\.awsubs\.co$/,
   },
   ready: function () {
     'use strict';
