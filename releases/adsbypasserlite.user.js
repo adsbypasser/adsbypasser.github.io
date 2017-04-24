@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.68.1
+// @version        5.68.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.68.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.68.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -566,9 +566,9 @@
   function dispatchByRegExp (rule, url_1) {
     return url_1.match(rule);
   }
-  function dispatchByArray (byLocation, rules, url_1, url_3, url_6) {
+  function dispatchByArray (rules, url_1, url_3, url_6) {
     var tmp = _.C(rules).find(function (rule) {
-      var m = dispatch(byLocation, rule, url_1, url_3, url_6);
+      var m = dispatch(rule, url_1, url_3, url_6);
       if (!m) {
         return _.none;
       }
@@ -623,14 +623,11 @@
   function dispatchByFunction (rule, url_1, url_3, url_6) {
     return rule(url_1, url_3, url_6);
   }
-  function dispatch (byLocation, rule, url_1, url_3, url_6) {
+  function dispatch (rule, url_1, url_3, url_6) {
     if (rule instanceof Array) {
-      return dispatchByArray(byLocation, rule, url_1, url_3, url_6);
+      return dispatchByArray(rule, url_1, url_3, url_6);
     }
     if (typeof rule === 'function') {
-      if (byLocation) {
-        return null;
-      }
       return dispatchByFunction(rule, url_1, url_3, url_6);
     }
     if (rule instanceof RegExp) {
@@ -641,7 +638,7 @@
     }
     return dispatchByObject(rule, url_6);
   }
-  $._findHandler = function (byLocation) {
+  $._findHandler = function () {
     var url_1 = window.location.toString();
     var url_3 = {
       scheme: window.location.protocol.slice(0, -1),
@@ -657,7 +654,7 @@
       hash: window.location.hash,
     };
     var pattern = _.C(patterns).find(function (pattern) {
-      var m = dispatch(byLocation, pattern.rule, url_1, url_3, url_6);
+      var m = dispatch(pattern.rule, url_1, url_3, url_6);
       if (!m) {
         return _.none;
       }
@@ -1373,25 +1370,14 @@ $.register({
     },
   });
   $.register({
-    rule: [
-      {
-        host: [
-          /^adf\.ly$/,
-          /^u\.shareme\.in$/,
-          /^server\.sbenny\.com$/,
-          /^bluenik\.com$/,
-        ],
-      },
-      function () {
-        var h = $.$('html[id="main_html"]');
-        var b = $.$('body[id="home"]');
-        if (h && b) {
-          return true;
-        } else {
-          return null;
-        }
-      },
-    ],
+    rule: function () {
+      var h = $.$('html[id="main_html"]');
+      if (h) {
+        return true;
+      } else {
+        return null;
+      }
+    },
     start: function () {
       $.window.document.write = _.nop;
       $.window.btoa = _.nop;
@@ -5229,7 +5215,7 @@ $.register({
     GM.registerMenuCommand('AdsBypasser - Configure', function () {
       GM.openInTab('https://adsbypasser.github.io/configure.html');
     });
-    var handler = findHandler(true);
+    var handler = findHandler();
     if (handler) {
       if ($.config.logLevel <= 0) {
         _._quiet = true;
@@ -5240,19 +5226,6 @@ $.register({
       });
       return;
     }
-    if ($.config.logLevel < 2) {
-      _._quiet = true;
-    }
-    _.info('does not match location on `%s`, will try HTML content', window.location.toString());
-    waitDOM().then(function () {
-      handler = findHandler(false);
-      if (!handler) {
-        _.info('does not match HTML content on `%s`', window.location.toString());
-        return;
-      }
-      beforeDOMReady(handler);
-      afterDOMReady(handler);
-    });
   };
   return $;
 }));
