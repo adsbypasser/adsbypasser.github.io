@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.68.2
+// @version        5.69.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.68.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.69.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -38,8 +38,10 @@
           fn(pr.resolve.bind(pr), pr.reject.bind(pr));
         });
       };
-    } else {
+    } else if (typeof context.Promise === 'function') {
       P = context.Promise;
+    } else {
+      P = this.Promise;
     }
     factory(context, P);
   }
@@ -819,6 +821,9 @@
     if (safe === null || !(safe instanceof Object)) {
       return safe;
     }
+    if (safe === unsafeWindow) {
+      return safe;
+    }
     if (safe instanceof String) {
       return safe.toString();
     }
@@ -1506,14 +1511,14 @@ $.register({
         /^url\.ht$/,
         /^urle\.co$/,
         /^cut-urls\.com$/,
-        /^(hashe|trlink)\.in$/,
+        /^(hashe|trlink|adshort)\.in$/,
         /^www\.worldhack\.net$/,
         /^123link\.top$/,
         /^pir\.im$/,
         /^bol\.tl$/,
         /^tl\.tc$/,
         /^tmearn\.com$/,
-        /^adfu\.us$/,
+        /^(adfu|linkhits)\.us$/,
         /^short\.pastewma\.com$/,
         /^adfly\.tc$/,
         /^linkfly\.gaosmedia\.com$/,
@@ -1639,18 +1644,20 @@ $.register({
       host: /^ah\.pe$/,
     },
     ready: function () {
-      $.removeNodes('iframe');
       var script = $.searchScripts('eval');
       script = decodeScript(script);
       script = decodeScript(script);
       script = decodeScript(script);
-      var path = script.match(/'(g\/[^']+)'/);
-      path = path[1];
-      _.wait(3000).then(function () {
-        $.get(path).then(function (url) {
-          $.openLink(url);
-        });
-      });
+      var path = script.match(/([^;= ]+)=([^+ ;]+)\+"\."\+([^+ ]+)\+"\."\+([^; ]+);/);
+      if (!path) {
+        throw new _.AdsBypasserError('script changed');
+      }
+      if (typeof $.window[path[2]] === 'undefined') {
+        _.info('recaptcha');
+        return;
+      }
+      path = _.T('{0}.{1}.{2}')($.window[path[2]], $.window[path[3]], $.window[path[4]]);
+      $.openLink(path);
     },
   });
 })();
@@ -3131,6 +3138,7 @@ $.register({
         /^ulshare\.net$/,
         /^adurl\.id$/,
         /^goolink\.me$/,
+        /^earningurl\.com$/,
       ],
     },
     ready: function () {
@@ -3864,7 +3872,7 @@ $.register({
   }
   var hostRules = [
     /^sh\.st$/,
-    /^(dh10thbvu|u2ks|jnw0|qaafa|xiw34|cllkme)\.com$/,
+    /^(dh10thbvu|u2ks|jnw0|qaafa|xiw34|cllkme|clkmein)\.com$/,
     /^digg\.to$/,
     /^([vw]iid|clkme)\.me$/,
     /^short\.est$/,
@@ -4256,6 +4264,7 @@ $.register({
         /^gadget13\.com$/,
         /^azhie\.net$/,
         /^ww2\.awsubs\.co$/,
+        /^autorp\.us$/
       ],
       query: /^\?d=([a-zA-Z0-9\/=]+)$/,
     },
@@ -4302,6 +4311,7 @@ $.register({
         /^susutin\.com$/,
         /^(getcomics|miuitutorial)\.gq$/,
         /^awsubs\.cf$/,
+        /^awsubsco\.ga$/,
       ],
       query: /id=(\w+=*)/,
     },
