@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.70.0
+// @version        5.71.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.70.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.71.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -1789,62 +1789,6 @@ $.register({
       });
     }, 1000);
   }
-  function knockServer2 (script) {
-    var post = $.window.$.post;
-    $.window.$.post = function (a, b, c) {
-      if (typeof c !== 'function') {
-        return;
-      }
-      setTimeout(function () {
-        var data = {
-          error: false,
-          message: {
-            url: '#',
-          },
-        };
-        c(JSON.stringify(data));
-      }, 1000);
-    };
-    var matches = script.match(ajaxPattern);
-    if (!matches) {
-      throw new _.AdsBypasserError('(in knock server 2) no script matches $.post');
-    }
-    var make_url = matches[1];
-    var tZ, cW, cH, sW, sH;
-    var make_opts = eval('(' + matches[2] + ')');
-    function makeLog () {
-        make_opts.opt = 'make_log';
-        post(make_url, make_opts, function (text) {
-          var data = _.parseJSON(text);
-          _.info('make_log', data);
-          if (!data.message) {
-            checksLog();
-            return;
-          }
-          $.openLink(data.message.url);
-        });
-    }
-    function checkLog () {
-      make_opts.opt = 'check_log';
-      post(make_url, make_opts, function (text) {
-        var data = _.parseJSON(text);
-        _.info('check_log', data);
-        if (!data.message) {
-          checkLog();
-          return;
-        }
-        makeLog();
-      });
-    }
-    function checksLog () {
-      make_opts.opt = 'checks_log';
-      post(make_url, make_opts, function () {
-        _.info('checks_log');
-        checkLog();
-      });
-    }
-    checksLog();
-  }
   $.register({
     rule: {
       host: /^bc\.vc$/,
@@ -1997,7 +1941,6 @@ $.register({
     jki = jki[1];
     var ojk = rv.match(/ojk:\s*'([^']+)'/);
     if (!ojk) {
-      _.info('!!!!');
       throw new _.AdsBypasserError('script changed');
     }
     ojk = ojk[1];
@@ -2403,16 +2346,6 @@ $.register({
 });
 $.register({
   rule: {
-    host: /empireload\.com$/,
-    path: /^\/plugin\.php$/,
-    query: /^\?id=linkout&url=([^&]+)$/,
-  },
-  start: function (m) {
-    $.openLink(m.query[1]);
-  },
-});
-$.register({
-  rule: {
     host: [
     	/^ethi\.in$/,
     	/^st\.wardhanime\.net$/,
@@ -2713,19 +2646,6 @@ $.register({
         _.warn('API Error ' + r.error.code + ' : ' + r.error.msg);
       }
     });
-  },
-});
-$.register({
-  rule: {
-    host: /^leechpremium\.space$/,
-    path: /^\/\w+$/,
-  },
-  ready: function () {
-    'use strict';
-    var a = $('#btn-main');
-    var i = a.href.lastIndexOf('http');
-    a = a.href.substr(i);
-    $.openLink(a);
   },
 });
 $.register({
@@ -3332,7 +3252,11 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^lnx\.lu|url\.fm|z\.gs$/,
+    host: [
+      /^lnx\.lu$/,
+      /^url\.fm$/,
+      /^z\.gs$/,
+    ],
   },
   ready: function () {
     'use strict';
@@ -3843,7 +3767,8 @@ $.register({
   }
   var hostRules = [
     /^sh\.st$/,
-    /^(dh10thbvu|u2ks|jnw0|qaafa|xiw34|cllkme|clkmein)\.com$/,
+    /^(dh10thbvu|u2ks|jnw0|qaafa|xiw34|cllkme|clkmein|corneey|ceesty)\.com$/,
+    /^[dfg]estyy\.com$/,
     /^digg\.to$/,
     /^([vw]iid|clkme)\.me$/,
     /^short\.est$/,
@@ -3971,7 +3896,7 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^short.am$/,
+    host: /^short\.am$/,
   },
   ready: function () {
     'use strict';
@@ -4057,7 +3982,7 @@ $.register({
 $.register({
   rule: {
     host: /^www\.shrink-service\.it$/,
-    path: /^\/s\//,
+    path: /^\/[se]\//,
   },
   ready: function () {
     'use strict';
@@ -4334,11 +4259,9 @@ $.register({
 $.register({
   rule: {
     host: [
-      /^designinghomey\.com$/,
+      /^(designinghomey|ani-share|sinopsisfilmku)\.com$/,
       /^motonews\.club$/,
       /^(autofans|landscapenature)\.pw$/,
-      /^ani-share\.com$/,
-      /^sinopsisfilmku\.com$/,
       /^(sidespace|erogedownload)\.net$/,
     ],
     query: /get=([^&]+)/,
@@ -4370,7 +4293,7 @@ $.register({
   rule: {
     host: [
       /^ww[23]\.picnictrans\.com$/,
-      /^short\.awsubs\.co$/,
+      /^short\.awsubs\.(co|me)$/,
     ],
   },
   ready: function () {
@@ -4480,7 +4403,12 @@ $.register({
 });
 $.register({
   rule: {
-    host: /urlcash\.(com|net|org)|(bat5|detonating|celebclk|eightteen|smilinglinks|peekatmygirlfriend|pornyhost|clb1|urlgalleries)\.com|looble\.net|xxxs\.org$/,
+    host: [
+      /^urlcash\.(com|net|org)$/,
+      /^(bat5|detonating|celebclk|eightteen|smilinglinks|peekatmygirlfriend|pornyhost|clb1|urlgalleries)\.com$/,
+      /^looble\.net$/,
+      /^xxxs\.org$/,
+    ],
   },
   ready: function () {
     'use strict';
@@ -4608,7 +4536,7 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^xlink.me$/
+    host: /^xlink\.me$/
   },
   ready: function () {
     'use strict';
