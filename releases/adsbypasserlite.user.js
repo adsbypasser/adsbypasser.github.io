@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.71.0
+// @version        5.72.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.71.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.72.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -2505,17 +2505,6 @@ $.register({
 });
 $.register({
   rule: {
-    host: /^igg-games\.com?$/,
-    query: /\?xurl=([^?]*)$/,
-  },
-  start: function (m) {
-    'use strict';
-    var url = 'http' + decodeURIComponent(m.query[1]);
-    $.openLink(url);
-  },
-});
-$.register({
-  rule: {
     host: /^(www\.)?(ilix\.in|priva\.us)$/,
     path: /\/(\w+)/,
   },
@@ -3181,8 +3170,9 @@ $.register({
   },
   ready: function () {
     'use strict';
-    var l = $('#skip .bt');
-    $.openLink(l.href);
+    var l = $.searchScripts(/revC\("([^"]+)"\)/);
+    l = atob(l[1]);
+    $.openLink('/' + l);
   },
 });
 $.register({
@@ -4213,7 +4203,7 @@ $.register({
         /^awsubs\.cf$/,
         /^awsubsco\.ga$/,
       ],
-      query: /id=(\w+=*)/,
+      query: /id=([\w\\]+=*)/,
     },
     {
       host: [
@@ -4226,7 +4216,7 @@ $.register({
         /^edogawa\.lon\.pw$/,
         /^telolet\.in$/,
       ],
-      query: /go=(\w+=*)/,
+      query: /go=([\w\\]+=*)/,
     },
   ],
   start: function (m) {
