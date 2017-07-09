@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.72.0
+// @version        5.73.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.72.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.73.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -20,9 +20,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.72.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.72.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.72.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.73.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.73.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.73.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -2151,6 +2151,7 @@ $.register({
         return a[1];
       };
     case 'coeg.in':
+    case 'www.telondasmu.com':
       return function () {
         var a = $('.download-link a');
         return a.href;
@@ -2169,6 +2170,7 @@ $.register({
       host: [
         /^link\.animagz\.org$/,
         /^(coeg|disingkat|gunting)\.in$/,
+        /^www\.telondasmu\.com$/,
       ],
       path: /^\/\w+$/,
     },
@@ -2825,7 +2827,7 @@ $.register({
   var hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|zytpirwai)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|zytpirwai|jzrputtbut)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
     /^(([\w]{8}|www)\.)?hornywood\.tv$/,
@@ -3871,7 +3873,6 @@ $.register({
   rule: [
     {
       host: [
-        /^(www\.)?shink\.in$/,
         /^fas\.li$/,
         /^cpmlink\.net$/,
       ],
@@ -3888,6 +3889,17 @@ $.register({
     var i = a.href.lastIndexOf('http');
     a = a.href.substr(i);
     $.openLink(a);
+  },
+});
+$.register({
+  rule: {
+    host: /^(www\.)?shink\.in$/,
+    path: /^\/go\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#skip');
+    f.submit();
   },
 });
 $.register({
@@ -4301,7 +4313,10 @@ $.register({
 $.register({
   rule: {
     host: /^techfunda\.net$/,
-    path: /^\/link\//,
+    path: [
+        /^\/link\//,
+        /^\/safe\//,
+    ],
   },
   ready: function () {
     'use strict';
@@ -4328,6 +4343,16 @@ $.register({
   start: function (m) {
     'use strict';
     $.openLink(decodeURIComponent(m.query[1]));
+  },
+});
+$.register({
+  rule: {
+    host: /^topload\.pro$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('.hide a.btn');
+    $.openLink(a.href);
   },
 });
 $.register({
@@ -4802,9 +4827,7 @@ $.register({
       path: /^\/verify\/(.+)$/,
     },
     start: function (m) {
-      $.openLink('/view/' + m.path[1], {
-        referer: false,
-      });
+      $.openLink('/view/' + m.path[1]);
     },
   });
   $.register({
@@ -5507,7 +5530,9 @@ $.register({
 (function () {
   'use strict';
   function run (rp) {
-    $.window.jQuery.prototype.append = undefined;
+    if ($.window.jQuery) {
+      $.window.jQuery.prototype.append = undefined;
+    }
     var i = $('img.pic');
     $.openImage(i.src, {
       replace: rp,
@@ -6456,7 +6481,7 @@ $.register({
           /^image(ontime|corn|picsa|horse|decode)\.com$/,
           /^(zonezeed|zelje|croft|myhot|bok|hostur|greasy|dam)image\.com$/,
           /^img(icy|next|savvy|\.spicyzilla|twyti|xyz|devil|tzar|ban|pu|beer|wet|tornado|kicks|nimz|binbou|2share|22|cover|hit|main|trial|blank|reputa|fapper|reality)\.com$/,
-          /^imgseeds?\.com$/,
+          /^(i\.)?imgseeds?\.com$/,
           /^img-(zone|planet|pay|uploads)\.com$/,
           /^www\.img(blow|lemon|4sharing)\.com$/,
           /^www\.imagefolks\.com$/,
@@ -6495,6 +6520,7 @@ $.register({
           /^pic4you\.top$/,
           /^imgsen\.se$/,
           /^ipicture\.su$/,
+          /^acidimg\.cc$/,
         ],
         path: /^\/img-.*\.html/,
       },

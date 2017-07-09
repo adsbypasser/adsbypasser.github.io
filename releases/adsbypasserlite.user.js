@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        5.72.0
+// @version        5.73.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasserlite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasserlite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.72.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v5.73.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_getValue
@@ -2145,6 +2145,7 @@ $.register({
         return a[1];
       };
     case 'coeg.in':
+    case 'www.telondasmu.com':
       return function () {
         var a = $('.download-link a');
         return a.href;
@@ -2163,6 +2164,7 @@ $.register({
       host: [
         /^link\.animagz\.org$/,
         /^(coeg|disingkat|gunting)\.in$/,
+        /^www\.telondasmu\.com$/,
       ],
       path: /^\/\w+$/,
     },
@@ -2819,7 +2821,7 @@ $.register({
   var hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|zytpirwai)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|zytpirwai|jzrputtbut)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
     /^(([\w]{8}|www)\.)?hornywood\.tv$/,
@@ -3865,7 +3867,6 @@ $.register({
   rule: [
     {
       host: [
-        /^(www\.)?shink\.in$/,
         /^fas\.li$/,
         /^cpmlink\.net$/,
       ],
@@ -3882,6 +3883,17 @@ $.register({
     var i = a.href.lastIndexOf('http');
     a = a.href.substr(i);
     $.openLink(a);
+  },
+});
+$.register({
+  rule: {
+    host: /^(www\.)?shink\.in$/,
+    path: /^\/go\/\w+$/,
+  },
+  ready: function () {
+    'use strict';
+    var f = $('#skip');
+    f.submit();
   },
 });
 $.register({
@@ -4295,7 +4307,10 @@ $.register({
 $.register({
   rule: {
     host: /^techfunda\.net$/,
-    path: /^\/link\//,
+    path: [
+        /^\/link\//,
+        /^\/safe\//,
+    ],
   },
   ready: function () {
     'use strict';
@@ -4322,6 +4337,16 @@ $.register({
   start: function (m) {
     'use strict';
     $.openLink(decodeURIComponent(m.query[1]));
+  },
+});
+$.register({
+  rule: {
+    host: /^topload\.pro$/,
+  },
+  ready: function () {
+    'use strict';
+    var a = $('.hide a.btn');
+    $.openLink(a.href);
   },
 });
 $.register({
