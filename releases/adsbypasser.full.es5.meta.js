@@ -7,8 +7,8 @@
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
-// @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
-// @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
+// @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es5.meta.js
+// @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es5.user.js
 // @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
