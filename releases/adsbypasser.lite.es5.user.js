@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.1.0
+// @version        6.1.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_deleteValue
@@ -6573,7 +6573,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?ouo\.(io|press)$/
+    host: /^(www\.)?ouo\.(io|press)$/,
+    path: /^\/go\/\w+$/
   },
   ready: function () {
     var _ref159 = _asyncToGenerator( regeneratorRuntime.mark(function _callee157() {
@@ -6581,7 +6582,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context157.prev = _context157.next) {
             case 0:
-              (0, _ADSBYPASSER_NAMESPACE__.$)('form[method="POST"]>input[name="_token"]').parentNode.submit();
+              (0, _ADSBYPASSER_NAMESPACE__.$)('form').submit();
             case 1:
             case 'end':
               return _context157.stop();
@@ -7696,7 +7697,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             case 3:
               _context191.next = 5;
               return _ADSBYPASSER_NAMESPACE__.$.post('/site/getRedirectLink', {
-                id: id
+                id: id[1]
               });
             case 5:
               url = _context191.sent;

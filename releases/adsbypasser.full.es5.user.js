@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.1.0
+// @version        6.1.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -21,9 +21,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.1/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.1/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.1/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -6871,7 +6871,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?ouo\.(io|press)$/
+    host: /^(www\.)?ouo\.(io|press)$/,
+    path: /^\/go\/\w+$/
   },
   ready: function () {
     var _ref159 = _asyncToGenerator( regeneratorRuntime.mark(function _callee157() {
@@ -6879,7 +6880,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context157.prev = _context157.next) {
             case 0:
-              (0, _ADSBYPASSER_NAMESPACE__.$)('form[method="POST"]>input[name="_token"]').parentNode.submit();
+              (0, _ADSBYPASSER_NAMESPACE__.$)('form').submit();
             case 1:
             case 'end':
               return _context157.stop();
@@ -7994,7 +7995,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             case 3:
               _context191.next = 5;
               return _ADSBYPASSER_NAMESPACE__.$.post('/site/getRedirectLink', {
-                id: id
+                id: id[1]
               });
             case 5:
               url = _context191.sent;
@@ -13150,7 +13151,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       /^(playimg|picstwist|ericsony|wpc8|uplimg|lexiit|thumbnailus|newimagepost|fapingpics|dimtus|tinizo)\.com$/, /^((i|hentai)\.)?imgslip\.com$/, /^(i|xxx)\.hentaiyoutube\.com$/, /^(go|er)imge\.com$/, /^(like\.)?08lkk\.com$/, /^nim(plus|zshare)\.com$/, /^nudeximg\.com$/,
       /^img(serve|coin|fap|candy|master|-view|run|boom|project|python|pics|pix)\.net$/, /^(imagesouls|naughtygate|gallerycloud|imagelaser|picture-bang|project-photo|pix-link|funimg|golfpit|xximg)\.net$/,
       /^(shot|adult)img\.org$/, /^image(\.adlock|on|team)\.org$/, /^(voyeur|drag|teen|mega)image\.org$/, /^teenshot\.org$/, /^img(studio|spot)\.org$/,
-      /^www\.hotimage\.uk$/, /^(hotimages|55888)\.eu$/, /^img(cloud|mag)\.co$/, /^pixup\.us$/, /^(bulkimg|photo-up|myimg|pop-img|img-pop|ads-img)\.info$/, /^vava\.in$/, /^(pixxx|picspornfree|imgload|fapat)\.me$/, /^(domaink|pic2pic|porno-pirat|24aconstii|loftlm|18pron|imgplus)\.ru$/, /^imgease\.re$/, /^goimg\.xyz$/, /^(pic2pic|picz)\.site$/, /^darpix\.ga$/, /^sxpics\.nl$/, /^darpix\.desi$/, /^pic4you\.top$/, /^imgsen\.se$/, /^ipicture\.su$/, /^acidimg\.cc$/],
+      /^www\.hotimage\.uk$/, /^hotimages\.eu$/, /(^|\.)55888\.eu$/, /^img(cloud|mag)\.co$/, /^pixup\.us$/, /^(bulkimg|photo-up|myimg|pop-img|img-pop|ads-img)\.info$/, /^vava\.in$/, /^(pixxx|picspornfree|imgload|fapat)\.me$/, /^(domaink|pic2pic|porno-pirat|24aconstii|loftlm|18pron|imgplus)\.ru$/, /^imgease\.re$/, /^goimg\.xyz$/, /^(pic2pic|picz)\.site$/, /^darpix\.ga$/, /^sxpics\.nl$/, /^darpix\.desi$/, /^pic4you\.top$/, /^imgsen\.se$/, /^ipicture\.su$/, /^acidimg\.cc$/],
       path: /^\/img-.*\.html/
     }, {
       host: [/^img(run|twyti)\.net$/, /^imgtwyti\.com$/, /^hentai-(pop|baka)\.com$/, /^star-hentai\.com$/, /^(jav|img)-hentai\.host$/, /^hentai-king\.host$/, /^img-king\.xyz$/],
