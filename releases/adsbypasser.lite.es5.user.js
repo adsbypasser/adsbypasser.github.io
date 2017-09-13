@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.1.1
+// @version        6.1.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_deleteValue
@@ -286,7 +286,7 @@ function tryEvery(msInterval, fn) {
   return new Promise(function (resolve) {
     var handle = setInterval(function () {
       var result = fn();
-      if (result !== _.none) {
+      if (result !== none) {
         clearInterval(handle);
         resolve(result);
       }
@@ -5360,7 +5360,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }()
   });
   function findToken(context) {
-    var script = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts('    const f = window[\'init\' + \'Lb\' + \'js\' + \'\']', context);
+    var script = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts('    var f = window[\'init\' + \'Lb\' + \'js\' + \'\']', context);
     if (!script) {
       _ADSBYPASSER_NAMESPACE__._.warn('pattern changed');
       return null;
@@ -9102,7 +9102,6 @@ var _ = {
   generateRandomIP: _misc.generateRandomIP,
   info: _logger.info,
   none: _core.none,
-  parseJSON: _core.parseJSON,
   partial: _core.partial,
   register: _dispatcher.register,
   template: _core.template,
@@ -9393,12 +9392,12 @@ function searchFromScriptsByString(pattern, context) {
   if (m === _core.none) {
     return null;
   }
-  return m;
+  return m.textContent;
 }
 function searchFromScripts(pattern, context) {
   if (pattern instanceof RegExp) {
     return searchFromScriptsByRegExp(pattern, context);
-  } else if (_.isString(pattern)) {
+  } else if ((0, _core.isString)(pattern)) {
     return searchFromScriptsByString(pattern, context);
   } else {
     return null;

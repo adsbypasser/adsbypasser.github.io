@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.1.0
+// @version        6.1.2
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.2/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -21,9 +21,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.2/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.2/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.2/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -77,9 +77,9 @@
  __webpack_require__.d(__webpack_exports__, "f", function() { return map; });
  __webpack_require__.d(__webpack_exports__, "g", function() { return none; });
  __webpack_require__.d(__webpack_exports__, "h", function() { return nop; });
- __webpack_require__.d(__webpack_exports__, "j", function() { return partial; });
- __webpack_require__.d(__webpack_exports__, "k", function() { return template; });
- __webpack_require__.d(__webpack_exports__, "l", function() { return wait; });
+ __webpack_require__.d(__webpack_exports__, "i", function() { return partial; });
+ __webpack_require__.d(__webpack_exports__, "j", function() { return template; });
+ __webpack_require__.d(__webpack_exports__, "k", function() { return wait; });
 class AdsBypasserError extends Error {
   constructor (message) {
     super(message);
@@ -190,7 +190,7 @@ function tryEvery (msInterval, fn) {
   return new Promise((resolve) => {
     const handle = setInterval(function () {
       const result = fn();
-      if (result !== _.none) {
+      if (result !== none) {
         clearInterval(handle);
         resolve(result);
       }
@@ -397,7 +397,7 @@ function dispatchByString (rule, url_3) {
   let scheme = /\*|https?|file|ftp|chrome-extension/;
   let host = /\*|(\*\.)?([^/*]+)/;
   let path = /\/.*/;
-  let tpl = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('^({scheme})://({host})?({path})$');
+  let tpl = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('^({scheme})://({host})?({path})$');
   tpl = tpl({
     scheme: scheme.source,
     host: host.source,
@@ -429,7 +429,7 @@ function dispatchByString (rule, url_3) {
       return null;
     }
   }
-  tpl = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('^{0}$');
+  tpl = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('^{0}$');
   const tmp = path.replace(/[*.[\]?+#]/g, (c) => {
     if (c === '*') {
       return '.*';
@@ -486,8 +486,8 @@ function findHandler () {
     return null;
   }
   return {
-    start: pattern.start ? Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])(pattern.start, matched) : __WEBPACK_IMPORTED_MODULE_0_util_core__["h" ],
-    ready: pattern.ready ? Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])(pattern.ready, matched) : __WEBPACK_IMPORTED_MODULE_0_util_core__["h" ],
+    start: pattern.start ? Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["i" ])(pattern.start, matched) : __WEBPACK_IMPORTED_MODULE_0_util_core__["h" ],
+    ready: pattern.ready ? Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["i" ])(pattern.ready, matched) : __WEBPACK_IMPORTED_MODULE_0_util_core__["h" ],
   };
 }
  }),
@@ -598,7 +598,7 @@ function createConfig () {
         __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue(m.key, v);
         const nv = __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue(m.key, m.default_);
         if (nv !== v) {
-          const s = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('failed to write config, key: {0}, value: {1}, new: {2}');
+          const s = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('failed to write config, key: {0}, value: {1}, new: {2}');
           throw new __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ](s(s.key, nv, v));
         }
       },
@@ -707,7 +707,7 @@ function loadConfig () {
  var __WEBPACK_IMPORTED_MODULE_0_util_core__ = __webpack_require__(0);
 class DomNotFoundError extends __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ] {
   constructor (selector) {
-    super(Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('`{0}` not found')(selector));
+    super(Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('`{0}` not found')(selector));
   }
   get name () {
     return 'DomNotFoundError';
@@ -778,12 +778,12 @@ function searchFromScriptsByString (pattern, context) {
   if (m === __WEBPACK_IMPORTED_MODULE_0_util_core__["g" ]) {
     return null;
   }
-  return m;
+  return m.textContent;
 }
 function searchFromScripts (pattern, context) {
   if (pattern instanceof RegExp) {
     return searchFromScriptsByRegExp(pattern, context);
-  } else if (_.isString(pattern)) {
+  } else if (Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["e" ])(pattern)) {
     return searchFromScriptsByString(pattern, context);
   } else {
     return null;
@@ -800,7 +800,7 @@ function prepare (e) {
     document.body = document.createElement('body');
   }
   document.body.appendChild(e);
-  return Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["l" ])(0);
+  return Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])(0);
 }
 async function get (url) {
   const a = document.createElement('a');
@@ -846,7 +846,7 @@ async function openLink (to, options) {
   const withReferer = typeof options.referer === 'undefined' ? true : options.referer;
   const postData = options.post;
   const from = window.location.toString();
-  Object(__WEBPACK_IMPORTED_MODULE_1_util_logger__["a" ])(Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('{0} -> {1}')(from, to));
+  Object(__WEBPACK_IMPORTED_MODULE_1_util_logger__["a" ])(Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('{0} -> {1}')(from, to));
   if (postData) {
     await post(to, postData);
     return;
@@ -2924,7 +2924,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     },
   });
   function findToken (context) {
-    const script = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].searchFromScripts('    const f = window[\'init\' + \'Lb\' + \'js\' + \'\']', context);
+    const script = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].searchFromScripts('    var f = window[\'init\' + \'Lb\' + \'js\' + \'\']', context);
     if (!script) {
       __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].warn('pattern changed');
       return null;
@@ -3530,10 +3530,11 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
 });
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
-    host: /^(www\.)?ouo\.(io|press)$/
+    host: /^(www\.)?ouo\.(io|press)$/,
+    path: /^\/go\/\w+$/,
   },
   async ready () {
-    Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('form[method="POST"]>input[name="_token"]').parentNode.submit();
+    Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('form').submit();
   },
 });
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
@@ -4036,7 +4037,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     const id = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].searchFromScripts(/\{id:'(\d+)'\}/);
     await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].wait(3000);
     const url = await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].post('/site/getRedirectLink', {
-      id: id,
+      id: id[1],
     });
     await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(url);
   },
@@ -6267,7 +6268,8 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
           /^teenshot\.org$/,
           /^img(studio|spot)\.org$/,
           /^www\.hotimage\.uk$/,
-          /^(hotimages|55888)\.eu$/,
+          /^hotimages\.eu$/,
+          /(^|\.)55888\.eu$/,
           /^img(cloud|mag)\.co$/,
           /^pixup\.us$/,
           /^(bulkimg|photo-up|myimg|pop-img|img-pop|ads-img)\.info$/,
@@ -6550,11 +6552,10 @@ const _ = {
   generateRandomIP: __WEBPACK_IMPORTED_MODULE_8_util_misc__["a" ],
   info: __WEBPACK_IMPORTED_MODULE_7_util_logger__["a" ],
   none: __WEBPACK_IMPORTED_MODULE_2_util_core__["g" ],
-  parseJSON: __WEBPACK_IMPORTED_MODULE_2_util_core__["parseJSON"],
-  partial: __WEBPACK_IMPORTED_MODULE_2_util_core__["j" ],
+  partial: __WEBPACK_IMPORTED_MODULE_2_util_core__["i" ],
   register: __WEBPACK_IMPORTED_MODULE_3_util_dispatcher__["b" ],
-  template: __WEBPACK_IMPORTED_MODULE_2_util_core__["k" ],
-  wait: __WEBPACK_IMPORTED_MODULE_2_util_core__["l" ],
+  template: __WEBPACK_IMPORTED_MODULE_2_util_core__["j" ],
+  wait: __WEBPACK_IMPORTED_MODULE_2_util_core__["k" ],
   warn: __WEBPACK_IMPORTED_MODULE_7_util_logger__["b" ],
 };
 function $ (selector, context) {
@@ -6585,11 +6586,11 @@ function deepJoin (prefix, object) {
   const keys = Object.getOwnPropertyNames(object);
   const mapped = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["f" ])(keys, (k) => {
     const v = object[k];
-    const key = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('{0}[{1}]')(prefix, k);
+    const key = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('{0}[{1}]')(prefix, k);
     if (typeof v === 'object') {
       return deepJoin(key, v);
     }
-    const tpl = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('{0}={1}');
+    const tpl = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('{0}={1}');
     const tmp = [key, v].map(encodeURIComponent);
     return tpl.apply(this, tmp);
   });
@@ -6612,7 +6613,7 @@ function toQuery (data) {
     if (typeof v === 'object') {
       return deepJoin(k, v);
     }
-    const tpl = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('{0}={1}');
+    const tpl = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('{0}={1}');
     const tmp = [k, v].map(encodeURIComponent);
     return tpl.apply(this, tmp);
   }).join('&');
@@ -6690,7 +6691,7 @@ function post (url, data, headers) {
 function setCookie (key, value) {
   const now = new Date();
   now.setTime(now.getTime() + 3600 * 1000);
-  const tpl = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('{0}={1};path={2};');
+  const tpl = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('{0}={1};path={2};');
   document.cookie = tpl(key, value, window.location.pathname, now.toUTCString());
 }
 function getCookie (key) {
@@ -6716,9 +6717,9 @@ function resetCookies () {
   const d = (new Date(1e3)).toUTCString();
   Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["d" ])(document.cookie.split(';'), (v) => {
     const k = v.replace(/^\s*(\w+)=.+$/, '$1');
-    document.cookie = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('{0}=;expires={1};')(k, d);
-    document.cookie = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('{0}=;path=/;expires={1};')(k, d);
-    const e = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('{0}=;path=/;domain={1};expires={2};');
+    document.cookie = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('{0}=;expires={1};')(k, d);
+    document.cookie = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('{0}=;path=/;expires={1};')(k, d);
+    const e = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('{0}=;path=/;domain={1};expires={2};');
     document.cookie = e(k, a, d);
     document.cookie = e(k, b, d);
     document.cookie = e(k, c, d);
@@ -6788,7 +6789,7 @@ function scaleImage (i) {
 function changeBackground () {
   const bgImage = __WEBPACK_IMPORTED_MODULE_6_util_platform__["a" ].getResourceURL('bgImage');
   document.body.style.backgroundColor = '#222222';
-  document.body.style.backgroundImage = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('url(\'{0}\')')(bgImage);
+  document.body.style.backgroundImage = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('url(\'{0}\')')(bgImage);
 }
 function alignCenter () {
   const style = __WEBPACK_IMPORTED_MODULE_6_util_platform__["a" ].getResourceText('alignCenter');
@@ -6807,7 +6808,7 @@ function replaceBody (imgSrc) {
     Object(__WEBPACK_IMPORTED_MODULE_4_util_logger__["b" ])('false url');
     return;
   }
-  Object(__WEBPACK_IMPORTED_MODULE_4_util_logger__["a" ])(Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])('replacing body with `{0}` ...')(imgSrc));
+  Object(__WEBPACK_IMPORTED_MODULE_4_util_logger__["a" ])(Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])('replacing body with `{0}` ...')(imgSrc));
   Object(__WEBPACK_IMPORTED_MODULE_5_util_misc__["c" ])();
   enableScrolling();
   document.body = document.createElement('body');
