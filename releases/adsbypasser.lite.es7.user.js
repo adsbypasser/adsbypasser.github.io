@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.1.2
+// @version        6.1.3
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.2/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.3/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_deleteValue
@@ -1393,11 +1393,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     });
   }
   function decodeToken (token) {
-    let a = token.indexOf('!HiTommy');
-    if (a >= 0) {
-      token = token.substring(0, a);
-    }
-    a = '';
+    let a = '';
     let b = '';
     for (let i = 0; i < token.length; ++i) {
       if (i % 2 === 0) {
@@ -1406,8 +1402,26 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         b = token.charAt(i) + b;
       }
     }
-    token = atob(a + b);
-    token = token.substr(2);
+    token = a + b;
+    a = token.split('');
+    for (let i = 0; i < a.length; ++i) {
+      if (/\d/.test(a[i])) {
+        for (let j = i + 1; j < a.length; ++j) {
+          if (/\d/.test(a[j])) {
+            b = a[i] ^ a[j];
+            if (b < 10) {
+              a[i] = b;
+            }
+            i = j;
+            j = a.length;
+          }
+        }
+      }
+    }
+    token = a.join('');
+    token = atob(token);
+    token = token.substring(16);
+    token = token.substring(0, token.length - 16);
     if (location.hash) {
       token += location.hash;
     }
