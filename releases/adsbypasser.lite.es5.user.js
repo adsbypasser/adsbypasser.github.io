@@ -1,15 +1,15 @@
 // ==UserScript==
-// @name           AdsBypasserLite
+// @name           AdsBypasser Lite Legacy
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.1.3
+// @version        6.1.4
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.3/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.4/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_deleteValue
@@ -58,41 +58,124 @@
  	};
  	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
  	__webpack_require__.p = "";
- 	return __webpack_require__(__webpack_require__.s = 5);
+ 	return __webpack_require__(__webpack_require__.s = 77);
  })
  ([
+ (function(module, exports) {
+var core = module.exports = { version: '2.5.1' };
+if (typeof __e == 'number') __e = core; 
+ }),
+ (function(module, exports, __webpack_require__) {
+var store = __webpack_require__(41)('wks');
+var uid = __webpack_require__(26);
+var Symbol = __webpack_require__(2).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+$exports.store = store;
+ }),
+ (function(module, exports) {
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  : Function('return this')();
+if (typeof __g == 'number') __g = global; 
+ }),
+ (function(module, exports, __webpack_require__) {
+var global = __webpack_require__(2);
+var core = __webpack_require__(0);
+var ctx = __webpack_require__(12);
+var hide = __webpack_require__(8);
+var PROTOTYPE = 'prototype';
+var $export = function (type, name, source) {
+  var IS_FORCED = type & $export.F;
+  var IS_GLOBAL = type & $export.G;
+  var IS_STATIC = type & $export.S;
+  var IS_PROTO = type & $export.P;
+  var IS_BIND = type & $export.B;
+  var IS_WRAP = type & $export.W;
+  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
+  var expProto = exports[PROTOTYPE];
+  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
+  var key, own, out;
+  if (IS_GLOBAL) source = name;
+  for (key in source) {
+    own = !IS_FORCED && target && target[key] !== undefined;
+    if (own && key in exports) continue;
+    out = own ? target[key] : source[key];
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    : IS_BIND && own ? ctx(out, global)
+    : IS_WRAP && target[key] == out ? (function (C) {
+      var F = function (a, b, c) {
+        if (this instanceof C) {
+          switch (arguments.length) {
+            case 0: return new C();
+            case 1: return new C(a);
+            case 2: return new C(a, b);
+          } return new C(a, b, c);
+        } return C.apply(this, arguments);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    if (IS_PROTO) {
+      (exports.virtual || (exports.virtual = {}))[key] = out;
+      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
+    }
+  }
+};
+$export.F = 1;   
+$export.G = 2;   
+$export.S = 4;   
+$export.P = 8;   
+$export.B = 16;  
+$export.W = 32;  
+$export.U = 64;  
+$export.R = 128; 
+module.exports = $export;
+ }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-(function(Promise) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-var _marked = regeneratorRuntime.mark(enumerate);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-exports.AdsBypasserError = AdsBypasserError;
-exports.every = every;
-exports.find = find;
-exports.forEach = forEach;
-exports.isString = isString;
-exports.map = map;
-exports.none = none;
-exports.nop = nop;
-exports.partial = partial;
-exports.template = template;
-exports.tryEvery = tryEvery;
-exports.wait = wait;
+exports.wait = exports.tryEvery = exports.template = exports.partial = exports.nop = exports.none = exports.map = exports.isString = exports.forEach = exports.find = exports.every = exports.AdsBypasserError = undefined;
+var _promise = __webpack_require__(15);
+var _promise2 = _interopRequireDefault(_promise);
+var _toConsumableArray2 = __webpack_require__(99);
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+var _regenerator = __webpack_require__(21);
+var _regenerator2 = _interopRequireDefault(_regenerator);
+var _getIterator2 = __webpack_require__(68);
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+var _slicedToArray2 = __webpack_require__(22);
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+var _getOwnPropertyNames = __webpack_require__(69);
+var _getOwnPropertyNames2 = _interopRequireDefault(_getOwnPropertyNames);
+var _assign = __webpack_require__(111);
+var _assign2 = _interopRequireDefault(_assign);
+var _keys = __webpack_require__(115);
+var _keys2 = _interopRequireDefault(_keys);
+var _getPrototypeOf = __webpack_require__(72);
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+var _classCallCheck2 = __webpack_require__(73);
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+var _createClass2 = __webpack_require__(74);
+var _createClass3 = _interopRequireDefault(_createClass2);
+var _possibleConstructorReturn2 = __webpack_require__(75);
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+var _inherits2 = __webpack_require__(76);
+var _inherits3 = _interopRequireDefault(_inherits2);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _marked = _regenerator2.default.mark(enumerate);
 var AdsBypasserError = function (_Error) {
-  _inherits(AdsBypasserError, _Error);
+  (0, _inherits3.default)(AdsBypasserError, _Error);
   function AdsBypasserError(message) {
-    _classCallCheck(this, AdsBypasserError);
-    return _possibleConstructorReturn(this, (AdsBypasserError.__proto__ || Object.getPrototypeOf(AdsBypasserError)).call(this, message));
+    (0, _classCallCheck3.default)(this, AdsBypasserError);
+    return (0, _possibleConstructorReturn3.default)(this, (AdsBypasserError.__proto__ || (0, _getPrototypeOf2.default)(AdsBypasserError)).call(this, message));
   }
-  _createClass(AdsBypasserError, [{
+  (0, _createClass3.default)(AdsBypasserError, [{
     key: 'name',
     get: function get() {
       return 'AdsBypasserError';
@@ -104,7 +187,7 @@ function forEach(collection, fn) {
   if (isArrayLike(collection)) {
     return Array.prototype.forEach.call(collection, fn);
   }
-  return Object.keys(collection).forEach(function (k) {
+  return (0, _keys2.default)(collection).forEach(function (k) {
     return fn(collection[k], k, collection);
   });
 }
@@ -112,7 +195,7 @@ function every(collection, fn) {
   if (isArrayLike(collection)) {
     return Array.prototype.every.call(collection, fn);
   }
-  return Object.keys(collection).every(function (k) {
+  return (0, _keys2.default)(collection).every(function (k) {
     return fn(collection[k], k, collection);
   });
 }
@@ -120,8 +203,8 @@ function map(collection, fn) {
   if (isArrayLike(collection)) {
     return Array.prototype.map.call(collection, fn);
   }
-  var mapped = Object.assign({}, collection);
-  Object.getOwnPropertyNames(mapped).forEach(function (k) {
+  var mapped = (0, _assign2.default)({}, collection);
+  (0, _getOwnPropertyNames2.default)(mapped).forEach(function (k) {
     mapped[k] = fn(collection[k], k, collection);
   });
   return mapped;
@@ -131,9 +214,9 @@ function find(collection, fn) {
   var _didIteratorError = false;
   var _iteratorError = undefined;
   try {
-    for (var _iterator = enumerate(collection)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    for (var _iterator = (0, _getIterator3.default)(enumerate(collection)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var _ref = _step.value;
-      var _ref2 = _slicedToArray(_ref, 2);
+      var _ref2 = (0, _slicedToArray3.default)(_ref, 2);
       var k = _ref2[0];
       var v = _ref2[1];
       var r = fn(v, k, collection);
@@ -159,7 +242,7 @@ function find(collection, fn) {
 }
 function enumerate(collection) {
   var keys, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, k;
-  return regeneratorRuntime.wrap(function enumerate$(_context) {
+  return _regenerator2.default.wrap(function enumerate$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
@@ -171,12 +254,12 @@ function enumerate(collection) {
         case 2:
           return _context.abrupt('return');
         case 3:
-          keys = Object.getOwnPropertyNames(collection);
+          keys = (0, _getOwnPropertyNames2.default)(collection);
           _iteratorNormalCompletion2 = true;
           _didIteratorError2 = false;
           _iteratorError2 = undefined;
           _context.prev = 7;
-          _iterator2 = keys[Symbol.iterator]();
+          _iterator2 = (0, _getIterator3.default)(keys);
         case 9:
           if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
             _context.next = 16;
@@ -269,7 +352,7 @@ function partial(fn) {
     for (var _len3 = arguments.length, innerArgs = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
       innerArgs[_key3] = arguments[_key3];
     }
-    return fn.apply(undefined, _toConsumableArray(args.concat(innerArgs)));
+    return fn.apply(undefined, (0, _toConsumableArray3.default)(args.concat(innerArgs)));
   };
 }
 function isString(value) {
@@ -278,12 +361,12 @@ function isString(value) {
 function nop() {}
 var none = nop;
 function wait(msDelay) {
-  return new Promise(function (resolve) {
+  return new _promise2.default(function (resolve) {
     setTimeout(resolve, msDelay);
   });
 }
 function tryEvery(msInterval, fn) {
-  return new Promise(function (resolve) {
+  return new _promise2.default(function (resolve) {
     var handle = setInterval(function () {
       var result = fn();
       if (result !== none) {
@@ -293,37 +376,201 @@ function tryEvery(msInterval, fn) {
     }, msInterval);
   });
 }
-}.call(exports, __webpack_require__(1)["Promise_"]))
+exports.AdsBypasserError = AdsBypasserError;
+exports.every = every;
+exports.find = find;
+exports.forEach = forEach;
+exports.isString = isString;
+exports.map = map;
+exports.none = none;
+exports.nop = nop;
+exports.partial = partial;
+exports.template = template;
+exports.tryEvery = tryEvery;
+exports.wait = wait;
+ }),
+ (function(module, exports, __webpack_require__) {
+var isObject = __webpack_require__(9);
+module.exports = function (it) {
+  if (!isObject(it)) throw TypeError(it + ' is not an object!');
+  return it;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var anObject = __webpack_require__(5);
+var IE8_DOM_DEFINE = __webpack_require__(54);
+var toPrimitive = __webpack_require__(37);
+var dP = Object.defineProperty;
+exports.f = __webpack_require__(7) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return dP(O, P, Attributes);
+  } catch (e) {  }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = !__webpack_require__(13)(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+ }),
+ (function(module, exports, __webpack_require__) {
+var dP = __webpack_require__(6);
+var createDesc = __webpack_require__(17);
+module.exports = __webpack_require__(7) ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+ }),
+ (function(module, exports) {
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+ }),
+ (function(module, exports) {
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var IObject = __webpack_require__(57);
+var defined = __webpack_require__(35);
+module.exports = function (it) {
+  return IObject(defined(it));
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var aFunction = __webpack_require__(25);
+module.exports = function (fn, that, length) {
+  aFunction(fn);
+  if (that === undefined) return fn;
+  switch (length) {
+    case 1: return function (a) {
+      return fn.call(that, a);
+    };
+    case 2: return function (a, b) {
+      return fn.call(that, a, b);
+    };
+    case 3: return function (a, b, c) {
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function () {
+    return fn.apply(that, arguments);
+  };
+};
+ }),
+ (function(module, exports) {
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (e) {
+    return true;
+  }
+};
+ }),
+ (function(module, exports) {
+module.exports = {};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(78), __esModule: true };
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-(function(Promise) {
-Object.defineProperty(exports, "__esModule", {
-  value: true
+var $at = __webpack_require__(79)(true);
+__webpack_require__(53)(String, 'String', function (iterated) {
+  this._t = String(iterated); 
+  this._i = 0;                
+}, function () {
+  var O = this._t;
+  var index = this._i;
+  var point;
+  if (index >= O.length) return { value: undefined, done: true };
+  point = $at(O, index);
+  this._i += point.length;
+  return { value: point, done: false };
 });
-exports.Promise_ = undefined;
-var _platform = __webpack_require__(2);
-exports.Promise_ = Promise_;
-var Promise_ = getPromiseConstructor();
-function getPromiseConstructor() {
-  var _this = this;
-  if (_platform.usw.Future) {
-    return function (fn) {
-      return _platform.usw.Future.call(_this, function (fr) {
-        fn(fr.resolve.bind(fr), fr.reject.bind(fr));
-      });
-    };
+ }),
+ (function(module, exports) {
+module.exports = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var $keys = __webpack_require__(56);
+var enumBugKeys = __webpack_require__(42);
+module.exports = Object.keys || function keys(O) {
+  return $keys(O, enumBugKeys);
+};
+ }),
+ (function(module, exports) {
+var toString = {}.toString;
+module.exports = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var defined = __webpack_require__(35);
+module.exports = function (it) {
+  return Object(defined(it));
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = __webpack_require__(96);
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+exports.__esModule = true;
+var _isIterable2 = __webpack_require__(106);
+var _isIterable3 = _interopRequireDefault(_isIterable2);
+var _getIterator2 = __webpack_require__(68);
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+    try {
+      for (var _i = (0, _getIterator3.default)(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+    return _arr;
   }
-  if (PromiseResolver) {
-    return function (fn) {
-      return new Promise(function (pr) {
-        fn(pr.resolve.bind(pr), pr.reject.bind(pr));
-      });
-    };
-  }
-  return Promise;
-}
-}.call(exports, __webpack_require__(1)["Promise_"]))
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if ((0, _isIterable3.default)(Object(arr))) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    }
+  };
+}();
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -331,12 +578,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.GM = exports.uswProxy = exports.usw = undefined;
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-var _core = __webpack_require__(0);
-exports.usw = usw;
-exports.uswProxy = uswProxy;
-exports.GM = GM;
-var usw = getUnsafeWindow();
+var _typeof2 = __webpack_require__(32);
+var _typeof3 = _interopRequireDefault(_typeof2);
+var _defineProperty = __webpack_require__(47);
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+var _getOwnPropertyDescriptor = __webpack_require__(139);
+var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
+var _core = __webpack_require__(4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var usw = getUnsafeWindow(); 
 var uswProxy = getUnsafeWindowProxy();
 var GM = getGreaseMonkeyAPI();
 function getUnsafeWindow() {
@@ -380,12 +630,12 @@ function getUnsafeWindowProxy() {
         return false;
       }
       if (target === unsafeWindow && key === 'open') {
-        var d = Object.getOwnPropertyDescriptor(target, key);
+        var d = (0, _getOwnPropertyDescriptor2.default)(target, key);
         d.value = clone(function () {
           var rv = value();
           return cloneInto(rv, unsafeWindow);
         });
-        Object.defineProperty(target, key, d);
+        (0, _defineProperty2.default)(target, key, d);
       } else {
         target[key] = clone(value);
       }
@@ -396,7 +646,7 @@ function getUnsafeWindowProxy() {
         return target;
       }
       var value = target[key];
-      var type = typeof value === 'undefined' ? 'undefined' : _typeof(value);
+      var type = typeof value === 'undefined' ? 'undefined' : (0, _typeof3.default)(value);
       if (value === null || type !== 'function' && type !== 'object') {
         return value;
       }
@@ -458,6 +708,114 @@ function clone(safe) {
   });
   return unsafe;
 }
+exports.usw = usw;
+exports.uswProxy = uswProxy;
+exports.GM = GM;
+ }),
+ (function(module, exports) {
+module.exports = true;
+ }),
+ (function(module, exports) {
+module.exports = function (it) {
+  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
+  return it;
+};
+ }),
+ (function(module, exports) {
+var id = 0;
+var px = Math.random();
+module.exports = function (key) {
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var def = __webpack_require__(6).f;
+var has = __webpack_require__(10);
+var TAG = __webpack_require__(1)('toStringTag');
+module.exports = function (it, tag, stat) {
+  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(84);
+var global = __webpack_require__(2);
+var hide = __webpack_require__(8);
+var Iterators = __webpack_require__(14);
+var TO_STRING_TAG = __webpack_require__(1)('toStringTag');
+var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
+  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
+  'MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,' +
+  'SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,' +
+  'TextTrackList,TouchList').split(',');
+for (var i = 0; i < DOMIterables.length; i++) {
+  var NAME = DOMIterables[i];
+  var Collection = global[NAME];
+  var proto = Collection && Collection.prototype;
+  if (proto && !proto[TO_STRING_TAG]) hide(proto, TO_STRING_TAG, NAME);
+  Iterators[NAME] = Iterators.Array;
+}
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+exports.__esModule = true;
+var _promise = __webpack_require__(15);
+var _promise2 = _interopRequireDefault(_promise);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = function (fn) {
+  return function () {
+    var gen = fn.apply(this, arguments);
+    return new _promise2.default(function (resolve, reject) {
+      function step(key, arg) {
+        try {
+          var info = gen[key](arg);
+          var value = info.value;
+        } catch (error) {
+          reject(error);
+          return;
+        }
+        if (info.done) {
+          resolve(value);
+        } else {
+          return _promise2.default.resolve(value).then(function (value) {
+            step("next", value);
+          }, function (err) {
+            step("throw", err);
+          });
+        }
+      }
+      return step("next");
+    });
+  };
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var $export = __webpack_require__(3);
+var core = __webpack_require__(0);
+var fails = __webpack_require__(13);
+module.exports = function (KEY, exec) {
+  var fn = (core.Object || {})[KEY] || Object[KEY];
+  var exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
+};
+ }),
+ (function(module, exports) {
+exports.f = {}.propertyIsEnumerable;
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+exports.__esModule = true;
+var _iterator = __webpack_require__(122);
+var _iterator2 = _interopRequireDefault(_iterator);
+var _symbol = __webpack_require__(124);
+var _symbol2 = _interopRequireDefault(_symbol);
+var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+} : function (obj) {
+  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+};
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -465,9 +823,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.warn = exports.info = undefined;
-var _core = __webpack_require__(0);
-exports.info = info;
-exports.warn = warn;
+var _core = __webpack_require__(4);
 var quiet = false;
 function log(method, args) {
   if (quiet) {
@@ -490,6 +846,183 @@ function info() {
 function warn() {
   log('warn', arguments);
 }
+exports.info = info;
+exports.warn = warn;
+ }),
+ (function(module, exports) {
+var ceil = Math.ceil;
+var floor = Math.floor;
+module.exports = function (it) {
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+};
+ }),
+ (function(module, exports) {
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on  " + it);
+  return it;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var isObject = __webpack_require__(9);
+var document = __webpack_require__(2).document;
+var is = isObject(document) && isObject(document.createElement);
+module.exports = function (it) {
+  return is ? document.createElement(it) : {};
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var isObject = __webpack_require__(9);
+module.exports = function (it, S) {
+  if (!isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var anObject = __webpack_require__(5);
+var dPs = __webpack_require__(81);
+var enumBugKeys = __webpack_require__(42);
+var IE_PROTO = __webpack_require__(40)('IE_PROTO');
+var Empty = function () {  };
+var PROTOTYPE = 'prototype';
+var createDict = function () {
+  var iframe = __webpack_require__(36)('iframe');
+  var i = enumBugKeys.length;
+  var lt = '<';
+  var gt = '>';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  __webpack_require__(58).appendChild(iframe);
+  iframe.src = 'javascript:'; 
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty();
+    Empty[PROTOTYPE] = null;
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var toInteger = __webpack_require__(34);
+var min = Math.min;
+module.exports = function (it) {
+  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; 
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var shared = __webpack_require__(41)('keys');
+var uid = __webpack_require__(26);
+module.exports = function (key) {
+  return shared[key] || (shared[key] = uid(key));
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var global = __webpack_require__(2);
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || (global[SHARED] = {});
+module.exports = function (key) {
+  return store[key] || (store[key] = {});
+};
+ }),
+ (function(module, exports) {
+module.exports = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+ }),
+ (function(module, exports, __webpack_require__) {
+var cof = __webpack_require__(19);
+var TAG = __webpack_require__(1)('toStringTag');
+var ARG = cof(function () { return arguments; }()) == 'Arguments';
+var tryGet = function (it, key) {
+  try {
+    return it[key];
+  } catch (e) {  }
+};
+module.exports = function (it) {
+  var O, T, B;
+  return it === undefined ? 'Undefined' : it === null ? 'Null'
+    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
+    : ARG ? cof(O)
+    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var classof = __webpack_require__(43);
+var ITERATOR = __webpack_require__(1)('iterator');
+var Iterators = __webpack_require__(14);
+module.exports = __webpack_require__(0).getIteratorMethod = function (it) {
+  if (it != undefined) return it[ITERATOR]
+    || it['@@iterator']
+    || Iterators[classof(it)];
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var aFunction = __webpack_require__(25);
+function PromiseCapability(C) {
+  var resolve, reject;
+  this.promise = new C(function ($$resolve, $$reject) {
+    if (resolve !== undefined || reject !== undefined) throw TypeError('Bad Promise constructor');
+    resolve = $$resolve;
+    reject = $$reject;
+  });
+  this.resolve = aFunction(resolve);
+  this.reject = aFunction(reject);
+}
+module.exports.f = function (C) {
+  return new PromiseCapability(C);
+};
+ }),
+ (function(module, exports) {
+exports.f = Object.getOwnPropertySymbols;
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(120), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+exports.f = __webpack_require__(1);
+ }),
+ (function(module, exports, __webpack_require__) {
+var global = __webpack_require__(2);
+var core = __webpack_require__(0);
+var LIBRARY = __webpack_require__(24);
+var wksExt = __webpack_require__(48);
+var defineProperty = __webpack_require__(6).f;
+module.exports = function (name) {
+  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
+  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var pIE = __webpack_require__(31);
+var createDesc = __webpack_require__(17);
+var toIObject = __webpack_require__(11);
+var toPrimitive = __webpack_require__(37);
+var has = __webpack_require__(10);
+var IE8_DOM_DEFINE = __webpack_require__(54);
+var gOPD = Object.getOwnPropertyDescriptor;
+exports.f = __webpack_require__(7) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+  O = toIObject(O);
+  P = toPrimitive(P, true);
+  if (IE8_DOM_DEFINE) try {
+    return gOPD(O, P);
+  } catch (e) {  }
+  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
+};
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -497,10 +1030,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.findHandler = exports.register = undefined;
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-var _core = __webpack_require__(0);
-exports.register = register;
-exports.findHandler = findHandler;
+var _slicedToArray2 = __webpack_require__(22);
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+var _core = __webpack_require__(4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var patterns = [];
 function register(pattern) {
   patterns.push(pattern);
@@ -515,7 +1048,7 @@ function dispatchByObject(rule, url_6) {
         var m = url_6[part].match(sp);
         return m || _core.none;
       }),
-          _find2 = _slicedToArray(_find, 3),
+          _find2 = (0, _slicedToArray3.default)(_find, 3),
           r = _find2[2];
       return r !== _core.none ? r : null;
     }
@@ -534,7 +1067,7 @@ function dispatchByArray(rules, url_1, url_3, url_6) {
     var m = dispatch(rule, url_1, url_3, url_6);
     return m ? m : _core.none;
   }),
-      _find4 = _slicedToArray(_find3, 3),
+      _find4 = (0, _slicedToArray3.default)(_find3, 3),
       r = _find4[2];
   return r !== _core.none ? r : null;
 }
@@ -624,7 +1157,7 @@ function findHandler() {
     var m = dispatch(pattern.rule, url_1, url_3, url_6);
     return m ? m : _core.none;
   }),
-      _find6 = _slicedToArray(_find5, 3),
+      _find6 = (0, _slicedToArray3.default)(_find5, 3),
       i = _find6[0],
       pattern = _find6[1],
       matched = _find6[2];
@@ -639,17 +1172,395 @@ function findHandler() {
     ready: pattern.ready ? (0, _core.partial)(pattern.ready, matched) : _core.nop
   };
 }
+exports.register = register;
+exports.findHandler = findHandler;
+ }),
+ (function(module, exports) {
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-(function(Promise) {
+var LIBRARY = __webpack_require__(24);
+var $export = __webpack_require__(3);
+var redefine = __webpack_require__(55);
+var hide = __webpack_require__(8);
+var has = __webpack_require__(10);
+var Iterators = __webpack_require__(14);
+var $iterCreate = __webpack_require__(80);
+var setToStringTag = __webpack_require__(27);
+var getPrototypeOf = __webpack_require__(59);
+var ITERATOR = __webpack_require__(1)('iterator');
+var BUGGY = !([].keys && 'next' in [].keys()); 
+var FF_ITERATOR = '@@iterator';
+var KEYS = 'keys';
+var VALUES = 'values';
+var returnThis = function () { return this; };
+module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
+  $iterCreate(Constructor, NAME, next);
+  var getMethod = function (kind) {
+    if (!BUGGY && kind in proto) return proto[kind];
+    switch (kind) {
+      case KEYS: return function keys() { return new Constructor(this, kind); };
+      case VALUES: return function values() { return new Constructor(this, kind); };
+    } return function entries() { return new Constructor(this, kind); };
+  };
+  var TAG = NAME + ' Iterator';
+  var DEF_VALUES = DEFAULT == VALUES;
+  var VALUES_BUG = false;
+  var proto = Base.prototype;
+  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
+  var $default = $native || getMethod(DEFAULT);
+  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
+  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
+  var methods, key, IteratorPrototype;
+  if ($anyNative) {
+    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
+    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
+      setToStringTag(IteratorPrototype, TAG, true);
+      if (!LIBRARY && !has(IteratorPrototype, ITERATOR)) hide(IteratorPrototype, ITERATOR, returnThis);
+    }
+  }
+  if (DEF_VALUES && $native && $native.name !== VALUES) {
+    VALUES_BUG = true;
+    $default = function values() { return $native.call(this); };
+  }
+  if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
+    hide(proto, ITERATOR, $default);
+  }
+  Iterators[NAME] = $default;
+  Iterators[TAG] = returnThis;
+  if (DEFAULT) {
+    methods = {
+      values: DEF_VALUES ? $default : getMethod(VALUES),
+      keys: IS_SET ? $default : getMethod(KEYS),
+      entries: $entries
+    };
+    if (FORCED) for (key in methods) {
+      if (!(key in proto)) redefine(proto, key, methods[key]);
+    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
+  }
+  return methods;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = !__webpack_require__(7) && !__webpack_require__(13)(function () {
+  return Object.defineProperty(__webpack_require__(36)('div'), 'a', { get: function () { return 7; } }).a != 7;
+});
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = __webpack_require__(8);
+ }),
+ (function(module, exports, __webpack_require__) {
+var has = __webpack_require__(10);
+var toIObject = __webpack_require__(11);
+var arrayIndexOf = __webpack_require__(82)(false);
+var IE_PROTO = __webpack_require__(40)('IE_PROTO');
+module.exports = function (object, names) {
+  var O = toIObject(object);
+  var i = 0;
+  var result = [];
+  var key;
+  for (key in O) if (key != IE_PROTO) has(O, key) && result.push(key);
+  while (names.length > i) if (has(O, key = names[i++])) {
+    ~arrayIndexOf(result, key) || result.push(key);
+  }
+  return result;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var cof = __webpack_require__(19);
+module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
+  return cof(it) == 'String' ? it.split('') : Object(it);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var document = __webpack_require__(2).document;
+module.exports = document && document.documentElement;
+ }),
+ (function(module, exports, __webpack_require__) {
+var has = __webpack_require__(10);
+var toObject = __webpack_require__(20);
+var IE_PROTO = __webpack_require__(40)('IE_PROTO');
+var ObjectProto = Object.prototype;
+module.exports = Object.getPrototypeOf || function (O) {
+  O = toObject(O);
+  if (has(O, IE_PROTO)) return O[IE_PROTO];
+  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
+    return O.constructor.prototype;
+  } return O instanceof Object ? ObjectProto : null;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var anObject = __webpack_require__(5);
+module.exports = function (iterator, fn, value, entries) {
+  try {
+    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
+  } catch (e) {
+    var ret = iterator['return'];
+    if (ret !== undefined) anObject(ret.call(iterator));
+    throw e;
+  }
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var Iterators = __webpack_require__(14);
+var ITERATOR = __webpack_require__(1)('iterator');
+var ArrayProto = Array.prototype;
+module.exports = function (it) {
+  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var anObject = __webpack_require__(5);
+var aFunction = __webpack_require__(25);
+var SPECIES = __webpack_require__(1)('species');
+module.exports = function (O, D) {
+  var C = anObject(O).constructor;
+  var S;
+  return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var ctx = __webpack_require__(12);
+var invoke = __webpack_require__(90);
+var html = __webpack_require__(58);
+var cel = __webpack_require__(36);
+var global = __webpack_require__(2);
+var process = global.process;
+var setTask = global.setImmediate;
+var clearTask = global.clearImmediate;
+var MessageChannel = global.MessageChannel;
+var Dispatch = global.Dispatch;
+var counter = 0;
+var queue = {};
+var ONREADYSTATECHANGE = 'onreadystatechange';
+var defer, channel, port;
+var run = function () {
+  var id = +this;
+  if (queue.hasOwnProperty(id)) {
+    var fn = queue[id];
+    delete queue[id];
+    fn();
+  }
+};
+var listener = function (event) {
+  run.call(event.data);
+};
+if (!setTask || !clearTask) {
+  setTask = function setImmediate(fn) {
+    var args = [];
+    var i = 1;
+    while (arguments.length > i) args.push(arguments[i++]);
+    queue[++counter] = function () {
+      invoke(typeof fn == 'function' ? fn : Function(fn), args);
+    };
+    defer(counter);
+    return counter;
+  };
+  clearTask = function clearImmediate(id) {
+    delete queue[id];
+  };
+  if (__webpack_require__(19)(process) == 'process') {
+    defer = function (id) {
+      process.nextTick(ctx(run, id, 1));
+    };
+  } else if (Dispatch && Dispatch.now) {
+    defer = function (id) {
+      Dispatch.now(ctx(run, id, 1));
+    };
+  } else if (MessageChannel) {
+    channel = new MessageChannel();
+    port = channel.port2;
+    channel.port1.onmessage = listener;
+    defer = ctx(port.postMessage, port, 1);
+  } else if (global.addEventListener && typeof postMessage == 'function' && !global.importScripts) {
+    defer = function (id) {
+      global.postMessage(id + '', '*');
+    };
+    global.addEventListener('message', listener, false);
+  } else if (ONREADYSTATECHANGE in cel('script')) {
+    defer = function (id) {
+      html.appendChild(cel('script'))[ONREADYSTATECHANGE] = function () {
+        html.removeChild(this);
+        run.call(id);
+      };
+    };
+  } else {
+    defer = function (id) {
+      setTimeout(ctx(run, id, 1), 0);
+    };
+  }
+}
+module.exports = {
+  set: setTask,
+  clear: clearTask
+};
+ }),
+ (function(module, exports) {
+module.exports = function (exec) {
+  try {
+    return { e: false, v: exec() };
+  } catch (e) {
+    return { e: true, v: e };
+  }
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var anObject = __webpack_require__(5);
+var isObject = __webpack_require__(9);
+var newPromiseCapability = __webpack_require__(45);
+module.exports = function (C, x) {
+  anObject(C);
+  if (isObject(x) && x.constructor === C) return x;
+  var promiseCapability = newPromiseCapability.f(C);
+  var resolve = promiseCapability.resolve;
+  resolve(x);
+  return promiseCapability.promise;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var ITERATOR = __webpack_require__(1)('iterator');
+var SAFE_CLOSING = false;
+try {
+  var riter = [7][ITERATOR]();
+  riter['return'] = function () { SAFE_CLOSING = true; };
+  Array.from(riter, function () { throw 2; });
+} catch (e) {  }
+module.exports = function (exec, skipClosing) {
+  if (!skipClosing && !SAFE_CLOSING) return false;
+  var safe = false;
+  try {
+    var arr = [7];
+    var iter = arr[ITERATOR]();
+    iter.next = function () { return { done: safe = true }; };
+    arr[ITERATOR] = function () { return iter; };
+    exec(arr);
+  } catch (e) {  }
+  return safe;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(98), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(104), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(109), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+var toIObject = __webpack_require__(11);
+var gOPN = __webpack_require__(71).f;
+var toString = {}.toString;
+var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
+  ? Object.getOwnPropertyNames(window) : [];
+var getWindowNames = function (it) {
+  try {
+    return gOPN(it);
+  } catch (e) {
+    return windowNames.slice();
+  }
+};
+module.exports.f = function getOwnPropertyNames(it) {
+  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var $keys = __webpack_require__(56);
+var hiddenKeys = __webpack_require__(42).concat('length', 'prototype');
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return $keys(O, hiddenKeys);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(118), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+exports.__esModule = true;
+exports.default = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+exports.__esModule = true;
+var _defineProperty = __webpack_require__(47);
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
+    }
+  }
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+exports.__esModule = true;
+var _typeof2 = __webpack_require__(32);
+var _typeof3 = _interopRequireDefault(_typeof2);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+exports.__esModule = true;
+var _setPrototypeOf = __webpack_require__(132);
+var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
+var _create = __webpack_require__(136);
+var _create2 = _interopRequireDefault(_create);
+var _typeof2 = __webpack_require__(32);
+var _typeof3 = _interopRequireDefault(_typeof2);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
+  }
+  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var _promise = __webpack_require__(15);
+var _promise2 = _interopRequireDefault(_promise);
+var _regenerator = __webpack_require__(21);
+var _regenerator2 = _interopRequireDefault(_regenerator);
+var _stringify = __webpack_require__(67);
+var _stringify2 = _interopRequireDefault(_stringify);
+var _asyncToGenerator2 = __webpack_require__(29);
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 var beforeDOMReady = function () {
-  var _ref = _asyncToGenerator( regeneratorRuntime.mark(function _callee(handler) {
-    return regeneratorRuntime.wrap(function _callee$(_context) {
+  var _ref = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee(handler) {
+    return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            (0, _logger.info)('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify(_config.config));
+            (0, _logger.info)('working on\n%s \nwith\n%s', window.location.toString(), (0, _stringify2.default)(_config.config));
             disableLeavePrompt(_platform.uswProxy);
             disableWindowOpen();
             _context.next = 5;
@@ -666,8 +1577,8 @@ var beforeDOMReady = function () {
   };
 }();
 var afterDOMReady = function () {
-  var _ref2 = _asyncToGenerator( regeneratorRuntime.mark(function _callee2(handler) {
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+  var _ref2 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee2(handler) {
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
@@ -687,9 +1598,9 @@ var afterDOMReady = function () {
   };
 }();
 var main = function () {
-  var _ref3 = _asyncToGenerator( regeneratorRuntime.mark(function _callee3() {
+  var _ref3 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee3() {
     var handler;
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
@@ -729,13 +1640,13 @@ var main = function () {
     return _ref3.apply(this, arguments);
   };
 }();
-var _core = __webpack_require__(0);
-var _dispatcher = __webpack_require__(4);
-var _platform = __webpack_require__(2);
-var _config = __webpack_require__(6);
-var _logger = __webpack_require__(3);
-__webpack_require__(7);
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+var _core = __webpack_require__(4);
+var _dispatcher = __webpack_require__(51);
+var _platform = __webpack_require__(23);
+var _config = __webpack_require__(142);
+var _logger = __webpack_require__(33);
+__webpack_require__(143);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
 function disableWindowOpen() {
   _platform.uswProxy.open = function () {
@@ -780,7 +1691,7 @@ function changeTitle() {
   document.title += ' - AdsBypasser';
 }
 function waitDOM() {
-  return new Promise(function (resolve) {
+  return new _promise2.default(function (resolve) {
     if (document.readyState !== 'loading') {
       resolve();
       return;
@@ -793,21 +1704,1624 @@ function waitDOM() {
 main().catch(function (e) {
   (0, _logger.warn)(e);
 });
-}.call(exports, __webpack_require__(1)["Promise_"]))
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(52);
+__webpack_require__(16);
+__webpack_require__(28);
+__webpack_require__(87);
+__webpack_require__(94);
+__webpack_require__(95);
+module.exports = __webpack_require__(0).Promise;
+ }),
+ (function(module, exports, __webpack_require__) {
+var toInteger = __webpack_require__(34);
+var defined = __webpack_require__(35);
+module.exports = function (TO_STRING) {
+  return function (that, pos) {
+    var s = String(defined(that));
+    var i = toInteger(pos);
+    var l = s.length;
+    var a, b;
+    if (i < 0 || i >= l) return TO_STRING ? '' : undefined;
+    a = s.charCodeAt(i);
+    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
+      ? TO_STRING ? s.charAt(i) : a
+      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+  };
+};
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-(function(Promise) {
+var create = __webpack_require__(38);
+var descriptor = __webpack_require__(17);
+var setToStringTag = __webpack_require__(27);
+var IteratorPrototype = {};
+__webpack_require__(8)(IteratorPrototype, __webpack_require__(1)('iterator'), function () { return this; });
+module.exports = function (Constructor, NAME, next) {
+  Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
+  setToStringTag(Constructor, NAME + ' Iterator');
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var dP = __webpack_require__(6);
+var anObject = __webpack_require__(5);
+var getKeys = __webpack_require__(18);
+module.exports = __webpack_require__(7) ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject(O);
+  var keys = getKeys(Properties);
+  var length = keys.length;
+  var i = 0;
+  var P;
+  while (length > i) dP.f(O, P = keys[i++], Properties[P]);
+  return O;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var toIObject = __webpack_require__(11);
+var toLength = __webpack_require__(39);
+var toAbsoluteIndex = __webpack_require__(83);
+module.exports = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIObject($this);
+    var length = toLength(O.length);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value;
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      if (value != value) return true;
+    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
+      if (O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var toInteger = __webpack_require__(34);
+var max = Math.max;
+var min = Math.min;
+module.exports = function (index, length) {
+  index = toInteger(index);
+  return index < 0 ? max(index + length, 0) : min(index, length);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var addToUnscopables = __webpack_require__(85);
+var step = __webpack_require__(86);
+var Iterators = __webpack_require__(14);
+var toIObject = __webpack_require__(11);
+module.exports = __webpack_require__(53)(Array, 'Array', function (iterated, kind) {
+  this._t = toIObject(iterated); 
+  this._i = 0;                   
+  this._k = kind;                
+}, function () {
+  var O = this._t;
+  var kind = this._k;
+  var index = this._i++;
+  if (!O || index >= O.length) {
+    this._t = undefined;
+    return step(1);
+  }
+  if (kind == 'keys') return step(0, index);
+  if (kind == 'values') return step(0, O[index]);
+  return step(0, [index, O[index]]);
+}, 'values');
+Iterators.Arguments = Iterators.Array;
+addToUnscopables('keys');
+addToUnscopables('values');
+addToUnscopables('entries');
+ }),
+ (function(module, exports) {
+module.exports = function () {  };
+ }),
+ (function(module, exports) {
+module.exports = function (done, value) {
+  return { value: value, done: !!done };
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var LIBRARY = __webpack_require__(24);
+var global = __webpack_require__(2);
+var ctx = __webpack_require__(12);
+var classof = __webpack_require__(43);
+var $export = __webpack_require__(3);
+var isObject = __webpack_require__(9);
+var aFunction = __webpack_require__(25);
+var anInstance = __webpack_require__(88);
+var forOf = __webpack_require__(89);
+var speciesConstructor = __webpack_require__(62);
+var task = __webpack_require__(63).set;
+var microtask = __webpack_require__(91)();
+var newPromiseCapabilityModule = __webpack_require__(45);
+var perform = __webpack_require__(64);
+var promiseResolve = __webpack_require__(65);
+var PROMISE = 'Promise';
+var TypeError = global.TypeError;
+var process = global.process;
+var $Promise = global[PROMISE];
+var isNode = classof(process) == 'process';
+var empty = function () {  };
+var Internal, newGenericPromiseCapability, OwnPromiseCapability, Wrapper;
+var newPromiseCapability = newGenericPromiseCapability = newPromiseCapabilityModule.f;
+var USE_NATIVE = !!function () {
+  try {
+    var promise = $Promise.resolve(1);
+    var FakePromise = (promise.constructor = {})[__webpack_require__(1)('species')] = function (exec) {
+      exec(empty, empty);
+    };
+    return (isNode || typeof PromiseRejectionEvent == 'function') && promise.then(empty) instanceof FakePromise;
+  } catch (e) {  }
+}();
+var isThenable = function (it) {
+  var then;
+  return isObject(it) && typeof (then = it.then) == 'function' ? then : false;
+};
+var notify = function (promise, isReject) {
+  if (promise._n) return;
+  promise._n = true;
+  var chain = promise._c;
+  microtask(function () {
+    var value = promise._v;
+    var ok = promise._s == 1;
+    var i = 0;
+    var run = function (reaction) {
+      var handler = ok ? reaction.ok : reaction.fail;
+      var resolve = reaction.resolve;
+      var reject = reaction.reject;
+      var domain = reaction.domain;
+      var result, then;
+      try {
+        if (handler) {
+          if (!ok) {
+            if (promise._h == 2) onHandleUnhandled(promise);
+            promise._h = 1;
+          }
+          if (handler === true) result = value;
+          else {
+            if (domain) domain.enter();
+            result = handler(value);
+            if (domain) domain.exit();
+          }
+          if (result === reaction.promise) {
+            reject(TypeError('Promise-chain cycle'));
+          } else if (then = isThenable(result)) {
+            then.call(result, resolve, reject);
+          } else resolve(result);
+        } else reject(value);
+      } catch (e) {
+        reject(e);
+      }
+    };
+    while (chain.length > i) run(chain[i++]); 
+    promise._c = [];
+    promise._n = false;
+    if (isReject && !promise._h) onUnhandled(promise);
+  });
+};
+var onUnhandled = function (promise) {
+  task.call(global, function () {
+    var value = promise._v;
+    var unhandled = isUnhandled(promise);
+    var result, handler, console;
+    if (unhandled) {
+      result = perform(function () {
+        if (isNode) {
+          process.emit('unhandledRejection', value, promise);
+        } else if (handler = global.onunhandledrejection) {
+          handler({ promise: promise, reason: value });
+        } else if ((console = global.console) && console.error) {
+          console.error('Unhandled promise rejection', value);
+        }
+      });
+      promise._h = isNode || isUnhandled(promise) ? 2 : 1;
+    } promise._a = undefined;
+    if (unhandled && result.e) throw result.v;
+  });
+};
+var isUnhandled = function (promise) {
+  if (promise._h == 1) return false;
+  var chain = promise._a || promise._c;
+  var i = 0;
+  var reaction;
+  while (chain.length > i) {
+    reaction = chain[i++];
+    if (reaction.fail || !isUnhandled(reaction.promise)) return false;
+  } return true;
+};
+var onHandleUnhandled = function (promise) {
+  task.call(global, function () {
+    var handler;
+    if (isNode) {
+      process.emit('rejectionHandled', promise);
+    } else if (handler = global.onrejectionhandled) {
+      handler({ promise: promise, reason: promise._v });
+    }
+  });
+};
+var $reject = function (value) {
+  var promise = this;
+  if (promise._d) return;
+  promise._d = true;
+  promise = promise._w || promise; 
+  promise._v = value;
+  promise._s = 2;
+  if (!promise._a) promise._a = promise._c.slice();
+  notify(promise, true);
+};
+var $resolve = function (value) {
+  var promise = this;
+  var then;
+  if (promise._d) return;
+  promise._d = true;
+  promise = promise._w || promise; 
+  try {
+    if (promise === value) throw TypeError("Promise can't be resolved itself");
+    if (then = isThenable(value)) {
+      microtask(function () {
+        var wrapper = { _w: promise, _d: false }; 
+        try {
+          then.call(value, ctx($resolve, wrapper, 1), ctx($reject, wrapper, 1));
+        } catch (e) {
+          $reject.call(wrapper, e);
+        }
+      });
+    } else {
+      promise._v = value;
+      promise._s = 1;
+      notify(promise, false);
+    }
+  } catch (e) {
+    $reject.call({ _w: promise, _d: false }, e); 
+  }
+};
+if (!USE_NATIVE) {
+  $Promise = function Promise(executor) {
+    anInstance(this, $Promise, PROMISE, '_h');
+    aFunction(executor);
+    Internal.call(this);
+    try {
+      executor(ctx($resolve, this, 1), ctx($reject, this, 1));
+    } catch (err) {
+      $reject.call(this, err);
+    }
+  };
+  Internal = function Promise(executor) {
+    this._c = [];             
+    this._a = undefined;      
+    this._s = 0;              
+    this._d = false;          
+    this._v = undefined;      
+    this._h = 0;              
+    this._n = false;          
+  };
+  Internal.prototype = __webpack_require__(92)($Promise.prototype, {
+    then: function then(onFulfilled, onRejected) {
+      var reaction = newPromiseCapability(speciesConstructor(this, $Promise));
+      reaction.ok = typeof onFulfilled == 'function' ? onFulfilled : true;
+      reaction.fail = typeof onRejected == 'function' && onRejected;
+      reaction.domain = isNode ? process.domain : undefined;
+      this._c.push(reaction);
+      if (this._a) this._a.push(reaction);
+      if (this._s) notify(this, false);
+      return reaction.promise;
+    },
+    'catch': function (onRejected) {
+      return this.then(undefined, onRejected);
+    }
+  });
+  OwnPromiseCapability = function () {
+    var promise = new Internal();
+    this.promise = promise;
+    this.resolve = ctx($resolve, promise, 1);
+    this.reject = ctx($reject, promise, 1);
+  };
+  newPromiseCapabilityModule.f = newPromiseCapability = function (C) {
+    return C === $Promise || C === Wrapper
+      ? new OwnPromiseCapability(C)
+      : newGenericPromiseCapability(C);
+  };
+}
+$export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
+__webpack_require__(27)($Promise, PROMISE);
+__webpack_require__(93)(PROMISE);
+Wrapper = __webpack_require__(0)[PROMISE];
+$export($export.S + $export.F * !USE_NATIVE, PROMISE, {
+  reject: function reject(r) {
+    var capability = newPromiseCapability(this);
+    var $$reject = capability.reject;
+    $$reject(r);
+    return capability.promise;
+  }
+});
+$export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
+  resolve: function resolve(x) {
+    return promiseResolve(LIBRARY && this === Wrapper ? $Promise : this, x);
+  }
+});
+$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(66)(function (iter) {
+  $Promise.all(iter)['catch'](empty);
+})), PROMISE, {
+  all: function all(iterable) {
+    var C = this;
+    var capability = newPromiseCapability(C);
+    var resolve = capability.resolve;
+    var reject = capability.reject;
+    var result = perform(function () {
+      var values = [];
+      var index = 0;
+      var remaining = 1;
+      forOf(iterable, false, function (promise) {
+        var $index = index++;
+        var alreadyCalled = false;
+        values.push(undefined);
+        remaining++;
+        C.resolve(promise).then(function (value) {
+          if (alreadyCalled) return;
+          alreadyCalled = true;
+          values[$index] = value;
+          --remaining || resolve(values);
+        }, reject);
+      });
+      --remaining || resolve(values);
+    });
+    if (result.e) reject(result.v);
+    return capability.promise;
+  },
+  race: function race(iterable) {
+    var C = this;
+    var capability = newPromiseCapability(C);
+    var reject = capability.reject;
+    var result = perform(function () {
+      forOf(iterable, false, function (promise) {
+        C.resolve(promise).then(capability.resolve, reject);
+      });
+    });
+    if (result.e) reject(result.v);
+    return capability.promise;
+  }
+});
+ }),
+ (function(module, exports) {
+module.exports = function (it, Constructor, name, forbiddenField) {
+  if (!(it instanceof Constructor) || (forbiddenField !== undefined && forbiddenField in it)) {
+    throw TypeError(name + ': incorrect invocation!');
+  } return it;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var ctx = __webpack_require__(12);
+var call = __webpack_require__(60);
+var isArrayIter = __webpack_require__(61);
+var anObject = __webpack_require__(5);
+var toLength = __webpack_require__(39);
+var getIterFn = __webpack_require__(44);
+var BREAK = {};
+var RETURN = {};
+var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
+  var iterFn = ITERATOR ? function () { return iterable; } : getIterFn(iterable);
+  var f = ctx(fn, that, entries ? 2 : 1);
+  var index = 0;
+  var length, step, iterator, result;
+  if (typeof iterFn != 'function') throw TypeError(iterable + ' is not iterable!');
+  if (isArrayIter(iterFn)) for (length = toLength(iterable.length); length > index; index++) {
+    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
+    if (result === BREAK || result === RETURN) return result;
+  } else for (iterator = iterFn.call(iterable); !(step = iterator.next()).done;) {
+    result = call(iterator, f, step.value, entries);
+    if (result === BREAK || result === RETURN) return result;
+  }
+};
+exports.BREAK = BREAK;
+exports.RETURN = RETURN;
+ }),
+ (function(module, exports) {
+module.exports = function (fn, args, that) {
+  var un = that === undefined;
+  switch (args.length) {
+    case 0: return un ? fn()
+                      : fn.call(that);
+    case 1: return un ? fn(args[0])
+                      : fn.call(that, args[0]);
+    case 2: return un ? fn(args[0], args[1])
+                      : fn.call(that, args[0], args[1]);
+    case 3: return un ? fn(args[0], args[1], args[2])
+                      : fn.call(that, args[0], args[1], args[2]);
+    case 4: return un ? fn(args[0], args[1], args[2], args[3])
+                      : fn.call(that, args[0], args[1], args[2], args[3]);
+  } return fn.apply(that, args);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var global = __webpack_require__(2);
+var macrotask = __webpack_require__(63).set;
+var Observer = global.MutationObserver || global.WebKitMutationObserver;
+var process = global.process;
+var Promise = global.Promise;
+var isNode = __webpack_require__(19)(process) == 'process';
+module.exports = function () {
+  var head, last, notify;
+  var flush = function () {
+    var parent, fn;
+    if (isNode && (parent = process.domain)) parent.exit();
+    while (head) {
+      fn = head.fn;
+      head = head.next;
+      try {
+        fn();
+      } catch (e) {
+        if (head) notify();
+        else last = undefined;
+        throw e;
+      }
+    } last = undefined;
+    if (parent) parent.enter();
+  };
+  if (isNode) {
+    notify = function () {
+      process.nextTick(flush);
+    };
+  } else if (Observer) {
+    var toggle = true;
+    var node = document.createTextNode('');
+    new Observer(flush).observe(node, { characterData: true }); 
+    notify = function () {
+      node.data = toggle = !toggle;
+    };
+  } else if (Promise && Promise.resolve) {
+    var promise = Promise.resolve();
+    notify = function () {
+      promise.then(flush);
+    };
+  } else {
+    notify = function () {
+      macrotask.call(global, flush);
+    };
+  }
+  return function (fn) {
+    var task = { fn: fn, next: undefined };
+    if (last) last.next = task;
+    if (!head) {
+      head = task;
+      notify();
+    } last = task;
+  };
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var hide = __webpack_require__(8);
+module.exports = function (target, src, safe) {
+  for (var key in src) {
+    if (safe && target[key]) target[key] = src[key];
+    else hide(target, key, src[key]);
+  } return target;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var global = __webpack_require__(2);
+var core = __webpack_require__(0);
+var dP = __webpack_require__(6);
+var DESCRIPTORS = __webpack_require__(7);
+var SPECIES = __webpack_require__(1)('species');
+module.exports = function (KEY) {
+  var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
+  if (DESCRIPTORS && C && !C[SPECIES]) dP.f(C, SPECIES, {
+    configurable: true,
+    get: function () { return this; }
+  });
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var $export = __webpack_require__(3);
+var core = __webpack_require__(0);
+var global = __webpack_require__(2);
+var speciesConstructor = __webpack_require__(62);
+var promiseResolve = __webpack_require__(65);
+$export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
+  var C = speciesConstructor(this, core.Promise || global.Promise);
+  var isFunction = typeof onFinally == 'function';
+  return this.then(
+    isFunction ? function (x) {
+      return promiseResolve(C, onFinally()).then(function () { return x; });
+    } : onFinally,
+    isFunction ? function (e) {
+      return promiseResolve(C, onFinally()).then(function () { throw e; });
+    } : onFinally
+  );
+} });
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var $export = __webpack_require__(3);
+var newPromiseCapability = __webpack_require__(45);
+var perform = __webpack_require__(64);
+$export($export.S, 'Promise', { 'try': function (callbackfn) {
+  var promiseCapability = newPromiseCapability.f(this);
+  var result = perform(callbackfn);
+  (result.e ? promiseCapability.reject : promiseCapability.resolve)(result.v);
+  return promiseCapability.promise;
+} });
+ }),
+ (function(module, exports, __webpack_require__) {
+var g = (function() { return this })() || Function("return this")();
+var hadRuntime = g.regeneratorRuntime &&
+  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
+var oldRuntime = hadRuntime && g.regeneratorRuntime;
+g.regeneratorRuntime = undefined;
+module.exports = __webpack_require__(97);
+if (hadRuntime) {
+  g.regeneratorRuntime = oldRuntime;
+} else {
+  try {
+    delete g.regeneratorRuntime;
+  } catch(e) {
+    g.regeneratorRuntime = undefined;
+  }
+}
+ }),
+ (function(module, exports) {
+!(function(global) {
+  "use strict";
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; 
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+  var inModule = typeof module === "object";
+  var runtime = global.regeneratorRuntime;
+  if (runtime) {
+    if (inModule) {
+      module.exports = runtime;
+    }
+    return;
+  }
+  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+    return generator;
+  }
+  runtime.wrap = wrap;
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+  var ContinueSentinel = {};
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunctionPrototype[toStringTagSymbol] =
+    GeneratorFunction.displayName = "GeneratorFunction";
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      prototype[method] = function(arg) {
+        return this._invoke(method, arg);
+      };
+    });
+  }
+  runtime.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+  runtime.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      if (!(toStringTagSymbol in genFun)) {
+        genFun[toStringTagSymbol] = "GeneratorFunction";
+      }
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+  runtime.awrap = function(arg) {
+    return { __await: arg };
+  };
+  function AsyncIterator(generator) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return Promise.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+        return Promise.resolve(value).then(function(unwrapped) {
+          result.value = unwrapped;
+          resolve(result);
+        }, reject);
+      }
+    }
+    var previousPromise;
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new Promise(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+      return previousPromise =
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+    this._invoke = enqueue;
+  }
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  runtime.AsyncIterator = AsyncIterator;
+  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList)
+    );
+    return runtime.isGeneratorFunction(outerFn)
+      ? iter 
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+        return doneResult();
+      }
+      context.method = method;
+      context.arg = arg;
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+        if (context.method === "next") {
+          context.sent = context._sent = context.arg;
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+          context.dispatchException(context.arg);
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+        state = GenStateExecuting;
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+          return {
+            value: record.arg,
+            done: context.done
+          };
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      context.delegate = null;
+      if (context.method === "throw") {
+        if (delegate.iterator.return) {
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+          if (context.method === "throw") {
+            return ContinueSentinel;
+          }
+        }
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+      return ContinueSentinel;
+    }
+    var record = tryCatch(method, delegate.iterator, context.arg);
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+    var info = record.arg;
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+    if (info.done) {
+      context[delegate.resultName] = info.value;
+      context.next = delegate.nextLoc;
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+    } else {
+      return info;
+    }
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+  defineIteratorMethods(Gp);
+  Gp[toStringTagSymbol] = "Generator";
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+    this.tryEntries.push(entry);
+  }
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+  function Context(tryLocsList) {
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+  runtime.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+      next.done = true;
+      return next;
+    };
+  };
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+          next.value = undefined;
+          next.done = true;
+          return next;
+        };
+        return next.next = next;
+      }
+    }
+    return { next: doneResult };
+  }
+  runtime.values = values;
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+  Context.prototype = {
+    constructor: Context,
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+      this.method = "next";
+      this.arg = undefined;
+      this.tryEntries.forEach(resetTryEntry);
+      if (!skipTempReset) {
+        for (var name in this) {
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+    stop: function() {
+      this.done = true;
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+      return this.rval;
+    },
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+        if (caught) {
+          context.method = "next";
+          context.arg = undefined;
+        }
+        return !! caught;
+      }
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+        if (entry.tryLoc === "root") {
+          return handle("end");
+        }
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        finallyEntry = null;
+      }
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+      return this.complete(record);
+    },
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+      return ContinueSentinel;
+    },
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+      throw new Error("illegal catch attempt");
+    },
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+      if (this.method === "next") {
+        this.arg = undefined;
+      }
+      return ContinueSentinel;
+    }
+  };
+})(
+  (function() { return this })() || Function("return this")()
+);
+ }),
+ (function(module, exports, __webpack_require__) {
+var core = __webpack_require__(0);
+var $JSON = core.JSON || (core.JSON = { stringify: JSON.stringify });
+module.exports = function stringify(it) { 
+  return $JSON.stringify.apply($JSON, arguments);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+exports.__esModule = true;
+var _from = __webpack_require__(100);
+var _from2 = _interopRequireDefault(_from);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+    return arr2;
+  } else {
+    return (0, _from2.default)(arr);
+  }
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(101), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(16);
+__webpack_require__(102);
+module.exports = __webpack_require__(0).Array.from;
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var ctx = __webpack_require__(12);
+var $export = __webpack_require__(3);
+var toObject = __webpack_require__(20);
+var call = __webpack_require__(60);
+var isArrayIter = __webpack_require__(61);
+var toLength = __webpack_require__(39);
+var createProperty = __webpack_require__(103);
+var getIterFn = __webpack_require__(44);
+$export($export.S + $export.F * !__webpack_require__(66)(function (iter) { Array.from(iter); }), 'Array', {
+  from: function from(arrayLike ) {
+    var O = toObject(arrayLike);
+    var C = typeof this == 'function' ? this : Array;
+    var aLen = arguments.length;
+    var mapfn = aLen > 1 ? arguments[1] : undefined;
+    var mapping = mapfn !== undefined;
+    var index = 0;
+    var iterFn = getIterFn(O);
+    var length, result, step, iterator;
+    if (mapping) mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
+    if (iterFn != undefined && !(C == Array && isArrayIter(iterFn))) {
+      for (iterator = iterFn.call(O), result = new C(); !(step = iterator.next()).done; index++) {
+        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
+      }
+    } else {
+      length = toLength(O.length);
+      for (result = new C(length); length > index; index++) {
+        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
+      }
+    }
+    result.length = index;
+    return result;
+  }
+});
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var $defineProperty = __webpack_require__(6);
+var createDesc = __webpack_require__(17);
+module.exports = function (object, index, value) {
+  if (index in object) $defineProperty.f(object, index, createDesc(0, value));
+  else object[index] = value;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(28);
+__webpack_require__(16);
+module.exports = __webpack_require__(105);
+ }),
+ (function(module, exports, __webpack_require__) {
+var anObject = __webpack_require__(5);
+var get = __webpack_require__(44);
+module.exports = __webpack_require__(0).getIterator = function (it) {
+  var iterFn = get(it);
+  if (typeof iterFn != 'function') throw TypeError(it + ' is not iterable!');
+  return anObject(iterFn.call(it));
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(107), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(28);
+__webpack_require__(16);
+module.exports = __webpack_require__(108);
+ }),
+ (function(module, exports, __webpack_require__) {
+var classof = __webpack_require__(43);
+var ITERATOR = __webpack_require__(1)('iterator');
+var Iterators = __webpack_require__(14);
+module.exports = __webpack_require__(0).isIterable = function (it) {
+  var O = Object(it);
+  return O[ITERATOR] !== undefined
+    || '@@iterator' in O
+    || Iterators.hasOwnProperty(classof(O));
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(110);
+var $Object = __webpack_require__(0).Object;
+module.exports = function getOwnPropertyNames(it) {
+  return $Object.getOwnPropertyNames(it);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(30)('getOwnPropertyNames', function () {
+  return __webpack_require__(70).f;
+});
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(112), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(113);
+module.exports = __webpack_require__(0).Object.assign;
+ }),
+ (function(module, exports, __webpack_require__) {
+var $export = __webpack_require__(3);
+$export($export.S + $export.F, 'Object', { assign: __webpack_require__(114) });
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var getKeys = __webpack_require__(18);
+var gOPS = __webpack_require__(46);
+var pIE = __webpack_require__(31);
+var toObject = __webpack_require__(20);
+var IObject = __webpack_require__(57);
+var $assign = Object.assign;
+module.exports = !$assign || __webpack_require__(13)(function () {
+  var A = {};
+  var B = {};
+  var S = Symbol();
+  var K = 'abcdefghijklmnopqrst';
+  A[S] = 7;
+  K.split('').forEach(function (k) { B[k] = k; });
+  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+}) ? function assign(target, source) { 
+  var T = toObject(target);
+  var aLen = arguments.length;
+  var index = 1;
+  var getSymbols = gOPS.f;
+  var isEnum = pIE.f;
+  while (aLen > index) {
+    var S = IObject(arguments[index++]);
+    var keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S);
+    var length = keys.length;
+    var j = 0;
+    var key;
+    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
+  } return T;
+} : $assign;
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(116), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(117);
+module.exports = __webpack_require__(0).Object.keys;
+ }),
+ (function(module, exports, __webpack_require__) {
+var toObject = __webpack_require__(20);
+var $keys = __webpack_require__(18);
+__webpack_require__(30)('keys', function () {
+  return function keys(it) {
+    return $keys(toObject(it));
+  };
+});
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(119);
+module.exports = __webpack_require__(0).Object.getPrototypeOf;
+ }),
+ (function(module, exports, __webpack_require__) {
+var toObject = __webpack_require__(20);
+var $getPrototypeOf = __webpack_require__(59);
+__webpack_require__(30)('getPrototypeOf', function () {
+  return function getPrototypeOf(it) {
+    return $getPrototypeOf(toObject(it));
+  };
+});
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(121);
+var $Object = __webpack_require__(0).Object;
+module.exports = function defineProperty(it, key, desc) {
+  return $Object.defineProperty(it, key, desc);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var $export = __webpack_require__(3);
+$export($export.S + $export.F * !__webpack_require__(7), 'Object', { defineProperty: __webpack_require__(6).f });
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(123), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(16);
+__webpack_require__(28);
+module.exports = __webpack_require__(48).f('iterator');
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(125), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(126);
+__webpack_require__(52);
+__webpack_require__(130);
+__webpack_require__(131);
+module.exports = __webpack_require__(0).Symbol;
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var global = __webpack_require__(2);
+var has = __webpack_require__(10);
+var DESCRIPTORS = __webpack_require__(7);
+var $export = __webpack_require__(3);
+var redefine = __webpack_require__(55);
+var META = __webpack_require__(127).KEY;
+var $fails = __webpack_require__(13);
+var shared = __webpack_require__(41);
+var setToStringTag = __webpack_require__(27);
+var uid = __webpack_require__(26);
+var wks = __webpack_require__(1);
+var wksExt = __webpack_require__(48);
+var wksDefine = __webpack_require__(49);
+var enumKeys = __webpack_require__(128);
+var isArray = __webpack_require__(129);
+var anObject = __webpack_require__(5);
+var toIObject = __webpack_require__(11);
+var toPrimitive = __webpack_require__(37);
+var createDesc = __webpack_require__(17);
+var _create = __webpack_require__(38);
+var gOPNExt = __webpack_require__(70);
+var $GOPD = __webpack_require__(50);
+var $DP = __webpack_require__(6);
+var $keys = __webpack_require__(18);
+var gOPD = $GOPD.f;
+var dP = $DP.f;
+var gOPN = gOPNExt.f;
+var $Symbol = global.Symbol;
+var $JSON = global.JSON;
+var _stringify = $JSON && $JSON.stringify;
+var PROTOTYPE = 'prototype';
+var HIDDEN = wks('_hidden');
+var TO_PRIMITIVE = wks('toPrimitive');
+var isEnum = {}.propertyIsEnumerable;
+var SymbolRegistry = shared('symbol-registry');
+var AllSymbols = shared('symbols');
+var OPSymbols = shared('op-symbols');
+var ObjectProto = Object[PROTOTYPE];
+var USE_NATIVE = typeof $Symbol == 'function';
+var QObject = global.QObject;
+var setter = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
+var setSymbolDesc = DESCRIPTORS && $fails(function () {
+  return _create(dP({}, 'a', {
+    get: function () { return dP(this, 'a', { value: 7 }).a; }
+  })).a != 7;
+}) ? function (it, key, D) {
+  var protoDesc = gOPD(ObjectProto, key);
+  if (protoDesc) delete ObjectProto[key];
+  dP(it, key, D);
+  if (protoDesc && it !== ObjectProto) dP(ObjectProto, key, protoDesc);
+} : dP;
+var wrap = function (tag) {
+  var sym = AllSymbols[tag] = _create($Symbol[PROTOTYPE]);
+  sym._k = tag;
+  return sym;
+};
+var isSymbol = USE_NATIVE && typeof $Symbol.iterator == 'symbol' ? function (it) {
+  return typeof it == 'symbol';
+} : function (it) {
+  return it instanceof $Symbol;
+};
+var $defineProperty = function defineProperty(it, key, D) {
+  if (it === ObjectProto) $defineProperty(OPSymbols, key, D);
+  anObject(it);
+  key = toPrimitive(key, true);
+  anObject(D);
+  if (has(AllSymbols, key)) {
+    if (!D.enumerable) {
+      if (!has(it, HIDDEN)) dP(it, HIDDEN, createDesc(1, {}));
+      it[HIDDEN][key] = true;
+    } else {
+      if (has(it, HIDDEN) && it[HIDDEN][key]) it[HIDDEN][key] = false;
+      D = _create(D, { enumerable: createDesc(0, false) });
+    } return setSymbolDesc(it, key, D);
+  } return dP(it, key, D);
+};
+var $defineProperties = function defineProperties(it, P) {
+  anObject(it);
+  var keys = enumKeys(P = toIObject(P));
+  var i = 0;
+  var l = keys.length;
+  var key;
+  while (l > i) $defineProperty(it, key = keys[i++], P[key]);
+  return it;
+};
+var $create = function create(it, P) {
+  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
+};
+var $propertyIsEnumerable = function propertyIsEnumerable(key) {
+  var E = isEnum.call(this, key = toPrimitive(key, true));
+  if (this === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return false;
+  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key] ? E : true;
+};
+var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key) {
+  it = toIObject(it);
+  key = toPrimitive(key, true);
+  if (it === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return;
+  var D = gOPD(it, key);
+  if (D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key])) D.enumerable = true;
+  return D;
+};
+var $getOwnPropertyNames = function getOwnPropertyNames(it) {
+  var names = gOPN(toIObject(it));
+  var result = [];
+  var i = 0;
+  var key;
+  while (names.length > i) {
+    if (!has(AllSymbols, key = names[i++]) && key != HIDDEN && key != META) result.push(key);
+  } return result;
+};
+var $getOwnPropertySymbols = function getOwnPropertySymbols(it) {
+  var IS_OP = it === ObjectProto;
+  var names = gOPN(IS_OP ? OPSymbols : toIObject(it));
+  var result = [];
+  var i = 0;
+  var key;
+  while (names.length > i) {
+    if (has(AllSymbols, key = names[i++]) && (IS_OP ? has(ObjectProto, key) : true)) result.push(AllSymbols[key]);
+  } return result;
+};
+if (!USE_NATIVE) {
+  $Symbol = function Symbol() {
+    if (this instanceof $Symbol) throw TypeError('Symbol is not a constructor!');
+    var tag = uid(arguments.length > 0 ? arguments[0] : undefined);
+    var $set = function (value) {
+      if (this === ObjectProto) $set.call(OPSymbols, value);
+      if (has(this, HIDDEN) && has(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
+      setSymbolDesc(this, tag, createDesc(1, value));
+    };
+    if (DESCRIPTORS && setter) setSymbolDesc(ObjectProto, tag, { configurable: true, set: $set });
+    return wrap(tag);
+  };
+  redefine($Symbol[PROTOTYPE], 'toString', function toString() {
+    return this._k;
+  });
+  $GOPD.f = $getOwnPropertyDescriptor;
+  $DP.f = $defineProperty;
+  __webpack_require__(71).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(31).f = $propertyIsEnumerable;
+  __webpack_require__(46).f = $getOwnPropertySymbols;
+  if (DESCRIPTORS && !__webpack_require__(24)) {
+    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
+  }
+  wksExt.f = function (name) {
+    return wrap(wks(name));
+  };
+}
+$export($export.G + $export.W + $export.F * !USE_NATIVE, { Symbol: $Symbol });
+for (var es6Symbols = (
+  'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'
+).split(','), j = 0; es6Symbols.length > j;)wks(es6Symbols[j++]);
+for (var wellKnownSymbols = $keys(wks.store), k = 0; wellKnownSymbols.length > k;) wksDefine(wellKnownSymbols[k++]);
+$export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
+  'for': function (key) {
+    return has(SymbolRegistry, key += '')
+      ? SymbolRegistry[key]
+      : SymbolRegistry[key] = $Symbol(key);
+  },
+  keyFor: function keyFor(sym) {
+    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol!');
+    for (var key in SymbolRegistry) if (SymbolRegistry[key] === sym) return key;
+  },
+  useSetter: function () { setter = true; },
+  useSimple: function () { setter = false; }
+});
+$export($export.S + $export.F * !USE_NATIVE, 'Object', {
+  create: $create,
+  defineProperty: $defineProperty,
+  defineProperties: $defineProperties,
+  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
+  getOwnPropertyNames: $getOwnPropertyNames,
+  getOwnPropertySymbols: $getOwnPropertySymbols
+});
+$JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
+  var S = $Symbol();
+  return _stringify([S]) != '[null]' || _stringify({ a: S }) != '{}' || _stringify(Object(S)) != '{}';
+})), 'JSON', {
+  stringify: function stringify(it) {
+    if (it === undefined || isSymbol(it)) return; 
+    var args = [it];
+    var i = 1;
+    var replacer, $replacer;
+    while (arguments.length > i) args.push(arguments[i++]);
+    replacer = args[1];
+    if (typeof replacer == 'function') $replacer = replacer;
+    if ($replacer || !isArray(replacer)) replacer = function (key, value) {
+      if ($replacer) value = $replacer.call(this, key, value);
+      if (!isSymbol(value)) return value;
+    };
+    args[1] = replacer;
+    return _stringify.apply($JSON, args);
+  }
+});
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(8)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+setToStringTag($Symbol, 'Symbol');
+setToStringTag(Math, 'Math', true);
+setToStringTag(global.JSON, 'JSON', true);
+ }),
+ (function(module, exports, __webpack_require__) {
+var META = __webpack_require__(26)('meta');
+var isObject = __webpack_require__(9);
+var has = __webpack_require__(10);
+var setDesc = __webpack_require__(6).f;
+var id = 0;
+var isExtensible = Object.isExtensible || function () {
+  return true;
+};
+var FREEZE = !__webpack_require__(13)(function () {
+  return isExtensible(Object.preventExtensions({}));
+});
+var setMeta = function (it) {
+  setDesc(it, META, { value: {
+    i: 'O' + ++id, 
+    w: {}          
+  } });
+};
+var fastKey = function (it, create) {
+  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+  if (!has(it, META)) {
+    if (!isExtensible(it)) return 'F';
+    if (!create) return 'E';
+    setMeta(it);
+  } return it[META].i;
+};
+var getWeak = function (it, create) {
+  if (!has(it, META)) {
+    if (!isExtensible(it)) return true;
+    if (!create) return false;
+    setMeta(it);
+  } return it[META].w;
+};
+var onFreeze = function (it) {
+  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
+  return it;
+};
+var meta = module.exports = {
+  KEY: META,
+  NEED: false,
+  fastKey: fastKey,
+  getWeak: getWeak,
+  onFreeze: onFreeze
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var getKeys = __webpack_require__(18);
+var gOPS = __webpack_require__(46);
+var pIE = __webpack_require__(31);
+module.exports = function (it) {
+  var result = getKeys(it);
+  var getSymbols = gOPS.f;
+  if (getSymbols) {
+    var symbols = getSymbols(it);
+    var isEnum = pIE.f;
+    var i = 0;
+    var key;
+    while (symbols.length > i) if (isEnum.call(it, key = symbols[i++])) result.push(key);
+  } return result;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var cof = __webpack_require__(19);
+module.exports = Array.isArray || function isArray(arg) {
+  return cof(arg) == 'Array';
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(49)('asyncIterator');
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(49)('observable');
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(133), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(134);
+module.exports = __webpack_require__(0).Object.setPrototypeOf;
+ }),
+ (function(module, exports, __webpack_require__) {
+var $export = __webpack_require__(3);
+$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(135).set });
+ }),
+ (function(module, exports, __webpack_require__) {
+var isObject = __webpack_require__(9);
+var anObject = __webpack_require__(5);
+var check = function (O, proto) {
+  anObject(O);
+  if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
+};
+module.exports = {
+  set: Object.setPrototypeOf || ('__proto__' in {} ? 
+    function (test, buggy, set) {
+      try {
+        set = __webpack_require__(12)(Function.call, __webpack_require__(50).f(Object.prototype, '__proto__').set, 2);
+        set(test, []);
+        buggy = !(test instanceof Array);
+      } catch (e) { buggy = true; }
+      return function setPrototypeOf(O, proto) {
+        check(O, proto);
+        if (buggy) O.__proto__ = proto;
+        else set(O, proto);
+        return O;
+      };
+    }({}, false) : undefined),
+  check: check
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(137), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(138);
+var $Object = __webpack_require__(0).Object;
+module.exports = function create(P, D) {
+  return $Object.create(P, D);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var $export = __webpack_require__(3);
+$export($export.S, 'Object', { create: __webpack_require__(38) });
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(140), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(141);
+var $Object = __webpack_require__(0).Object;
+module.exports = function getOwnPropertyDescriptor(it, key) {
+  return $Object.getOwnPropertyDescriptor(it, key);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var toIObject = __webpack_require__(11);
+var $getOwnPropertyDescriptor = __webpack_require__(50).f;
+__webpack_require__(30)('getOwnPropertyDescriptor', function () {
+  return function getOwnPropertyDescriptor(it, key) {
+    return $getOwnPropertyDescriptor(toIObject(it), key);
+  };
+});
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.config = exports.loadConfig = undefined;
-var _core = __webpack_require__(0);
-var _dispatcher = __webpack_require__(4);
-var _platform = __webpack_require__(2);
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-exports.loadConfig = loadConfig;
-exports.config = config;
+var _regenerator = __webpack_require__(21);
+var _regenerator2 = _interopRequireDefault(_regenerator);
+var _asyncToGenerator2 = __webpack_require__(29);
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+var _defineProperty = __webpack_require__(47);
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+var _core = __webpack_require__(4);
+var _dispatcher = __webpack_require__(51);
+var _platform = __webpack_require__(23);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var MANIFEST = [{
   name: 'version',
   key: 'version',
@@ -886,7 +3400,7 @@ function toNumber(v) {
 function createConfig() {
   var c = {};
   (0, _core.forEach)(MANIFEST, function (m) {
-    Object.defineProperty(c, m.name, {
+    (0, _defineProperty2.default)(c, m.name, {
       configurable: true,
       enumerable: true,
       get: function get() {
@@ -937,8 +3451,8 @@ function loadConfig() {
       path: /^\/configure\.html$/
     },
     ready: function () {
-      var _ref = _asyncToGenerator( regeneratorRuntime.mark(function _callee() {
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+      var _ref = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee() {
+        return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
@@ -998,23 +3512,30 @@ function loadConfig() {
     }()
   });
 }
-}.call(exports, __webpack_require__(1)["Promise_"]))
+exports.loadConfig = loadConfig;
+exports.config = config;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-(function(Promise) {
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-var _ADSBYPASSER_NAMESPACE__ = __webpack_require__(8);
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+var _promise = __webpack_require__(15);
+var _promise2 = _interopRequireDefault(_promise);
+var _slicedToArray2 = __webpack_require__(22);
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+var _regenerator = __webpack_require__(21);
+var _regenerator2 = _interopRequireDefault(_regenerator);
+var _asyncToGenerator2 = __webpack_require__(29);
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+var _ADSBYPASSER_NAMESPACE__ = __webpack_require__(144);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^akoam\.com$/,
     path: /^\/download\//
   },
   start: function () {
-    var _ref = _asyncToGenerator( regeneratorRuntime.mark(function _callee() {
+    var _ref = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee() {
       var locationLink, data;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
+      return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
@@ -1053,9 +3574,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.anafile\.com$/
   },
   ready: function () {
-    var _ref2 = _asyncToGenerator( regeneratorRuntime.mark(function _callee2() {
+    var _ref2 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee2() {
       var b;
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
@@ -1090,9 +3611,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function () {
-    var _ref3 = _asyncToGenerator( regeneratorRuntime.mark(function _callee3() {
+    var _ref3 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee3() {
       var f;
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      return _regenerator2.default.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
@@ -1120,9 +3641,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/dlpop\.php$/
   },
   ready: function () {
-    var _ref4 = _asyncToGenerator( regeneratorRuntime.mark(function _callee4() {
+    var _ref4 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee4() {
       var matches;
-      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      return _regenerator2.default.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
@@ -1149,9 +3670,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /\/[A-Z0-9]+/
     },
     ready: function () {
-      var _ref5 = _asyncToGenerator( regeneratorRuntime.mark(function _callee5() {
+      var _ref5 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee5() {
         var f, iIn, _ref6, _ref7, p, l;
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        return _regenerator2.default.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
@@ -1193,7 +3714,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 });
               case 13:
                 _ref6 = _context5.sent;
-                _ref7 = _slicedToArray(_ref6, 3);
+                _ref7 = (0, _slicedToArray3.default)(_ref6, 3);
                 p = _ref7[2];
                 if (!p) {
                   _context5.next = 20;
@@ -1230,10 +3751,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return !_ADSBYPASSER_NAMESPACE__.$.$('form[name=ccerure]').onsubmit && !_ADSBYPASSER_NAMESPACE__.$.$('form[name=ccerure] input[name=pwd]');
   }
   function waitDOM(element, config, fn) {
-    return new Promise(function (resolve) {
+    return new _promise2.default(function (resolve) {
       var observer = new MutationObserver(function (mutations) {
         var _$find = _ADSBYPASSER_NAMESPACE__._.find(mutations, fn),
-            _$find2 = _slicedToArray(_$find, 3),
+            _$find2 = (0, _slicedToArray3.default)(_$find, 3),
             k = _$find2[0],
             v = _$find2[1],
             r = _$find2[2];
@@ -1254,9 +3775,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?\w{2}=\w+$/
   },
   ready: function () {
-    var _ref8 = _asyncToGenerator( regeneratorRuntime.mark(function _callee6() {
+    var _ref8 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee6() {
       var downloadPage;
-      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+      return _regenerator2.default.wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
@@ -1282,9 +3803,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/files\/+/
   },
   ready: function () {
-    var _ref9 = _asyncToGenerator( regeneratorRuntime.mark(function _callee7() {
+    var _ref9 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee7() {
       var m;
-      return regeneratorRuntime.wrap(function _callee7$(_context7) {
+      return _regenerator2.default.wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
@@ -1310,9 +3831,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/file\/[0-9A-F]+$/
   },
   ready: function () {
-    var _ref10 = _asyncToGenerator( regeneratorRuntime.mark(function _callee8() {
+    var _ref10 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee8() {
       var c;
-      return regeneratorRuntime.wrap(function _callee8$(_context8) {
+      return _regenerator2.default.wrap(function _callee8$(_context8) {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
@@ -1336,9 +3857,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^iori\.us$/
   },
   ready: function () {
-    var _ref11 = _asyncToGenerator( regeneratorRuntime.mark(function _callee9() {
+    var _ref11 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee9() {
       var a;
-      return regeneratorRuntime.wrap(function _callee9$(_context9) {
+      return _regenerator2.default.wrap(function _callee9$(_context9) {
         while (1) {
           switch (_context9.prev = _context9.next) {
             case 0:
@@ -1364,8 +3885,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/captcha\//
   },
   ready: function () {
-    var _ref12 = _asyncToGenerator( regeneratorRuntime.mark(function _callee10() {
-      return regeneratorRuntime.wrap(function _callee10$(_context10) {
+    var _ref12 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee10() {
+      return _regenerator2.default.wrap(function _callee10$(_context10) {
         while (1) {
           switch (_context10.prev = _context10.next) {
             case 0:
@@ -1389,10 +3910,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/redirect\//
   },
   ready: function () {
-    var _ref13 = _asyncToGenerator( regeneratorRuntime.mark(function _callee11() {
+    var _ref13 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee11() {
       'use strict';
       var matches, slug, hoster, response, respJSON;
-      return regeneratorRuntime.wrap(function _callee11$(_context11) {
+      return _regenerator2.default.wrap(function _callee11$(_context11) {
         while (1) {
           switch (_context11.prev = _context11.next) {
             case 0:
@@ -1430,8 +3951,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /id=\d+/
   },
   start: function () {
-    var _ref14 = _asyncToGenerator( regeneratorRuntime.mark(function _callee12() {
-      return regeneratorRuntime.wrap(function _callee12$(_context12) {
+    var _ref14 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee12() {
+      return _regenerator2.default.wrap(function _callee12$(_context12) {
         while (1) {
           switch (_context12.prev = _context12.next) {
             case 0:
@@ -1456,9 +3977,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/redirect\//
   },
   ready: function () {
-    var _ref15 = _asyncToGenerator( regeneratorRuntime.mark(function _callee13() {
+    var _ref15 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee13() {
       var l;
-      return regeneratorRuntime.wrap(function _callee13$(_context13) {
+      return _regenerator2.default.wrap(function _callee13$(_context13) {
         while (1) {
           switch (_context13.prev = _context13.next) {
             case 0:
@@ -1484,9 +4005,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/showurl\.php$/
   },
   ready: function () {
-    var _ref16 = _asyncToGenerator( regeneratorRuntime.mark(function _callee14() {
+    var _ref16 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee14() {
       var a;
-      return regeneratorRuntime.wrap(function _callee14$(_context14) {
+      return _regenerator2.default.wrap(function _callee14$(_context14) {
         while (1) {
           switch (_context14.prev = _context14.next) {
             case 0:
@@ -1529,9 +4050,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/f\//
   },
   ready: function () {
-    var _ref17 = _asyncToGenerator( regeneratorRuntime.mark(function _callee15() {
+    var _ref17 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee15() {
       var f;
-      return regeneratorRuntime.wrap(function _callee15$(_context15) {
+      return _regenerator2.default.wrap(function _callee15$(_context15) {
         while (1) {
           switch (_context15.prev = _context15.next) {
             case 0:
@@ -1556,8 +4077,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/p\/(.+)$/
   },
   start: function () {
-    var _ref18 = _asyncToGenerator( regeneratorRuntime.mark(function _callee16(m) {
-      return regeneratorRuntime.wrap(function _callee16$(_context16) {
+    var _ref18 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee16(m) {
+      return _regenerator2.default.wrap(function _callee16$(_context16) {
         while (1) {
           switch (_context16.prev = _context16.next) {
             case 0:
@@ -1582,9 +4103,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/g\//
   },
   ready: function () {
-    var _ref19 = _asyncToGenerator( regeneratorRuntime.mark(function _callee17() {
+    var _ref19 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee17() {
       var a;
-      return regeneratorRuntime.wrap(function _callee17$(_context17) {
+      return _regenerator2.default.wrap(function _callee17$(_context17) {
         while (1) {
           switch (_context17.prev = _context17.next) {
             case 0:
@@ -1610,8 +4131,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/f\/.*/
   },
   start: function () {
-    var _ref20 = _asyncToGenerator( regeneratorRuntime.mark(function _callee18() {
-      return regeneratorRuntime.wrap(function _callee18$(_context18) {
+    var _ref20 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee18() {
+      return _regenerator2.default.wrap(function _callee18$(_context18) {
         while (1) {
           switch (_context18.prev = _context18.next) {
             case 0:
@@ -1631,9 +4152,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return start;
   }(),
   ready: function () {
-    var _ref21 = _asyncToGenerator( regeneratorRuntime.mark(function _callee19() {
+    var _ref21 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee19() {
       var timer, dlCtn, dlBtn, ePath, videoCtn, overlay;
-      return regeneratorRuntime.wrap(function _callee19$(_context19) {
+      return _regenerator2.default.wrap(function _callee19$(_context19) {
         while (1) {
           switch (_context19.prev = _context19.next) {
             case 0:
@@ -1685,8 +4206,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?upmirror\.info$/
   },
   ready: function () {
-    var _ref22 = _asyncToGenerator( regeneratorRuntime.mark(function _callee20() {
-      return regeneratorRuntime.wrap(function _callee20$(_context20) {
+    var _ref22 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee20() {
+      return _regenerator2.default.wrap(function _callee20$(_context20) {
         while (1) {
           switch (_context20.prev = _context20.next) {
             case 0:
@@ -1715,9 +4236,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?vidto\.me$/
   },
   ready: function () {
-    var _ref23 = _asyncToGenerator( regeneratorRuntime.mark(function _callee21() {
+    var _ref23 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee21() {
       var f;
-      return regeneratorRuntime.wrap(function _callee21$(_context21) {
+      return _regenerator2.default.wrap(function _callee21$(_context21) {
         while (1) {
           switch (_context21.prev = _context21.next) {
             case 0:
@@ -1744,9 +4265,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^01\.nl$/
   },
   ready: function () {
-    var _ref24 = _asyncToGenerator( regeneratorRuntime.mark(function _callee22() {
+    var _ref24 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee22() {
       var f;
-      return regeneratorRuntime.wrap(function _callee22$(_context22) {
+      return _regenerator2.default.wrap(function _callee22$(_context22) {
         while (1) {
           switch (_context22.prev = _context22.next) {
             case 0:
@@ -1771,9 +4292,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^10co\.(biz|xyz|co|me)$/
   },
   ready: function () {
-    var _ref25 = _asyncToGenerator( regeneratorRuntime.mark(function _callee23() {
+    var _ref25 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee23() {
       var d;
-      return regeneratorRuntime.wrap(function _callee23$(_context23) {
+      return _regenerator2.default.wrap(function _callee23$(_context23) {
         while (1) {
           switch (_context23.prev = _context23.next) {
             case 0:
@@ -1800,8 +4321,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?(.+)/
   },
   start: function () {
-    var _ref26 = _asyncToGenerator( regeneratorRuntime.mark(function _callee24(m) {
-      return regeneratorRuntime.wrap(function _callee24$(_context24) {
+    var _ref26 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee24(m) {
+      return _regenerator2.default.wrap(function _callee24$(_context24) {
         while (1) {
           switch (_context24.prev = _context24.next) {
             case 0:
@@ -1826,9 +4347,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /\/\w+/
   },
   ready: function () {
-    var _ref27 = _asyncToGenerator( regeneratorRuntime.mark(function _callee25() {
+    var _ref27 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee25() {
       var directUrl;
-      return regeneratorRuntime.wrap(function _callee25$(_context25) {
+      return _regenerator2.default.wrap(function _callee25$(_context25) {
         while (1) {
           switch (_context25.prev = _context25.next) {
             case 0:
@@ -1860,9 +4381,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/.+/
   },
   ready: function () {
-    var _ref28 = _asyncToGenerator( regeneratorRuntime.mark(function _callee26() {
+    var _ref28 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee26() {
       var a;
-      return regeneratorRuntime.wrap(function _callee26$(_context26) {
+      return _regenerator2.default.wrap(function _callee26$(_context26) {
         while (1) {
           switch (_context26.prev = _context26.next) {
             case 0:
@@ -1888,9 +4409,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?3ra\.be$/
   },
   ready: function () {
-    var _ref29 = _asyncToGenerator( regeneratorRuntime.mark(function _callee27() {
+    var _ref29 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee27() {
       var f;
-      return regeneratorRuntime.wrap(function _callee27$(_context27) {
+      return _regenerator2.default.wrap(function _callee27$(_context27) {
         while (1) {
           switch (_context27.prev = _context27.next) {
             case 0:
@@ -1930,9 +4451,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?4fun\.tw$/
   },
   ready: function () {
-    var _ref30 = _asyncToGenerator( regeneratorRuntime.mark(function _callee28() {
+    var _ref30 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee28() {
       var i;
-      return regeneratorRuntime.wrap(function _callee28$(_context28) {
+      return _regenerator2.default.wrap(function _callee28$(_context28) {
         while (1) {
           switch (_context28.prev = _context28.next) {
             case 0:
@@ -1958,8 +4479,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w-.+$/
   },
   ready: function () {
-    var _ref31 = _asyncToGenerator( regeneratorRuntime.mark(function _callee29() {
-      return regeneratorRuntime.wrap(function _callee29$(_context29) {
+    var _ref31 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee29() {
+      return _regenerator2.default.wrap(function _callee29$(_context29) {
         while (1) {
           switch (_context29.prev = _context29.next) {
             case 0:
@@ -1988,9 +4509,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^ad4\.fr$/
   },
   ready: function () {
-    var _ref32 = _asyncToGenerator( regeneratorRuntime.mark(function _callee30() {
+    var _ref32 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee30() {
       var s;
-      return regeneratorRuntime.wrap(function _callee30$(_context30) {
+      return _regenerator2.default.wrap(function _callee30$(_context30) {
         while (1) {
           switch (_context30.prev = _context30.next) {
             case 0:
@@ -2025,9 +4546,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/\d+\/(.*)$/
     },
     start: function () {
-      var _ref33 = _asyncToGenerator( regeneratorRuntime.mark(function _callee31(m) {
+      var _ref33 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee31(m) {
         var redirectLink;
-        return regeneratorRuntime.wrap(function _callee31$(_context31) {
+        return _regenerator2.default.wrap(function _callee31$(_context31) {
           while (1) {
             switch (_context31.prev = _context31.next) {
               case 0:
@@ -2057,9 +4578,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/\w+$/
     },
     ready: function () {
-      var _ref34 = _asyncToGenerator( regeneratorRuntime.mark(function _callee32() {
+      var _ref34 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee32() {
         var script, url;
-        return regeneratorRuntime.wrap(function _callee32$(_context32) {
+        return _regenerator2.default.wrap(function _callee32$(_context32) {
           while (1) {
             switch (_context32.prev = _context32.next) {
               case 0:
@@ -2090,9 +4611,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/
     },
     ready: function () {
-      var _ref35 = _asyncToGenerator( regeneratorRuntime.mark(function _callee33() {
+      var _ref35 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee33() {
         var m, args;
-        return regeneratorRuntime.wrap(function _callee33$(_context33) {
+        return _regenerator2.default.wrap(function _callee33$(_context33) {
           while (1) {
             switch (_context33.prev = _context33.next) {
               case 0:
@@ -2127,7 +4648,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   function getArguments() {
     var PATTERN = /\{\s*_args[^}]+\}[^}]+\}/;
-    return new Promise(function (resolve) {
+    return new _promise2.default(function (resolve) {
       var m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(PATTERN);
       if (m) {
         resolve(m);
@@ -2173,9 +4694,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/redirecting\/(.+)$/
     },
     start: function () {
-      var _ref36 = _asyncToGenerator( regeneratorRuntime.mark(function _callee34(m) {
+      var _ref36 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee34(m) {
         var url;
-        return regeneratorRuntime.wrap(function _callee34$(_context34) {
+        return _regenerator2.default.wrap(function _callee34$(_context34) {
           while (1) {
             switch (_context34.prev = _context34.next) {
               case 0:
@@ -2201,9 +4722,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /url=([^&]+)/
     },
     start: function () {
-      var _ref37 = _asyncToGenerator( regeneratorRuntime.mark(function _callee35(m) {
+      var _ref37 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee35(m) {
         var url;
-        return regeneratorRuntime.wrap(function _callee35$(_context35) {
+        return _regenerator2.default.wrap(function _callee35$(_context35) {
           while (1) {
             switch (_context35.prev = _context35.next) {
               case 0:
@@ -2244,9 +4765,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       }
     },
     start: function () {
-      var _ref38 = _asyncToGenerator( regeneratorRuntime.mark(function _callee36() {
+      var _ref38 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee36() {
         var token, url;
-        return regeneratorRuntime.wrap(function _callee36$(_context36) {
+        return _regenerator2.default.wrap(function _callee36$(_context36) {
           while (1) {
             switch (_context36.prev = _context36.next) {
               case 0:
@@ -2275,9 +4796,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       return start;
     }(),
     ready: function () {
-      var _ref39 = _asyncToGenerator( regeneratorRuntime.mark(function _callee37() {
+      var _ref39 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee37() {
         var h, b, token;
-        return regeneratorRuntime.wrap(function _callee37$(_context37) {
+        return _regenerator2.default.wrap(function _callee37$(_context37) {
           while (1) {
             switch (_context37.prev = _context37.next) {
               case 0:
@@ -2316,7 +4837,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }()
   });
   function waitToken() {
-    return new Promise(function (resolve) {
+    return new _promise2.default(function (resolve) {
       var o = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
           _ADSBYPASSER_NAMESPACE__._.forEach(mutation.addedNodes, function (node) {
@@ -2336,7 +4857,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     });
   }
   function waitDocumentHead() {
-    return new Promise(function (resolve) {
+    return new _promise2.default(function (resolve) {
       if (document.head) {
         resolve();
         return;
@@ -2398,9 +4919,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function () {
-    var _ref40 = _asyncToGenerator( regeneratorRuntime.mark(function _callee38() {
+    var _ref40 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee38() {
       var f;
-      return regeneratorRuntime.wrap(function _callee38$(_context38) {
+      return _regenerator2.default.wrap(function _callee38$(_context38) {
         while (1) {
           switch (_context38.prev = _context38.next) {
             case 0:
@@ -2428,13 +4949,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://adfoc.us/*',
   ready: function () {
-    var _ref41 = _asyncToGenerator( regeneratorRuntime.mark(function _callee39() {
+    var _ref41 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee39() {
       var promise, url;
-      return regeneratorRuntime.wrap(function _callee39$(_context39) {
+      return _regenerator2.default.wrap(function _callee39$(_context39) {
         while (1) {
           switch (_context39.prev = _context39.next) {
             case 0:
-              promise = new Promise(function (resolve) {
+              promise = new _promise2.default(function (resolve) {
                 var root = document.body;
                 var observer = new MutationObserver(function () {
                   var o = _ADSBYPASSER_NAMESPACE__.$.$('#showSkip');
@@ -2473,9 +4994,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?adjet\.biz$/
   },
   ready: function () {
-    var _ref42 = _asyncToGenerator( regeneratorRuntime.mark(function _callee40() {
+    var _ref42 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee40() {
       var m;
-      return regeneratorRuntime.wrap(function _callee40$(_context40) {
+      return _regenerator2.default.wrap(function _callee40$(_context40) {
         while (1) {
           switch (_context40.prev = _context40.next) {
             case 0:
@@ -2503,9 +5024,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 (function () {
   var secondStage = function () {
-    var _ref44 = _asyncToGenerator( regeneratorRuntime.mark(function _callee42(page) {
+    var _ref44 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee42(page) {
       var f, args, url, data;
-      return regeneratorRuntime.wrap(function _callee42$(_context42) {
+      return _regenerator2.default.wrap(function _callee42$(_context42) {
         while (1) {
           switch (_context42.prev = _context42.next) {
             case 0:
@@ -2540,9 +5061,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: [/^adlink\.guru$/, /^cypt\.ga$/, /^(filesbucks|tmearn|cut-urls)\.com$/, /^elink\.link$/, /^(payurl|urlst)\.me$/, /^url\.ht$/, /^urle\.co$/, /^(hashe|trlink|adshort)\.in$/, /^www\.worldhack\.net$/, /^123link\.top$/, /^pir\.im$/, /^bol\.tl$/, /^(tl|adfly)\.tc$/, /^(adfu|linkhits)\.us$/, /^short\.pastewma\.com$/, /^linkfly\.gaosmedia\.com$/]
     },
     ready: function () {
-      var _ref43 = _asyncToGenerator( regeneratorRuntime.mark(function _callee41() {
+      var _ref43 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee41() {
         var page, url;
-        return regeneratorRuntime.wrap(function _callee41$(_context41) {
+        return _regenerator2.default.wrap(function _callee41$(_context41) {
           while (1) {
             switch (_context41.prev = _context41.next) {
               case 0:
@@ -2572,7 +5093,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }()
   });
   function firstStage() {
-    return new Promise(function (resolve) {
+    return new _promise2.default(function (resolve) {
       var f = _ADSBYPASSER_NAMESPACE__.$.$('#link-view');
       if (!f) {
         resolve(document);
@@ -2599,9 +5120,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^adlock\.org$/
   },
   ready: function () {
-    var _ref45 = _asyncToGenerator( regeneratorRuntime.mark(function _callee43() {
+    var _ref45 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee43() {
       var a;
-      return regeneratorRuntime.wrap(function _callee43$(_context43) {
+      return _regenerator2.default.wrap(function _callee43$(_context43) {
         while (1) {
           switch (_context43.prev = _context43.next) {
             case 0:
@@ -2640,9 +5161,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?adlot\.us$/
   },
   ready: function () {
-    var _ref46 = _asyncToGenerator( regeneratorRuntime.mark(function _callee44() {
+    var _ref46 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee44() {
       var script, p, opt, tmp;
-      return regeneratorRuntime.wrap(function _callee44$(_context44) {
+      return _regenerator2.default.wrap(function _callee44$(_context44) {
         while (1) {
           switch (_context44.prev = _context44.next) {
             case 0:
@@ -2678,9 +5199,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^admy\.link$/
   },
   ready: function () {
-    var _ref47 = _asyncToGenerator( regeneratorRuntime.mark(function _callee45() {
+    var _ref47 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee45() {
       var f;
-      return regeneratorRuntime.wrap(function _callee45$(_context45) {
+      return _regenerator2.default.wrap(function _callee45$(_context45) {
         while (1) {
           switch (_context45.prev = _context45.next) {
             case 0:
@@ -2705,9 +5226,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/ZipUrl/
   },
   ready: function () {
-    var _ref48 = _asyncToGenerator( regeneratorRuntime.mark(function _callee46() {
+    var _ref48 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee46() {
       var a;
-      return regeneratorRuntime.wrap(function _callee46$(_context46) {
+      return _regenerator2.default.wrap(function _callee46$(_context46) {
         while (1) {
           switch (_context46.prev = _context46.next) {
             case 0:
@@ -2733,9 +5254,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: /^ah\.pe$/
     },
     ready: function () {
-      var _ref49 = _asyncToGenerator( regeneratorRuntime.mark(function _callee47() {
+      var _ref49 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee47() {
         var script, path;
-        return regeneratorRuntime.wrap(function _callee47$(_context47) {
+        return _regenerator2.default.wrap(function _callee47$(_context47) {
           while (1) {
             switch (_context47.prev = _context47.next) {
               case 0:
@@ -2786,9 +5307,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^aka\.gr$/
   },
   ready: function () {
-    var _ref50 = _asyncToGenerator( regeneratorRuntime.mark(function _callee48() {
+    var _ref50 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee48() {
       var l;
-      return regeneratorRuntime.wrap(function _callee48$(_context48) {
+      return _regenerator2.default.wrap(function _callee48$(_context48) {
         while (1) {
           switch (_context48.prev = _context48.next) {
             case 0:
@@ -2813,9 +5334,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^al\.ly$/, /^ally\.sh$/]
   },
   ready: function () {
-    var _ref51 = _asyncToGenerator( regeneratorRuntime.mark(function _callee49() {
+    var _ref51 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee49() {
       var i, a;
-      return regeneratorRuntime.wrap(function _callee49$(_context49) {
+      return _regenerator2.default.wrap(function _callee49$(_context49) {
         while (1) {
           switch (_context49.prev = _context49.next) {
             case 0:
@@ -2860,9 +5381,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(www\.)?allkeyshop\.com$/, /^cshort\.org$/]
   },
   ready: function () {
-    var _ref52 = _asyncToGenerator( regeneratorRuntime.mark(function _callee50() {
+    var _ref52 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee50() {
       var matches;
-      return regeneratorRuntime.wrap(function _callee50$(_context50) {
+      return _regenerator2.default.wrap(function _callee50$(_context50) {
         while (1) {
           switch (_context50.prev = _context50.next) {
             case 0:
@@ -2889,9 +5410,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^anonymbucks\.com$/
   },
   ready: function () {
-    var _ref53 = _asyncToGenerator( regeneratorRuntime.mark(function _callee51() {
+    var _ref53 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee51() {
       var a;
-      return regeneratorRuntime.wrap(function _callee51$(_context51) {
+      return _regenerator2.default.wrap(function _callee51$(_context51) {
         while (1) {
           switch (_context51.prev = _context51.next) {
             case 0:
@@ -2912,9 +5433,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 (function () {
   var run = function () {
-    var _ref60 = _asyncToGenerator( regeneratorRuntime.mark(function _callee58(dirtyFix) {
+    var _ref60 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee58(dirtyFix) {
       var result;
-      return regeneratorRuntime.wrap(function _callee58$(_context58) {
+      return _regenerator2.default.wrap(function _callee58$(_context58) {
         while (1) {
           switch (_context58.prev = _context58.next) {
             case 0:
@@ -2956,8 +5477,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^.+(https?:\/\/.+)$/
     },
     start: function () {
-      var _ref54 = _asyncToGenerator( regeneratorRuntime.mark(function _callee52(m) {
-        return regeneratorRuntime.wrap(function _callee52$(_context52) {
+      var _ref54 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee52(m) {
+        return _regenerator2.default.wrap(function _callee52$(_context52) {
           while (1) {
             switch (_context52.prev = _context52.next) {
               case 0:
@@ -2982,9 +5503,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/.+/
     },
     ready: function () {
-      var _ref55 = _asyncToGenerator( regeneratorRuntime.mark(function _callee53() {
+      var _ref55 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee53() {
         var token, time, url, rv;
-        return regeneratorRuntime.wrap(function _callee53$(_context53) {
+        return _regenerator2.default.wrap(function _callee53$(_context53) {
           while (1) {
             switch (_context53.prev = _context53.next) {
               case 0:
@@ -3038,9 +5559,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/\w+$/
     },
     ready: function () {
-      var _ref56 = _asyncToGenerator( regeneratorRuntime.mark(function _callee54() {
+      var _ref56 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee54() {
         var rSurveyLink, l;
-        return regeneratorRuntime.wrap(function _callee54$(_context54) {
+        return _regenerator2.default.wrap(function _callee54$(_context54) {
           while (1) {
             switch (_context54.prev = _context54.next) {
               case 0:
@@ -3084,9 +5605,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/.+/
     },
     ready: function () {
-      var _ref57 = _asyncToGenerator( regeneratorRuntime.mark(function _callee55() {
+      var _ref57 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee55() {
         var a, f;
-        return regeneratorRuntime.wrap(function _callee55$(_context55) {
+        return _regenerator2.default.wrap(function _callee55$(_context55) {
           while (1) {
             switch (_context55.prev = _context55.next) {
               case 0:
@@ -3123,9 +5644,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/[^.]+$/
     },
     ready: function () {
-      var _ref58 = _asyncToGenerator( regeneratorRuntime.mark(function _callee56() {
+      var _ref58 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee56() {
         var s, m, tz, d;
-        return regeneratorRuntime.wrap(function _callee56$(_context56) {
+        return _regenerator2.default.wrap(function _callee56$(_context56) {
           while (1) {
             switch (_context56.prev = _context56.next) {
               case 0:
@@ -3166,8 +5687,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/.+/
     },
     ready: function () {
-      var _ref59 = _asyncToGenerator( regeneratorRuntime.mark(function _callee57() {
-        return regeneratorRuntime.wrap(function _callee57$(_context57) {
+      var _ref59 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee57() {
+        return _regenerator2.default.wrap(function _callee57$(_context57) {
           while (1) {
             switch (_context57.prev = _context57.next) {
               case 0:
@@ -3288,8 +5809,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\/(\w+\.\w+)$/
   },
   start: function () {
-    var _ref61 = _asyncToGenerator( regeneratorRuntime.mark(function _callee59(m) {
-      return regeneratorRuntime.wrap(function _callee59$(_context59) {
+    var _ref61 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee59(m) {
+      return _regenerator2.default.wrap(function _callee59$(_context59) {
         while (1) {
           switch (_context59.prev = _context59.next) {
             case 0:
@@ -3311,9 +5832,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.bild.me/bild.php?file=*',
   ready: function () {
-    var _ref62 = _asyncToGenerator( regeneratorRuntime.mark(function _callee60() {
+    var _ref62 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee60() {
       var i;
-      return regeneratorRuntime.wrap(function _callee60$(_context60) {
+      return _regenerator2.default.wrap(function _callee60$(_context60) {
         while (1) {
           switch (_context60.prev = _context60.next) {
             case 0:
@@ -3336,9 +5857,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://bildr.no/view/*',
   ready: function () {
-    var _ref63 = _asyncToGenerator( regeneratorRuntime.mark(function _callee61() {
+    var _ref63 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee61() {
       var i;
-      return regeneratorRuntime.wrap(function _callee61$(_context61) {
+      return _regenerator2.default.wrap(function _callee61$(_context61) {
         while (1) {
           switch (_context61.prev = _context61.next) {
             case 0:
@@ -3364,9 +5885,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /\/o\/([a-zA-Z0-9]+)/
   },
   start: function () {
-    var _ref64 = _asyncToGenerator( regeneratorRuntime.mark(function _callee62(m) {
+    var _ref64 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee62(m) {
       var direct_link;
-      return regeneratorRuntime.wrap(function _callee62$(_context62) {
+      return _regenerator2.default.wrap(function _callee62$(_context62) {
         while (1) {
           switch (_context62.prev = _context62.next) {
             case 0:
@@ -3392,9 +5913,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[\w~]+$/
   },
   ready: function () {
-    var _ref65 = _asyncToGenerator( regeneratorRuntime.mark(function _callee63() {
+    var _ref65 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee63() {
       var m, response, l;
-      return regeneratorRuntime.wrap(function _callee63$(_context63) {
+      return _regenerator2.default.wrap(function _callee63$(_context63) {
         while (1) {
           switch (_context63.prev = _context63.next) {
             case 0:
@@ -3437,9 +5958,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /url=(.+)$/
   },
   start: function () {
-    var _ref66 = _asyncToGenerator( regeneratorRuntime.mark(function _callee64(m) {
+    var _ref66 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee64(m) {
       var l;
-      return regeneratorRuntime.wrap(function _callee64$(_context64) {
+      return _regenerator2.default.wrap(function _callee64$(_context64) {
         while (1) {
           switch (_context64.prev = _context64.next) {
             case 0:
@@ -3464,9 +5985,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?(buz|vzt)url\.com$/
   },
   ready: function () {
-    var _ref67 = _asyncToGenerator( regeneratorRuntime.mark(function _callee65() {
+    var _ref67 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee65() {
       var frame;
-      return regeneratorRuntime.wrap(function _callee65$(_context65) {
+      return _regenerator2.default.wrap(function _callee65$(_context65) {
         while (1) {
           switch (_context65.prev = _context65.next) {
             case 0:
@@ -3491,9 +6012,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(cf|ex|xt)\d\.(me|co)$/
   },
   ready: function () {
-    var _ref68 = _asyncToGenerator( regeneratorRuntime.mark(function _callee66() {
+    var _ref68 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee66() {
       var a;
-      return regeneratorRuntime.wrap(function _callee66$(_context66) {
+      return _regenerator2.default.wrap(function _callee66$(_context66) {
         while (1) {
           switch (_context66.prev = _context66.next) {
             case 0:
@@ -3519,9 +6040,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^catcut\.net$/
   },
   ready: function () {
-    var _ref69 = _asyncToGenerator( regeneratorRuntime.mark(function _callee67() {
+    var _ref69 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee67() {
       var a;
-      return regeneratorRuntime.wrap(function _callee67$(_context67) {
+      return _regenerator2.default.wrap(function _callee67$(_context67) {
         while (1) {
           switch (_context67.prev = _context67.next) {
             case 0:
@@ -3547,8 +6068,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[^/]+$/
   },
   start: function () {
-    var _ref70 = _asyncToGenerator( regeneratorRuntime.mark(function _callee68(m) {
-      return regeneratorRuntime.wrap(function _callee68$(_context68) {
+    var _ref70 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee68(m) {
+      return _regenerator2.default.wrap(function _callee68$(_context68) {
         while (1) {
           switch (_context68.prev = _context68.next) {
             case 0:
@@ -3573,9 +6094,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?cli\.gs$/
   },
   ready: function () {
-    var _ref71 = _asyncToGenerator( regeneratorRuntime.mark(function _callee69() {
+    var _ref71 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee69() {
       var a;
-      return regeneratorRuntime.wrap(function _callee69$(_context69) {
+      return _regenerator2.default.wrap(function _callee69$(_context69) {
         while (1) {
           switch (_context69.prev = _context69.next) {
             case 0:
@@ -3601,9 +6122,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/id=\d+/
   },
   ready: function () {
-    var _ref72 = _asyncToGenerator( regeneratorRuntime.mark(function _callee70() {
+    var _ref72 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee70() {
       var matches, url;
-      return regeneratorRuntime.wrap(function _callee70$(_context70) {
+      return _regenerator2.default.wrap(function _callee70$(_context70) {
         while (1) {
           switch (_context70.prev = _context70.next) {
             case 0:
@@ -3630,9 +6151,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^clk\.im$/
   },
   ready: function () {
-    var _ref73 = _asyncToGenerator( regeneratorRuntime.mark(function _callee71() {
+    var _ref73 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee71() {
       var matches;
-      return regeneratorRuntime.wrap(function _callee71$(_context71) {
+      return _regenerator2.default.wrap(function _callee71$(_context71) {
         while (1) {
           switch (_context71.prev = _context71.next) {
             case 0:
@@ -3658,9 +6179,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^cocoleech\.com$/
   },
   ready: function () {
-    var _ref74 = _asyncToGenerator( regeneratorRuntime.mark(function _callee72() {
+    var _ref74 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee72() {
       var a;
-      return regeneratorRuntime.wrap(function _callee72$(_context72) {
+      return _regenerator2.default.wrap(function _callee72$(_context72) {
         while (1) {
           switch (_context72.prev = _context72.next) {
             case 0:
@@ -3687,9 +6208,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/\w+$/
     },
     ready: function () {
-      var _ref75 = _asyncToGenerator( regeneratorRuntime.mark(function _callee73(m) {
+      var _ref75 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee73(m) {
         var mapper, b64;
-        return regeneratorRuntime.wrap(function _callee73$(_context73) {
+        return _regenerator2.default.wrap(function _callee73$(_context73) {
           while (1) {
             switch (_context73.prev = _context73.next) {
               case 0:
@@ -3716,9 +6237,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: [/^\/\w+$/, /^\/menujulink\//]
     },
     ready: function () {
-      var _ref76 = _asyncToGenerator( regeneratorRuntime.mark(function _callee74() {
+      var _ref76 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee74() {
         var d;
-        return regeneratorRuntime.wrap(function _callee74$(_context74) {
+        return _regenerator2.default.wrap(function _callee74$(_context74) {
           while (1) {
             switch (_context74.prev = _context74.next) {
               case 0:
@@ -3776,9 +6297,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/i\//
   },
   ready: function () {
-    var _ref77 = _asyncToGenerator( regeneratorRuntime.mark(function _callee75() {
+    var _ref77 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee75() {
       var a;
-      return regeneratorRuntime.wrap(function _callee75$(_context75) {
+      return _regenerator2.default.wrap(function _callee75$(_context75) {
         while (1) {
           switch (_context75.prev = _context75.next) {
             case 0:
@@ -3804,9 +6325,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/([-\w]+)$/
   },
   ready: function () {
-    var _ref78 = _asyncToGenerator( regeneratorRuntime.mark(function _callee76(m) {
+    var _ref78 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee76(m) {
       var host, param, mainFrameContent, docMainFrame, rExtractLink;
-      return regeneratorRuntime.wrap(function _callee76$(_context76) {
+      return _regenerator2.default.wrap(function _callee76$(_context76) {
         while (1) {
           switch (_context76.prev = _context76.next) {
             case 0:
@@ -3862,9 +6383,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^comyonet\.com$/
   },
   ready: function () {
-    var _ref79 = _asyncToGenerator( regeneratorRuntime.mark(function _callee77() {
+    var _ref79 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee77() {
       var input;
-      return regeneratorRuntime.wrap(function _callee77$(_context77) {
+      return _regenerator2.default.wrap(function _callee77$(_context77) {
         while (1) {
           switch (_context77.prev = _context77.next) {
             case 0:
@@ -3889,9 +6410,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   start: function () {
-    var _ref80 = _asyncToGenerator( regeneratorRuntime.mark(function _callee78() {
+    var _ref80 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee78() {
       var text, matches;
-      return regeneratorRuntime.wrap(function _callee78$(_context78) {
+      return _regenerator2.default.wrap(function _callee78$(_context78) {
         while (1) {
           switch (_context78.prev = _context78.next) {
             case 0:
@@ -3923,9 +6444,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?dapat\.in$/
   },
   ready: function () {
-    var _ref81 = _asyncToGenerator( regeneratorRuntime.mark(function _callee79() {
+    var _ref81 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee79() {
       var f;
-      return regeneratorRuntime.wrap(function _callee79$(_context79) {
+      return _regenerator2.default.wrap(function _callee79$(_context79) {
         while (1) {
           switch (_context79.prev = _context79.next) {
             case 0:
@@ -3950,9 +6471,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?dd\.ma$/
   },
   ready: function () {
-    var _ref82 = _asyncToGenerator( regeneratorRuntime.mark(function _callee80() {
+    var _ref82 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee80() {
       var i, a;
-      return regeneratorRuntime.wrap(function _callee80$(_context80) {
+      return _regenerator2.default.wrap(function _callee80$(_context80) {
         while (1) {
           switch (_context80.prev = _context80.next) {
             case 0:
@@ -3988,8 +6509,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?(.+)/
   },
   start: function () {
-    var _ref83 = _asyncToGenerator( regeneratorRuntime.mark(function _callee81(m) {
-      return regeneratorRuntime.wrap(function _callee81$(_context81) {
+    var _ref83 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee81(m) {
+      return _regenerator2.default.wrap(function _callee81$(_context81) {
         while (1) {
           switch (_context81.prev = _context81.next) {
             case 0:
@@ -4013,9 +6534,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^dikit\.in$/
   },
   ready: function () {
-    var _ref84 = _asyncToGenerator( regeneratorRuntime.mark(function _callee82() {
+    var _ref84 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee82() {
       var a;
-      return regeneratorRuntime.wrap(function _callee82$(_context82) {
+      return _regenerator2.default.wrap(function _callee82$(_context82) {
         while (1) {
           switch (_context82.prev = _context82.next) {
             case 0:
@@ -4041,9 +6562,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^durl\.me$/
   },
   ready: function () {
-    var _ref85 = _asyncToGenerator( regeneratorRuntime.mark(function _callee83() {
+    var _ref85 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee83() {
       var a;
-      return regeneratorRuntime.wrap(function _callee83$(_context83) {
+      return _regenerator2.default.wrap(function _callee83$(_context83) {
         while (1) {
           switch (_context83.prev = _context83.next) {
             case 0:
@@ -4068,9 +6589,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^easyurl\.net$/, /^(atu|clickthru|redirects|readthis)\.ca$/, /^goshrink\.com$/]
   },
   ready: function () {
-    var _ref86 = _asyncToGenerator( regeneratorRuntime.mark(function _callee84() {
+    var _ref86 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee84() {
       var f;
-      return regeneratorRuntime.wrap(function _callee84$(_context84) {
+      return _regenerator2.default.wrap(function _callee84$(_context84) {
         while (1) {
           switch (_context84.prev = _context84.next) {
             case 0:
@@ -4095,9 +6616,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^elde\.me$/
   },
   ready: function () {
-    var _ref87 = _asyncToGenerator( regeneratorRuntime.mark(function _callee85() {
+    var _ref87 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee85() {
       var a;
-      return regeneratorRuntime.wrap(function _callee85$(_context85) {
+      return _regenerator2.default.wrap(function _callee85$(_context85) {
         while (1) {
           switch (_context85.prev = _context85.next) {
             case 0:
@@ -4125,9 +6646,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/i\/\d+$/
   },
   ready: function () {
-    var _ref88 = _asyncToGenerator( regeneratorRuntime.mark(function _callee86() {
+    var _ref88 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee86() {
       var a;
-      return regeneratorRuntime.wrap(function _callee86$(_context86) {
+      return _regenerator2.default.wrap(function _callee86$(_context86) {
         while (1) {
           switch (_context86.prev = _context86.next) {
             case 0:
@@ -4152,9 +6673,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?filoops\.info$/
   },
   ready: function () {
-    var _ref89 = _asyncToGenerator( regeneratorRuntime.mark(function _callee87() {
+    var _ref89 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee87() {
       var a;
-      return regeneratorRuntime.wrap(function _callee87$(_context87) {
+      return _regenerator2.default.wrap(function _callee87$(_context87) {
         while (1) {
           switch (_context87.prev = _context87.next) {
             case 0:
@@ -4179,9 +6700,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^fit\.sh$/
   },
   ready: function () {
-    var _ref90 = _asyncToGenerator( regeneratorRuntime.mark(function _callee88() {
+    var _ref90 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee88() {
       var m, interLink;
-      return regeneratorRuntime.wrap(function _callee88$(_context88) {
+      return _regenerator2.default.wrap(function _callee88$(_context88) {
         while (1) {
           switch (_context88.prev = _context88.next) {
             case 0:
@@ -4219,8 +6740,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/links?\/$/
   },
   ready: function () {
-    var _ref91 = _asyncToGenerator( regeneratorRuntime.mark(function _callee89() {
-      return regeneratorRuntime.wrap(function _callee89$(_context89) {
+    var _ref91 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee89() {
+      return _regenerator2.default.wrap(function _callee89$(_context89) {
         while (1) {
           switch (_context89.prev = _context89.next) {
             case 0:
@@ -4245,8 +6766,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /i=([^&]+)/
   },
   start: function () {
-    var _ref92 = _asyncToGenerator( regeneratorRuntime.mark(function _callee90(m) {
-      return regeneratorRuntime.wrap(function _callee90$(_context90) {
+    var _ref92 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee90(m) {
+      return _regenerator2.default.wrap(function _callee90$(_context90) {
         while (1) {
           switch (_context90.prev = _context90.next) {
             case 0:
@@ -4271,9 +6792,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/(go-\w+|load\.php)$/
   },
   ready: function () {
-    var _ref93 = _asyncToGenerator( regeneratorRuntime.mark(function _callee91() {
+    var _ref93 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee91() {
       var f;
-      return regeneratorRuntime.wrap(function _callee91$(_context91) {
+      return _regenerator2.default.wrap(function _callee91$(_context91) {
         while (1) {
           switch (_context91.prev = _context91.next) {
             case 0:
@@ -4303,9 +6824,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       hash: /^(.*)$/
     },
     start: function () {
-      var _ref94 = _asyncToGenerator( regeneratorRuntime.mark(function _callee92(m) {
+      var _ref94 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee92(m) {
         var l;
-        return regeneratorRuntime.wrap(function _callee92$(_context92) {
+        return _regenerator2.default.wrap(function _callee92$(_context92) {
           while (1) {
             switch (_context92.prev = _context92.next) {
               case 0:
@@ -4330,9 +6851,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: hosts
     },
     ready: function () {
-      var _ref95 = _asyncToGenerator( regeneratorRuntime.mark(function _callee93() {
+      var _ref95 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee93() {
         var jQuery;
-        return regeneratorRuntime.wrap(function _callee93$(_context93) {
+        return _regenerator2.default.wrap(function _callee93$(_context93) {
           while (1) {
             switch (_context93.prev = _context93.next) {
               case 0:
@@ -4361,9 +6882,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^gkurl\.us$/
   },
   ready: function () {
-    var _ref96 = _asyncToGenerator( regeneratorRuntime.mark(function _callee94() {
+    var _ref96 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee94() {
       var iframe;
-      return regeneratorRuntime.wrap(function _callee94$(_context94) {
+      return _regenerator2.default.wrap(function _callee94$(_context94) {
         while (1) {
           switch (_context94.prev = _context94.next) {
             case 0:
@@ -4388,9 +6909,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^u\.go2\.me$/
   },
   ready: function () {
-    var _ref97 = _asyncToGenerator( regeneratorRuntime.mark(function _callee95() {
+    var _ref97 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee95() {
       var iframe;
-      return regeneratorRuntime.wrap(function _callee95$(_context95) {
+      return _regenerator2.default.wrap(function _callee95$(_context95) {
         while (1) {
           switch (_context95.prev = _context95.next) {
             case 0:
@@ -4416,9 +6937,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /open=(.+)/
   },
   start: function () {
-    var _ref98 = _asyncToGenerator( regeneratorRuntime.mark(function _callee96(m) {
+    var _ref98 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee96(m) {
       var url;
-      return regeneratorRuntime.wrap(function _callee96$(_context96) {
+      return _regenerator2.default.wrap(function _callee96$(_context96) {
         while (1) {
           switch (_context96.prev = _context96.next) {
             case 0:
@@ -4443,9 +6964,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^gsurl\.(me|in)$/, /^g5u\.pw$/]
   },
   ready: function () {
-    var _ref99 = _asyncToGenerator( regeneratorRuntime.mark(function _callee97() {
+    var _ref99 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee97() {
       var a;
-      return regeneratorRuntime.wrap(function _callee97$(_context97) {
+      return _regenerator2.default.wrap(function _callee97$(_context97) {
         while (1) {
           switch (_context97.prev = _context97.next) {
             case 0:
@@ -4474,9 +6995,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^hotshorturl\.com$/
   },
   ready: function () {
-    var _ref100 = _asyncToGenerator( regeneratorRuntime.mark(function _callee98() {
+    var _ref100 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee98() {
       var frame;
-      return regeneratorRuntime.wrap(function _callee98$(_context98) {
+      return _regenerator2.default.wrap(function _callee98$(_context98) {
         while (1) {
           switch (_context98.prev = _context98.next) {
             case 0:
@@ -4502,9 +7023,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /\/(\w+)/
   },
   ready: function () {
-    var _ref101 = _asyncToGenerator( regeneratorRuntime.mark(function _callee99(m) {
+    var _ref101 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee99(m) {
       var realHost, realURL, f;
-      return regeneratorRuntime.wrap(function _callee99$(_context99) {
+      return _regenerator2.default.wrap(function _callee99$(_context99) {
         while (1) {
           switch (_context99.prev = _context99.next) {
             case 0:
@@ -4550,9 +7071,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^ilovebanten\.com$/
   },
   ready: function () {
-    var _ref102 = _asyncToGenerator( regeneratorRuntime.mark(function _callee100() {
+    var _ref102 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee100() {
       var p;
-      return regeneratorRuntime.wrap(function _callee100$(_context100) {
+      return _regenerator2.default.wrap(function _callee100$(_context100) {
         while (1) {
           switch (_context100.prev = _context100.next) {
             case 0:
@@ -4578,8 +7099,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/([^/]+)$/
   },
   start: function () {
-    var _ref103 = _asyncToGenerator( regeneratorRuntime.mark(function _callee101(m) {
-      return regeneratorRuntime.wrap(function _callee101$(_context101) {
+    var _ref103 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee101(m) {
+      return _regenerator2.default.wrap(function _callee101$(_context101) {
         while (1) {
           switch (_context101.prev = _context101.next) {
             case 0:
@@ -4604,9 +7125,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/r\//
   },
   ready: function () {
-    var _ref104 = _asyncToGenerator( regeneratorRuntime.mark(function _callee102() {
+    var _ref104 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee102() {
       var f;
-      return regeneratorRuntime.wrap(function _callee102$(_context102) {
+      return _regenerator2.default.wrap(function _callee102$(_context102) {
         while (1) {
           switch (_context102.prev = _context102.next) {
             case 0:
@@ -4630,9 +7151,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^ity\.im$/
   },
   ready: function () {
-    var _ref105 = _asyncToGenerator( regeneratorRuntime.mark(function _callee103() {
+    var _ref105 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee103() {
       var f, _$find3, _$find4, data;
-      return regeneratorRuntime.wrap(function _callee103$(_context103) {
+      return _regenerator2.default.wrap(function _callee103$(_context103) {
         while (1) {
           switch (_context103.prev = _context103.next) {
             case 0:
@@ -4652,7 +7173,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 }
                 return frame.src;
               });
-              _$find4 = _slicedToArray(_$find3, 3);
+              _$find4 = (0, _slicedToArray3.default)(_$find3, 3);
               f = _$find4[2];
               if (!(f !== _ADSBYPASSER_NAMESPACE__._.none)) {
                 _context103.next = 12;
@@ -4696,9 +7217,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?kingofshrink\.com$/
   },
   ready: function () {
-    var _ref106 = _asyncToGenerator( regeneratorRuntime.mark(function _callee104() {
+    var _ref106 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee104() {
       var l;
-      return regeneratorRuntime.wrap(function _callee104$(_context104) {
+      return _regenerator2.default.wrap(function _callee104$(_context104) {
         while (1) {
           switch (_context104.prev = _context104.next) {
             case 0:
@@ -4724,9 +7245,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /r=(.+)/
   },
   start: function () {
-    var _ref107 = _asyncToGenerator( regeneratorRuntime.mark(function _callee105(m) {
+    var _ref107 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee105(m) {
       var r;
-      return regeneratorRuntime.wrap(function _callee105$(_context105) {
+      return _regenerator2.default.wrap(function _callee105$(_context105) {
         while (1) {
           switch (_context105.prev = _context105.next) {
             case 0:
@@ -4751,9 +7272,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^st\.kurogaze\.net$/
   },
   ready: function () {
-    var _ref108 = _asyncToGenerator( regeneratorRuntime.mark(function _callee106() {
+    var _ref108 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee106() {
       var a;
-      return regeneratorRuntime.wrap(function _callee106$(_context106) {
+      return _regenerator2.default.wrap(function _callee106$(_context106) {
         while (1) {
           switch (_context106.prev = _context106.next) {
             case 0:
@@ -4779,9 +7300,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/Shortener\/(\w+)$/
   },
   start: function () {
-    var _ref109 = _asyncToGenerator( regeneratorRuntime.mark(function _callee107(m) {
+    var _ref109 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee107(m) {
       var text, r;
-      return regeneratorRuntime.wrap(function _callee107$(_context107) {
+      return _regenerator2.default.wrap(function _callee107$(_context107) {
         while (1) {
           switch (_context107.prev = _context107.next) {
             case 0:
@@ -4820,9 +7341,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.lienscash.com/l/*',
   ready: function () {
-    var _ref110 = _asyncToGenerator( regeneratorRuntime.mark(function _callee108() {
+    var _ref110 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee108() {
       var a;
-      return regeneratorRuntime.wrap(function _callee108$(_context108) {
+      return _regenerator2.default.wrap(function _callee108$(_context108) {
         while (1) {
           switch (_context108.prev = _context108.next) {
             case 0:
@@ -4847,9 +7368,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?\w+\.link-protector\.com$/
   },
   ready: function () {
-    var _ref111 = _asyncToGenerator( regeneratorRuntime.mark(function _callee109() {
+    var _ref111 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee109() {
       var f;
-      return regeneratorRuntime.wrap(function _callee109$(_context109) {
+      return _regenerator2.default.wrap(function _callee109$(_context109) {
         while (1) {
           switch (_context109.prev = _context109.next) {
             case 0:
@@ -4875,9 +7396,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   start: function () {
-    var _ref112 = _asyncToGenerator( regeneratorRuntime.mark(function _callee110() {
+    var _ref112 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee110() {
       var text, m;
-      return regeneratorRuntime.wrap(function _callee110$(_context110) {
+      return _regenerator2.default.wrap(function _callee110$(_context110) {
         while (1) {
           switch (_context110.prev = _context110.next) {
             case 0:
@@ -4910,9 +7431,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?to=(.+)$/
   },
   ready: function () {
-    var _ref113 = _asyncToGenerator( regeneratorRuntime.mark(function _callee111() {
+    var _ref113 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee111() {
       var a;
-      return regeneratorRuntime.wrap(function _callee111$(_context111) {
+      return _regenerator2.default.wrap(function _callee111$(_context111) {
         while (1) {
           switch (_context111.prev = _context111.next) {
             case 0:
@@ -4948,8 +7469,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/(.+)$/
   },
   start: function () {
-    var _ref114 = _asyncToGenerator( regeneratorRuntime.mark(function _callee112(m) {
-      return regeneratorRuntime.wrap(function _callee112$(_context112) {
+    var _ref114 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee112(m) {
+      return _regenerator2.default.wrap(function _callee112$(_context112) {
         while (1) {
           switch (_context112.prev = _context112.next) {
             case 0:
@@ -4974,9 +7495,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\d+$/
   },
   ready: function () {
-    var _ref115 = _asyncToGenerator( regeneratorRuntime.mark(function _callee113() {
+    var _ref115 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee113() {
       var m;
-      return regeneratorRuntime.wrap(function _callee113$(_context113) {
+      return _regenerator2.default.wrap(function _callee113$(_context113) {
         while (1) {
           switch (_context113.prev = _context113.next) {
             case 0:
@@ -5009,9 +7530,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\d+\/(.+)$/
   },
   start: function () {
-    var _ref116 = _asyncToGenerator( regeneratorRuntime.mark(function _callee114(m) {
+    var _ref116 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee114(m) {
       var url;
-      return regeneratorRuntime.wrap(function _callee114$(_context114) {
+      return _regenerator2.default.wrap(function _callee114$(_context114) {
         while (1) {
           switch (_context114.prev = _context114.next) {
             case 0:
@@ -5040,9 +7561,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/(.+)$/
   },
   ready: function () {
-    var _ref117 = _asyncToGenerator( regeneratorRuntime.mark(function _callee115(m) {
+    var _ref117 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee115(m) {
       var d, url;
-      return regeneratorRuntime.wrap(function _callee115$(_context115) {
+      return _regenerator2.default.wrap(function _callee115$(_context115) {
         while (1) {
           switch (_context115.prev = _context115.next) {
             case 0:
@@ -5074,9 +7595,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 (function () {
   var sendRequest = function () {
-    var _ref119 = _asyncToGenerator( regeneratorRuntime.mark(function _callee117(opts) {
+    var _ref119 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee117(opts) {
       var data, a;
-      return regeneratorRuntime.wrap(function _callee117$(_context117) {
+      return _regenerator2.default.wrap(function _callee117$(_context117) {
         while (1) {
           switch (_context117.prev = _context117.next) {
             case 0:
@@ -5113,9 +7634,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/([^/]+)$/
     },
     ready: function () {
-      var _ref118 = _asyncToGenerator( regeneratorRuntime.mark(function _callee116(m) {
+      var _ref118 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee116(m) {
         var i, opts, url;
-        return regeneratorRuntime.wrap(function _callee116$(_context116) {
+        return _regenerator2.default.wrap(function _callee116$(_context116) {
           while (1) {
             switch (_context116.prev = _context116.next) {
               case 0:
@@ -5149,9 +7670,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 })();
 (function () {
   var sendRequest = function () {
-    var _ref124 = _asyncToGenerator( regeneratorRuntime.mark(function _callee122(token) {
+    var _ref124 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee122(token) {
       var text, data;
-      return regeneratorRuntime.wrap(function _callee122$(_context122) {
+      return _regenerator2.default.wrap(function _callee122$(_context122) {
         while (1) {
           switch (_context122.prev = _context122.next) {
             case 0:
@@ -5206,9 +7727,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     };
   }();
   var retry = function () {
-    var _ref125 = _asyncToGenerator( regeneratorRuntime.mark(function _callee123() {
+    var _ref125 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee123() {
       var text, d, t;
-      return regeneratorRuntime.wrap(function _callee123$(_context123) {
+      return _regenerator2.default.wrap(function _callee123$(_context123) {
         while (1) {
           switch (_context123.prev = _context123.next) {
             case 0:
@@ -5254,9 +7775,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/\w+\/url\/(.+)$/
     },
     ready: function () {
-      var _ref120 = _asyncToGenerator( regeneratorRuntime.mark(function _callee118(m) {
+      var _ref120 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee118(m) {
         var url, match;
-        return regeneratorRuntime.wrap(function _callee118$(_context118) {
+        return _regenerator2.default.wrap(function _callee118$(_context118) {
           while (1) {
             switch (_context118.prev = _context118.next) {
               case 0:
@@ -5288,8 +7809,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: hostRules
     },
     start: function () {
-      var _ref121 = _asyncToGenerator( regeneratorRuntime.mark(function _callee119() {
-        return regeneratorRuntime.wrap(function _callee119$(_context119) {
+      var _ref121 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee119() {
+        return _regenerator2.default.wrap(function _callee119$(_context119) {
           while (1) {
             switch (_context119.prev = _context119.next) {
               case 0:
@@ -5307,9 +7828,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       return start;
     }(),
     ready: function () {
-      var _ref122 = _asyncToGenerator( regeneratorRuntime.mark(function _callee120() {
+      var _ref122 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee120() {
         var path, token, url;
-        return regeneratorRuntime.wrap(function _callee120$(_context120) {
+        return _regenerator2.default.wrap(function _callee120$(_context120) {
           while (1) {
             switch (_context120.prev = _context120.next) {
               case 0:
@@ -5352,8 +7873,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /^(.*)[?&]_lbGate=\d+$/
     },
     start: function () {
-      var _ref123 = _asyncToGenerator( regeneratorRuntime.mark(function _callee121(m) {
-        return regeneratorRuntime.wrap(function _callee121$(_context121) {
+      var _ref123 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee121(m) {
+        return _regenerator2.default.wrap(function _callee121$(_context121) {
           while (1) {
             switch (_context121.prev = _context121.next) {
               case 0:
@@ -5451,9 +7972,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?(.+)$/
   },
   ready: function () {
-    var _ref126 = _asyncToGenerator( regeneratorRuntime.mark(function _callee124(m) {
+    var _ref126 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee124(m) {
       var lnk, b;
-      return regeneratorRuntime.wrap(function _callee124$(_context124) {
+      return _regenerator2.default.wrap(function _callee124$(_context124) {
         while (1) {
           switch (_context124.prev = _context124.next) {
             case 0:
@@ -5516,9 +8037,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^linkdolar\.xyz$/
   },
   ready: function () {
-    var _ref127 = _asyncToGenerator( regeneratorRuntime.mark(function _callee125() {
+    var _ref127 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee125() {
       var s, url, args, target;
-      return regeneratorRuntime.wrap(function _callee125$(_context125) {
+      return _regenerator2.default.wrap(function _callee125$(_context125) {
         while (1) {
           switch (_context125.prev = _context125.next) {
             case 0:
@@ -5563,9 +8084,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: [/^(www\.)?linkdrop\.net$/, /^dmus\.in$/, /^ulshare\.net$/, /^adurl\.id$/, /^goolink\.me$/, /^earningurl\.com$/]
     },
     ready: function () {
-      var _ref128 = _asyncToGenerator( regeneratorRuntime.mark(function _callee126() {
+      var _ref128 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee126() {
         var f;
-        return regeneratorRuntime.wrap(function _callee126$(_context126) {
+        return _regenerator2.default.wrap(function _callee126$(_context126) {
           while (1) {
             switch (_context126.prev = _context126.next) {
               case 0:
@@ -5596,9 +8117,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: [/^sflnk\.me$/, /^idsly\.com$/]
     },
     ready: function () {
-      var _ref129 = _asyncToGenerator( regeneratorRuntime.mark(function _callee127() {
+      var _ref129 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee127() {
         var f;
-        return regeneratorRuntime.wrap(function _callee127$(_context127) {
+        return _regenerator2.default.wrap(function _callee127$(_context127) {
           while (1) {
             switch (_context127.prev = _context127.next) {
               case 0:
@@ -5660,9 +8181,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\//
   },
   ready: function () {
-    var _ref130 = _asyncToGenerator( regeneratorRuntime.mark(function _callee128() {
+    var _ref130 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee128() {
       var f;
-      return regeneratorRuntime.wrap(function _callee128$(_context128) {
+      return _regenerator2.default.wrap(function _callee128$(_context128) {
         while (1) {
           switch (_context128.prev = _context128.next) {
             case 0:
@@ -5686,9 +8207,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?linkplugapp\.com$/
   },
   ready: function () {
-    var _ref131 = _asyncToGenerator( regeneratorRuntime.mark(function _callee129() {
+    var _ref131 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee129() {
       var a;
-      return regeneratorRuntime.wrap(function _callee129$(_context129) {
+      return _regenerator2.default.wrap(function _callee129$(_context129) {
         while (1) {
           switch (_context129.prev = _context129.next) {
             case 0:
@@ -5714,9 +8235,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^(\/\w+)$/
   },
   ready: function () {
-    var _ref132 = _asyncToGenerator( regeneratorRuntime.mark(function _callee130(m) {
+    var _ref132 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee130(m) {
       var recaptcha, url, ipinfo, payload, token, data;
-      return regeneratorRuntime.wrap(function _callee130$(_context130) {
+      return _regenerator2.default.wrap(function _callee130$(_context130) {
         while (1) {
           switch (_context130.prev = _context130.next) {
             case 0:
@@ -5775,9 +8296,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\//
   },
   ready: function () {
-    var _ref133 = _asyncToGenerator( regeneratorRuntime.mark(function _callee131() {
+    var _ref133 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee131() {
       var a, url, pattern, lastURL, matched;
-      return regeneratorRuntime.wrap(function _callee131$(_context131) {
+      return _regenerator2.default.wrap(function _callee131$(_context131) {
         while (1) {
           switch (_context131.prev = _context131.next) {
             case 0:
@@ -5828,8 +8349,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[a-zA-Z0-9]+$/
   },
   start: function () {
-    var _ref134 = _asyncToGenerator( regeneratorRuntime.mark(function _callee132() {
-      return regeneratorRuntime.wrap(function _callee132$(_context132) {
+    var _ref134 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee132() {
+      return _regenerator2.default.wrap(function _callee132$(_context132) {
         while (1) {
           switch (_context132.prev = _context132.next) {
             case 0:
@@ -5847,9 +8368,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return start;
   }(),
   ready: function () {
-    var _ref135 = _asyncToGenerator( regeneratorRuntime.mark(function _callee133() {
+    var _ref135 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee133() {
       var l;
-      return regeneratorRuntime.wrap(function _callee133$(_context133) {
+      return _regenerator2.default.wrap(function _callee133$(_context133) {
         while (1) {
           switch (_context133.prev = _context133.next) {
             case 0:
@@ -5876,8 +8397,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /=(.+)$/
   },
   start: function () {
-    var _ref136 = _asyncToGenerator( regeneratorRuntime.mark(function _callee134(m) {
-      return regeneratorRuntime.wrap(function _callee134$(_context134) {
+    var _ref136 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee134(m) {
+      return _regenerator2.default.wrap(function _callee134$(_context134) {
         while (1) {
           switch (_context134.prev = _context134.next) {
             case 0:
@@ -5899,9 +8420,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://lix.in/-*',
   ready: function () {
-    var _ref137 = _asyncToGenerator( regeneratorRuntime.mark(function _callee135() {
+    var _ref137 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee135() {
       var i;
-      return regeneratorRuntime.wrap(function _callee135$(_context135) {
+      return _regenerator2.default.wrap(function _callee135$(_context135) {
         while (1) {
           switch (_context135.prev = _context135.next) {
             case 0:
@@ -5941,9 +8462,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^lnk\.in$/
   },
   ready: function () {
-    var _ref138 = _asyncToGenerator( regeneratorRuntime.mark(function _callee136() {
+    var _ref138 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee136() {
       var a;
-      return regeneratorRuntime.wrap(function _callee136$(_context136) {
+      return _regenerator2.default.wrap(function _callee136$(_context136) {
         while (1) {
           switch (_context136.prev = _context136.next) {
             case 0:
@@ -5969,9 +8490,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[^.]+$/
   },
   ready: function () {
-    var _ref139 = _asyncToGenerator( regeneratorRuntime.mark(function _callee137() {
+    var _ref139 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee137() {
       var f, o;
-      return regeneratorRuntime.wrap(function _callee137$(_context137) {
+      return _regenerator2.default.wrap(function _callee137$(_context137) {
         while (1) {
           switch (_context137.prev = _context137.next) {
             case 0:
@@ -6028,9 +8549,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^lnx\.lu$/, /^url\.fm$/, /^z\.gs$/]
   },
   ready: function () {
-    var _ref140 = _asyncToGenerator( regeneratorRuntime.mark(function _callee138() {
+    var _ref140 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee138() {
       var a;
-      return regeneratorRuntime.wrap(function _callee138$(_context138) {
+      return _regenerator2.default.wrap(function _callee138$(_context138) {
         while (1) {
           switch (_context138.prev = _context138.next) {
             case 0:
@@ -6056,8 +8577,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /\?(.+)/
   },
   start: function () {
-    var _ref141 = _asyncToGenerator( regeneratorRuntime.mark(function _callee139(m) {
-      return regeneratorRuntime.wrap(function _callee139$(_context139) {
+    var _ref141 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee139(m) {
+      return _regenerator2.default.wrap(function _callee139$(_context139) {
         while (1) {
           switch (_context139.prev = _context139.next) {
             case 0:
@@ -6082,9 +8603,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\d+$/
   },
   ready: function () {
-    var _ref142 = _asyncToGenerator( regeneratorRuntime.mark(function _callee140() {
+    var _ref142 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee140() {
       var a;
-      return regeneratorRuntime.wrap(function _callee140$(_context140) {
+      return _regenerator2.default.wrap(function _callee140$(_context140) {
         while (1) {
           switch (_context140.prev = _context140.next) {
             case 0:
@@ -6110,9 +8631,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/Pro\/(.+)$/
   },
   ready: function () {
-    var _ref143 = _asyncToGenerator( regeneratorRuntime.mark(function _callee141(m) {
+    var _ref143 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee141(m) {
       var url;
-      return regeneratorRuntime.wrap(function _callee141$(_context141) {
+      return _regenerator2.default.wrap(function _callee141$(_context141) {
         while (1) {
           switch (_context141.prev = _context141.next) {
             case 0:
@@ -6144,8 +8665,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/(.+)$/
   },
   start: function () {
-    var _ref144 = _asyncToGenerator( regeneratorRuntime.mark(function _callee142(m) {
-      return regeneratorRuntime.wrap(function _callee142$(_context142) {
+    var _ref144 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee142(m) {
+      return _regenerator2.default.wrap(function _callee142$(_context142) {
         while (1) {
           switch (_context142.prev = _context142.next) {
             case 0:
@@ -6170,9 +8691,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://madlink.sk/*',
   start: function () {
-    var _ref145 = _asyncToGenerator( regeneratorRuntime.mark(function _callee143(m) {
+    var _ref145 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee143(m) {
       var text;
-      return regeneratorRuntime.wrap(function _callee143$(_context143) {
+      return _regenerator2.default.wrap(function _callee143$(_context143) {
         while (1) {
           switch (_context143.prev = _context143.next) {
             case 0:
@@ -6203,9 +8724,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^mant[ae][pb]\.in$/, /^st\.oploverz\.net$/, /^minidroid\.net$/, /^ww3\.awaremmxv\.com$/, /^linkpoi\.in$/]
   },
   ready: function () {
-    var _ref146 = _asyncToGenerator( regeneratorRuntime.mark(function _callee144() {
+    var _ref146 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee144() {
       var a;
-      return regeneratorRuntime.wrap(function _callee144$(_context144) {
+      return _regenerator2.default.wrap(function _callee144$(_context144) {
         while (1) {
           switch (_context144.prev = _context144.next) {
             case 0:
@@ -6230,9 +8751,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^susutin\.com$/
   },
   ready: function () {
-    var _ref147 = _asyncToGenerator( regeneratorRuntime.mark(function _callee145() {
+    var _ref147 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee145() {
       var s;
-      return regeneratorRuntime.wrap(function _callee145$(_context145) {
+      return _regenerator2.default.wrap(function _callee145$(_context145) {
         while (1) {
           switch (_context145.prev = _context145.next) {
             case 0:
@@ -6258,9 +8779,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+\/(.+)$/
   },
   start: function () {
-    var _ref148 = _asyncToGenerator( regeneratorRuntime.mark(function _callee146(m) {
+    var _ref148 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee146(m) {
       var url;
-      return regeneratorRuntime.wrap(function _callee146$(_context146) {
+      return _regenerator2.default.wrap(function _callee146$(_context146) {
         while (1) {
           switch (_context146.prev = _context146.next) {
             case 0:
@@ -6285,9 +8806,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^mirrorfilehost\.com$/
   },
   ready: function () {
-    var _ref149 = _asyncToGenerator( regeneratorRuntime.mark(function _callee147() {
+    var _ref149 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee147() {
       var frame, form, input;
-      return regeneratorRuntime.wrap(function _callee147$(_context147) {
+      return _regenerator2.default.wrap(function _callee147$(_context147) {
         while (1) {
           switch (_context147.prev = _context147.next) {
             case 0:
@@ -6322,9 +8843,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^moe\.god\.jp$/, /^moesubs\.akurapopo\.pro$/, /^dl\.nsfk\.in$/]
   },
   ready: function () {
-    var _ref150 = _asyncToGenerator( regeneratorRuntime.mark(function _callee148() {
+    var _ref150 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee148() {
       var a;
-      return regeneratorRuntime.wrap(function _callee148$(_context148) {
+      return _regenerator2.default.wrap(function _callee148$(_context148) {
         while (1) {
           switch (_context148.prev = _context148.next) {
             case 0:
@@ -6350,9 +8871,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/url\//
   },
   ready: function () {
-    var _ref151 = _asyncToGenerator( regeneratorRuntime.mark(function _callee149() {
+    var _ref151 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee149() {
       var a, i;
-      return regeneratorRuntime.wrap(function _callee149$(_context149) {
+      return _regenerator2.default.wrap(function _callee149$(_context149) {
         while (1) {
           switch (_context149.prev = _context149.next) {
             case 0:
@@ -6381,9 +8902,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[^/]+\/$/
   },
   ready: function () {
-    var _ref152 = _asyncToGenerator( regeneratorRuntime.mark(function _callee150() {
+    var _ref152 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee150() {
       var f, i;
-      return regeneratorRuntime.wrap(function _callee150$(_context150) {
+      return _regenerator2.default.wrap(function _callee150$(_context150) {
         while (1) {
           switch (_context150.prev = _context150.next) {
             case 0:
@@ -6413,9 +8934,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://my-link.pro/*',
   ready: function () {
-    var _ref153 = _asyncToGenerator( regeneratorRuntime.mark(function _callee151() {
+    var _ref153 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee151() {
       var i;
-      return regeneratorRuntime.wrap(function _callee151$(_context151) {
+      return _regenerator2.default.wrap(function _callee151$(_context151) {
         while (1) {
           switch (_context151.prev = _context151.next) {
             case 0:
@@ -6445,9 +8966,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/download\/(.+)/
   },
   start: function () {
-    var _ref154 = _asyncToGenerator( regeneratorRuntime.mark(function _callee152(m) {
+    var _ref154 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee152(m) {
       var url;
-      return regeneratorRuntime.wrap(function _callee152$(_context152) {
+      return _regenerator2.default.wrap(function _callee152$(_context152) {
         while (1) {
           switch (_context152.prev = _context152.next) {
             case 0:
@@ -6472,9 +8993,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^nsfw\.in$/
   },
   ready: function () {
-    var _ref155 = _asyncToGenerator( regeneratorRuntime.mark(function _callee153() {
+    var _ref155 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee153() {
       var a;
-      return regeneratorRuntime.wrap(function _callee153$(_context153) {
+      return _regenerator2.default.wrap(function _callee153$(_context153) {
         while (1) {
           switch (_context153.prev = _context153.next) {
             case 0:
@@ -6499,9 +9020,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^nutshellurl\.com$/
   },
   ready: function () {
-    var _ref156 = _asyncToGenerator( regeneratorRuntime.mark(function _callee154() {
+    var _ref156 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee154() {
       var iframe;
-      return regeneratorRuntime.wrap(function _callee154$(_context154) {
+      return _regenerator2.default.wrap(function _callee154$(_context154) {
         while (1) {
           switch (_context154.prev = _context154.next) {
             case 0:
@@ -6527,8 +9048,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/dl\/$/
   },
   ready: function () {
-    var _ref157 = _asyncToGenerator( regeneratorRuntime.mark(function _callee155() {
-      return regeneratorRuntime.wrap(function _callee155$(_context155) {
+    var _ref157 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee155() {
+      return _regenerator2.default.wrap(function _callee155$(_context155) {
         while (1) {
           switch (_context155.prev = _context155.next) {
             case 0:
@@ -6551,9 +9072,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.oni\.vn$/
   },
   ready: function () {
-    var _ref158 = _asyncToGenerator( regeneratorRuntime.mark(function _callee156() {
+    var _ref158 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee156() {
       var data, url;
-      return regeneratorRuntime.wrap(function _callee156$(_context156) {
+      return _regenerator2.default.wrap(function _callee156$(_context156) {
         while (1) {
           switch (_context156.prev = _context156.next) {
             case 0:
@@ -6591,8 +9112,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\/\w+$/
   },
   ready: function () {
-    var _ref159 = _asyncToGenerator( regeneratorRuntime.mark(function _callee157() {
-      return regeneratorRuntime.wrap(function _callee157$(_context157) {
+    var _ref159 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee157() {
+      return _regenerator2.default.wrap(function _callee157$(_context157) {
         while (1) {
           switch (_context157.prev = _context157.next) {
             case 0:
@@ -6615,9 +9136,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^oxyl\.me$/
   },
   ready: function () {
-    var _ref160 = _asyncToGenerator( regeneratorRuntime.mark(function _callee158() {
+    var _ref160 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee158() {
       var l;
-      return regeneratorRuntime.wrap(function _callee158$(_context158) {
+      return _regenerator2.default.wrap(function _callee158$(_context158) {
         while (1) {
           switch (_context158.prev = _context158.next) {
             case 0:
@@ -6648,9 +9169,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^p\.pw$/
   },
   ready: function () {
-    var _ref161 = _asyncToGenerator( regeneratorRuntime.mark(function _callee159() {
+    var _ref161 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee159() {
       var m;
-      return regeneratorRuntime.wrap(function _callee159$(_context159) {
+      return _regenerator2.default.wrap(function _callee159$(_context159) {
         while (1) {
           switch (_context159.prev = _context159.next) {
             case 0:
@@ -6677,9 +9198,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^pdi2\.net$/
   },
   ready: function () {
-    var _ref162 = _asyncToGenerator( regeneratorRuntime.mark(function _callee160() {
+    var _ref162 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee160() {
       var s;
-      return regeneratorRuntime.wrap(function _callee160$(_context160) {
+      return _regenerator2.default.wrap(function _callee160$(_context160) {
         while (1) {
           switch (_context160.prev = _context160.next) {
             case 0:
@@ -6706,9 +9227,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/(go|prepair|request|collect|analyze)\/[a-f0-9]+$/
   },
   ready: function () {
-    var _ref163 = _asyncToGenerator( regeneratorRuntime.mark(function _callee161() {
+    var _ref163 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee161() {
       var a;
-      return regeneratorRuntime.wrap(function _callee161$(_context161) {
+      return _regenerator2.default.wrap(function _callee161$(_context161) {
         while (1) {
           switch (_context161.prev = _context161.next) {
             case 0:
@@ -6731,9 +9252,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://reffbux.com/refflinx/view/*',
   ready: function () {
-    var _ref164 = _asyncToGenerator( regeneratorRuntime.mark(function _callee162() {
+    var _ref164 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee162() {
       var m, id, share, location, text;
-      return regeneratorRuntime.wrap(function _callee162$(_context162) {
+      return _regenerator2.default.wrap(function _callee162$(_context162) {
         while (1) {
           switch (_context162.prev = _context162.next) {
             case 0:
@@ -6777,9 +9298,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://richlink.com/app/webscr?cmd=_click&key=*',
   ready: function () {
-    var _ref165 = _asyncToGenerator( regeneratorRuntime.mark(function _callee163() {
+    var _ref165 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee163() {
       var f;
-      return regeneratorRuntime.wrap(function _callee163$(_context163) {
+      return _regenerator2.default.wrap(function _callee163$(_context163) {
         while (1) {
           switch (_context163.prev = _context163.next) {
             case 0:
@@ -6810,9 +9331,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://rijaliti.info/*.php',
   ready: function () {
-    var _ref166 = _asyncToGenerator( regeneratorRuntime.mark(function _callee164() {
+    var _ref166 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee164() {
       var a;
-      return regeneratorRuntime.wrap(function _callee164$(_context164) {
+      return _regenerator2.default.wrap(function _callee164$(_context164) {
         while (1) {
           switch (_context164.prev = _context164.next) {
             case 0:
@@ -6838,9 +9359,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/.+/
   },
   ready: function () {
-    var _ref167 = _asyncToGenerator( regeneratorRuntime.mark(function _callee165() {
+    var _ref167 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee165() {
       var s;
-      return regeneratorRuntime.wrap(function _callee165$(_context165) {
+      return _regenerator2.default.wrap(function _callee165$(_context165) {
         while (1) {
           switch (_context165.prev = _context165.next) {
             case 0:
@@ -6881,9 +9402,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^preview\.rlu\.ru$/
   },
   ready: function () {
-    var _ref168 = _asyncToGenerator( regeneratorRuntime.mark(function _callee166() {
+    var _ref168 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee166() {
       var a;
-      return regeneratorRuntime.wrap(function _callee166$(_context166) {
+      return _regenerator2.default.wrap(function _callee166$(_context166) {
         while (1) {
           switch (_context166.prev = _context166.next) {
             case 0:
@@ -6908,9 +9429,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^robo\.us$/
   },
   ready: function () {
-    var _ref169 = _asyncToGenerator( regeneratorRuntime.mark(function _callee167() {
+    var _ref169 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee167() {
       var url;
-      return regeneratorRuntime.wrap(function _callee167$(_context167) {
+      return _regenerator2.default.wrap(function _callee167$(_context167) {
         while (1) {
           switch (_context167.prev = _context167.next) {
             case 0:
@@ -6936,9 +9457,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.ron\.vn$/
   },
   ready: function () {
-    var _ref170 = _asyncToGenerator( regeneratorRuntime.mark(function _callee168() {
+    var _ref170 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee168() {
       var script, data, url;
-      return regeneratorRuntime.wrap(function _callee168$(_context168) {
+      return _regenerator2.default.wrap(function _callee168$(_context168) {
         while (1) {
           switch (_context168.prev = _context168.next) {
             case 0:
@@ -6972,9 +9493,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+\/$/
   },
   ready: function () {
-    var _ref171 = _asyncToGenerator( regeneratorRuntime.mark(function _callee169() {
+    var _ref171 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee169() {
       var m;
-      return regeneratorRuntime.wrap(function _callee169$(_context169) {
+      return _regenerator2.default.wrap(function _callee169$(_context169) {
         while (1) {
           switch (_context169.prev = _context169.next) {
             case 0:
@@ -7000,9 +9521,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /\/\w+/
   },
   ready: function () {
-    var _ref172 = _asyncToGenerator( regeneratorRuntime.mark(function _callee170() {
+    var _ref172 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee170() {
       var directUrl;
-      return regeneratorRuntime.wrap(function _callee170$(_context170) {
+      return _regenerator2.default.wrap(function _callee170$(_context170) {
         while (1) {
           switch (_context170.prev = _context170.next) {
             case 0:
@@ -7036,8 +9557,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /return_url=([^&]+)/
   },
   start: function () {
-    var _ref173 = _asyncToGenerator( regeneratorRuntime.mark(function _callee171(m) {
-      return regeneratorRuntime.wrap(function _callee171$(_context171) {
+    var _ref173 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee171(m) {
+      return _regenerator2.default.wrap(function _callee171$(_context171) {
         while (1) {
           switch (_context171.prev = _context171.next) {
             case 0:
@@ -7061,9 +9582,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?(apploadz\.ru|seomafia\.net)$/
   },
   ready: function () {
-    var _ref174 = _asyncToGenerator( regeneratorRuntime.mark(function _callee172() {
+    var _ref174 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee172() {
       var a;
-      return regeneratorRuntime.wrap(function _callee172$(_context172) {
+      return _regenerator2.default.wrap(function _callee172$(_context172) {
         while (1) {
           switch (_context172.prev = _context172.next) {
             case 0:
@@ -7087,9 +9608,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: /http:\/\/setlinks\.us\/(p|t|d).*/,
   ready: function () {
-    var _ref175 = _asyncToGenerator( regeneratorRuntime.mark(function _callee173() {
+    var _ref175 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee173() {
       var k, aLinks;
-      return regeneratorRuntime.wrap(function _callee173$(_context173) {
+      return _regenerator2.default.wrap(function _callee173$(_context173) {
         while (1) {
           switch (_context173.prev = _context173.next) {
             case 0:
@@ -7134,13 +9655,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/freeze\/.+/
     },
     ready: function () {
-      var _ref176 = _asyncToGenerator( regeneratorRuntime.mark(function _callee174() {
+      var _ref176 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee174() {
         var promise, url;
-        return regeneratorRuntime.wrap(function _callee174$(_context174) {
+        return _regenerator2.default.wrap(function _callee174$(_context174) {
           while (1) {
             switch (_context174.prev = _context174.next) {
               case 0:
-                promise = new Promise(function (resolve) {
+                promise = new _promise2.default(function (resolve) {
                   var o = new MutationObserver(function (mutations) {
                     mutations.forEach(function (mutation) {
                       if (mutation.target.getAttribute('class').match(/active/)) {
@@ -7179,9 +9700,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /https?:\/\//
     },
     start: function () {
-      var _ref177 = _asyncToGenerator( regeneratorRuntime.mark(function _callee175() {
+      var _ref177 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee175() {
         var url;
-        return regeneratorRuntime.wrap(function _callee175$(_context175) {
+        return _regenerator2.default.wrap(function _callee175$(_context175) {
           while (1) {
             switch (_context175.prev = _context175.next) {
               case 0:
@@ -7209,8 +9730,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/[\d\w]+/
     },
     start: function () {
-      var _ref178 = _asyncToGenerator( regeneratorRuntime.mark(function _callee176() {
-        return regeneratorRuntime.wrap(function _callee176$(_context176) {
+      var _ref178 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee176() {
+        return _regenerator2.default.wrap(function _callee176$(_context176) {
           while (1) {
             switch (_context176.prev = _context176.next) {
               case 0:
@@ -7228,9 +9749,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       return start;
     }(),
     ready: function () {
-      var _ref179 = _asyncToGenerator( regeneratorRuntime.mark(function _callee177() {
+      var _ref179 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee177() {
         var m, o;
-        return regeneratorRuntime.wrap(function _callee177$(_context177) {
+        return _regenerator2.default.wrap(function _callee177$(_context177) {
           while (1) {
             switch (_context177.prev = _context177.next) {
               case 0:
@@ -7299,9 +9820,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function () {
-    var _ref180 = _asyncToGenerator( regeneratorRuntime.mark(function _callee178() {
+    var _ref180 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee178() {
       var f, o;
-      return regeneratorRuntime.wrap(function _callee178$(_context178) {
+      return _regenerator2.default.wrap(function _callee178$(_context178) {
         while (1) {
           switch (_context178.prev = _context178.next) {
             case 0:
@@ -7348,9 +9869,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/ok\/\w+$/
   }],
   ready: function () {
-    var _ref181 = _asyncToGenerator( regeneratorRuntime.mark(function _callee179() {
+    var _ref181 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee179() {
       var a, i;
-      return regeneratorRuntime.wrap(function _callee179$(_context179) {
+      return _regenerator2.default.wrap(function _callee179$(_context179) {
         while (1) {
           switch (_context179.prev = _context179.next) {
             case 0:
@@ -7378,9 +9899,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\/\w+$/
   },
   ready: function () {
-    var _ref182 = _asyncToGenerator( regeneratorRuntime.mark(function _callee180() {
+    var _ref182 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee180() {
       var f;
-      return regeneratorRuntime.wrap(function _callee180$(_context180) {
+      return _regenerator2.default.wrap(function _callee180$(_context180) {
         while (1) {
           switch (_context180.prev = _context180.next) {
             case 0:
@@ -7404,8 +9925,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^short\.am$/
   },
   ready: function () {
-    var _ref183 = _asyncToGenerator( regeneratorRuntime.mark(function _callee181() {
-      return regeneratorRuntime.wrap(function _callee181$(_context181) {
+    var _ref183 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee181() {
+      return _regenerator2.default.wrap(function _callee181$(_context181) {
         while (1) {
           switch (_context181.prev = _context181.next) {
             case 0:
@@ -7437,9 +9958,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function () {
-    var _ref184 = _asyncToGenerator( regeneratorRuntime.mark(function _callee182() {
+    var _ref184 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee182() {
       var l;
-      return regeneratorRuntime.wrap(function _callee182$(_context182) {
+      return _regenerator2.default.wrap(function _callee182$(_context182) {
         while (1) {
           switch (_context182.prev = _context182.next) {
             case 0:
@@ -7465,9 +9986,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: [/^\/\w+$/, /^\/url_redirector\.html$/]
   },
   ready: function () {
-    var _ref185 = _asyncToGenerator( regeneratorRuntime.mark(function _callee183() {
+    var _ref185 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee183() {
       var f, _$find5, _$find6, v;
-      return regeneratorRuntime.wrap(function _callee183$(_context183) {
+      return _regenerator2.default.wrap(function _callee183$(_context183) {
         while (1) {
           switch (_context183.prev = _context183.next) {
             case 0:
@@ -7477,7 +9998,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   return _ADSBYPASSER_NAMESPACE__._.none;
                 }
                 return 'Target frame found';
-              }), _$find6 = _slicedToArray(_$find5, 2), v = _$find6[1];
+              }), _$find6 = (0, _slicedToArray3.default)(_$find5, 2), v = _$find6[1];
               _context183.next = 4;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(v.src);
             case 4:
@@ -7500,9 +10021,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /i=([^&]+)/
   },
   start: function () {
-    var _ref186 = _asyncToGenerator( regeneratorRuntime.mark(function _callee184(m) {
+    var _ref186 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee184(m) {
       var url;
-      return regeneratorRuntime.wrap(function _callee184$(_context184) {
+      return _regenerator2.default.wrap(function _callee184$(_context184) {
         while (1) {
           switch (_context184.prev = _context184.next) {
             case 0:
@@ -7528,9 +10049,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/(.+)/
   },
   start: function () {
-    var _ref187 = _asyncToGenerator( regeneratorRuntime.mark(function _callee185(m) {
+    var _ref187 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee185(m) {
       var url;
-      return regeneratorRuntime.wrap(function _callee185$(_context185) {
+      return _regenerator2.default.wrap(function _callee185$(_context185) {
         while (1) {
           switch (_context185.prev = _context185.next) {
             case 0:
@@ -7556,9 +10077,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/shrinked\//
   },
   ready: function () {
-    var _ref188 = _asyncToGenerator( regeneratorRuntime.mark(function _callee186() {
+    var _ref188 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee186() {
       var i;
-      return regeneratorRuntime.wrap(function _callee186$(_context186) {
+      return _regenerator2.default.wrap(function _callee186$(_context186) {
         while (1) {
           switch (_context186.prev = _context186.next) {
             case 0:
@@ -7584,9 +10105,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[se]\//
   },
   ready: function () {
-    var _ref189 = _asyncToGenerator( regeneratorRuntime.mark(function _callee187() {
+    var _ref189 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee187() {
       var i;
-      return regeneratorRuntime.wrap(function _callee187$(_context187) {
+      return _regenerator2.default.wrap(function _callee187$(_context187) {
         while (1) {
           switch (_context187.prev = _context187.next) {
             case 0:
@@ -7612,9 +10133,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\d+\/(.+)$/
   },
   start: function () {
-    var _ref190 = _asyncToGenerator( regeneratorRuntime.mark(function _callee188(m) {
+    var _ref190 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee188(m) {
       var url;
-      return regeneratorRuntime.wrap(function _callee188$(_context188) {
+      return _regenerator2.default.wrap(function _callee188$(_context188) {
         while (1) {
           switch (_context188.prev = _context188.next) {
             case 0:
@@ -7641,9 +10162,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/goto\/([^?]+)/
   },
   start: function () {
-    var _ref191 = _asyncToGenerator( regeneratorRuntime.mark(function _callee189(m) {
+    var _ref191 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee189(m) {
       var l;
-      return regeneratorRuntime.wrap(function _callee189$(_context189) {
+      return _regenerator2.default.wrap(function _callee189$(_context189) {
         while (1) {
           switch (_context189.prev = _context189.next) {
             case 0:
@@ -7671,9 +10192,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^smll\.io$/
   },
   ready: function () {
-    var _ref192 = _asyncToGenerator( regeneratorRuntime.mark(function _callee190() {
+    var _ref192 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee190() {
       var m;
-      return regeneratorRuntime.wrap(function _callee190$(_context190) {
+      return _regenerator2.default.wrap(function _callee190$(_context190) {
         while (1) {
           switch (_context190.prev = _context190.next) {
             case 0:
@@ -7699,9 +10220,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\/\w+$/
   },
   ready: function () {
-    var _ref193 = _asyncToGenerator( regeneratorRuntime.mark(function _callee191() {
+    var _ref193 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee191() {
       var id, url;
-      return regeneratorRuntime.wrap(function _callee191$(_context191) {
+      return _regenerator2.default.wrap(function _callee191$(_context191) {
         while (1) {
           switch (_context191.prev = _context191.next) {
             case 0:
@@ -7736,9 +10257,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/i\//
   },
   ready: function () {
-    var _ref194 = _asyncToGenerator( regeneratorRuntime.mark(function _callee192() {
+    var _ref194 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee192() {
       var a, href, method, csrfParam, csrfToken, form, input, script, m;
-      return regeneratorRuntime.wrap(function _callee192$(_context192) {
+      return _regenerator2.default.wrap(function _callee192$(_context192) {
         while (1) {
           switch (_context192.prev = _context192.next) {
             case 0:
@@ -7804,9 +10325,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^stash-coins\.com$/
   },
   start: function () {
-    var _ref195 = _asyncToGenerator( regeneratorRuntime.mark(function _callee193() {
+    var _ref195 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee193() {
       var url, i;
-      return regeneratorRuntime.wrap(function _callee193$(_context193) {
+      return _regenerator2.default.wrap(function _callee193$(_context193) {
         while (1) {
           switch (_context193.prev = _context193.next) {
             case 0:
@@ -7835,9 +10356,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?xb=(.+)$/
   },
   start: function () {
-    var _ref196 = _asyncToGenerator( regeneratorRuntime.mark(function _callee194(m) {
+    var _ref196 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee194(m) {
       var url;
-      return regeneratorRuntime.wrap(function _callee194$(_context194) {
+      return _regenerator2.default.wrap(function _callee194$(_context194) {
         while (1) {
           switch (_context194.prev = _context194.next) {
             case 0:
@@ -7864,8 +10385,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /(?:\?|&)oldurl=([^&]+)(?:$|&)/
   },
   start: function () {
-    var _ref197 = _asyncToGenerator( regeneratorRuntime.mark(function _callee195(m) {
-      return regeneratorRuntime.wrap(function _callee195$(_context195) {
+    var _ref197 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee195(m) {
+      return _regenerator2.default.wrap(function _callee195$(_context195) {
         while (1) {
           switch (_context195.prev = _context195.next) {
             case 0:
@@ -7926,9 +10447,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?url=([a-zA-Z0-9/=]+)=$/
   }],
   start: function () {
-    var _ref198 = _asyncToGenerator( regeneratorRuntime.mark(function _callee196(m) {
+    var _ref198 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee196(m) {
       var rawLink;
-      return regeneratorRuntime.wrap(function _callee196$(_context196) {
+      return _regenerator2.default.wrap(function _callee196$(_context196) {
         while (1) {
           switch (_context196.prev = _context196.next) {
             case 0:
@@ -7959,9 +10480,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /go=([\w\\]+=*)/
   }],
   start: function () {
-    var _ref199 = _asyncToGenerator( regeneratorRuntime.mark(function _callee197(m) {
+    var _ref199 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee197(m) {
       var l, table;
-      return regeneratorRuntime.wrap(function _callee197$(_context197) {
+      return _regenerator2.default.wrap(function _callee197$(_context197) {
         while (1) {
           switch (_context197.prev = _context197.next) {
             case 0:
@@ -7997,9 +10518,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+\/cost\/([\w.]+)\/?$/
   },
   start: function () {
-    var _ref200 = _asyncToGenerator( regeneratorRuntime.mark(function _callee198(m) {
+    var _ref200 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee198(m) {
       var l;
-      return regeneratorRuntime.wrap(function _callee198$(_context198) {
+      return _regenerator2.default.wrap(function _callee198$(_context198) {
         while (1) {
           switch (_context198.prev = _context198.next) {
             case 0:
@@ -8025,9 +10546,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /get=([^&]+)/
   },
   ready: function () {
-    var _ref201 = _asyncToGenerator( regeneratorRuntime.mark(function _callee199(m) {
+    var _ref201 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee199(m) {
       var s;
-      return regeneratorRuntime.wrap(function _callee199$(_context199) {
+      return _regenerator2.default.wrap(function _callee199$(_context199) {
         while (1) {
           switch (_context199.prev = _context199.next) {
             case 0:
@@ -8062,9 +10583,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^kombatch\.loncat\.pw$/
   },
   ready: function () {
-    var _ref202 = _asyncToGenerator( regeneratorRuntime.mark(function _callee200() {
+    var _ref202 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee200() {
       var s;
-      return regeneratorRuntime.wrap(function _callee200$(_context200) {
+      return _regenerator2.default.wrap(function _callee200$(_context200) {
         while (1) {
           switch (_context200.prev = _context200.next) {
             case 0:
@@ -8091,9 +10612,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^ww[23]\.picnictrans\.com$/, /^short\.awsubs\.(co|me)$/]
   },
   ready: function () {
-    var _ref203 = _asyncToGenerator( regeneratorRuntime.mark(function _callee201() {
+    var _ref203 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee201() {
       var a;
-      return regeneratorRuntime.wrap(function _callee201$(_context201) {
+      return _regenerator2.default.wrap(function _callee201$(_context201) {
         while (1) {
           switch (_context201.prev = _context201.next) {
             case 0:
@@ -8119,9 +10640,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: [/^\/link\//, /^\/safe\//]
   },
   ready: function () {
-    var _ref204 = _asyncToGenerator( regeneratorRuntime.mark(function _callee202() {
+    var _ref204 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee202() {
       var a;
-      return regeneratorRuntime.wrap(function _callee202$(_context202) {
+      return _regenerator2.default.wrap(function _callee202$(_context202) {
         while (1) {
           switch (_context202.prev = _context202.next) {
             case 0:
@@ -8146,9 +10667,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^thinfi\.com$/
   },
   ready: function () {
-    var _ref205 = _asyncToGenerator( regeneratorRuntime.mark(function _callee203() {
+    var _ref205 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee203() {
       var a;
-      return regeneratorRuntime.wrap(function _callee203$(_context203) {
+      return _regenerator2.default.wrap(function _callee203$(_context203) {
         while (1) {
           switch (_context203.prev = _context203.next) {
             case 0:
@@ -8175,8 +10696,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?page=([^&]+)/
   },
   start: function () {
-    var _ref206 = _asyncToGenerator( regeneratorRuntime.mark(function _callee204(m) {
-      return regeneratorRuntime.wrap(function _callee204$(_context204) {
+    var _ref206 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee204(m) {
+      return _regenerator2.default.wrap(function _callee204$(_context204) {
         while (1) {
           switch (_context204.prev = _context204.next) {
             case 0:
@@ -8200,9 +10721,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^topload\.pro$/
   },
   ready: function () {
-    var _ref207 = _asyncToGenerator( regeneratorRuntime.mark(function _callee205() {
+    var _ref207 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee205() {
       var a;
-      return regeneratorRuntime.wrap(function _callee205$(_context205) {
+      return _regenerator2.default.wrap(function _callee205$(_context205) {
         while (1) {
           switch (_context205.prev = _context205.next) {
             case 0:
@@ -8229,9 +10750,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /\?ads=([a-zA-Z0-9=]+)$/
   },
   start: function () {
-    var _ref208 = _asyncToGenerator( regeneratorRuntime.mark(function _callee206(m) {
+    var _ref208 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee206(m) {
       var l;
-      return regeneratorRuntime.wrap(function _callee206$(_context206) {
+      return _regenerator2.default.wrap(function _callee206$(_context206) {
         while (1) {
           switch (_context206.prev = _context206.next) {
             case 0:
@@ -8256,9 +10777,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?typ\.me$/
   },
   ready: function () {
-    var _ref209 = _asyncToGenerator( regeneratorRuntime.mark(function _callee207() {
+    var _ref209 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee207() {
       var a;
-      return regeneratorRuntime.wrap(function _callee207$(_context207) {
+      return _regenerator2.default.wrap(function _callee207$(_context207) {
         while (1) {
           switch (_context207.prev = _context207.next) {
             case 0:
@@ -8285,9 +10806,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^(?:\?a=\d&c=(\d+))?$/
   },
   start: function () {
-    var _ref210 = _asyncToGenerator( regeneratorRuntime.mark(function _callee208(m) {
+    var _ref210 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee208(m) {
       var linkId, directLink;
-      return regeneratorRuntime.wrap(function _callee208$(_context208) {
+      return _regenerator2.default.wrap(function _callee208$(_context208) {
         while (1) {
           switch (_context208.prev = _context208.next) {
             case 0:
@@ -8313,9 +10834,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^unfake\.it$/
   },
   ready: function () {
-    var _ref211 = _asyncToGenerator( regeneratorRuntime.mark(function _callee209() {
+    var _ref211 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee209() {
       var frame, i;
-      return regeneratorRuntime.wrap(function _callee209$(_context209) {
+      return _regenerator2.default.wrap(function _callee209$(_context209) {
         while (1) {
           switch (_context209.prev = _context209.next) {
             case 0:
@@ -8342,9 +10863,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function () {
-    var _ref212 = _asyncToGenerator( regeneratorRuntime.mark(function _callee210() {
+    var _ref212 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee210() {
       var a;
-      return regeneratorRuntime.wrap(function _callee210$(_context210) {
+      return _regenerator2.default.wrap(function _callee210$(_context210) {
         while (1) {
           switch (_context210.prev = _context210.next) {
             case 0:
@@ -8369,9 +10890,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^url\.ie$/
   },
   ready: function () {
-    var _ref213 = _asyncToGenerator( regeneratorRuntime.mark(function _callee211() {
+    var _ref213 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee211() {
       var a;
-      return regeneratorRuntime.wrap(function _callee211$(_context211) {
+      return _regenerator2.default.wrap(function _callee211$(_context211) {
         while (1) {
           switch (_context211.prev = _context211.next) {
             case 0:
@@ -8396,9 +10917,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/(^|\.)urlcash\.(com|net|org)$/, /^(bat5|detonating|celebclk|eightteen|smilinglinks|peekatmygirlfriend|pornyhost|clb1|urlgalleries)\.com$/, /^looble\.net$/, /^xxxs\.org$/]
   },
   ready: function () {
-    var _ref214 = _asyncToGenerator( regeneratorRuntime.mark(function _callee212() {
+    var _ref214 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee212() {
       var matches;
-      return regeneratorRuntime.wrap(function _callee212$(_context212) {
+      return _regenerator2.default.wrap(function _callee212$(_context212) {
         while (1) {
           switch (_context212.prev = _context212.next) {
             case 0:
@@ -8438,9 +10959,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^urlinn\.com$/
   },
   ready: function () {
-    var _ref215 = _asyncToGenerator( regeneratorRuntime.mark(function _callee213() {
+    var _ref215 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee213() {
       var m;
-      return regeneratorRuntime.wrap(function _callee213$(_context213) {
+      return _regenerator2.default.wrap(function _callee213$(_context213) {
         while (1) {
           switch (_context213.prev = _context213.next) {
             case 0:
@@ -8469,9 +10990,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^urlms\.com$/
   },
   ready: function () {
-    var _ref216 = _asyncToGenerator( regeneratorRuntime.mark(function _callee214() {
+    var _ref216 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee214() {
       var iframe;
-      return regeneratorRuntime.wrap(function _callee214$(_context214) {
+      return _regenerator2.default.wrap(function _callee214$(_context214) {
         while (1) {
           switch (_context214.prev = _context214.next) {
             case 0:
@@ -8496,9 +11017,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?urlv2\.com$/
   },
   ready: function () {
-    var _ref217 = _asyncToGenerator( regeneratorRuntime.mark(function _callee215() {
+    var _ref217 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee215() {
       var path, m, l;
-      return regeneratorRuntime.wrap(function _callee215$(_context215) {
+      return _regenerator2.default.wrap(function _callee215$(_context215) {
         while (1) {
           switch (_context215.prev = _context215.next) {
             case 0:
@@ -8538,9 +11059,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\/\w+$/
   },
   ready: function () {
-    var _ref218 = _asyncToGenerator( regeneratorRuntime.mark(function _callee216() {
+    var _ref218 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee216() {
       var a;
-      return regeneratorRuntime.wrap(function _callee216$(_context216) {
+      return _regenerator2.default.wrap(function _callee216$(_context216) {
         while (1) {
           switch (_context216.prev = _context216.next) {
             case 0:
@@ -8565,9 +11086,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^vavi\.co$/
   },
   ready: function () {
-    var _ref219 = _asyncToGenerator( regeneratorRuntime.mark(function _callee217() {
+    var _ref219 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee217() {
       var l;
-      return regeneratorRuntime.wrap(function _callee217$(_context217) {
+      return _regenerator2.default.wrap(function _callee217$(_context217) {
         while (1) {
           switch (_context217.prev = _context217.next) {
             case 0:
@@ -8593,9 +11114,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   start: function () {
-    var _ref220 = _asyncToGenerator( regeneratorRuntime.mark(function _callee218() {
+    var _ref220 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee218() {
       var text, m;
-      return regeneratorRuntime.wrap(function _callee218$(_context218) {
+      return _regenerator2.default.wrap(function _callee218$(_context218) {
         while (1) {
           switch (_context218.prev = _context218.next) {
             case 0:
@@ -8627,9 +11148,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.viidii\.info$/
   },
   ready: function () {
-    var _ref221 = _asyncToGenerator( regeneratorRuntime.mark(function _callee219() {
+    var _ref221 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee219() {
       var o;
-      return regeneratorRuntime.wrap(function _callee219$(_context219) {
+      return _regenerator2.default.wrap(function _callee219$(_context219) {
         while (1) {
           switch (_context219.prev = _context219.next) {
             case 0:
@@ -8654,9 +11175,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?vir\.al$/
   },
   ready: function () {
-    var _ref222 = _asyncToGenerator( regeneratorRuntime.mark(function _callee220() {
+    var _ref222 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee220() {
       var m;
-      return regeneratorRuntime.wrap(function _callee220$(_context220) {
+      return _regenerator2.default.wrap(function _callee220$(_context220) {
         while (1) {
           switch (_context220.prev = _context220.next) {
             case 0:
@@ -8687,9 +11208,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?wzzq\.me$/
   },
   ready: function () {
-    var _ref223 = _asyncToGenerator( regeneratorRuntime.mark(function _callee221() {
+    var _ref223 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee221() {
       var l;
-      return regeneratorRuntime.wrap(function _callee221$(_context221) {
+      return _regenerator2.default.wrap(function _callee221$(_context221) {
         while (1) {
           switch (_context221.prev = _context221.next) {
             case 0:
@@ -8714,9 +11235,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^xlink\.me$/
   },
   ready: function () {
-    var _ref224 = _asyncToGenerator( regeneratorRuntime.mark(function _callee222() {
+    var _ref224 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee222() {
       var a;
-      return regeneratorRuntime.wrap(function _callee222$(_context222) {
+      return _regenerator2.default.wrap(function _callee222$(_context222) {
         while (1) {
           switch (_context222.prev = _context222.next) {
             case 0:
@@ -8745,9 +11266,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://yep.it/preview.php?p=*',
   ready: function () {
-    var _ref225 = _asyncToGenerator( regeneratorRuntime.mark(function _callee223() {
+    var _ref225 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee223() {
       var link;
-      return regeneratorRuntime.wrap(function _callee223$(_context223) {
+      return _regenerator2.default.wrap(function _callee223$(_context223) {
         while (1) {
           switch (_context223.prev = _context223.next) {
             case 0:
@@ -8769,9 +11290,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 (function () {
   var getURL = function () {
-    var _ref227 = _asyncToGenerator( regeneratorRuntime.mark(function _callee225(url) {
+    var _ref227 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee225(url) {
       var text, goodURL;
-      return regeneratorRuntime.wrap(function _callee225$(_context225) {
+      return _regenerator2.default.wrap(function _callee225$(_context225) {
         while (1) {
           switch (_context225.prev = _context225.next) {
             case 0:
@@ -8808,9 +11329,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: 'http://www.yooclick.com/l/*',
     ready: function () {
-      var _ref226 = _asyncToGenerator( regeneratorRuntime.mark(function _callee224() {
+      var _ref226 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee224() {
         var uniq, path, url;
-        return regeneratorRuntime.wrap(function _callee224$(_context224) {
+        return _regenerator2.default.wrap(function _callee224$(_context224) {
           while (1) {
             switch (_context224.prev = _context224.next) {
               case 0:
@@ -8846,9 +11367,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/3\/(.+)$/
   },
   start: function () {
-    var _ref228 = _asyncToGenerator( regeneratorRuntime.mark(function _callee226(m) {
+    var _ref228 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee226(m) {
       var url;
-      return regeneratorRuntime.wrap(function _callee226$(_context226) {
+      return _regenerator2.default.wrap(function _callee226$(_context226) {
         while (1) {
           switch (_context226.prev = _context226.next) {
             case 0:
@@ -8874,9 +11395,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/2\/(.+)$/
   },
   start: function () {
-    var _ref229 = _asyncToGenerator( regeneratorRuntime.mark(function _callee227(m) {
+    var _ref229 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee227(m) {
       var url;
-      return regeneratorRuntime.wrap(function _callee227$(_context227) {
+      return _regenerator2.default.wrap(function _callee227$(_context227) {
         while (1) {
           switch (_context227.prev = _context227.next) {
             case 0:
@@ -8904,9 +11425,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/link\/$/
   },
   ready: function () {
-    var _ref230 = _asyncToGenerator( regeneratorRuntime.mark(function _callee228() {
+    var _ref230 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee228() {
       var a;
-      return regeneratorRuntime.wrap(function _callee228$(_context228) {
+      return _regenerator2.default.wrap(function _callee228$(_context228) {
         while (1) {
           switch (_context228.prev = _context228.next) {
             case 0:
@@ -8929,8 +11450,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://zo.mu/redirector/process?link=*',
   ready: function () {
-    var _ref231 = _asyncToGenerator( regeneratorRuntime.mark(function _callee229() {
-      return regeneratorRuntime.wrap(function _callee229$(_context229) {
+    var _ref231 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee229() {
+      return _regenerator2.default.wrap(function _callee229$(_context229) {
         while (1) {
           switch (_context229.prev = _context229.next) {
             case 0:
@@ -8954,9 +11475,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^zzz\.gl$/
   },
   ready: function () {
-    var _ref232 = _asyncToGenerator( regeneratorRuntime.mark(function _callee230() {
+    var _ref232 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee230() {
       var m;
-      return regeneratorRuntime.wrap(function _callee230$(_context230) {
+      return _regenerator2.default.wrap(function _callee230$(_context230) {
         while (1) {
           switch (_context230.prev = _context230.next) {
             case 0:
@@ -8990,9 +11511,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       hash: /(?:#([a-zA-Z0-9]+))?/
     },
     ready: function () {
-      var _ref233 = _asyncToGenerator( regeneratorRuntime.mark(function _callee231(m) {
+      var _ref233 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee231(m) {
         var sjcl, paste_id, paste_salt, API_URL, pasteInfo, raw_paste, elm, frame;
-        return regeneratorRuntime.wrap(function _callee231$(_context231) {
+        return _regenerator2.default.wrap(function _callee231$(_context231) {
           while (1) {
             switch (_context231.prev = _context231.next) {
               case 0:
@@ -9071,8 +11592,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function () {
-    var _ref234 = _asyncToGenerator( regeneratorRuntime.mark(function _callee232() {
-      return regeneratorRuntime.wrap(function _callee232$(_context232) {
+    var _ref234 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee232() {
+      return _regenerator2.default.wrap(function _callee232$(_context232) {
         while (1) {
           switch (_context232.prev = _context232.next) {
             case 0:
@@ -9090,7 +11611,6 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return ready;
   }()
 });
-}.call(exports, __webpack_require__(1)["Promise_"]))
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -9098,17 +11618,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.$ = exports._ = undefined;
-var _ajax = __webpack_require__(9);
-var _cookie = __webpack_require__(10);
-var _core = __webpack_require__(0);
-var _dispatcher = __webpack_require__(4);
-var _dom = __webpack_require__(11);
-var _link = __webpack_require__(12);
-var _logger = __webpack_require__(3);
-var _misc = __webpack_require__(13);
-var _platform = __webpack_require__(2);
-exports._ = _;
-exports.$ = $;
+var _ajax = __webpack_require__(145);
+var _cookie = __webpack_require__(146);
+var _core = __webpack_require__(4);
+var _dispatcher = __webpack_require__(51);
+var _dom = __webpack_require__(147);
+var _link = __webpack_require__(148);
+var _logger = __webpack_require__(33);
+var _misc = __webpack_require__(149);
+var _platform = __webpack_require__(23);
 var _ = {
   AdsBypasserError: _core.AdsBypasserError,
   find: _core.find,
@@ -9138,26 +11656,33 @@ $.resetCookies = _cookie.resetCookies;
 $.searchFromScripts = _dom.searchFromScripts;
 $.setCookie = _cookie.setCookie;
 $.window = _platform.uswProxy;
+exports._ = _;
+exports.$ = $;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-(function(Promise) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.post = exports.get = undefined;
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-var _core = __webpack_require__(0);
-var _platform = __webpack_require__(2);
-exports.get = get;
-exports.post = post;
+var _promise = __webpack_require__(15);
+var _promise2 = _interopRequireDefault(_promise);
+var _stringify = __webpack_require__(67);
+var _stringify2 = _interopRequireDefault(_stringify);
+var _typeof2 = __webpack_require__(32);
+var _typeof3 = _interopRequireDefault(_typeof2);
+var _getOwnPropertyNames = __webpack_require__(69);
+var _getOwnPropertyNames2 = _interopRequireDefault(_getOwnPropertyNames);
+var _core = __webpack_require__(4);
+var _platform = __webpack_require__(23);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function deepJoin(prefix, object) {
   var _this = this;
-  var keys = Object.getOwnPropertyNames(object);
+  var keys = (0, _getOwnPropertyNames2.default)(object);
   var mapped = (0, _core.map)(keys, function (k) {
     var v = object[k];
     var key = (0, _core.template)('{0}[{1}]')(prefix, k);
-    if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') {
+    if ((typeof v === 'undefined' ? 'undefined' : (0, _typeof3.default)(v)) === 'object') {
       return deepJoin(key, v);
     }
     var tpl = (0, _core.template)('{0}={1}');
@@ -9168,7 +11693,7 @@ function deepJoin(prefix, object) {
 }
 function toQuery(data) {
   var _this2 = this;
-  var type = typeof data === 'undefined' ? 'undefined' : _typeof(data);
+  var type = typeof data === 'undefined' ? 'undefined' : (0, _typeof3.default)(data);
   if (data === null || type !== 'string' && type !== 'object') {
     return '';
   }
@@ -9178,10 +11703,10 @@ function toQuery(data) {
   if (data instanceof String) {
     return data.toString();
   }
-  var keys = Object.getOwnPropertyNames(data);
+  var keys = (0, _getOwnPropertyNames2.default)(data);
   return (0, _core.map)(keys, function (k) {
     var v = data[k];
-    if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') {
+    if ((typeof v === 'undefined' ? 'undefined' : (0, _typeof3.default)(v)) === 'object') {
       return deepJoin(k, v);
     }
     var tpl = (0, _core.template)('{0}={1}');
@@ -9208,13 +11733,13 @@ function ajax(method, url, data, headers) {
   });
   if (data) {
     if (headers['Content-Type'].indexOf('json') >= 0) {
-      data = JSON.stringify(data);
+      data = (0, _stringify2.default)(data);
     } else {
       data = toQuery(data);
     }
     headers['Content-Length'] = data.length;
   }
-  return new Promise(function (resolve, reject) {
+  return new _promise2.default(function (resolve, reject) {
     _platform.GM.xmlhttpRequest({
       method: method,
       url: url,
@@ -9252,7 +11777,8 @@ function post(url, data, headers) {
   }
   return ajax('POST', url, data, h);
 }
-}.call(exports, __webpack_require__(1)["Promise_"]))
+exports.get = get;
+exports.post = post;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -9260,11 +11786,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.resetCookies = exports.getCookie = exports.setCookie = undefined;
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-var _core = __webpack_require__(0);
-exports.setCookie = setCookie;
-exports.getCookie = getCookie;
-exports.resetCookies = resetCookies;
+var _slicedToArray2 = __webpack_require__(22);
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+var _core = __webpack_require__(4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function setCookie(key, value) {
   var now = new Date();
   now.setTime(now.getTime() + 3600 * 1000);
@@ -9278,7 +11803,7 @@ function getCookie(key) {
       return _core.none;
     }
   }),
-      _find2 = _slicedToArray(_find, 2),
+      _find2 = (0, _slicedToArray3.default)(_find, 2),
       c = _find2[1];
   if (c === _core.none) {
     return null;
@@ -9304,6 +11829,9 @@ function resetCookies() {
     document.cookie = e(k, c, d);
   });
 }
+exports.setCookie = setCookie;
+exports.getCookie = getCookie;
+exports.resetCookies = resetCookies;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -9311,25 +11839,27 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.searchFromScripts = exports.remove = exports.toDOM = exports.querySelectorAll = exports.querySelectorOrNull = exports.querySelector = undefined;
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-var _core = __webpack_require__(0);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-exports.querySelector = querySelector;
-exports.querySelectorOrNull = querySelectorOrNull;
-exports.querySelectorAll = querySelectorAll;
-exports.toDOM = toDOM;
-exports.remove = remove;
-exports.searchFromScripts = searchFromScripts;
+var _slicedToArray2 = __webpack_require__(22);
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+var _getPrototypeOf = __webpack_require__(72);
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+var _classCallCheck2 = __webpack_require__(73);
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+var _createClass2 = __webpack_require__(74);
+var _createClass3 = _interopRequireDefault(_createClass2);
+var _possibleConstructorReturn2 = __webpack_require__(75);
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+var _inherits2 = __webpack_require__(76);
+var _inherits3 = _interopRequireDefault(_inherits2);
+var _core = __webpack_require__(4);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var DomNotFoundError = function (_AdsBypasserError) {
-  _inherits(DomNotFoundError, _AdsBypasserError);
+  (0, _inherits3.default)(DomNotFoundError, _AdsBypasserError);
   function DomNotFoundError(selector) {
-    _classCallCheck(this, DomNotFoundError);
-    return _possibleConstructorReturn(this, (DomNotFoundError.__proto__ || Object.getPrototypeOf(DomNotFoundError)).call(this, (0, _core.template)('`{0}` not found')(selector)));
+    (0, _classCallCheck3.default)(this, DomNotFoundError);
+    return (0, _possibleConstructorReturn3.default)(this, (DomNotFoundError.__proto__ || (0, _getPrototypeOf2.default)(DomNotFoundError)).call(this, (0, _core.template)('`{0}` not found')(selector)));
   }
-  _createClass(DomNotFoundError, [{
+  (0, _createClass3.default)(DomNotFoundError, [{
     key: 'name',
     get: function get() {
       return 'DomNotFoundError';
@@ -9385,7 +11915,7 @@ function searchFromScriptsByRegExp(pattern, context) {
     }
     return m;
   }),
-      _find2 = _slicedToArray(_find, 3),
+      _find2 = (0, _slicedToArray3.default)(_find, 3),
       m = _find2[2];
   if (m === _core.none) {
     return null;
@@ -9401,7 +11931,7 @@ function searchFromScriptsByString(pattern, context) {
     }
     return m;
   }),
-      _find4 = _slicedToArray(_find3, 2),
+      _find4 = (0, _slicedToArray3.default)(_find3, 2),
       m = _find4[1];
   if (m === _core.none) {
     return null;
@@ -9417,18 +11947,27 @@ function searchFromScripts(pattern, context) {
     return null;
   }
 }
+exports.querySelector = querySelector;
+exports.querySelectorOrNull = querySelectorOrNull;
+exports.querySelectorAll = querySelectorAll;
+exports.toDOM = toDOM;
+exports.remove = remove;
+exports.searchFromScripts = searchFromScripts;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-(function(Promise) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.openLink = undefined;
+var _regenerator = __webpack_require__(21);
+var _regenerator2 = _interopRequireDefault(_regenerator);
+var _asyncToGenerator2 = __webpack_require__(29);
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 var get = function () {
-  var _ref = _asyncToGenerator( regeneratorRuntime.mark(function _callee(url) {
+  var _ref = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee(url) {
     var a, clicked, tick;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
+    return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -9464,9 +12003,9 @@ var get = function () {
   };
 }();
 var post = function () {
-  var _ref2 = _asyncToGenerator( regeneratorRuntime.mark(function _callee2(path, params) {
+  var _ref2 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee2(path, params) {
     var form;
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
@@ -9497,9 +12036,9 @@ var post = function () {
   };
 }();
 var openLink = function () {
-  var _ref3 = _asyncToGenerator( regeneratorRuntime.mark(function _callee3(to, options) {
+  var _ref3 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee3(to, options) {
     var withReferer, postData, from;
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
@@ -9545,10 +12084,9 @@ var openLink = function () {
     return _ref3.apply(this, arguments);
   };
 }();
-var _core = __webpack_require__(0);
-var _logger = __webpack_require__(3);
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-exports.openLink = openLink;
+var _core = __webpack_require__(4);
+var _logger = __webpack_require__(33);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function prepare(e) {
   if (!document.body) {
     document.body = document.createElement('body');
@@ -9556,7 +12094,7 @@ function prepare(e) {
   document.body.appendChild(e);
   return (0, _core.wait)(0);
 }
-}.call(exports, __webpack_require__(1)["Promise_"]))
+exports.openLink = openLink;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -9564,12 +12102,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.generateRandomIP = exports.nuke = exports.removeAllTimer = undefined;
-var _core = __webpack_require__(0);
-var _platform = __webpack_require__(2);
-var _logger = __webpack_require__(3);
-exports.removeAllTimer = removeAllTimer;
-exports.nuke = nuke;
-exports.generateRandomIP = generateRandomIP;
+var _core = __webpack_require__(4);
+var _platform = __webpack_require__(23);
+var _logger = __webpack_require__(33);
 function removeAllTimer() {
   var handle = window.setInterval(_core.nop, 10);
   while (handle > 0) {
@@ -9596,5 +12131,8 @@ function generateRandomIP() {
     return Math.floor(Math.random() * 256);
   }).join('.');
 }
+exports.removeAllTimer = removeAllTimer;
+exports.nuke = nuke;
+exports.generateRandomIP = generateRandomIP;
  })
  ]);
