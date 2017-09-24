@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.1.4
+// @version        6.2.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.1.4/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.2.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_deleteValue
@@ -140,7 +140,7 @@ module.exports = $export;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.wait = exports.tryEvery = exports.template = exports.partial = exports.nop = exports.none = exports.map = exports.isString = exports.forEach = exports.find = exports.every = exports.AdsBypasserError = undefined;
+exports.wait = exports.tryEvery = exports.partial = exports.nop = exports.none = exports.map = exports.isString = exports.forEach = exports.find = exports.every = exports.AdsBypasserError = undefined;
 var _promise = __webpack_require__(15);
 var _promise2 = _interopRequireDefault(_promise);
 var _toConsumableArray2 = __webpack_require__(99);
@@ -310,47 +310,16 @@ function isArrayLike(collection) {
 function isNodeList(collection) {
   return collection.constructor.name === 'NodeList';
 }
-function template(s) {
-  if (typeof s !== 'string') {
-    if (s instanceof String) {
-      s = s.toString();
-    } else {
-      throw new AdsBypasserError('template must be a string');
-    }
-  }
-  var T = {
-    '{{': '{',
-    '}}': '}'
-  };
-  return function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    var kwargs = args[args.length - 1];
-    return s.replace(/\{\{|\}\}|\{([^}]+)\}/g, function (m, key) {
-      if (T.hasOwnProperty(m)) {
-        return T[m];
-      }
-      if (args.hasOwnProperty(key)) {
-        return args[key];
-      }
-      if (kwargs.hasOwnProperty(key)) {
-        return kwargs[key];
-      }
-      return m;
-    });
-  };
-}
 function partial(fn) {
-  for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-    args[_key2 - 1] = arguments[_key2];
+  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    args[_key - 1] = arguments[_key];
   }
   if (typeof fn !== 'function') {
     throw new AdsBypasserError('must give a function');
   }
   return function () {
-    for (var _len3 = arguments.length, innerArgs = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      innerArgs[_key3] = arguments[_key3];
+    for (var _len2 = arguments.length, innerArgs = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      innerArgs[_key2] = arguments[_key2];
     }
     return fn.apply(undefined, (0, _toConsumableArray3.default)(args.concat(innerArgs)));
   };
@@ -385,7 +354,6 @@ exports.map = map;
 exports.none = none;
 exports.nop = nop;
 exports.partial = partial;
-exports.template = template;
 exports.tryEvery = tryEvery;
 exports.wait = wait;
  }),
@@ -1075,13 +1043,8 @@ function dispatchByString(rule, url_3) {
   var scheme = /\*|https?|file|ftp|chrome-extension/;
   var host = /\*|(\*\.)?([^/*]+)/;
   var path = /\/.*/;
-  var tpl = (0, _core.template)('^({scheme})://({host})?({path})$');
-  tpl = tpl({
-    scheme: scheme.source,
-    host: host.source,
-    path: path.source
-  });
-  var up = new RegExp(tpl);
+  var tmp = '^(' + scheme.source + ')://(' + host.source + ')?(' + path.source + ')$';
+  var up = new RegExp(tmp);
   var matched = rule.match(up);
   if (!matched) {
     return null;
@@ -1107,14 +1070,13 @@ function dispatchByString(rule, url_3) {
       return null;
     }
   }
-  tpl = (0, _core.template)('^{0}$');
-  var tmp = path.replace(/[*.[\]?+#]/g, function (c) {
+  tmp = path.replace(/[*.[\]?+#]/g, function (c) {
     if (c === '*') {
       return '.*';
     }
     return '\\' + c;
   });
-  path = new RegExp(tpl(tmp));
+  path = new RegExp('^' + tmp + '$');
   if (!path.test(url_3.path)) {
     return null;
   }
@@ -3410,8 +3372,8 @@ function createConfig() {
         _platform.GM.setValue(m.key, v);
         var nv = _platform.GM.getValue(m.key, m.default_);
         if (nv !== v) {
-          var s = (0, _core.template)('failed to write config, key: {0}, value: {1}, new: {2}');
-          throw new _core.AdsBypasserError(s(s.key, nv, v));
+          var msg = 'failed to write config, key: ' + m.key + ', value: ' + nv + ', new: ' + v;
+          throw new _core.AdsBypasserError(msg);
         }
       }
     });
@@ -4181,7 +4143,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 iframe.src = dlBtn.href;
                 document.body.appendChild(iframe);
               });
-              _ADSBYPASSER_NAMESPACE__._.info(_ADSBYPASSER_NAMESPACE__._.template('{0} -> {1}')(window.location, dlBtn.href));
+              _ADSBYPASSER_NAMESPACE__._.info(window.location + ' -> ' + dlBtn.href);
               dlBtn.click();
               _context19.next = 20;
               break;
@@ -5058,7 +5020,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }();
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^adlink\.guru$/, /^cypt\.ga$/, /^(filesbucks|tmearn|cut-urls)\.com$/, /^elink\.link$/, /^(payurl|urlst)\.me$/, /^url\.ht$/, /^urle\.co$/, /^(hashe|trlink|adshort)\.in$/, /^www\.worldhack\.net$/, /^123link\.top$/, /^pir\.im$/, /^bol\.tl$/, /^(tl|adfly)\.tc$/, /^(adfu|linkhits)\.us$/, /^short\.pastewma\.com$/, /^linkfly\.gaosmedia\.com$/]
+      host: [/^adlink\.guru$/, /^cypt\.ga$/, /^(filesbucks|tmearn|cut-urls)\.com$/, /^elink\.link$/, /^(payurl|urlst)\.me$/, /^u2s\.io$/, /^url\.ht$/, /^urle\.co$/, /^(hashe|trlink|adshort)\.in$/, /^www\.worldhack\.net$/, /^123link\.top$/, /^pir\.im$/, /^bol\.tl$/, /^(tl|adfly)\.tc$/, /^(adfu|linkhits)\.us$/, /^short\.pastewma\.com$/, /^linkfly\.gaosmedia\.com$/, /^linclik\.com$/, /^link-earn\.com$/, /^zez\.io$/, /^adbull\.me$/, /^adshort\.co$/, /^adshorte\.com$/]
     },
     ready: function () {
       var _ref43 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee41() {
@@ -5278,7 +5240,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 _ADSBYPASSER_NAMESPACE__._.info('recaptcha');
                 return _context47.abrupt('return');
               case 10:
-                path = _ADSBYPASSER_NAMESPACE__._.template('{0}.{1}.{2}')(_ADSBYPASSER_NAMESPACE__.$.window[path[2]], _ADSBYPASSER_NAMESPACE__.$.window[path[3]], _ADSBYPASSER_NAMESPACE__.$.window[path[4]]);
+                path = [_ADSBYPASSER_NAMESPACE__.$.window[path[2]], _ADSBYPASSER_NAMESPACE__.$.window[path[3]], _ADSBYPASSER_NAMESPACE__.$.window[path[4]]].join('.');
                 _context47.next = 13;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
               case 13:
@@ -5512,12 +5474,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
                 token = findAJAXToken();
                 time = fakeAJAXToken();
-                url = _ADSBYPASSER_NAMESPACE__._.template('/fly/ajax.php?wds={0}&time={1}');
-                url = url(token.wds, time);
-                _context53.next = 7;
+                url = '/fly/ajax.php?wds=' + token.wds + '&time=' + time;
+                _context53.next = 6;
                 return _ADSBYPASSER_NAMESPACE__._.wait(5000);
-              case 7:
-                _context53.next = 9;
+              case 6:
+                _context53.next = 8;
                 return _ADSBYPASSER_NAMESPACE__.$.post(url, {
                   xdf: {
                     afg: _ADSBYPASSER_NAMESPACE__.$.window.tZ,
@@ -5529,18 +5490,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   },
                   ojk: token.ojk
                 });
-              case 9:
+              case 8:
                 rv = _context53.sent;
                 rv = JSON.parse(rv);
                 if (!rv.error) {
-                  _context53.next = 13;
+                  _context53.next = 12;
                   break;
                 }
                 throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('auth error');
-              case 13:
-                _context53.next = 15;
+              case 12:
+                _context53.next = 14;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(rv.message.url);
-              case 15:
+              case 14:
               case 'end':
                 return _context53.stop();
             }
@@ -6233,7 +6194,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: /^sipkur\.(net|us)$/,
+      host: /^sipkur\.net$/,
       path: [/^\/\w+$/, /^\/menujulink\//]
     },
     ready: function () {
@@ -7924,8 +7885,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }
   function decrypt(url) {
     url = ConvertFromHex(url);
-    var unsafe = _ADSBYPASSER_NAMESPACE__._.template('({0})("{1}")');
-    unsafe = unsafe(Encode.toString(), url);
+    var unsafe = '(' + Encode.toString() + ')("' + url + '")';
     unsafe = (0, eval)(unsafe);
     return unsafe;
   }
@@ -8254,7 +8214,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
               });
             case 2:
               recaptcha = _context130.sent;
-              url = _ADSBYPASSER_NAMESPACE__._.template('http://ipinfo.io/{0}/json')(_ADSBYPASSER_NAMESPACE__.$.generateRandomIP());
+              url = 'http://ipinfo.io/' + _ADSBYPASSER_NAMESPACE__.$.generateRandomIP() + '/json';
               _context130.next = 6;
               return _ADSBYPASSER_NAMESPACE__.$.get(url);
             case 6:
@@ -10050,15 +10010,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
   },
   start: function () {
     var _ref187 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee185(m) {
-      var url;
       return _regenerator2.default.wrap(function _callee185$(_context185) {
         while (1) {
           switch (_context185.prev = _context185.next) {
             case 0:
-              url = _ADSBYPASSER_NAMESPACE__._.template('//www.shrink-service.it/shrinked/{0}');
-              _context185.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(url(m.path[1]));
-            case 3:
+              _context185.next = 2;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink('//www.shrink-service.it/shrinked/' + m.path[1]);
+            case 2:
             case 'end':
               return _context185.stop();
           }
@@ -10541,10 +10499,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: [/^(designinghomey|ani-share|sinopsisfilmku)\.com$/, /^motonews\.club$/, /^(autofans|landscapenature)\.pw$/, /^(sidespace|erogedownload)\.net$/],
+  rule: [{
+    host: [/^(designinghomey|ani-share|sinopsisfilmku|autolinkach)\.com$/, /^motonews\.club$/, /^(autofans|landscapenature)\.pw$/, /^(sidespace|erogedownload)\.net$/],
     query: /get=([^&]+)/
-  },
+  }, {
+    host: /^sipkur\.us$/,
+    path: /\.html$/
+  }],
   ready: function () {
     var _ref201 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee199(m) {
       var s;
@@ -10552,13 +10513,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context199.prev = _context199.next) {
             case 0:
-              s = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/const a='([^']+)'/);
+              s = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/(const|var) a='([^']+)'/);
               if (!s) {
                 _context199.next = 5;
                 break;
               }
               _context199.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(s[1]);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(s[2]);
             case 4:
               return _context199.abrupt('return');
             case 5:
@@ -11344,7 +11305,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 return _context224.abrupt('return');
               case 4:
                 path = window.location.pathname;
-                url = _ADSBYPASSER_NAMESPACE__._.template('{0}?ajax=true&adblock=false&old=false&framed=false&uniq={1}')(path, uniq);
+                url = path + '?ajax=true&adblock=false&old=false&framed=false&uniq=' + uniq;
                 _context224.next = 8;
                 return getURL(url);
               case 8:
@@ -11520,7 +11481,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 sjcl = _ADSBYPASSER_NAMESPACE__.$.window.sjcl;
                 paste_id = m.path[1];
                 paste_salt = m.hash[1];
-                API_URL = _ADSBYPASSER_NAMESPACE__._.template('https://binbox.io/{0}.json')(paste_id);
+                API_URL = 'https://binbox.io/' + paste_id + '.json';
                 _context231.next = 6;
                 return _ADSBYPASSER_NAMESPACE__.$.get(API_URL, false, {
                   Origin: _ADSBYPASSER_NAMESPACE__._.none,
@@ -11576,13 +11537,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   var sUrl = '(\\b(https?|ftp|file)://[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])';
   function isLink(text) {
-    var rUrl = new RegExp(_ADSBYPASSER_NAMESPACE__._.template('^{0}$')(sUrl), 'i');
+    var rUrl = new RegExp('^' + sUrl + '$', 'i');
     return rUrl.test(text);
   }
   function linkify(text) {
     var rUrl = new RegExp(sUrl, 'ig');
     return text.replace(rUrl, function (match) {
-      return _ADSBYPASSER_NAMESPACE__._.template('<a href=\'{0}\'>{0}</a>')(match);
+      return '<a href="' + match + '">' + match + '</a>';
     });
   }
 })();
@@ -11636,7 +11597,6 @@ var _ = {
   none: _core.none,
   partial: _core.partial,
   register: _dispatcher.register,
-  template: _core.template,
   wait: _core.wait,
   warn: _logger.warn
 };
@@ -11677,22 +11637,19 @@ var _core = __webpack_require__(4);
 var _platform = __webpack_require__(23);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function deepJoin(prefix, object) {
-  var _this = this;
   var keys = (0, _getOwnPropertyNames2.default)(object);
   var mapped = (0, _core.map)(keys, function (k) {
     var v = object[k];
-    var key = (0, _core.template)('{0}[{1}]')(prefix, k);
+    var key = prefix + '[' + k + ']';
     if ((typeof v === 'undefined' ? 'undefined' : (0, _typeof3.default)(v)) === 'object') {
       return deepJoin(key, v);
     }
-    var tpl = (0, _core.template)('{0}={1}');
     var tmp = [key, v].map(encodeURIComponent);
-    return tpl.apply(_this, tmp);
+    return tmp.join('=');
   });
   return mapped.join('&');
 }
 function toQuery(data) {
-  var _this2 = this;
   var type = typeof data === 'undefined' ? 'undefined' : (0, _typeof3.default)(data);
   if (data === null || type !== 'string' && type !== 'object') {
     return '';
@@ -11709,9 +11666,8 @@ function toQuery(data) {
     if ((typeof v === 'undefined' ? 'undefined' : (0, _typeof3.default)(v)) === 'object') {
       return deepJoin(k, v);
     }
-    var tpl = (0, _core.template)('{0}={1}');
     var tmp = [k, v].map(encodeURIComponent);
-    return tpl.apply(_this2, tmp);
+    return tmp.join('=');
   }).join('&');
 }
 function ajax(method, url, data, headers) {
@@ -11791,10 +11747,7 @@ var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 var _core = __webpack_require__(4);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function setCookie(key, value) {
-  var now = new Date();
-  now.setTime(now.getTime() + 3600 * 1000);
-  var tpl = (0, _core.template)('{0}={1};path={2};');
-  document.cookie = tpl(key, value, window.location.pathname, now.toUTCString());
+  document.cookie = key + '=' + value + ';path=' + location.pathname + ';';
 }
 function getCookie(key) {
   var _find = (0, _core.find)(document.cookie.split(';'), function (v) {
@@ -11821,9 +11774,11 @@ function resetCookies() {
   var d = new Date(1e3).toUTCString();
   (0, _core.forEach)(document.cookie.split(';'), function (v) {
     var k = v.replace(/^\s*(\w+)=.+$/, '$1');
-    document.cookie = (0, _core.template)('{0}=;expires={1};')(k, d);
-    document.cookie = (0, _core.template)('{0}=;path=/;expires={1};')(k, d);
-    var e = (0, _core.template)('{0}=;path=/;domain={1};expires={2};');
+    document.cookie = k + '=;expires=' + d + ';';
+    document.cookie = k + '=;path=/;expires=' + d + ';';
+    var e = function e(a, b, c) {
+      return a + '=;path=/;domain=' + b + ';expires=' + c + ';';
+    };
     document.cookie = e(k, a, d);
     document.cookie = e(k, b, d);
     document.cookie = e(k, c, d);
@@ -11857,7 +11812,7 @@ var DomNotFoundError = function (_AdsBypasserError) {
   (0, _inherits3.default)(DomNotFoundError, _AdsBypasserError);
   function DomNotFoundError(selector) {
     (0, _classCallCheck3.default)(this, DomNotFoundError);
-    return (0, _possibleConstructorReturn3.default)(this, (DomNotFoundError.__proto__ || (0, _getPrototypeOf2.default)(DomNotFoundError)).call(this, (0, _core.template)('`{0}` not found')(selector)));
+    return (0, _possibleConstructorReturn3.default)(this, (DomNotFoundError.__proto__ || (0, _getPrototypeOf2.default)(DomNotFoundError)).call(this, '`' + selector + '` not found'));
   }
   (0, _createClass3.default)(DomNotFoundError, [{
     key: 'name',
@@ -12053,7 +12008,7 @@ var openLink = function () {
             withReferer = typeof options.referer === 'undefined' ? true : options.referer;
             postData = options.post;
             from = window.location.toString();
-            (0, _logger.info)((0, _core.template)('{0} -> {1}')(from, to));
+            (0, _logger.info)(from + ' -> ' + to);
             if (!postData) {
               _context3.next = 12;
               break;
