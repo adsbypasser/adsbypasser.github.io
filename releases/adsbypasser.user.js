@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.2.0
+// @version        6.2.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.2.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.2.1/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
@@ -21,9 +21,9 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.2.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.2.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.2.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.2.1/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.2.1/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.2.1/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -171,12 +171,12 @@ function tryEvery (msInterval, fn) {
  }),
  (function(module, __webpack_exports__, __webpack_require__) {
 "use strict";
- __webpack_require__.d(__webpack_exports__, "b", function() { return usw; });
- __webpack_require__.d(__webpack_exports__, "c", function() { return uswProxy; });
+ __webpack_require__.d(__webpack_exports__, "b", function() { return rawUSW; });
+ __webpack_require__.d(__webpack_exports__, "c", function() { return usw; });
  __webpack_require__.d(__webpack_exports__, "a", function() { return GM; });
  var __WEBPACK_IMPORTED_MODULE_0_util_core__ = __webpack_require__(0);
-const usw = getUnsafeWindow();
-const uswProxy = getUnsafeWindowProxy();
+const rawUSW = getUnsafeWindow();
+const usw = getUnsafeWindowProxy();
 const GM = getGreaseMonkeyAPI();
 function getUnsafeWindow () {
   let w = null;
@@ -191,27 +191,34 @@ function getUnsafeWindow () {
   return w ? w : (0, eval)('this').window;
 }
 function getGreaseMonkeyAPI () {
-  if (usw.global) {
+  if (rawUSW.global) {
     return null;
   }
-  return {
+  const gm = {
     openInTab: GM_openInTab,
     registerMenuCommand: GM_registerMenuCommand,
     getValue: GM_getValue,
     setValue: GM_setValue,
     deleteValue: GM_deleteValue,
     xmlhttpRequest: GM_xmlhttpRequest,
-    getResourceText: GM_getResourceText,
-    addStyle: GM_addStyle,
-    getResourceURL: GM_getResourceURL,
   };
+  if (typeof GM_getResourceText === 'function') {
+    gm.getResourceText = GM_getResourceText;
+  }
+  if (typeof GM_addStyle === 'function') {
+    gm.addStyle = GM_addStyle;
+  }
+  if (typeof GM_getResourceURL === 'function') {
+    gm.getResourceURL = GM_getResourceURL;
+  }
+  return gm;
 }
 const MAGIC_KEY = '__adsbypasser_reverse_proxy__';
 function getUnsafeWindowProxy () {
   const isFirefox = typeof InstallTrigger !== 'undefined';
   const isWebExtension = typeof cloneInto === 'undefined' || typeof exportFunction === 'undefined';
   if (!isFirefox || isWebExtension) {
-    return usw;
+    return rawUSW;
   }
   const decorator = {
     set (target, key, value) {
@@ -604,6 +611,7 @@ function loadConfig () {
       path: /^\/configure\.html$/,
     },
     async ready () {
+      await waitForPage();
       __WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ].commit = (data) => {
         data.version = config.version;
         Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["d" ])(data, (v, k) => {
@@ -659,6 +667,16 @@ function loadConfig () {
         },
       });
     },
+  });
+}
+function waitForPage () {
+  return new Promise((resolve) => {
+    const i = setInterval(() => {
+      if (__WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ].render) {
+        clearInterval(i);
+        resolve();
+      }
+    }, 50);
   });
 }
  }),
@@ -1159,7 +1177,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
     host: /^(www\.)?mirrorcreator\.com$/,
-    path: /^\/showurl\.php$/,
+    path: /^\/downlink\.php$/,
   },
   async ready () {
     let a = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('#redirectlink a');
@@ -6567,6 +6585,38 @@ $.window = __WEBPACK_IMPORTED_MODULE_9_util_platform__["c" ];
  __webpack_require__.d(__webpack_exports__, "b", function() { return post; });
  var __WEBPACK_IMPORTED_MODULE_0_util_core__ = __webpack_require__(0);
  var __WEBPACK_IMPORTED_MODULE_1_util_platform__ = __webpack_require__(1);
+class AjaxError extends __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ] {
+  constructor (method, url, data, headers, status, response) {
+    super(`${method} ${url} got ${status}`);
+    this._method = method;
+    this._url = url;
+    this._data = data;
+    this._headers = headers;
+    this._status = status;
+    this._response = response;
+  }
+  get name () {
+    return 'AjaxError';
+  }
+  get method () {
+    return this._method;
+  }
+  get url () {
+    return this._url;
+  }
+  get data () {
+    return this._data;
+  }
+  get headers () {
+    return this._headers;
+  }
+  get status () {
+    return this._status;
+  }
+  get response () {
+    return this._response;
+  }
+}
 function deepJoin (prefix, object) {
   const keys = Object.getOwnPropertyNames(object);
   const mapped = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["f" ])(keys, (k) => {
@@ -6635,14 +6685,14 @@ function ajax (method, url, data, headers) {
       onload (response) {
         response = (typeof response.responseText !== 'undefined') ? response : this;
         if (response.status !== 200) {
-          reject(response.responseText);
+          reject(new AjaxError(method, url, data, headers, response.status, response.responseText));
         } else {
           resolve(response.responseText);
         }
       },
       onerror (response) {
         response = (typeof response.responseText !== 'undefined') ? response : this;
-        reject(response.responseText);
+        reject(new AjaxError(method, url, data, headers, response.status, response.responseText));
       },
     });
   });
