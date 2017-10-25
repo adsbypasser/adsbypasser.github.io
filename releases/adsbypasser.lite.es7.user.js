@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.2.1
+// @version        6.3.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.2.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.3.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_deleteValue
@@ -1024,7 +1024,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
     host: [
       /^openload\.co$/,
-      /^oload\.tv$/,
+      /^oload\.(info|tv)$/,
     ],
     path: /^\/f\/.*/,
   },
@@ -1050,6 +1050,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         evt.preventDefault();
         const iframe = document.createElement('iframe');
         iframe.src = dlBtn.href;
+        iframe.style.display = 'none';
         document.body.appendChild(iframe);
       });
       __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].info(`${window.location} -> ${dlBtn.href}`);
@@ -1476,7 +1477,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         /^urle\.co$/,
         /^(hashe|trlink|adshort)\.in$/,
         /^www\.worldhack\.net$/,
-        /^123link\.top$/,
+        /^123link\.io$/,
         /^pir\.im$/,
         /^bol\.tl$/,
         /^(tl|adfly)\.tc$/,
@@ -2027,11 +2028,11 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
     host: /^(www\.)?clictune\.com$/,
-    path: /^\/id=\d+/,
+    path: /^\/[^/]+$/,
   },
   async ready () {
     __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('iframe');
-    const matches = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].searchFromScripts(/<a href="http:\/\/(?:www.)?clictune\.com\/redirect\.php\?url=([^&]+)&/);
+    const matches = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].searchFromScripts(/<a href="http:\/\/(?:www.)?clictune\.com\/link\/redirect\/?url=([^&]+)&/);
     const url = decodeURIComponent(matches[1]);
     await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(url);
   },
@@ -2779,7 +2780,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   }
   async function retry () {
     const text = await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].get(window.location.toString(), {}, {
-      'X-Forwarded-For': __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].generateRandomIP(),
+      'X-Forwarded-For': __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].generateRandomIP(),
     });
     const d = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].toDOM(text);
     const t = findToken(d);
@@ -2985,7 +2986,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
       }
       return recaptcha.value;
     });
-    const url = `http://ipinfo.io/${__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" /* $ */].generateRandomIP()}/json`;
+    const url = `http://ipinfo.io/${__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" /* _ */].generateRandomIP()}/json`;
     let ipinfo = await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].get(url);
     ipinfo = JSON.parse(ipinfo);
     const payload = {
@@ -3642,7 +3643,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
     host: [
-      /^(www\.)?shink\.in$/,
+      /^(www\.)?shink\.(in|me)$/,
       /^fas\.li$/,
       /^(www\.)?croco\.(me|site)$/,
       /^cpmlink\.net$/,
@@ -3697,7 +3698,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
     host: [
       /^fas\.li$/,
-      /^(www\.)?shink\.in$/,
+      /^(www\.)?shink\.(in|me)$/,
     ],
     path: /^\/go\/\w+$/,
   },
@@ -4511,6 +4512,7 @@ $.removeAllTimer = __WEBPACK_IMPORTED_MODULE_7_util_misc__["c" ];
 $.resetCookies = __WEBPACK_IMPORTED_MODULE_1_util_cookie__["b" ];
 $.searchFromScripts = __WEBPACK_IMPORTED_MODULE_4_util_dom__["e" ];
 $.setCookie = __WEBPACK_IMPORTED_MODULE_1_util_cookie__["c" ];
+$.toDOM = __WEBPACK_IMPORTED_MODULE_4_util_dom__["f" ];
 $.window = __WEBPACK_IMPORTED_MODULE_8_util_platform__["c" ];
  }),
  (function(module, __webpack_exports__, __webpack_require__) {
@@ -4695,6 +4697,7 @@ function resetCookies () {
  __webpack_require__.d(__webpack_exports__, "a", function() { return querySelector; });
  __webpack_require__.d(__webpack_exports__, "c", function() { return querySelectorOrNull; });
  __webpack_require__.d(__webpack_exports__, "b", function() { return querySelectorAll; });
+ __webpack_require__.d(__webpack_exports__, "f", function() { return toDOM; });
  __webpack_require__.d(__webpack_exports__, "d", function() { return remove; });
  __webpack_require__.d(__webpack_exports__, "e", function() { return searchFromScripts; });
  var __WEBPACK_IMPORTED_MODULE_0_util_core__ = __webpack_require__(0);

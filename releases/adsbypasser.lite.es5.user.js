@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.2.1
+// @version        6.3.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.2.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.3.0/img/logo.png
 // @grant          unsafeWindow
 // @grant          GM_xmlhttpRequest
 // @grant          GM_deleteValue
@@ -4111,7 +4111,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^openload\.co$/, /^oload\.tv$/],
+    host: [/^openload\.co$/, /^oload\.(info|tv)$/],
     path: /^\/f\/.*/
   },
   start: function () {
@@ -4163,6 +4163,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 evt.preventDefault();
                 var iframe = document.createElement('iframe');
                 iframe.src = dlBtn.href;
+                iframe.style.display = 'none';
                 document.body.appendChild(iframe);
               });
               _ADSBYPASSER_NAMESPACE__._.info(window.location + ' -> ' + dlBtn.href);
@@ -5042,7 +5043,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }();
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^adlink\.guru$/, /^cypt\.ga$/, /^(filesbucks|tmearn|cut-urls)\.com$/, /^elink\.link$/, /^(payurl|urlst)\.me$/, /^u2s\.io$/, /^url\.ht$/, /^urle\.co$/, /^(hashe|trlink|adshort)\.in$/, /^www\.worldhack\.net$/, /^123link\.top$/, /^pir\.im$/, /^bol\.tl$/, /^(tl|adfly)\.tc$/, /^(adfu|linkhits)\.us$/, /^short\.pastewma\.com$/, /^linkfly\.gaosmedia\.com$/, /^linclik\.com$/, /^link-earn\.com$/, /^zez\.io$/, /^adbull\.me$/, /^adshort\.co$/, /^adshorte\.com$/]
+      host: [/^adlink\.guru$/, /^cypt\.ga$/, /^(filesbucks|tmearn|cut-urls)\.com$/, /^elink\.link$/, /^(payurl|urlst)\.me$/, /^u2s\.io$/, /^url\.ht$/, /^urle\.co$/, /^(hashe|trlink|adshort)\.in$/, /^www\.worldhack\.net$/, /^123link\.io$/, /^pir\.im$/, /^bol\.tl$/, /^(tl|adfly)\.tc$/, /^(adfu|linkhits)\.us$/, /^short\.pastewma\.com$/, /^linkfly\.gaosmedia\.com$/, /^linclik\.com$/, /^link-earn\.com$/, /^zez\.io$/, /^adbull\.me$/, /^adshort\.co$/, /^adshorte\.com$/]
     },
     ready: function () {
       var _ref43 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee41() {
@@ -6102,7 +6103,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?clictune\.com$/,
-    path: /^\/id=\d+/
+    path: /^\/[^/]+$/
   },
   ready: function () {
     var _ref72 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee70() {
@@ -6112,7 +6113,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
           switch (_context70.prev = _context70.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              matches = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/<a href="http:\/\/(?:www.)?clictune\.com\/redirect\.php\?url=([^&]+)&/);
+              matches = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/<a href="http:\/\/(?:www.)?clictune\.com\/link\/redirect\/?url=([^&]+)&/);
               url = decodeURIComponent(matches[1]);
               _context70.next = 5;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
@@ -7718,7 +7719,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             case 0:
               _context123.next = 2;
               return _ADSBYPASSER_NAMESPACE__.$.get(window.location.toString(), {}, {
-                'X-Forwarded-For': _ADSBYPASSER_NAMESPACE__.$.generateRandomIP()
+                'X-Forwarded-For': _ADSBYPASSER_NAMESPACE__._.generateRandomIP()
               });
             case 2:
               text = _context123.sent;
@@ -8236,7 +8237,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
               });
             case 2:
               recaptcha = _context130.sent;
-              url = 'http://ipinfo.io/' + _ADSBYPASSER_NAMESPACE__.$.generateRandomIP() + '/json';
+              url = 'http://ipinfo.io/' + _ADSBYPASSER_NAMESPACE__._.generateRandomIP() + '/json';
               _context130.next = 6;
               return _ADSBYPASSER_NAMESPACE__.$.get(url);
             case 6:
@@ -9798,7 +9799,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 })();
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^(www\.)?shink\.in$/, /^fas\.li$/, /^(www\.)?croco\.(me|site)$/, /^cpmlink\.net$/],
+    host: [/^(www\.)?shink\.(in|me)$/, /^fas\.li$/, /^(www\.)?croco\.(me|site)$/, /^cpmlink\.net$/],
     path: /^\/\w+$/
   },
   ready: function () {
@@ -9877,7 +9878,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^fas\.li$/, /^(www\.)?shink\.in$/],
+    host: [/^fas\.li$/, /^(www\.)?shink\.(in|me)$/],
     path: /^\/go\/\w+$/
   },
   ready: function () {
@@ -11637,6 +11638,7 @@ $.removeAllTimer = _misc.removeAllTimer;
 $.resetCookies = _cookie.resetCookies;
 $.searchFromScripts = _dom.searchFromScripts;
 $.setCookie = _cookie.setCookie;
+$.toDOM = _dom.toDOM;
 $.window = _platform.usw;
 exports._ = _;
 exports.$ = $;
