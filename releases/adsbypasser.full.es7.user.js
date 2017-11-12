@@ -3,27 +3,31 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.3.0
+// @version        6.4.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.3.0/img/logo.png
-// @grant          unsafeWindow
-// @grant          GM_xmlhttpRequest
-// @grant          GM_addStyle
-// @grant          GM_getResourceText
-// @grant          GM_getResourceURL
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.0/img/logo.png
 // @grant          GM_deleteValue
+// @grant          GM_getResourceURL
 // @grant          GM_getValue
 // @grant          GM_openInTab
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
+// @grant          GM_xmlhttpRequest
+// @grant          GM.deleteValue
+// @grant          GM.getResourceUrl
+// @grant          GM.getValue
+// @grant          GM.openInTab
+// @grant          GM.setValue
+// @grant          GM.xmlHttpRequest
+// @grant          unsafeWindow
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.0/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.0/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.0/img/imagedoc-darknoise.png
 // @run-at         document-start
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.3.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.3.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.3.0/img/imagedoc-darknoise.png
 // @include        http://*
 // @include        https://*
 // @connect        *
@@ -64,7 +68,7 @@
  	};
  	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
  	__webpack_require__.p = "";
- 	return __webpack_require__(__webpack_require__.s = 8);
+ 	return __webpack_require__(__webpack_require__.s = 7);
  })
  ([
  (function(module, __webpack_exports__, __webpack_require__) {
@@ -173,11 +177,11 @@ function tryEvery (msInterval, fn) {
 "use strict";
  __webpack_require__.d(__webpack_exports__, "b", function() { return rawUSW; });
  __webpack_require__.d(__webpack_exports__, "c", function() { return usw; });
- __webpack_require__.d(__webpack_exports__, "a", function() { return GM; });
+ __webpack_require__.d(__webpack_exports__, "a", function() { return GMAPI; });
  var __WEBPACK_IMPORTED_MODULE_0_util_core__ = __webpack_require__(0);
 const rawUSW = getUnsafeWindow();
 const usw = getUnsafeWindowProxy();
-const GM = getGreaseMonkeyAPI();
+const GMAPI = getGreaseMonkeyAPI();
 function getUnsafeWindow () {
   let w = null;
   try {
@@ -194,22 +198,49 @@ function getGreaseMonkeyAPI () {
   if (rawUSW.global) {
     return null;
   }
-  const gm = {
-    openInTab: GM_openInTab,
-    registerMenuCommand: GM_registerMenuCommand,
-    getValue: GM_getValue,
-    setValue: GM_setValue,
-    deleteValue: GM_deleteValue,
-    xmlhttpRequest: GM_xmlhttpRequest,
-  };
-  if (typeof GM_getResourceText === 'function') {
-    gm.getResourceText = GM_getResourceText;
+  const gm = {};
+  if (typeof GM_openInTab === 'function') {
+    gm.openInTab = GM_openInTab;
+  } else {
+    gm.openInTab = GM.openInTab;
   }
-  if (typeof GM_addStyle === 'function') {
-    gm.addStyle = GM_addStyle;
+  if (typeof GM_getValue === 'function') {
+    gm.getValue = (name, default_) => {
+      return Promise.resolve(GM_getValue(name, default_));
+    };
+  } else {
+    gm.getValue = GM.getValue;
+  }
+  if (typeof GM_setValue === 'function') {
+    gm.setValue = (name, value) => {
+      return Promise.resolve(GM_setValue(name, value));
+    };
+  } else {
+    gm.setValue = GM.setValue;
+  }
+  if (typeof GM_deleteValue === 'function') {
+    gm.deleteValue = (name) => {
+      return Promise.resolve(GM_deleteValue(name));
+    };
+  } else {
+    gm.deleteValue = GM.deleteValue;
+  }
+  if (typeof GM_xmlhttpRequest === 'function') {
+    gm.xmlHttpRequest = GM_xmlhttpRequest;
+  } else {
+    gm.xmlHttpRequest = GM.xmlHttpRequest;
+  }
+  if (typeof GM_registerMenuCommand === 'function') {
+    gm.registerMenuCommand = GM_registerMenuCommand;
+  } else {
+    gm.registerMenuCommand = __WEBPACK_IMPORTED_MODULE_0_util_core__["h" ];
   }
   if (typeof GM_getResourceURL === 'function') {
-    gm.getResourceURL = GM_getResourceURL;
+    gm.getResourceUrl = (resourceName) => {
+      return Promise.resolve(GM_getResourceURL(resourceName));
+    };
+  } else if (GM.getResourceUrl) {
+    gm.getResourceUrl = GM.getResourceUrl;
   }
   return gm;
 }
@@ -465,223 +496,6 @@ function findHandler () {
  }),
  (function(module, __webpack_exports__, __webpack_require__) {
 "use strict";
- __webpack_require__.d(__webpack_exports__, "b", function() { return loadConfig; });
- __webpack_require__.d(__webpack_exports__, "a", function() { return config; });
- var __WEBPACK_IMPORTED_MODULE_0_util_core__ = __webpack_require__(0);
- var __WEBPACK_IMPORTED_MODULE_1_util_dispatcher__ = __webpack_require__(3);
- var __WEBPACK_IMPORTED_MODULE_2_util_platform__ = __webpack_require__(1);
-const MANIFEST = [
-  {
-    name: 'version',
-    key: 'version',
-    default_: 0,
-    verify (v) {
-      return typeof v === 'number' && v >= 0;
-    },
-    normalize: toNumber,
-  },
-  {
-    name: 'alignCenter',
-    key: 'align_center',
-    default_: true,
-    verify: isBoolean,
-    normalize: toBoolean,
-  },
-  {
-    name: 'changeBackground',
-    key: 'change_background',
-    default_: true,
-    verify: isBoolean,
-    normalize: toBoolean,
-  },
-  {
-    name: 'redirectImage',
-    key: 'redirect_image',
-    default_: true,
-    verify: isBoolean,
-    normalize: toBoolean,
-  },
-  {
-    name: 'scaleImage',
-    key: 'scale_image',
-    default_: true,
-    verify: isBoolean,
-    normalize: toBoolean,
-  },
-  {
-    name: 'logLevel',
-    key: 'log_level',
-    default_: 1,
-    verify (v) {
-      return typeof v === 'number' && v >= 0 && v <= 2;
-    },
-    normalize: toNumber,
-  },
-];
-const PATCHES = [
-  (c) => {
-    const ac = typeof c.alignCenter === 'boolean';
-    if (typeof c.changeBackground !== 'boolean') {
-      c.changeBackground = ac ? c.alignCenter : true;
-    }
-    if (typeof c.scaleImage !== 'boolean') {
-      c.scaleImage = ac ? c.alignCenter : true;
-    }
-    if (!ac) {
-      c.alignCenter = true;
-    }
-    if (typeof c.redirectImage !== 'boolean') {
-      c.redirectImage = true;
-    }
-  },
-  (c) => {
-    if (typeof c.externalServerSupport !== 'boolean') {
-      c.externalServerSupport = false;
-    }
-  },
-  (c) => {
-    if (typeof c.logLevel !== 'number') {
-      c.logLevel = 1;
-    }
-  },
-  () => {
-    __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].deleteValue('external_server_support');
-  },
-];
-function isBoolean (v) {
-  return typeof v === 'boolean';
-}
-function toBoolean (v) {
-  return !!v;
-}
-function toNumber (v) {
-  return parseInt(v, 10);
-}
-function createConfig () {
-  const c = {};
-  Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["d" ])(MANIFEST, (m) => {
-    Object.defineProperty(c, m.name, {
-      configurable: true,
-      enumerable: true,
-      get: () => {
-        return __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue(m.key, m.default_);
-      },
-      set: (v) => {
-        __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue(m.key, v);
-        const nv = __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue(m.key, m.default_);
-        if (nv !== v) {
-          const msg = `failed to write config, key: ${m.key}, value: ${nv}, new: ${v}`;
-          throw new __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ](msg);
-        }
-      },
-    });
-  });
-  return c;
-}
-function senityCheck (c) {
-  const ok = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["b" ])(MANIFEST, (m) => {
-    return m.verify(c[m.name]);
-  });
-  if (!ok) {
-    c.version = 0;
-  }
-  return c;
-}
-function migrate (c) {
-  if (typeof c.version !== 'number' || c.version < 0) {
-    throw new __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ]('wrong config version: ' + c.version);
-  }
-  for (let i = 0; c.version < PATCHES.length; ++i) {
-    PATCHES[c.version](c);
-    ++c.version;
-    if (i >= PATCHES.length) {
-      throw new __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ]('invalid config state', i, c);
-    }
-  }
-  return c;
-}
-let config = null;
-function loadConfig () {
-  config = createConfig();
-  config = senityCheck(config);
-  config = migrate(config);
-  Object(__WEBPACK_IMPORTED_MODULE_1_util_dispatcher__["b" ])({
-    rule: {
-      host: /^adsbypasser\.github\.io$/,
-      path: /^\/configure\.html$/,
-    },
-    async ready () {
-      await waitForPage();
-      __WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ].commit = (data) => {
-        data.version = config.version;
-        Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["d" ])(data, (v, k) => {
-          config[k] = v;
-        });
-      };
-      __WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ].render({
-        version: config.version,
-        options: {
-          alignCenter: {
-            type: 'checkbox',
-            value: config.alignCenter,
-            label: 'Align Center',
-            help: 'Align image to the center if possible. (default: enabled)',
-          },
-          changeBackground: {
-            type: 'checkbox',
-            value: config.changeBackground,
-            label: 'Change Background',
-            help: 'Use Firefox-like image background if possible. (default: enabled)',
-          },
-          redirectImage: {
-            type: 'checkbox',
-            value: config.redirectImage,
-            label: 'Redirect Image',
-            help: [
-              'Directly open image link if possible. (default: enabled)',
-              'If disabled, redirection will only works on link shortener sites.',
-            ].join('<br/>\n'),
-          },
-          scaleImage: {
-            type: 'checkbox',
-            value: config.scaleImage,
-            label: 'Scale Image',
-            help: 'When image loaded, scale it to fit window if possible. (default: enabled)',
-          },
-          logLevel: {
-            type: 'select',
-            value: config.logLevel,
-            menu: [
-              [0, '0 (quiet)'],
-              [1, '1 (default)'],
-              [2, '2 (verbose)'],
-            ],
-            label: 'Log Level',
-            help: [
-              'Log level in developer console. (default: 1)',
-              '0 will not print anything in console.',
-              '1 will only print logs on affected sites.',
-              '2 will print on any sites.',
-            ].join('<br/>\n'),
-          },
-        },
-      });
-    },
-  });
-}
-function waitForPage () {
-  return new Promise((resolve) => {
-    const i = setInterval(() => {
-      if (__WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ].render) {
-        clearInterval(i);
-        resolve();
-      }
-    }, 50);
-  });
-}
- }),
- (function(module, __webpack_exports__, __webpack_require__) {
-"use strict";
  __webpack_require__.d(__webpack_exports__, "a", function() { return querySelector; });
  __webpack_require__.d(__webpack_exports__, "c", function() { return querySelectorOrNull; });
  __webpack_require__.d(__webpack_exports__, "b", function() { return querySelectorAll; });
@@ -883,7 +697,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  var __WEBPACK_IMPORTED_MODULE_0_util_core__ = __webpack_require__(0);
  var __WEBPACK_IMPORTED_MODULE_1_util_dispatcher__ = __webpack_require__(3);
  var __WEBPACK_IMPORTED_MODULE_2_util_platform__ = __webpack_require__(1);
- var __WEBPACK_IMPORTED_MODULE_3_util_config__ = __webpack_require__(4);
+ var __WEBPACK_IMPORTED_MODULE_3_util_config__ = __webpack_require__(8);
  var __WEBPACK_IMPORTED_MODULE_4_util_logger__ = __webpack_require__(2);
  var __WEBPACK_IMPORTED_MODULE_5__ADSBYPASSER_HANDLERS___ = __webpack_require__(9);
 const isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
@@ -930,7 +744,8 @@ function changeTitle () {
   document.title += ' - AdsBypasser';
 }
 async function beforeDOMReady (handler) {
-  Object(__WEBPACK_IMPORTED_MODULE_4_util_logger__["a" ])('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify(__WEBPACK_IMPORTED_MODULE_3_util_config__["a" ]));
+  const config = await Object(__WEBPACK_IMPORTED_MODULE_3_util_config__["a" ])();
+  Object(__WEBPACK_IMPORTED_MODULE_4_util_logger__["a" ])('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify(config));
   disableLeavePrompt(__WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ]);
   disableWindowOpen();
   await handler.start();
@@ -958,7 +773,7 @@ async function main () {
   __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].registerMenuCommand('AdsBypasser - Configure', () => {
     __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].openInTab('https://adsbypasser.github.io/configure.html');
   });
-  Object(__WEBPACK_IMPORTED_MODULE_3_util_config__["b" ])();
+  await Object(__WEBPACK_IMPORTED_MODULE_3_util_config__["b" ])();
   const handler = Object(__WEBPACK_IMPORTED_MODULE_1_util_dispatcher__["a" ])();
   if (handler) {
     await beforeDOMReady(handler);
@@ -970,6 +785,210 @@ async function main () {
 main().catch((e) => {
   Object(__WEBPACK_IMPORTED_MODULE_4_util_logger__["b" ])(e);
 });
+ }),
+ (function(module, __webpack_exports__, __webpack_require__) {
+"use strict";
+ __webpack_require__.d(__webpack_exports__, "a", function() { return dumpConfig; });
+ __webpack_require__.d(__webpack_exports__, "b", function() { return loadConfig; });
+ var __WEBPACK_IMPORTED_MODULE_0_util_core__ = __webpack_require__(0);
+ var __WEBPACK_IMPORTED_MODULE_1_util_dispatcher__ = __webpack_require__(3);
+ var __WEBPACK_IMPORTED_MODULE_2_util_platform__ = __webpack_require__(1);
+const MANIFEST = [
+  {
+    key: 'version',
+    default_: 0,
+    verify (v) {
+      return typeof v === 'number' && v >= 0;
+    },
+    normalize: toNumber,
+  },
+  {
+    key: 'align_center',
+    default_: true,
+    verify: isBoolean,
+    normalize: toBoolean,
+  },
+  {
+    key: 'change_background',
+    default_: true,
+    verify: isBoolean,
+    normalize: toBoolean,
+  },
+  {
+    key: 'redirect_image',
+    default_: true,
+    verify: isBoolean,
+    normalize: toBoolean,
+  },
+  {
+    key: 'scale_image',
+    default_: true,
+    verify: isBoolean,
+    normalize: toBoolean,
+  },
+  {
+    key: 'log_level',
+    default_: 1,
+    verify (v) {
+      return typeof v === 'number' && v >= 0 && v <= 2;
+    },
+    normalize: toNumber,
+  },
+];
+const PATCHES = [
+  async () => {
+    const alignCenter = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('align_center');
+    const changeBackground = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('change_background');
+    const scaleImage = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('scale_image');
+    const redirectImage = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('redirect_image');
+    const ac = typeof alignCenter === 'boolean';
+    if (typeof changeBackground !== 'boolean') {
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('change_background', ac ? alignCenter : true);
+    }
+    if (typeof scaleImage !== 'boolean') {
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('scale_image', ac ? alignCenter : true);
+    }
+    if (!ac) {
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('align_center', true);
+    }
+    if (typeof redirectImage !== 'boolean') {
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('redirect_image', true);
+    }
+  },
+  async () => {
+    const externalServerSupport = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('external_server_support');
+    if (typeof externalServerSupport !== 'boolean') {
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('external_server_support', false);
+    }
+  },
+  async () => {
+    const logLevel = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('log_level');
+    if (typeof logLevel !== 'number') {
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('log_level', 1);
+    }
+  },
+  async () => {
+    await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].deleteValue('external_server_support');
+  },
+];
+function isBoolean (v) {
+  return typeof v === 'boolean';
+}
+function toBoolean (v) {
+  return !!v;
+}
+function toNumber (v) {
+  return parseInt(v, 10);
+}
+async function senityCheck () {
+  let verifyResults = MANIFEST.map(async (descriptor) => {
+    const rv = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue(descriptor.key);
+    return descriptor.verify(rv);
+  });
+  verifyResults = await Promise.all(verifyResults);
+  const ok = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["b" ])(verifyResults, v => v);
+  if (!ok) {
+    await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('version', 0);
+  }
+}
+async function migrate () {
+  let currentVersion = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('version');
+  if (currentVersion !== 0 && !currentVersion) {
+    throw new __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ]('invalid version');
+  }
+  while (currentVersion < PATCHES.length) {
+    PATCHES[currentVersion]();
+    ++currentVersion;
+  }
+  await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('version', currentVersion);
+}
+async function loadConfig () {
+  await senityCheck();
+  await migrate();
+  Object(__WEBPACK_IMPORTED_MODULE_1_util_dispatcher__["b" ])({
+    rule: {
+      host: /^adsbypasser\.github\.io$/,
+      path: /^\/configure\.html$/,
+    },
+    async ready () {
+      await waitForPage();
+      __WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ].commit = async (data) => {
+        for (const [k, v] of Object.entries(data)) {
+          await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue(k, v);
+        }
+      };
+      __WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ].render({
+        version: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('version'),
+        options: {
+          align_center: {
+            type: 'checkbox',
+            value: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('align_center'),
+            label: 'Align Center',
+            help: 'Align image to the center if possible. (default: enabled)',
+          },
+          change_background: {
+            type: 'checkbox',
+            value: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('change_background'),
+            label: 'Change Background',
+            help: 'Use Firefox-like image background if possible. (default: enabled)',
+          },
+          redirect_image: {
+            type: 'checkbox',
+            value: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('redirect_image'),
+            label: 'Redirect Image',
+            help: [
+              'Directly open image link if possible. (default: enabled)',
+              'If disabled, redirection will only works on link shortener sites.',
+            ].join('<br/>\n'),
+          },
+          scale_image: {
+            type: 'checkbox',
+            value: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('scale_image'),
+            label: 'Scale Image',
+            help: 'When image loaded, scale it to fit window if possible. (default: enabled)',
+          },
+          log_level: {
+            type: 'select',
+            value: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('log_level'),
+            menu: [
+              [0, '0 (quiet)'],
+              [1, '1 (default)'],
+              [2, '2 (verbose)'],
+            ],
+            label: 'Log Level',
+            help: [
+              'Log level in developer console. (default: 1)',
+              '0 will not print anything in console.',
+              '1 will only print logs on affected sites.',
+              '2 will print on any sites.',
+            ].join('<br/>\n'),
+          },
+        },
+      });
+    },
+  });
+}
+function waitForPage () {
+  return new Promise((resolve) => {
+    const i = setInterval(() => {
+      if (__WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ].render) {
+        clearInterval(i);
+        resolve();
+      }
+    }, 50);
+  });
+}
+async function dumpConfig () {
+  let rv = MANIFEST.map(async (descriptor) => {
+    return [descriptor.key, await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue(descriptor.key)];
+  });
+  rv = await Promise.all(rv);
+  const o = {};
+  for (const [k, v] of rv) {
+    o[k] = v;
+  }
+  return o;
+}
  }),
  (function(module, __webpack_exports__, __webpack_require__) {
 "use strict";
@@ -1227,7 +1246,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
     host: [
       /^openload\.co$/,
-      /^oload\.(info|tv)$/,
+      /^oload\.(stream|info|tv)$/,
     ],
     path: /^\/f\/.*/,
   },
@@ -1671,6 +1690,9 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     rule: {
       host: [
         /^adlink\.guru$/,
+        /^clik\.pw$/,
+        /^coshurl\.co$/,
+        /^curs\.io$/,
         /^cypt\.ga$/,
         /^(filesbucks|tmearn|cut-urls)\.com$/,
         /^elink\.link$/,
@@ -1680,19 +1702,21 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         /^urle\.co$/,
         /^(hashe|trlink|adshort)\.in$/,
         /^www\.worldhack\.net$/,
-        /^123link\.io$/,
+        /^123link\.(io|co|press)$/,
         /^pir\.im$/,
         /^bol\.tl$/,
         /^(tl|adfly)\.tc$/,
         /^(adfu|linkhits)\.us$/,
         /^short\.pastewma\.com$/,
+        /^l2s\.io$/,
         /^linkfly\.gaosmedia\.com$/,
         /^linclik\.com$/,
         /^link-earn\.com$/,
         /^zez\.io$/,
         /^adbull\.me$/,
-        /^adshort\.co$/,
+        /^adshort\.im$/,
         /^adshorte\.com$/,
+        /^weefy\.me$/,
       ],
     },
     async ready () {
@@ -1839,20 +1863,18 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     ],
   },
   async ready () {
-    let i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('body > section > iframe');
+    let i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('#html_element');
     if (i) {
-      i.src = 'about:blank';
-      await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].wait(3000);
-      const a = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('a.redirect');
-      a.click();
+      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('#messa');
+      i.classList.remove('hidden');
       return;
     }
-    i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].searchFromScripts(/"href","([^"]+)"\)\.remove/);
+    i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].searchFromScripts(/"href","([^"]+)" \+ hash\)\.remove/);
     if (!i) {
       __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].warn('site changed');
       return;
     }
-    i = i[1];
+    i = i[1] + location.hash;
     __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(i);
   },
 });
@@ -3117,7 +3139,11 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     },
     async ready () {
       __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('iframe');
-      let f = getForm();
+      let f = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('#captchaShortlink');
+      if (f) {
+        return;
+      }
+      f = getForm();
       if (!f) {
         f = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('#link-view');
         f.submit();
@@ -4190,6 +4216,11 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     {
       host: /^shorten\.id$/,
       query: /^\?url=([a-zA-Z0-9/=]+)=$/,
+    },
+    {
+      host: /^www\.compartiendofull\.net$/,
+      path: /^\/go2/,
+      query: /^\?p=([a-zA-Z0-9/=]+)$/,
     },
   ],
   async start (m) {
@@ -6121,11 +6152,14 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
 });
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
-    host: /^www\.pics-money\.ru$/,
+    host: [
+      /^www\.pics-money\.ru$/,
+      /^p0xpicmoney\.ru$/,
+    ],
   },
   async ready () {
     __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('iframe');
-    let i = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('#d1 img');
+    let i = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('#d1 img, #pay_thumb_img > img');
     i = i.onclick.toString();
     i = i.match(/mshow\('(.+)'\)/);
     i = i[1];
@@ -6564,11 +6598,11 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
  var __WEBPACK_IMPORTED_MODULE_1_util_cookie__ = __webpack_require__(12);
  var __WEBPACK_IMPORTED_MODULE_2_util_core__ = __webpack_require__(0);
  var __WEBPACK_IMPORTED_MODULE_3_util_dispatcher__ = __webpack_require__(3);
- var __WEBPACK_IMPORTED_MODULE_4_util_dom__ = __webpack_require__(5);
+ var __WEBPACK_IMPORTED_MODULE_4_util_dom__ = __webpack_require__(4);
  var __WEBPACK_IMPORTED_MODULE_5_util_image__ = __webpack_require__(13);
- var __WEBPACK_IMPORTED_MODULE_6_util_link__ = __webpack_require__(6);
+ var __WEBPACK_IMPORTED_MODULE_6_util_link__ = __webpack_require__(5);
  var __WEBPACK_IMPORTED_MODULE_7_util_logger__ = __webpack_require__(2);
- var __WEBPACK_IMPORTED_MODULE_8_util_misc__ = __webpack_require__(7);
+ var __WEBPACK_IMPORTED_MODULE_8_util_misc__ = __webpack_require__(6);
  var __WEBPACK_IMPORTED_MODULE_9_util_platform__ = __webpack_require__(1);
 const _ = {
   AdsBypasserError: __WEBPACK_IMPORTED_MODULE_2_util_core__["a" ],
@@ -6699,7 +6733,7 @@ function ajax (method, url, data, headers) {
     headers['Content-Length'] = data.length;
   }
   return new Promise((resolve, reject) => {
-    __WEBPACK_IMPORTED_MODULE_1_util_platform__["a" ].xmlhttpRequest({
+    __WEBPACK_IMPORTED_MODULE_1_util_platform__["a" ].xmlHttpRequest({
       method: method,
       url: url,
       data: data,
@@ -6781,22 +6815,22 @@ function resetCookies () {
  (function(module, __webpack_exports__, __webpack_require__) {
 "use strict";
  __webpack_require__.d(__webpack_exports__, "a", function() { return openImage; });
- var __WEBPACK_IMPORTED_MODULE_0_util_config__ = __webpack_require__(4);
- var __WEBPACK_IMPORTED_MODULE_1_util_link__ = __webpack_require__(6);
- var __WEBPACK_IMPORTED_MODULE_2_util_dom__ = __webpack_require__(5);
- var __WEBPACK_IMPORTED_MODULE_3_util_logger__ = __webpack_require__(2);
- var __WEBPACK_IMPORTED_MODULE_4_util_misc__ = __webpack_require__(7);
- var __WEBPACK_IMPORTED_MODULE_5_util_platform__ = __webpack_require__(1);
+ var __WEBPACK_IMPORTED_MODULE_0_util_link__ = __webpack_require__(5);
+ var __WEBPACK_IMPORTED_MODULE_1_util_dom__ = __webpack_require__(4);
+ var __WEBPACK_IMPORTED_MODULE_2_util_logger__ = __webpack_require__(2);
+ var __WEBPACK_IMPORTED_MODULE_3_util_misc__ = __webpack_require__(6);
+ var __WEBPACK_IMPORTED_MODULE_4_util_platform__ = __webpack_require__(1);
 async function openImage (imgSrc, options) {
   options = options || {};
   const replace = !!options.replace;
   const referer = !!options.referer;
   if (replace) {
-    replaceBody(imgSrc);
+    await replaceBody(imgSrc);
     return;
   }
-  if (__WEBPACK_IMPORTED_MODULE_0_util_config__["a" ].redirectImage) {
-    await Object(__WEBPACK_IMPORTED_MODULE_1_util_link__["a" ])(imgSrc, {
+  const redirectImage = await __WEBPACK_IMPORTED_MODULE_4_util_platform__["a" ].getValue('redirect_image');
+  if (redirectImage) {
+    await Object(__WEBPACK_IMPORTED_MODULE_0_util_link__["a" ])(imgSrc, {
       referer: referer,
     });
   }
@@ -6823,9 +6857,9 @@ function checkScaling () {
     this.classList.remove('adsbypasser-resizable');
   }
 }
-function scaleImage (i) {
-  const style = __WEBPACK_IMPORTED_MODULE_5_util_platform__["a" ].getResourceText('scaleImage');
-  __WEBPACK_IMPORTED_MODULE_5_util_platform__["a" ].addStyle(style);
+async function scaleImage (i) {
+  const siURL = await __WEBPACK_IMPORTED_MODULE_4_util_platform__["a" ].getResourceUrl('scaleImage');
+  appendStyleURL(siURL);
   if (i.naturalWidth && i.naturalHeight) {
     checkScaling.call(i);
   } else {
@@ -6837,30 +6871,38 @@ function scaleImage (i) {
     h = window.setTimeout(checkScaling.bind(i), 100);
   });
 }
-function changeBackground () {
-  const bgImage = __WEBPACK_IMPORTED_MODULE_5_util_platform__["a" ].getResourceURL('bgImage');
+async function changeBackground () {
+  const bgImage = await __WEBPACK_IMPORTED_MODULE_4_util_platform__["a" ].getResourceUrl('bgImage');
   document.body.style.backgroundColor = '#222222';
   document.body.style.backgroundImage = `url('${bgImage}')`;
 }
-function alignCenter () {
-  const style = __WEBPACK_IMPORTED_MODULE_5_util_platform__["a" ].getResourceText('alignCenter');
-  __WEBPACK_IMPORTED_MODULE_5_util_platform__["a" ].addStyle(style);
+async function alignCenter () {
+  const acURL = await __WEBPACK_IMPORTED_MODULE_4_util_platform__["a" ].getResourceUrl('alignCenter');
+  appendStyleURL(acURL);
 }
 function injectStyle (d, i) {
-  Object(__WEBPACK_IMPORTED_MODULE_2_util_dom__["d" ])('style, link[rel=stylesheet]');
+  Object(__WEBPACK_IMPORTED_MODULE_1_util_dom__["d" ])('style, link[rel=stylesheet]');
   d.id = 'adsbypasser-wrapper';
   i.id = 'adsbypasser-image';
 }
-function replaceBody (imgSrc) {
-  if (!__WEBPACK_IMPORTED_MODULE_0_util_config__["a" ].redirectImage) {
+function appendStyleURL (url) {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = url;
+  document.head.appendChild(link);
+}
+async function replaceBody (imgSrc) {
+  const redirectImage = await __WEBPACK_IMPORTED_MODULE_4_util_platform__["a" ].getValue('redirect_image');
+  if (!redirectImage) {
     return;
   }
   if (!imgSrc) {
-    Object(__WEBPACK_IMPORTED_MODULE_3_util_logger__["b" ])('false url');
+    Object(__WEBPACK_IMPORTED_MODULE_2_util_logger__["b" ])('false url');
     return;
   }
-  Object(__WEBPACK_IMPORTED_MODULE_3_util_logger__["a" ])(`replacing body with \`${imgSrc}\` ...`);
-  Object(__WEBPACK_IMPORTED_MODULE_4_util_misc__["c" ])();
+  Object(__WEBPACK_IMPORTED_MODULE_2_util_logger__["a" ])(`replacing body with \`${imgSrc}\` ...`);
+  Object(__WEBPACK_IMPORTED_MODULE_3_util_misc__["c" ])();
   enableScrolling();
   document.body = document.createElement('body');
   const d = document.createElement('div');
@@ -6868,17 +6910,20 @@ function replaceBody (imgSrc) {
   const i = document.createElement('img');
   i.src = imgSrc;
   d.appendChild(i);
-  if (__WEBPACK_IMPORTED_MODULE_0_util_config__["a" ].alignCenter || __WEBPACK_IMPORTED_MODULE_0_util_config__["a" ].scaleImage) {
+  const ac = await __WEBPACK_IMPORTED_MODULE_4_util_platform__["a" ].getValue('align_center');
+  const si = await __WEBPACK_IMPORTED_MODULE_4_util_platform__["a" ].getValue('scale_image');
+  if (ac || si) {
     injectStyle(d, i);
   }
-  if (__WEBPACK_IMPORTED_MODULE_0_util_config__["a" ].alignCenter) {
-    alignCenter();
+  if (ac) {
+    await alignCenter();
   }
-  if (__WEBPACK_IMPORTED_MODULE_0_util_config__["a" ].changeBackground) {
-    changeBackground();
+  const cb = await __WEBPACK_IMPORTED_MODULE_4_util_platform__["a" ].getValue('change_background');
+  if (cb) {
+    await changeBackground();
   }
-  if (__WEBPACK_IMPORTED_MODULE_0_util_config__["a" ].scaleImage) {
-    scaleImage(i);
+  if (si) {
+    await scaleImage(i);
   }
 }
  })

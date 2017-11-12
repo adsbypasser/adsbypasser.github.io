@@ -3,20 +3,25 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.3.0
+// @version        6.4.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.3.0/img/logo.png
-// @grant          unsafeWindow
-// @grant          GM_xmlhttpRequest
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.0/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
+// @grant          GM_xmlhttpRequest
+// @grant          GM.deleteValue
+// @grant          GM.getValue
+// @grant          GM.openInTab
+// @grant          GM.setValue
+// @grant          GM.xmlHttpRequest
+// @grant          unsafeWindow
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -167,11 +172,11 @@ function tryEvery (msInterval, fn) {
 "use strict";
  __webpack_require__.d(__webpack_exports__, "b", function() { return rawUSW; });
  __webpack_require__.d(__webpack_exports__, "c", function() { return usw; });
- __webpack_require__.d(__webpack_exports__, "a", function() { return GM; });
+ __webpack_require__.d(__webpack_exports__, "a", function() { return GMAPI; });
  var __WEBPACK_IMPORTED_MODULE_0_util_core__ = __webpack_require__(0);
 const rawUSW = getUnsafeWindow();
 const usw = getUnsafeWindowProxy();
-const GM = getGreaseMonkeyAPI();
+const GMAPI = getGreaseMonkeyAPI();
 function getUnsafeWindow () {
   let w = null;
   try {
@@ -188,22 +193,49 @@ function getGreaseMonkeyAPI () {
   if (rawUSW.global) {
     return null;
   }
-  const gm = {
-    openInTab: GM_openInTab,
-    registerMenuCommand: GM_registerMenuCommand,
-    getValue: GM_getValue,
-    setValue: GM_setValue,
-    deleteValue: GM_deleteValue,
-    xmlhttpRequest: GM_xmlhttpRequest,
-  };
-  if (typeof GM_getResourceText === 'function') {
-    gm.getResourceText = GM_getResourceText;
+  const gm = {};
+  if (typeof GM_openInTab === 'function') {
+    gm.openInTab = GM_openInTab;
+  } else {
+    gm.openInTab = GM.openInTab;
   }
-  if (typeof GM_addStyle === 'function') {
-    gm.addStyle = GM_addStyle;
+  if (typeof GM_getValue === 'function') {
+    gm.getValue = (name, default_) => {
+      return Promise.resolve(GM_getValue(name, default_));
+    };
+  } else {
+    gm.getValue = GM.getValue;
+  }
+  if (typeof GM_setValue === 'function') {
+    gm.setValue = (name, value) => {
+      return Promise.resolve(GM_setValue(name, value));
+    };
+  } else {
+    gm.setValue = GM.setValue;
+  }
+  if (typeof GM_deleteValue === 'function') {
+    gm.deleteValue = (name) => {
+      return Promise.resolve(GM_deleteValue(name));
+    };
+  } else {
+    gm.deleteValue = GM.deleteValue;
+  }
+  if (typeof GM_xmlhttpRequest === 'function') {
+    gm.xmlHttpRequest = GM_xmlhttpRequest;
+  } else {
+    gm.xmlHttpRequest = GM.xmlHttpRequest;
+  }
+  if (typeof GM_registerMenuCommand === 'function') {
+    gm.registerMenuCommand = GM_registerMenuCommand;
+  } else {
+    gm.registerMenuCommand = __WEBPACK_IMPORTED_MODULE_0_util_core__["h" ];
   }
   if (typeof GM_getResourceURL === 'function') {
-    gm.getResourceURL = GM_getResourceURL;
+    gm.getResourceUrl = (resourceName) => {
+      return Promise.resolve(GM_getResourceURL(resourceName));
+    };
+  } else if (GM.getResourceUrl) {
+    gm.getResourceUrl = GM.getResourceUrl;
   }
   return gm;
 }
@@ -510,7 +542,8 @@ function changeTitle () {
   document.title += ' - AdsBypasser';
 }
 async function beforeDOMReady (handler) {
-  Object(__WEBPACK_IMPORTED_MODULE_4_util_logger__["a" ])('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify(__WEBPACK_IMPORTED_MODULE_3_util_config__["a" ]));
+  const config = await Object(__WEBPACK_IMPORTED_MODULE_3_util_config__["a" ])();
+  Object(__WEBPACK_IMPORTED_MODULE_4_util_logger__["a" ])('working on\n%s \nwith\n%s', window.location.toString(), JSON.stringify(config));
   disableLeavePrompt(__WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ]);
   disableWindowOpen();
   await handler.start();
@@ -538,7 +571,7 @@ async function main () {
   __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].registerMenuCommand('AdsBypasser - Configure', () => {
     __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].openInTab('https://adsbypasser.github.io/configure.html');
   });
-  Object(__WEBPACK_IMPORTED_MODULE_3_util_config__["b" ])();
+  await Object(__WEBPACK_IMPORTED_MODULE_3_util_config__["b" ])();
   const handler = Object(__WEBPACK_IMPORTED_MODULE_1_util_dispatcher__["a" ])();
   if (handler) {
     await beforeDOMReady(handler);
@@ -553,14 +586,13 @@ main().catch((e) => {
  }),
  (function(module, __webpack_exports__, __webpack_require__) {
 "use strict";
+ __webpack_require__.d(__webpack_exports__, "a", function() { return dumpConfig; });
  __webpack_require__.d(__webpack_exports__, "b", function() { return loadConfig; });
- __webpack_require__.d(__webpack_exports__, "a", function() { return config; });
  var __WEBPACK_IMPORTED_MODULE_0_util_core__ = __webpack_require__(0);
  var __WEBPACK_IMPORTED_MODULE_1_util_dispatcher__ = __webpack_require__(3);
  var __WEBPACK_IMPORTED_MODULE_2_util_platform__ = __webpack_require__(1);
 const MANIFEST = [
   {
-    name: 'version',
     key: 'version',
     default_: 0,
     verify (v) {
@@ -569,35 +601,30 @@ const MANIFEST = [
     normalize: toNumber,
   },
   {
-    name: 'alignCenter',
     key: 'align_center',
     default_: true,
     verify: isBoolean,
     normalize: toBoolean,
   },
   {
-    name: 'changeBackground',
     key: 'change_background',
     default_: true,
     verify: isBoolean,
     normalize: toBoolean,
   },
   {
-    name: 'redirectImage',
     key: 'redirect_image',
     default_: true,
     verify: isBoolean,
     normalize: toBoolean,
   },
   {
-    name: 'scaleImage',
     key: 'scale_image',
     default_: true,
     verify: isBoolean,
     normalize: toBoolean,
   },
   {
-    name: 'logLevel',
     key: 'log_level',
     default_: 1,
     verify (v) {
@@ -607,33 +634,39 @@ const MANIFEST = [
   },
 ];
 const PATCHES = [
-  (c) => {
-    const ac = typeof c.alignCenter === 'boolean';
-    if (typeof c.changeBackground !== 'boolean') {
-      c.changeBackground = ac ? c.alignCenter : true;
+  async () => {
+    const alignCenter = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('align_center');
+    const changeBackground = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('change_background');
+    const scaleImage = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('scale_image');
+    const redirectImage = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('redirect_image');
+    const ac = typeof alignCenter === 'boolean';
+    if (typeof changeBackground !== 'boolean') {
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('change_background', ac ? alignCenter : true);
     }
-    if (typeof c.scaleImage !== 'boolean') {
-      c.scaleImage = ac ? c.alignCenter : true;
+    if (typeof scaleImage !== 'boolean') {
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('scale_image', ac ? alignCenter : true);
     }
     if (!ac) {
-      c.alignCenter = true;
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('align_center', true);
     }
-    if (typeof c.redirectImage !== 'boolean') {
-      c.redirectImage = true;
-    }
-  },
-  (c) => {
-    if (typeof c.externalServerSupport !== 'boolean') {
-      c.externalServerSupport = false;
+    if (typeof redirectImage !== 'boolean') {
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('redirect_image', true);
     }
   },
-  (c) => {
-    if (typeof c.logLevel !== 'number') {
-      c.logLevel = 1;
+  async () => {
+    const externalServerSupport = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('external_server_support');
+    if (typeof externalServerSupport !== 'boolean') {
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('external_server_support', false);
     }
   },
-  () => {
-    __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].deleteValue('external_server_support');
+  async () => {
+    const logLevel = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('log_level');
+    if (typeof logLevel !== 'number') {
+      await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('log_level', 1);
+    }
+  },
+  async () => {
+    await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].deleteValue('external_server_support');
   },
 ];
 function isBoolean (v) {
@@ -645,54 +678,31 @@ function toBoolean (v) {
 function toNumber (v) {
   return parseInt(v, 10);
 }
-function createConfig () {
-  const c = {};
-  Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["d" ])(MANIFEST, (m) => {
-    Object.defineProperty(c, m.name, {
-      configurable: true,
-      enumerable: true,
-      get: () => {
-        return __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue(m.key, m.default_);
-      },
-      set: (v) => {
-        __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue(m.key, v);
-        const nv = __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue(m.key, m.default_);
-        if (nv !== v) {
-          const msg = `failed to write config, key: ${m.key}, value: ${nv}, new: ${v}`;
-          throw new __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ](msg);
-        }
-      },
-    });
+async function senityCheck () {
+  let verifyResults = MANIFEST.map(async (descriptor) => {
+    const rv = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue(descriptor.key);
+    return descriptor.verify(rv);
   });
-  return c;
-}
-function senityCheck (c) {
-  const ok = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["b" ])(MANIFEST, (m) => {
-    return m.verify(c[m.name]);
-  });
+  verifyResults = await Promise.all(verifyResults);
+  const ok = Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["b" ])(verifyResults, v => v);
   if (!ok) {
-    c.version = 0;
+    await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('version', 0);
   }
-  return c;
 }
-function migrate (c) {
-  if (typeof c.version !== 'number' || c.version < 0) {
-    throw new __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ]('wrong config version: ' + c.version);
+async function migrate () {
+  let currentVersion = await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('version');
+  if (currentVersion !== 0 && !currentVersion) {
+    throw new __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ]('invalid version');
   }
-  for (let i = 0; c.version < PATCHES.length; ++i) {
-    PATCHES[c.version](c);
-    ++c.version;
-    if (i >= PATCHES.length) {
-      throw new __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ]('invalid config state', i, c);
-    }
+  while (currentVersion < PATCHES.length) {
+    PATCHES[currentVersion]();
+    ++currentVersion;
   }
-  return c;
+  await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue('version', currentVersion);
 }
-let config = null;
-function loadConfig () {
-  config = createConfig();
-  config = senityCheck(config);
-  config = migrate(config);
+async function loadConfig () {
+  await senityCheck();
+  await migrate();
   Object(__WEBPACK_IMPORTED_MODULE_1_util_dispatcher__["b" ])({
     rule: {
       host: /^adsbypasser\.github\.io$/,
@@ -700,45 +710,44 @@ function loadConfig () {
     },
     async ready () {
       await waitForPage();
-      __WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ].commit = (data) => {
-        data.version = config.version;
-        Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["d" ])(data, (v, k) => {
-          config[k] = v;
-        });
+      __WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ].commit = async (data) => {
+        for (const [k, v] of Object.entries(data)) {
+          await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].setValue(k, v);
+        }
       };
       __WEBPACK_IMPORTED_MODULE_2_util_platform__["c" ].render({
-        version: config.version,
+        version: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('version'),
         options: {
-          alignCenter: {
+          align_center: {
             type: 'checkbox',
-            value: config.alignCenter,
+            value: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('align_center'),
             label: 'Align Center',
             help: 'Align image to the center if possible. (default: enabled)',
           },
-          changeBackground: {
+          change_background: {
             type: 'checkbox',
-            value: config.changeBackground,
+            value: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('change_background'),
             label: 'Change Background',
             help: 'Use Firefox-like image background if possible. (default: enabled)',
           },
-          redirectImage: {
+          redirect_image: {
             type: 'checkbox',
-            value: config.redirectImage,
+            value: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('redirect_image'),
             label: 'Redirect Image',
             help: [
               'Directly open image link if possible. (default: enabled)',
               'If disabled, redirection will only works on link shortener sites.',
             ].join('<br/>\n'),
           },
-          scaleImage: {
+          scale_image: {
             type: 'checkbox',
-            value: config.scaleImage,
+            value: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('scale_image'),
             label: 'Scale Image',
             help: 'When image loaded, scale it to fit window if possible. (default: enabled)',
           },
-          logLevel: {
+          log_level: {
             type: 'select',
-            value: config.logLevel,
+            value: await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue('log_level'),
             menu: [
               [0, '0 (quiet)'],
               [1, '1 (default)'],
@@ -766,6 +775,17 @@ function waitForPage () {
       }
     }, 50);
   });
+}
+async function dumpConfig () {
+  let rv = MANIFEST.map(async (descriptor) => {
+    return [descriptor.key, await __WEBPACK_IMPORTED_MODULE_2_util_platform__["a" ].getValue(descriptor.key)];
+  });
+  rv = await Promise.all(rv);
+  const o = {};
+  for (const [k, v] of rv) {
+    o[k] = v;
+  }
+  return o;
 }
  }),
  (function(module, __webpack_exports__, __webpack_require__) {
@@ -1024,7 +1044,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
     host: [
       /^openload\.co$/,
-      /^oload\.(info|tv)$/,
+      /^oload\.(stream|info|tv)$/,
     ],
     path: /^\/f\/.*/,
   },
@@ -1468,6 +1488,9 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     rule: {
       host: [
         /^adlink\.guru$/,
+        /^clik\.pw$/,
+        /^coshurl\.co$/,
+        /^curs\.io$/,
         /^cypt\.ga$/,
         /^(filesbucks|tmearn|cut-urls)\.com$/,
         /^elink\.link$/,
@@ -1477,19 +1500,21 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         /^urle\.co$/,
         /^(hashe|trlink|adshort)\.in$/,
         /^www\.worldhack\.net$/,
-        /^123link\.io$/,
+        /^123link\.(io|co|press)$/,
         /^pir\.im$/,
         /^bol\.tl$/,
         /^(tl|adfly)\.tc$/,
         /^(adfu|linkhits)\.us$/,
         /^short\.pastewma\.com$/,
+        /^l2s\.io$/,
         /^linkfly\.gaosmedia\.com$/,
         /^linclik\.com$/,
         /^link-earn\.com$/,
         /^zez\.io$/,
         /^adbull\.me$/,
-        /^adshort\.co$/,
+        /^adshort\.im$/,
         /^adshorte\.com$/,
+        /^weefy\.me$/,
       ],
     },
     async ready () {
@@ -1636,20 +1661,18 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     ],
   },
   async ready () {
-    let i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('body > section > iframe');
+    let i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('#html_element');
     if (i) {
-      i.src = 'about:blank';
-      await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].wait(3000);
-      const a = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('a.redirect');
-      a.click();
+      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('#messa');
+      i.classList.remove('hidden');
       return;
     }
-    i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].searchFromScripts(/"href","([^"]+)"\)\.remove/);
+    i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].searchFromScripts(/"href","([^"]+)" \+ hash\)\.remove/);
     if (!i) {
       __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].warn('site changed');
       return;
     }
-    i = i[1];
+    i = i[1] + location.hash;
     __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(i);
   },
 });
@@ -2914,7 +2937,11 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     },
     async ready () {
       __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('iframe');
-      let f = getForm();
+      let f = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('#captchaShortlink');
+      if (f) {
+        return;
+      }
+      f = getForm();
       if (!f) {
         f = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('#link-view');
         f.submit();
@@ -3988,6 +4015,11 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
       host: /^shorten\.id$/,
       query: /^\?url=([a-zA-Z0-9/=]+)=$/,
     },
+    {
+      host: /^www\.compartiendofull\.net$/,
+      path: /^\/go2/,
+      query: /^\?p=([a-zA-Z0-9/=]+)$/,
+    },
   ],
   async start (m) {
     const rawLink = atob(m.query[1]);
@@ -4613,7 +4645,7 @@ function ajax (method, url, data, headers) {
     headers['Content-Length'] = data.length;
   }
   return new Promise((resolve, reject) => {
-    __WEBPACK_IMPORTED_MODULE_1_util_platform__["a" ].xmlhttpRequest({
+    __WEBPACK_IMPORTED_MODULE_1_util_platform__["a" ].xmlHttpRequest({
       method: method,
       url: url,
       data: data,
