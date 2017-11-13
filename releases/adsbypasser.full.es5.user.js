@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.4.0
+// @version        6.4.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.1/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.1/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.1/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.1/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -518,12 +518,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.GMAPI = exports.usw = exports.rawUSW = undefined;
-var _typeof2 = __webpack_require__(33);
-var _typeof3 = _interopRequireDefault(_typeof2);
 var _defineProperty = __webpack_require__(76);
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 var _getOwnPropertyDescriptor = __webpack_require__(142);
 var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
+var _typeof2 = __webpack_require__(33);
+var _typeof3 = _interopRequireDefault(_typeof2);
 var _promise = __webpack_require__(9);
 var _promise2 = _interopRequireDefault(_promise);
 var _core = __webpack_require__(4);
@@ -588,7 +588,7 @@ function getGreaseMonkeyAPI() {
     gm.getResourceUrl = function (resourceName) {
       return _promise2.default.resolve(GM_getResourceURL(resourceName));
     };
-  } else if (GM.getResourceUrl) {
+  } else if ((typeof GM === 'undefined' ? 'undefined' : (0, _typeof3.default)(GM)) === 'object' && GM && GM.getResourceUrl) {
     gm.getResourceUrl = GM.getResourceUrl;
   }
   return gm;
