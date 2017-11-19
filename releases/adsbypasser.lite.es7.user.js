@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.4.1
+// @version        6.5.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.4.1/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.5.0/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -77,7 +77,8 @@
  __webpack_require__.d(__webpack_exports__, "g", function() { return none; });
  __webpack_require__.d(__webpack_exports__, "h", function() { return nop; });
  __webpack_require__.d(__webpack_exports__, "i", function() { return partial; });
- __webpack_require__.d(__webpack_exports__, "j", function() { return wait; });
+ __webpack_require__.d(__webpack_exports__, "j", function() { return tryEvery; });
+ __webpack_require__.d(__webpack_exports__, "k", function() { return wait; });
 class AdsBypasserError extends Error {
   constructor (message) {
     super(message);
@@ -1483,82 +1484,6 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(m[1]);
   },
 });
-(function () {
-  __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
-    rule: {
-      host: [
-        /^adlink\.guru$/,
-        /^clik\.pw$/,
-        /^coshurl\.co$/,
-        /^curs\.io$/,
-        /^cypt\.ga$/,
-        /^(filesbucks|tmearn|cut-urls)\.com$/,
-        /^elink\.link$/,
-        /^(payurl|urlst)\.me$/,
-        /^u2s\.io$/,
-        /^url\.ht$/,
-        /^urle\.co$/,
-        /^(hashe|trlink|adshort)\.in$/,
-        /^www\.worldhack\.net$/,
-        /^123link\.(io|co|press)$/,
-        /^pir\.im$/,
-        /^bol\.tl$/,
-        /^(tl|adfly)\.tc$/,
-        /^(adfu|linkhits)\.us$/,
-        /^short\.pastewma\.com$/,
-        /^l2s\.io$/,
-        /^linkfly\.gaosmedia\.com$/,
-        /^linclik\.com$/,
-        /^link-earn\.com$/,
-        /^zez\.io$/,
-        /^adbull\.me$/,
-        /^adshort\.im$/,
-        /^adshorte\.com$/,
-        /^weefy\.me$/,
-      ],
-    },
-    async ready () {
-      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('iframe', '.BJPPopAdsOverlay');
-      const page = await firstStage();
-      const url = await secondStage(page);
-      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].nuke(url);
-      await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(url);
-    },
-  });
-  function firstStage () {
-    return new Promise((resolve) => {
-      const f = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('#link-view');
-      if (!f) {
-        resolve(document);
-        return;
-      }
-      const args = extractArgument(f);
-      const url = f.getAttribute('action');
-      const p = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].post(url, args).then((data) => {
-        return __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].toDOM(data);
-      });
-      resolve(p);
-    });
-  }
-  async function secondStage (page) {
-    const f = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('#go-link', page);
-    const args = extractArgument(f);
-    const url = f.getAttribute('action');
-    let data = await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].post(url, args);
-    data = JSON.parse(data);
-    if (data && data.url) {
-      return data.url;
-    }
-    throw new __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].AdsBypasserError('wrong data');
-  }
-  function extractArgument (form) {
-    const args = {};
-    __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].forEach(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$$('input', form), (v) => {
-      args[v.name] = v.value;
-    });
-    return args;
-  }
-})();
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
     host: /^adlock\.org$/,
@@ -2690,7 +2615,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   const hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|zytpirwai|jzrputtbut)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|jzrputtbut)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
     /^(([\w]{8}|www)\.)?hornywood\.tv$/,
@@ -2920,9 +2845,11 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
       ],
     },
     async ready () {
-      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('iframe');
+      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('iframe, [class$="Overlay"]');
+      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].block('[class$="Overlay"]', document.body);
       const f = getForm();
       if (!f) {
+        __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].info('no form');
         return;
       }
       sendRequest(f);
@@ -2933,6 +2860,8 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
       host: [
         /^sflnk\.me$/,
         /^idsly\.com$/,
+        /^adbilty\.me$/,
+        /^oke\.io$/,
       ],
     },
     async ready () {
@@ -2950,9 +2879,50 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
       sendRequest(f);
     },
   });
+  __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
+    rule: {
+      host: [
+        /^adlink\.guru$/,
+        /^clik\.pw$/,
+        /^coshurl\.co$/,
+        /^curs\.io$/,
+        /^cypt\.ga$/,
+        /^(filesbucks|tmearn|cut-urls)\.com$/,
+        /^elink\.link$/,
+        /^(payurl|urlst)\.me$/,
+        /^u2s\.io$/,
+        /^url\.ht$/,
+        /^urle\.co$/,
+        /^(hashe|trlink|adshort)\.in$/,
+        /^www\.worldhack\.net$/,
+        /^123link\.(io|co|press)$/,
+        /^pir\.im$/,
+        /^bol\.tl$/,
+        /^(tl|adfly)\.tc$/,
+        /^(adfu|linkhits)\.us$/,
+        /^short\.pastewma\.com$/,
+        /^l2s\.io$/,
+        /^linkfly\.gaosmedia\.com$/,
+        /^linclik\.com$/,
+        /^link-earn\.com$/,
+        /^zez\.io$/,
+        /^adbull\.me$/,
+        /^adshort\.im$/,
+        /^adshorte\.com$/,
+        /^weefy\.me$/,
+      ],
+    },
+    async ready () {
+      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('iframe', '.BJPPopAdsOverlay');
+      const page = await firstStage();
+      const url = await secondStage(page);
+      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].nuke(url);
+      await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(url);
+    },
+  });
   function getForm () {
     const jQuery = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].window.$;
-    const f = jQuery('form[action="/links/go"], form[action="/links/linkdropgo"]');
+    const f = jQuery('#go-link, .go-link, form[action="/links/go"], form[action="/links/linkdropgo"]');
     if (f.length > 0) {
       return f;
     }
@@ -2976,6 +2946,39 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].warn(xhr, status, error);
       },
     });
+  }
+  function firstStage () {
+    return new Promise((resolve) => {
+      const f = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('#link-view');
+      if (!f) {
+        resolve(document);
+        return;
+      }
+      const args = extractArgument(f);
+      const url = f.getAttribute('action');
+      const p = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].post(url, args).then((data) => {
+        return __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].toDOM(data);
+      });
+      resolve(p);
+    });
+  }
+  async function secondStage (page) {
+    const f = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('#go-link', page);
+    const args = extractArgument(f);
+    const url = f.getAttribute('action');
+    let data = await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].post(url, args);
+    data = JSON.parse(data);
+    if (data && data.url) {
+      return data.url;
+    }
+    throw new __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].AdsBypasserError('wrong data');
+  }
+  function extractArgument (form) {
+    const args = {};
+    __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].forEach(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$$('input', form), (v) => {
+      args[v.name] = v.value;
+    });
+    return args;
   }
 })();
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
@@ -3682,23 +3685,10 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     if (!__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('#captcha')) {
       f.submit();
     }
-    const o = new MutationObserver((mutations) => {
-      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('.BJPPopAdsOverlay');
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (node.localName === 'div') {
-            if (node.style.zIndex === '2147483647') {
-              node.parentNode.removeChild(node);
-              return;
-            }
-          }
-        });
-      });
-    });
-    o.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
+    __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('.BJPPopAdsOverlay');
+    __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].block((node) => {
+      return node.localName === 'div' && node.style.zIndex === '2147483647';
+    }, document.body);
   },
 });
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
@@ -4129,6 +4119,30 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
 });
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
+    host: /^susutinv2\.com$/,
+  },
+  async ready () {
+    const s = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].searchFromScripts(/="([^"]+)",/);
+    if (!s) {
+      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].warn('site changed');
+      return;
+    }
+    await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(s[1]);
+  },
+});
+__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
+  rule: {
+    host: /^www\.njiir\.com$/,
+  },
+  async ready () {
+    let a = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('div.download-link > a');
+    a = a.href.match(/r=(.*)$/);
+    a = atob(a[1]);
+    await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(a);
+  },
+});
+__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
+  rule: {
     host: /^techfunda\.net$/,
     path: [
       /^\/link\//,
@@ -4526,25 +4540,27 @@ const _ = {
   none: __WEBPACK_IMPORTED_MODULE_2_util_core__["g" ],
   partial: __WEBPACK_IMPORTED_MODULE_2_util_core__["i" ],
   register: __WEBPACK_IMPORTED_MODULE_3_util_dispatcher__["b" ],
-  wait: __WEBPACK_IMPORTED_MODULE_2_util_core__["j" ],
+  tryEvery: __WEBPACK_IMPORTED_MODULE_2_util_core__["j" ],
+  wait: __WEBPACK_IMPORTED_MODULE_2_util_core__["k" ],
   warn: __WEBPACK_IMPORTED_MODULE_6_util_logger__["b" ],
 };
 function $ (selector, context) {
-  return Object(__WEBPACK_IMPORTED_MODULE_4_util_dom__["a" ])(selector, context);
+  return Object(__WEBPACK_IMPORTED_MODULE_4_util_dom__["b" ])(selector, context);
 }
-$.$ = __WEBPACK_IMPORTED_MODULE_4_util_dom__["c" ];
-$.$$ = __WEBPACK_IMPORTED_MODULE_4_util_dom__["b" ];
+$.$ = __WEBPACK_IMPORTED_MODULE_4_util_dom__["d" ];
+$.$$ = __WEBPACK_IMPORTED_MODULE_4_util_dom__["c" ];
+$.block = __WEBPACK_IMPORTED_MODULE_4_util_dom__["a" ];
 $.get = __WEBPACK_IMPORTED_MODULE_0_util_ajax__["a" ];
 $.getCookie = __WEBPACK_IMPORTED_MODULE_1_util_cookie__["a" ];
 $.nuke = __WEBPACK_IMPORTED_MODULE_7_util_misc__["b" ];
 $.openLink = __WEBPACK_IMPORTED_MODULE_5_util_link__["a" ];
 $.post = __WEBPACK_IMPORTED_MODULE_0_util_ajax__["b" ];
-$.remove = __WEBPACK_IMPORTED_MODULE_4_util_dom__["d" ];
+$.remove = __WEBPACK_IMPORTED_MODULE_4_util_dom__["e" ];
 $.removeAllTimer = __WEBPACK_IMPORTED_MODULE_7_util_misc__["c" ];
 $.resetCookies = __WEBPACK_IMPORTED_MODULE_1_util_cookie__["b" ];
-$.searchFromScripts = __WEBPACK_IMPORTED_MODULE_4_util_dom__["e" ];
+$.searchFromScripts = __WEBPACK_IMPORTED_MODULE_4_util_dom__["f" ];
 $.setCookie = __WEBPACK_IMPORTED_MODULE_1_util_cookie__["c" ];
-$.toDOM = __WEBPACK_IMPORTED_MODULE_4_util_dom__["f" ];
+$.toDOM = __WEBPACK_IMPORTED_MODULE_4_util_dom__["g" ];
 $.window = __WEBPACK_IMPORTED_MODULE_8_util_platform__["c" ];
  }),
  (function(module, __webpack_exports__, __webpack_require__) {
@@ -4726,12 +4742,13 @@ function resetCookies () {
  }),
  (function(module, __webpack_exports__, __webpack_require__) {
 "use strict";
- __webpack_require__.d(__webpack_exports__, "a", function() { return querySelector; });
- __webpack_require__.d(__webpack_exports__, "c", function() { return querySelectorOrNull; });
- __webpack_require__.d(__webpack_exports__, "b", function() { return querySelectorAll; });
- __webpack_require__.d(__webpack_exports__, "f", function() { return toDOM; });
- __webpack_require__.d(__webpack_exports__, "d", function() { return remove; });
- __webpack_require__.d(__webpack_exports__, "e", function() { return searchFromScripts; });
+ __webpack_require__.d(__webpack_exports__, "a", function() { return block; });
+ __webpack_require__.d(__webpack_exports__, "b", function() { return querySelector; });
+ __webpack_require__.d(__webpack_exports__, "c", function() { return querySelectorAll; });
+ __webpack_require__.d(__webpack_exports__, "d", function() { return querySelectorOrNull; });
+ __webpack_require__.d(__webpack_exports__, "e", function() { return remove; });
+ __webpack_require__.d(__webpack_exports__, "f", function() { return searchFromScripts; });
+ __webpack_require__.d(__webpack_exports__, "g", function() { return toDOM; });
  var __WEBPACK_IMPORTED_MODULE_0_util_core__ = __webpack_require__(0);
 class DomNotFoundError extends __WEBPACK_IMPORTED_MODULE_0_util_core__["a" ] {
   constructor (selector) {
@@ -4778,6 +4795,36 @@ function remove (selector, context) {
   const nodes = querySelectorAll(selector, context);
   Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["d" ])(nodes, (e) => {
     e.parentNode.removeChild(e);
+  });
+}
+function block (selector, context=null) {
+  if (!context) {
+    context = document;
+  }
+  let fn = null;
+  if (Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["e" ])(selector)) {
+    fn = () => {
+      remove(selector, context);
+    };
+  } else if (typeof selector === 'function') {
+    fn = (mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (selector(node)) {
+          node.parentNode.removeChild(node);
+        }
+      });
+    };
+  } else {
+    throw new TypeError('wrong selector');
+  }
+  const o = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      fn(mutation);
+    });
+  });
+  o.observe(context, {
+    childList: true,
+    subtree: true,
   });
 }
 function searchFromScriptsByRegExp (pattern, context) {
@@ -4828,7 +4875,7 @@ function prepare (e) {
     document.body = document.createElement('body');
   }
   document.body.appendChild(e);
-  return Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["j" ])(0);
+  return Object(__WEBPACK_IMPORTED_MODULE_0_util_core__["k" ])(0);
 }
 async function get (url) {
   const a = document.createElement('a');
