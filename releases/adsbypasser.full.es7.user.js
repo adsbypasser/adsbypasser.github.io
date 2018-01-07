@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.5.0
+// @version        6.6.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.5.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.6.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.5.0/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.5.0/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.5.0/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.6.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.6.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.6.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -1477,7 +1477,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
       host: [
         /^(www\.)?adb\.ug$/,
         /^(www\.)?lynk\.my$/,
-        /^adyou\.me$/,
+        /^(www\.)?adyou\.(co|me)$/,
       ],
       path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/,
     },
@@ -2743,36 +2743,6 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
 });
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
-    host: /^link\.tl$/,
-    path: /^\/fly\/site\.php$/,
-    query: /^\?to=(.+)$/,
-  },
-  async ready () {
-    const a = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('.skip > .btn');
-    await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(a.href);
-  },
-});
-__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
-  rule: {
-    host: /^link\.tl$/,
-    path: /[^^](https?:\/\/.+)$/,
-  },
-  start: function (m) {
-    'use strict';
-    __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(m.path[1]);
-  },
-});
-__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
-  rule: {
-    host: /^link\.tl$/,
-    path: /^\/(.+)$/,
-  },
-  async start (m) {
-    await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink('/fly/site.php?to=' + m.path[1]);
-  },
-});
-__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
-  rule: {
     host: /\.link2dollar\.com$/,
     path: /^\/\d+$/,
   },
@@ -3075,6 +3045,9 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         /^adurl\.id$/,
         /^goolink\.me$/,
         /^earningurl\.com$/,
+        /^cutwin\.com$/,
+        /^cutwi\.in$/,
+        /^(www\.)?ourl\.io$/,
       ],
     },
     async ready () {
@@ -5685,7 +5658,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   },
 });
 (function () {
-  const PATH_RULE = /^\/([0-9a-zA-Z-]+)(\.|\/|$)/;
+  const PATH_RULE = /^\/([0-9a-zA-Z-_]+)(\.|\/|$)/;
   __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     rule: {
       host: [
@@ -5741,7 +5714,10 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openImage(i.src);
         return;
       }
-      const node = await getAmbiguousForm('div center + div[id]');
+      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].window._0x337c4b = null;
+      const node = await getAmbiguousForm('div[id] + div[id] > style', (node) => {
+        return node.parentElement;
+      });
       node.click();
       node.click();
       node.click();
@@ -5749,17 +5725,21 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   });
   __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     rule: {
-      host: /^imgoutlet\.co$/,
+      host: /^imgoutlet\.pw$/,
       path: PATH_RULE,
     },
     async ready () {
-      const i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('img.pic');
+      const i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('img.picview');
       if (i) {
+        __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].window._0x2cd123 = null;
         await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openImage(i.src);
         return;
       }
-      const node = getAmbiguousForm('.inner > center > div[id]');
-      node.submit();
+      __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].window._0x337c4b = null;
+      const node = await getAmbiguousForm('div[id] + div[id] > style', (node) => {
+        return node.parentElement;
+      });
+      node.click();
     },
   });
   __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
@@ -5835,34 +5815,37 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
       });
     });
   }
-  async function getAmbiguousForm (selector) {
-    const d = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])(selector);
-    let visibleClasses = null;
-    let button = null;
-    await waitDOM(d, (node) => {
+  async function getAmbiguousForm (selector, shellNormalizer) {
+    const d = await waitFormShell(selector, shellNormalizer);
+    const style = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('style', d);
+    const visibleClasses = parseStyle(style);
+    const forms = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$$('form', d);
+    for (const form of forms) {
+      const isVisible = visibleClasses.some((class_) => {
+        return form.classList.contains(class_);
+      });
+      if (!isVisible) {
+        continue;
+      }
+      const button = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('input[type="button"]', form);
       if (button) {
-        return true;
+        return button;
       }
-      if (node.nodeName === 'STYLE') {
-        visibleClasses = parseStyle(node);
-        return false;
-      }
-      if (node.nodeName === 'FORM' && node.offsetParent !== null) {
-        return visibleClasses.some((class_) => {
-          const isVisible = node.classList.contains(class_);
-          if (!isVisible) {
-            return false;
-          }
-          button = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('input[type="button"]', node);
-          if (!button) {
-            return false;
-          }
-          return true;
-        });
-      }
-      return false;
+    }
+    return null;
+  }
+  function waitFormShell (selector, normalizer) {
+    return new Promise((resolve) => {
+      const handle = setInterval(() => {
+        let shell = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$(selector);
+        if (!shell) {
+          return;
+        }
+        clearInterval(handle);
+        shell = normalizer(shell);
+        resolve(shell);
+      }, 500);
     });
-    return button;
   }
   function parseStyle (style) {
     style = style.textContent;
@@ -5898,7 +5881,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
       await go(id, Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('input[name="pre"]').value, next);
       return;
     }
-    i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('img.pic');
+    i = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('img.picview');
     if (i) {
       await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openImage(i.src);
       return;
@@ -6199,6 +6182,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
     host: [
       /^www\.pics-money\.ru$/,
+      /^picker-click\.ru$/,
       /^p0xpicmoney\.ru$/,
     ],
   },
@@ -6265,6 +6249,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     host: [
       /^www\.pixsense\.net$/,
       /^www\.imagespicy\.site$/,
+      /^www\.imgsky\.net$/,
     ],
     path: /^\/site\/v\/\d+$/,
   },

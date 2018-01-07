@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.5.0
+// @version        6.6.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.5.0/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.6.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -1244,7 +1244,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
       host: [
         /^(www\.)?adb\.ug$/,
         /^(www\.)?lynk\.my$/,
-        /^adyou\.me$/,
+        /^(www\.)?adyou\.(co|me)$/,
       ],
       path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/,
     },
@@ -2510,36 +2510,6 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
 });
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
-    host: /^link\.tl$/,
-    path: /^\/fly\/site\.php$/,
-    query: /^\?to=(.+)$/,
-  },
-  async ready () {
-    const a = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('.skip > .btn');
-    await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(a.href);
-  },
-});
-__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
-  rule: {
-    host: /^link\.tl$/,
-    path: /[^^](https?:\/\/.+)$/,
-  },
-  start: function (m) {
-    'use strict';
-    __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(m.path[1]);
-  },
-});
-__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
-  rule: {
-    host: /^link\.tl$/,
-    path: /^\/(.+)$/,
-  },
-  async start (m) {
-    await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink('/fly/site.php?to=' + m.path[1]);
-  },
-});
-__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
-  rule: {
     host: /\.link2dollar\.com$/,
     path: /^\/\d+$/,
   },
@@ -2842,6 +2812,9 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         /^adurl\.id$/,
         /^goolink\.me$/,
         /^earningurl\.com$/,
+        /^cutwin\.com$/,
+        /^cutwi\.in$/,
+        /^(www\.)?ourl\.io$/,
       ],
     },
     async ready () {
