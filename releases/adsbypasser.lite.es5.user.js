@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.7.0
+// @version        6.8.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.7.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.8.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -4506,7 +4506,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^openload\.co$/, /^oload\.(stream|info|tv)$/],
+    host: [/^openload\.co$/, /^oload\.(stream|info|site|tv)$/],
     path: /^\/f\/.*/
   },
   start: function () {
@@ -5908,7 +5908,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^(1tk|hit|adbla|tl7|mylink)\.us$/, /^gx\.si$/, /^adwat\.ch$/, /^(fly2url|urlwiz|xafox)\.com$/, /^(zpoz|ultry)\.net$/, /^(wwy|myam)\.me$/, /^(ssl|srk)\.gs$/, /^shortit\.in$/, /^www\.adjet\.eu$/, /^cun\.bz$/, /^miniurl\.tk$/, /^vizzy\.es$/, /^kazan\.vc$/, /^linkcash\.ml$/],
+      host: [/^(1tk|hit|adbla|tl7)\.us$/, /^mylink\.(us|zone)$/, /^gx\.si$/, /^adwat\.ch$/, /^(fly2url|urlwiz|xafox)\.com$/, /^(zpoz|ultry)\.net$/, /^(wwy|myam)\.me$/, /^(ssl|srk)\.gs$/, /^shortit\.in$/, /^www\.adjet\.eu$/, /^cun\.bz$/, /^miniurl\.tk$/, /^vizzy\.es$/, /^kazan\.vc$/, /^linkcash\.ml$/],
       path: /^\/.+/
     },
     ready: run
@@ -6518,7 +6518,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^link\.animagz\.org$/, /^(coeg|disingkat|gunting)\.in$/, /^www\.(telondasmu|siotong|siherp)\.com$/],
+      host: [/^link\.animagz\.org$/, /^(coeg|disingkat|gunting)\.in$/, /^www\.(telondasmu|siotong|siherp)\.com$/, /^www\.greget\.space$/],
       path: /^\/\w+$/
     },
     ready: function () {
@@ -6593,6 +6593,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       case 'www.telondasmu.com':
       case 'www.siotong.com':
       case 'www.siherp.com':
+      case 'www.greget.space':
         return function () {
           var a = (0, _ADSBYPASSER_NAMESPACE__.$)('.download-link a');
           return a.href;
@@ -7991,7 +7992,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       return _ref121.apply(this, arguments);
     };
   }();
-  var hostRules = [/^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/, /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/, /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|jzrputtbut)\.net$/, /^(([\w]{8}|www)\.)?freean\.us$/, /^(([\w]{8}|www)\.)?galleries\.bz$/, /^(([\w]{8}|www)\.)?hornywood\.tv$/, /^(([\w]{8}|www)\.)?link(babes|bucks)\.com$/, /^(([\w]{8}|www)\.)?(megaline|miniurls|qqc|rqq|tinylinks|yyv|zff)\.co$/, /^(([\w]{8}|www)\.)?(these(blog|forum)s)\.com$/, /^(([\w]{8}|www)\.)?youfap\.me$/, /^warning-this-linkcode-will-cease-working-soon\.www\.linkbucksdns\.com$/];
+  var hostRules = [/^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/, /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/, /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|zbqhfbetlmni)\.net$/, /^(([\w]{8}|www)\.)?freean\.us$/, /^(([\w]{8}|www)\.)?galleries\.bz$/, /^(([\w]{8}|www)\.)?hornywood\.tv$/, /^(([\w]{8}|www)\.)?link(babes|bucks)\.com$/, /^(([\w]{8}|www)\.)?(megaline|miniurls|qqc|rqq|tinylinks|yyv|zff)\.co$/, /^(([\w]{8}|www)\.)?(these(blog|forum)s)\.com$/, /^(([\w]{8}|www)\.)?youfap\.me$/, /^warning-this-linkcode-will-cease-working-soon\.www\.linkbucksdns\.com$/];
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: hostRules,
@@ -8336,7 +8337,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }();
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^(www\.)?linkdrop\.net$/, /^dmus\.in$/, /^ulshare\.net$/, /^adurl\.id$/, /^goolink\.me$/, /^earningurl\.com$/, /^(cutwin|cut-earn)\.com$/, /^(cutwi|cut-w)\.in$/, /^(www\.)?(ourl|jurl)\.io$/, /^(urlcloud|mitly)\.us$/, /^adpop\.me$/, /^wi\.cr$/, /^tui\.click$/, /^megaurl\.in$/]
+      host: [/^(www\.)?linkdrop\.net$/, /^dmus\.in$/, /^ulshare\.net$/, /^adurl\.id$/, /^goolink\.me$/, /^earningurl\.com$/, /^earn-guide\.com$/, /^(cutwin|cut-earn)\.com$/, /^(cutwi|cut-w)\.in$/, /^(www\.)?(ourl|jurl)\.io$/, /^(urlcloud|mitly)\.us$/, /^adpop\.me$/, /^wi\.cr$/, /^tui\.click$/, /^megaurl\.in$/]
     },
     ready: function () {
       var _ref124 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee122() {
@@ -8371,7 +8372,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^sflnk\.me$/, /^idsly\.com$/, /^adbilty\.me$/, /^oke\.io$/, /^linkrex\.net$/, /^3rabshort\.com$/, /^shink\.xyz$/, /^mlink\.club$/, /^zlshorte\.net$/, /^(igram|gram)\.im$/, /^(trlink|wolink)\.in$/]
+      host: [/^sflnk\.me$/, /^idsly\.com$/, /^adbilty\.me$/, /^oke\.io$/, /^linkrex\.net$/, /^safelinku\.net$/, /^3rabshort\.com$/, /^shink\.xyz$/, /^mlink\.club$/, /^zlshorte\.net$/, /^(igram|gram)\.im$/, /^(trlink|wolink)\.in$/]
     },
     ready: function () {
       var _ref125 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee123() {
@@ -8413,7 +8414,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^adlink\.guru$/, /^clik\.pw$/, /^short\.pe$/, /^coshink\.co$/, /^(curs|cuon)\.io$/, /^cypt\.ga$/, /^(filesbucks|tmearn|cut-urls)\.com$/, /^adslink\.pw$/, /^dzurl\.ml$/, /^elink\.link$/, /^(payurl|urlst)\.me$/, /^u2s\.io$/, /^link4\.me$/, /^url\.ht$/, /^urle\.co$/, /^hashe\.in$/, /^www\.worldhack\.net$/, /^123link\.(io|co|press|pw)$/, /^pir\.im$/, /^bol\.tl$/, /^(tl|adfly|git)\.tc$/, /^(adfu|linkhits)\.us$/, /^short\.pastewma\.com$/, /^l2s\.io$/, /^adbilty\.in$/, /^gg-l\.xyz$/, /^linkfly\.gaosmedia\.com$/, /^linclik\.com$/, /^link-earn\.com$/, /^zeiz\.me$/, /^adbull\.me$/, /^adshort\.(in|im|pro)$/, /^(adshorte|adsrt)\.com$/, /^weefy\.me$/, /^bit-url\.com$/, /^premiumzen\.com$/, /^cut4links\.com$/, /^coinlink\.co$/]
+      host: [/^adlink\.guru$/, /^(clik|psl)\.pw$/, /^short\.pe$/, /^coshink\.co$/, /^(curs|cuon)\.io$/, /^shark\.vn$/, /^cypt\.ga$/, /^(filesbucks|tmearn|cut-urls|link-earn|shrinkearn)\.com$/, /^adslink\.pw$/, /^dzurl\.ml$/, /^(elink|petty)\.link$/, /^(payurl|urlst)\.me$/, /^u2s\.io$/, /^shortad\.cf$/, /^link4\.me$/, /^url\.ht$/, /^urle\.co$/, /^hashe\.in$/, /^www\.worldhack\.net$/, /^123link\.(io|co|press|pw)$/, /^pir\.im$/, /^bol\.tl$/, /^(tl|adfly|git)\.tc$/, /^(adfu|linkhits)\.us$/, /^short\.pastewma\.com$/, /^l2s\.io$/, /^adbilty\.in$/, /^gg-l\.xyz$/, /^linkfly\.gaosmedia\.com$/, /^linclik\.com$/, /^zeiz\.me$/, /^adbull\.me$/, /^adshort\.(in|im|pro)$/, /^(adshorte|adsrt)\.com$/, /^weefy\.me$/, /^bit-url\.com$/, /^premiumzen\.com$/, /^cut4links\.com$/, /^coinlink\.co$/, /^kokemoon\.com$/, /^icutit\.ca$/]
     },
     ready: function () {
       var _ref126 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee124() {
@@ -10148,15 +10149,37 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context176.prev = _context176.next) {
             case 0:
-              f = (0, _ADSBYPASSER_NAMESPACE__.$)('#skip');
-              if (!_ADSBYPASSER_NAMESPACE__.$.$('#captcha')) {
-                f.submit();
+              if (_ADSBYPASSER_NAMESPACE__.$.$('#captcha')) {
+                _context176.next = 9;
+                break;
               }
-              _ADSBYPASSER_NAMESPACE__.$.remove('.BJPPopAdsOverlay');
+              f = _ADSBYPASSER_NAMESPACE__.$.$('#skip');
+              if (!f) {
+                _context176.next = 5;
+                break;
+              }
+              f.submit();
+              return _context176.abrupt('return');
+            case 5:
+              f = (0, _ADSBYPASSER_NAMESPACE__.$)('#btn-main');
+              _context176.next = 8;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(f.href);
+            case 8:
+              return _context176.abrupt('return');
+            case 9:
+              _ADSBYPASSER_NAMESPACE__.$.remove('div[class$=Overlay]');
               _ADSBYPASSER_NAMESPACE__.$.block(function (node) {
-                return node.localName === 'div' && node.style.zIndex === '2147483647';
+                if (node.className.match(/Overlay$/)) {
+                  return true;
+                }
+                if (node.localName === 'div') {
+                  return ['2147483647', '2'].some(function (z) {
+                    return z === node.style.zIndex;
+                  });
+                }
+                return false;
               }, document.body);
-            case 4:
+            case 11:
             case 'end':
               return _context176.stop();
           }

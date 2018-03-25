@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.7.0
+// @version        6.8.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.7.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.8.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.7.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.7.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.7.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.8.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.8.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.8.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -1278,7 +1278,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   rule: {
     host: [
       /^openload\.co$/,
-      /^oload\.(stream|info|tv)$/,
+      /^oload\.(stream|info|site|tv)$/,
     ],
     path: /^\/f\/.*/,
   },
@@ -1933,7 +1933,8 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     rule: {
       host: [
-        /^(1tk|hit|adbla|tl7|mylink)\.us$/,
+        /^(1tk|hit|adbla|tl7)\.us$/,
+        /^mylink\.(us|zone)$/,
         /^gx\.si$/,
         /^adwat\.ch$/,
         /^(fly2url|urlwiz|xafox)\.com$/,
@@ -2258,6 +2259,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         /^link\.animagz\.org$/,
         /^(coeg|disingkat|gunting)\.in$/,
         /^www\.(telondasmu|siotong|siherp)\.com$/,
+        /^www\.greget\.space$/,
       ],
       path: /^\/\w+$/,
     },
@@ -2300,6 +2302,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     case 'www.telondasmu.com':
     case 'www.siotong.com':
     case 'www.siherp.com':
+    case 'www.greget.space':
       return () => {
         const a = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('.download-link a');
         return a.href;
@@ -2825,7 +2828,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
   const hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
     /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|jzrputtbut)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|zbqhfbetlmni)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
     /^(([\w]{8}|www)\.)?hornywood\.tv$/,
@@ -3052,6 +3055,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         /^adurl\.id$/,
         /^goolink\.me$/,
         /^earningurl\.com$/,
+        /^earn-guide\.com$/,
         /^(cutwin|cut-earn)\.com$/,
         /^(cutwi|cut-w)\.in$/,
         /^(www\.)?(ourl|jurl)\.io$/,
@@ -3081,6 +3085,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         /^adbilty\.me$/,
         /^oke\.io$/,
         /^linkrex\.net$/,
+        /^safelinku\.net$/,
         /^3rabshort\.com$/,
         /^shink\.xyz$/,
         /^mlink\.club$/,
@@ -3108,17 +3113,19 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     rule: {
       host: [
         /^adlink\.guru$/,
-        /^clik\.pw$/,
+        /^(clik|psl)\.pw$/,
         /^short\.pe$/,
         /^coshink\.co$/,
         /^(curs|cuon)\.io$/,
+        /^shark\.vn$/,
         /^cypt\.ga$/,
-        /^(filesbucks|tmearn|cut-urls)\.com$/,
+        /^(filesbucks|tmearn|cut-urls|link-earn|shrinkearn)\.com$/,
         /^adslink\.pw$/,
         /^dzurl\.ml$/,
-        /^elink\.link$/,
+        /^(elink|petty)\.link$/,
         /^(payurl|urlst)\.me$/,
         /^u2s\.io$/,
+        /^shortad\.cf$/,
         /^link4\.me$/,
         /^url\.ht$/,
         /^urle\.co$/,
@@ -3135,7 +3142,6 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         /^gg-l\.xyz$/,
         /^linkfly\.gaosmedia\.com$/,
         /^linclik\.com$/,
-        /^link-earn\.com$/,
         /^zeiz\.me$/,
         /^adbull\.me$/,
         /^adshort\.(in|im|pro)$/,
@@ -3145,6 +3151,8 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
         /^premiumzen\.com$/,
         /^cut4links\.com$/,
         /^coinlink\.co$/,
+        /^kokemoon\.com$/,
+        /^icutit\.ca$/,
       ],
     },
     async ready () {
@@ -3916,13 +3924,30 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     path: /^\/\w+$/,
   },
   async ready () {
-    const f = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('#skip');
     if (!__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('#captcha')) {
-      f.submit();
+      let f = __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].$('#skip');
+      if (f) {
+        f.submit();
+        return;
+      }
+      f = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('#btn-main');
+      await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(f.href);
+      return;
     }
-    __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('.BJPPopAdsOverlay');
+    __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('div[class$=Overlay]');
     __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].block((node) => {
-      return node.localName === 'div' && node.style.zIndex === '2147483647';
+      if (node.className.match(/Overlay$/)) {
+        return true;
+      }
+      if (node.localName === 'div') {
+        return [
+          '2147483647',
+          '2',
+        ].some((z) => {
+          return z === node.style.zIndex;
+        });
+      }
+      return false;
     }, document.body);
   },
 });
@@ -4801,18 +4826,8 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     host: /^(www\.)?image(pearl|crest)\.com$/,
     path: /^\/verify\/(.+)$/,
   },
-  async ready () {
-    const w = screen.width;
-    const h = screen.height;
-    const i = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('#i').value;
-    const r = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('#r').value;
-    await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].get('verify.php', {
-      w,
-      h,
-      i,
-      r,
-    });
-    location.reload();
+  async ready (m) {
+    await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openLink(`/view/${m.path[1]}`);
   },
 });
 __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
@@ -6413,6 +6428,7 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
           /^ipicture\.su$/,
           /^acidimg\.cc$/,
           /^s\.imghost\.top$/,
+          /^pic\.hotimg\.site$/,
         ],
         path: /^\/img-.*\.html/,
       },
@@ -6485,7 +6501,6 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
     rule: {
       host: [
         /^(www\.)?img(adult|wallet|taxi)\.com$/,
-        /^(www\.)?imgdrive\.net$/,
         /^(www\.)?imgfresh\.info$/,
       ],
       path: /^\/img-.*\.html$/,
@@ -6597,6 +6612,17 @@ __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
       path: /^\/img-.*\.html/,
     },
     ready: __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].partial(action, '#continuebutton, #continuetoimage input[type="submit"]', 'img[class^=centred]'),
+  });
+  __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["b" ].register({
+    rule: {
+      host: /^(www\.)?imgdrive\.net$/,
+      path: /^\/img-.*\.html$/,
+    },
+    async ready () {
+      let m = Object(__WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ])('meta[property="og:image"]');
+      m = m.content.replace('small', 'big');
+      await __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].openImage(m);
+    },
   });
   async function action (firstSelector, secondSelector) {
     __WEBPACK_IMPORTED_MODULE_0__ADSBYPASSER_NAMESPACE___["a" ].remove('iframe, #adblock_detect, .popupOverlay');
