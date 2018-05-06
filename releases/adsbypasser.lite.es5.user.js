@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.9.0
+// @version        6.10.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.9.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.10.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -54,6 +54,9 @@
  			});
  		}
  	};
+ 	__webpack_require__.r = function(exports) {
+ 		Object.defineProperty(exports, '__esModule', { value: true });
+ 	};
  	__webpack_require__.n = function(module) {
  		var getter = module && module.__esModule ?
  			function getDefault() { return module['default']; } :
@@ -63,1499 +66,18 @@
  	};
  	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
  	__webpack_require__.p = "";
- 	return __webpack_require__(__webpack_require__.s = 77);
+ 	return __webpack_require__(__webpack_require__.s = 0);
  })
  ([
- (function(module, exports) {
-var core = module.exports = { version: '2.5.3' };
-if (typeof __e == 'number') __e = core; 
- }),
- (function(module, exports, __webpack_require__) {
-var store = __webpack_require__(41)('wks');
-var uid = __webpack_require__(27);
-var Symbol = __webpack_require__(2).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-$exports.store = store;
- }),
- (function(module, exports) {
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; 
- }),
- (function(module, exports, __webpack_require__) {
-var global = __webpack_require__(2);
-var core = __webpack_require__(0);
-var ctx = __webpack_require__(13);
-var hide = __webpack_require__(11);
-var PROTOTYPE = 'prototype';
-var $export = function (type, name, source) {
-  var IS_FORCED = type & $export.F;
-  var IS_GLOBAL = type & $export.G;
-  var IS_STATIC = type & $export.S;
-  var IS_PROTO = type & $export.P;
-  var IS_BIND = type & $export.B;
-  var IS_WRAP = type & $export.W;
-  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
-  var expProto = exports[PROTOTYPE];
-  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
-  var key, own, out;
-  if (IS_GLOBAL) source = name;
-  for (key in source) {
-    own = !IS_FORCED && target && target[key] !== undefined;
-    if (own && key in exports) continue;
-    out = own ? target[key] : source[key];
-    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-    : IS_BIND && own ? ctx(out, global)
-    : IS_WRAP && target[key] == out ? (function (C) {
-      var F = function (a, b, c) {
-        if (this instanceof C) {
-          switch (arguments.length) {
-            case 0: return new C();
-            case 1: return new C(a);
-            case 2: return new C(a, b);
-          } return new C(a, b, c);
-        } return C.apply(this, arguments);
-      };
-      F[PROTOTYPE] = C[PROTOTYPE];
-      return F;
-    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-    if (IS_PROTO) {
-      (exports.virtual || (exports.virtual = {}))[key] = out;
-      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
-    }
-  }
-};
-$export.F = 1;   
-$export.G = 2;   
-$export.S = 4;   
-$export.P = 8;   
-$export.B = 16;  
-$export.W = 32;  
-$export.U = 64;  
-$export.R = 128; 
-module.exports = $export;
- }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.wait = exports.tryEvery = exports.partial = exports.nop = exports.none = exports.map = exports.isString = exports.forEach = exports.find = exports.every = exports.AdsBypasserError = undefined;
-var _promise = __webpack_require__(10);
+var _promise = __webpack_require__(1);
 var _promise2 = _interopRequireDefault(_promise);
-var _toConsumableArray2 = __webpack_require__(99);
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-var _regenerator = __webpack_require__(22);
+var _regenerator = __webpack_require__(71);
 var _regenerator2 = _interopRequireDefault(_regenerator);
-var _getIterator2 = __webpack_require__(46);
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-var _slicedToArray2 = __webpack_require__(17);
-var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
-var _getOwnPropertyNames = __webpack_require__(73);
-var _getOwnPropertyNames2 = _interopRequireDefault(_getOwnPropertyNames);
-var _assign = __webpack_require__(111);
-var _assign2 = _interopRequireDefault(_assign);
-var _keys = __webpack_require__(115);
-var _keys2 = _interopRequireDefault(_keys);
-var _getPrototypeOf = __webpack_require__(48);
-var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-var _classCallCheck2 = __webpack_require__(49);
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-var _createClass2 = __webpack_require__(50);
-var _createClass3 = _interopRequireDefault(_createClass2);
-var _possibleConstructorReturn2 = __webpack_require__(51);
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-var _inherits2 = __webpack_require__(55);
-var _inherits3 = _interopRequireDefault(_inherits2);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var _marked = _regenerator2.default.mark(enumerate);
-var AdsBypasserError = function (_Error) {
-  (0, _inherits3.default)(AdsBypasserError, _Error);
-  function AdsBypasserError(message) {
-    (0, _classCallCheck3.default)(this, AdsBypasserError);
-    return (0, _possibleConstructorReturn3.default)(this, (AdsBypasserError.__proto__ || (0, _getPrototypeOf2.default)(AdsBypasserError)).call(this, message));
-  }
-  (0, _createClass3.default)(AdsBypasserError, [{
-    key: 'name',
-    get: function get() {
-      return 'AdsBypasserError';
-    }
-  }]);
-  return AdsBypasserError;
-}(Error);
-function forEach(collection, fn) {
-  if (isArrayLike(collection)) {
-    return Array.prototype.forEach.call(collection, fn);
-  }
-  return (0, _keys2.default)(collection).forEach(function (k) {
-    return fn(collection[k], k, collection);
-  });
-}
-function every(collection, fn) {
-  if (isArrayLike(collection)) {
-    return Array.prototype.every.call(collection, fn);
-  }
-  return (0, _keys2.default)(collection).every(function (k) {
-    return fn(collection[k], k, collection);
-  });
-}
-function map(collection, fn) {
-  if (isArrayLike(collection)) {
-    return Array.prototype.map.call(collection, fn);
-  }
-  var mapped = (0, _assign2.default)({}, collection);
-  (0, _getOwnPropertyNames2.default)(mapped).forEach(function (k) {
-    mapped[k] = fn(collection[k], k, collection);
-  });
-  return mapped;
-}
-function find(collection, fn) {
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-  try {
-    for (var _iterator = (0, _getIterator3.default)(enumerate(collection)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var _ref = _step.value;
-      var _ref2 = (0, _slicedToArray3.default)(_ref, 2);
-      var k = _ref2[0];
-      var v = _ref2[1];
-      var r = fn(v, k, collection);
-      if (r !== none) {
-        return [k, v, r];
-      }
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
-  }
-  return [none, none, none];
-}
-function enumerate(collection) {
-  var keys, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, k;
-  return _regenerator2.default.wrap(function enumerate$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          if (!isArrayLike(collection)) {
-            _context.next = 3;
-            break;
-          }
-          return _context.delegateYield(Array.prototype.entries.call(collection), 't0', 2);
-        case 2:
-          return _context.abrupt('return');
-        case 3:
-          keys = (0, _getOwnPropertyNames2.default)(collection);
-          _iteratorNormalCompletion2 = true;
-          _didIteratorError2 = false;
-          _iteratorError2 = undefined;
-          _context.prev = 7;
-          _iterator2 = (0, _getIterator3.default)(keys);
-        case 9:
-          if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
-            _context.next = 16;
-            break;
-          }
-          k = _step2.value;
-          _context.next = 13;
-          return [k, collection[k]];
-        case 13:
-          _iteratorNormalCompletion2 = true;
-          _context.next = 9;
-          break;
-        case 16:
-          _context.next = 22;
-          break;
-        case 18:
-          _context.prev = 18;
-          _context.t1 = _context['catch'](7);
-          _didIteratorError2 = true;
-          _iteratorError2 = _context.t1;
-        case 22:
-          _context.prev = 22;
-          _context.prev = 23;
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-            _iterator2.return();
-          }
-        case 25:
-          _context.prev = 25;
-          if (!_didIteratorError2) {
-            _context.next = 28;
-            break;
-          }
-          throw _iteratorError2;
-        case 28:
-          return _context.finish(25);
-        case 29:
-          return _context.finish(22);
-        case 30:
-        case 'end':
-          return _context.stop();
-      }
-    }
-  }, _marked, this, [[7, 18, 22, 30], [23,, 25, 29]]);
-}
-function isArrayLike(collection) {
-  return Array.isArray(collection) || isNodeList(collection);
-}
-function isNodeList(collection) {
-  return collection.constructor.name === 'NodeList';
-}
-function partial(fn) {
-  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
-  }
-  if (typeof fn !== 'function') {
-    throw new AdsBypasserError('must give a function');
-  }
-  return function () {
-    for (var _len2 = arguments.length, innerArgs = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      innerArgs[_key2] = arguments[_key2];
-    }
-    return fn.apply(undefined, (0, _toConsumableArray3.default)(args.concat(innerArgs)));
-  };
-}
-function isString(value) {
-  return typeof value === 'string' || value instanceof String;
-}
-function nop() {}
-var none = nop;
-function wait(msDelay) {
-  return new _promise2.default(function (resolve) {
-    setTimeout(resolve, msDelay);
-  });
-}
-function tryEvery(msInterval, fn) {
-  return new _promise2.default(function (resolve) {
-    var handle = setInterval(function () {
-      var result = fn();
-      if (result !== none) {
-        clearInterval(handle);
-        resolve(result);
-      }
-    }, msInterval);
-  });
-}
-exports.AdsBypasserError = AdsBypasserError;
-exports.every = every;
-exports.find = find;
-exports.forEach = forEach;
-exports.isString = isString;
-exports.map = map;
-exports.none = none;
-exports.nop = nop;
-exports.partial = partial;
-exports.tryEvery = tryEvery;
-exports.wait = wait;
- }),
- (function(module, exports, __webpack_require__) {
-var isObject = __webpack_require__(7);
-module.exports = function (it) {
-  if (!isObject(it)) throw TypeError(it + ' is not an object!');
-  return it;
-};
- }),
- (function(module, exports, __webpack_require__) {
-var anObject = __webpack_require__(5);
-var IE8_DOM_DEFINE = __webpack_require__(59);
-var toPrimitive = __webpack_require__(37);
-var dP = Object.defineProperty;
-exports.f = __webpack_require__(8) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return dP(O, P, Attributes);
-  } catch (e) {  }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
- }),
- (function(module, exports) {
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = !__webpack_require__(14)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
- }),
- (function(module, exports, __webpack_require__) {
-var IObject = __webpack_require__(62);
-var defined = __webpack_require__(35);
-module.exports = function (it) {
-  return IObject(defined(it));
-};
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(78), __esModule: true };
- }),
- (function(module, exports, __webpack_require__) {
-var dP = __webpack_require__(6);
-var createDesc = __webpack_require__(19);
-module.exports = __webpack_require__(8) ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
- }),
- (function(module, exports) {
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
- }),
- (function(module, exports, __webpack_require__) {
-var aFunction = __webpack_require__(26);
-module.exports = function (fn, that, length) {
-  aFunction(fn);
-  if (that === undefined) return fn;
-  switch (length) {
-    case 1: return function (a) {
-      return fn.call(that, a);
-    };
-    case 2: return function (a, b) {
-      return fn.call(that, a, b);
-    };
-    case 3: return function (a, b, c) {
-      return fn.call(that, a, b, c);
-    };
-  }
-  return function () {
-    return fn.apply(that, arguments);
-  };
-};
- }),
- (function(module, exports) {
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
- }),
- (function(module, exports) {
-module.exports = {};
- }),
- (function(module, exports, __webpack_require__) {
-var $keys = __webpack_require__(61);
-var enumBugKeys = __webpack_require__(42);
-module.exports = Object.keys || function keys(O) {
-  return $keys(O, enumBugKeys);
-};
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-exports.__esModule = true;
-var _isIterable2 = __webpack_require__(106);
-var _isIterable3 = _interopRequireDefault(_isIterable2);
-var _getIterator2 = __webpack_require__(46);
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-    try {
-      for (var _i = (0, _getIterator3.default)(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-    return _arr;
-  }
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if ((0, _isIterable3.default)(Object(arr))) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance");
-    }
-  };
-}();
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-var $at = __webpack_require__(79)(true);
-__webpack_require__(58)(String, 'String', function (iterated) {
-  this._t = String(iterated); 
-  this._i = 0;                
-}, function () {
-  var O = this._t;
-  var index = this._i;
-  var point;
-  if (index >= O.length) return { value: undefined, done: true };
-  point = $at(O, index);
-  this._i += point.length;
-  return { value: point, done: false };
-});
- }),
- (function(module, exports) {
-module.exports = function (bitmap, value) {
-  return {
-    enumerable: !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable: !(bitmap & 4),
-    value: value
-  };
-};
- }),
- (function(module, exports) {
-var toString = {}.toString;
-module.exports = function (it) {
-  return toString.call(it).slice(8, -1);
-};
- }),
- (function(module, exports, __webpack_require__) {
-var defined = __webpack_require__(35);
-module.exports = function (it) {
-  return Object(defined(it));
-};
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = __webpack_require__(96);
- }),
- (function(module, exports) {
-exports.f = {}.propertyIsEnumerable;
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.GMAPI = exports.usw = exports.rawUSW = undefined;
-var _defineProperty = __webpack_require__(76);
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-var _getOwnPropertyDescriptor = __webpack_require__(139);
-var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
-var _typeof2 = __webpack_require__(32);
-var _typeof3 = _interopRequireDefault(_typeof2);
-var _promise = __webpack_require__(10);
-var _promise2 = _interopRequireDefault(_promise);
-var _core = __webpack_require__(4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var rawUSW = getUnsafeWindow(); 
-var usw = getUnsafeWindowProxy();
-var GMAPI = getGreaseMonkeyAPI();
-function getUnsafeWindow() {
-  var w = null;
-  try {
-    w = unsafeWindow;
-  } catch (e) {
-    try {
-      w = (0, eval)('this').global;
-    } catch (e) {
-    }
-  }
-  return w ? w : (0, eval)('this').window;
-}
-function getGreaseMonkeyAPI() {
-  if (rawUSW.global) {
-    return null;
-  }
-  var gm = {};
-  if (typeof GM_openInTab === 'function') {
-    gm.openInTab = GM_openInTab;
-  } else {
-    gm.openInTab = GM.openInTab;
-  }
-  if (typeof GM_getValue === 'function') {
-    gm.getValue = function (name, default_) {
-      return _promise2.default.resolve(GM_getValue(name, default_));
-    };
-  } else {
-    gm.getValue = GM.getValue;
-  }
-  if (typeof GM_setValue === 'function') {
-    gm.setValue = function (name, value) {
-      return _promise2.default.resolve(GM_setValue(name, value));
-    };
-  } else {
-    gm.setValue = GM.setValue;
-  }
-  if (typeof GM_deleteValue === 'function') {
-    gm.deleteValue = function (name) {
-      return _promise2.default.resolve(GM_deleteValue(name));
-    };
-  } else {
-    gm.deleteValue = GM.deleteValue;
-  }
-  if (typeof GM_xmlhttpRequest === 'function') {
-    gm.xmlHttpRequest = GM_xmlhttpRequest;
-  } else {
-    gm.xmlHttpRequest = GM.xmlHttpRequest;
-  }
-  if (typeof GM_registerMenuCommand === 'function') {
-    gm.registerMenuCommand = GM_registerMenuCommand;
-  } else {
-    gm.registerMenuCommand = _core.nop;
-  }
-  if (typeof GM_getResourceURL === 'function') {
-    gm.getResourceUrl = function (resourceName) {
-      return _promise2.default.resolve(GM_getResourceURL(resourceName));
-    };
-  } else if ((typeof GM === 'undefined' ? 'undefined' : (0, _typeof3.default)(GM)) === 'object' && GM && GM.getResourceUrl) {
-    gm.getResourceUrl = GM.getResourceUrl;
-  }
-  return gm;
-}
-var MAGIC_KEY = '__adsbypasser_reverse_proxy__';
-function getUnsafeWindowProxy() {
-  var isFirefox = typeof InstallTrigger !== 'undefined';
-  var isWebExtension = typeof cloneInto === 'undefined' || typeof exportFunction === 'undefined';
-  if (!isFirefox || isWebExtension) {
-    return rawUSW;
-  }
-  var decorator = {
-    set: function set(target, key, value) {
-      if (key === MAGIC_KEY) {
-        return false;
-      }
-      if (target === unsafeWindow && key === 'open') {
-        var d = (0, _getOwnPropertyDescriptor2.default)(target, key);
-        d.value = clone(function () {
-          var rv = value();
-          return cloneInto(rv, unsafeWindow);
-        });
-        (0, _defineProperty2.default)(target, key, d);
-      } else {
-        target[key] = clone(value);
-      }
-      return true;
-    },
-    get: function get(target, key) {
-      if (key === MAGIC_KEY) {
-        return target;
-      }
-      var value = target[key];
-      var type = typeof value === 'undefined' ? 'undefined' : (0, _typeof3.default)(value);
-      if (value === null || type !== 'function' && type !== 'object') {
-        return value;
-      }
-      return new Proxy(value, decorator);
-    },
-    apply: function apply(target, self, args) {
-      args = Array.prototype.slice.call(args);
-      if (target === unsafeWindow.Object.defineProperty) {
-        args[0] = args[0][MAGIC_KEY];
-      }
-      if (target === unsafeWindow.Function.apply) {
-        self = self[MAGIC_KEY];
-        args[1] = Array.prototype.slice.call(args[1]);
-      }
-      if (target === unsafeWindow.document.querySelector) {
-        self = self[MAGIC_KEY];
-      }
-      if (target === unsafeWindow.document.write) {
-        self = self[MAGIC_KEY];
-      }
-      var usargs = clone(args);
-      return target.apply(self, usargs);
-    },
-    construct: function construct(target, args) {
-      args = Array.prototype.slice.call(args);
-      args.unshift(undefined);
-      var usargs = clone(args);
-      var bind = unsafeWindow.Function.prototype.bind;
-      return new (bind.apply(target, usargs))();
-    }
-  };
-  return new Proxy(unsafeWindow, decorator);
-}
-function clone(safe) {
-  if (safe === null || !(safe instanceof Object)) {
-    return safe;
-  }
-  if (safe === unsafeWindow) {
-    return safe;
-  }
-  if (safe instanceof String) {
-    return safe.toString();
-  }
-  if (safe instanceof Function) {
-    return exportFunction(safe, unsafeWindow, {
-      allowCrossOriginArguments: true
-    });
-  }
-  if (safe instanceof Array) {
-    var _unsafe = new unsafeWindow.Array();
-    for (var i = 0; i < safe.length; ++i) {
-      _unsafe.push(clone(safe[i]));
-    }
-    return _unsafe;
-  }
-  var unsafe = new unsafeWindow.Object();
-  (0, _core.forEach)(safe, function (v, k) {
-    unsafe[k] = clone(v);
-  });
-  return unsafe;
-}
-exports.rawUSW = rawUSW;
-exports.usw = usw;
-exports.GMAPI = GMAPI;
- }),
- (function(module, exports) {
-module.exports = true;
- }),
- (function(module, exports) {
-module.exports = function (it) {
-  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
-  return it;
-};
- }),
- (function(module, exports) {
-var id = 0;
-var px = Math.random();
-module.exports = function (key) {
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
- }),
- (function(module, exports, __webpack_require__) {
-var def = __webpack_require__(6).f;
-var has = __webpack_require__(12);
-var TAG = __webpack_require__(1)('toStringTag');
-module.exports = function (it, tag, stat) {
-  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
-};
- }),
- (function(module, exports, __webpack_require__) {
-__webpack_require__(84);
-var global = __webpack_require__(2);
-var hide = __webpack_require__(11);
-var Iterators = __webpack_require__(15);
-var TO_STRING_TAG = __webpack_require__(1)('toStringTag');
-var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
-  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
-  'MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,' +
-  'SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,' +
-  'TextTrackList,TouchList').split(',');
-for (var i = 0; i < DOMIterables.length; i++) {
-  var NAME = DOMIterables[i];
-  var Collection = global[NAME];
-  var proto = Collection && Collection.prototype;
-  if (proto && !proto[TO_STRING_TAG]) hide(proto, TO_STRING_TAG, NAME);
-  Iterators[NAME] = Iterators.Array;
-}
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-exports.__esModule = true;
-var _promise = __webpack_require__(10);
-var _promise2 = _interopRequireDefault(_promise);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = function (fn) {
-  return function () {
-    var gen = fn.apply(this, arguments);
-    return new _promise2.default(function (resolve, reject) {
-      function step(key, arg) {
-        try {
-          var info = gen[key](arg);
-          var value = info.value;
-        } catch (error) {
-          reject(error);
-          return;
-        }
-        if (info.done) {
-          resolve(value);
-        } else {
-          return _promise2.default.resolve(value).then(function (value) {
-            step("next", value);
-          }, function (err) {
-            step("throw", err);
-          });
-        }
-      }
-      return step("next");
-    });
-  };
-};
- }),
- (function(module, exports, __webpack_require__) {
-var $export = __webpack_require__(3);
-var core = __webpack_require__(0);
-var fails = __webpack_require__(14);
-module.exports = function (KEY, exec) {
-  var fn = (core.Object || {})[KEY] || Object[KEY];
-  var exp = {};
-  exp[KEY] = exec(fn);
-  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
-};
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-exports.__esModule = true;
-var _iterator = __webpack_require__(122);
-var _iterator2 = _interopRequireDefault(_iterator);
-var _symbol = __webpack_require__(124);
-var _symbol2 = _interopRequireDefault(_symbol);
-var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
-  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
-} : function (obj) {
-  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
-};
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.warn = exports.info = undefined;
-var _core = __webpack_require__(4);
-var quiet = false;
-function log(method, args) {
-  if (quiet) {
-    return;
-  }
-  args = Array.prototype.slice.call(args);
-  if ((0, _core.isString)(args[0])) {
-    args[0] = 'AdsBypasser: ' + args[0];
-  } else {
-    args.unshift('AdsBypasser:');
-  }
-  var f = console[method];
-  if (typeof f === 'function') {
-    f.apply(console, args);
-  }
-}
-function info() {
-  log('info', arguments);
-}
-function warn() {
-  log('warn', arguments);
-}
-exports.info = info;
-exports.warn = warn;
- }),
- (function(module, exports) {
-var ceil = Math.ceil;
-var floor = Math.floor;
-module.exports = function (it) {
-  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-};
- }),
- (function(module, exports) {
-module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on  " + it);
-  return it;
-};
- }),
- (function(module, exports, __webpack_require__) {
-var isObject = __webpack_require__(7);
-var document = __webpack_require__(2).document;
-var is = isObject(document) && isObject(document.createElement);
-module.exports = function (it) {
-  return is ? document.createElement(it) : {};
-};
- }),
- (function(module, exports, __webpack_require__) {
-var isObject = __webpack_require__(7);
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
- }),
- (function(module, exports, __webpack_require__) {
-var anObject = __webpack_require__(5);
-var dPs = __webpack_require__(81);
-var enumBugKeys = __webpack_require__(42);
-var IE_PROTO = __webpack_require__(40)('IE_PROTO');
-var Empty = function () {  };
-var PROTOTYPE = 'prototype';
-var createDict = function () {
-  var iframe = __webpack_require__(36)('iframe');
-  var i = enumBugKeys.length;
-  var lt = '<';
-  var gt = '>';
-  var iframeDocument;
-  iframe.style.display = 'none';
-  __webpack_require__(63).appendChild(iframe);
-  iframe.src = 'javascript:'; 
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-module.exports = Object.create || function create(O, Properties) {
-  var result;
-  if (O !== null) {
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty();
-    Empty[PROTOTYPE] = null;
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
- }),
- (function(module, exports, __webpack_require__) {
-var toInteger = __webpack_require__(34);
-var min = Math.min;
-module.exports = function (it) {
-  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; 
-};
- }),
- (function(module, exports, __webpack_require__) {
-var shared = __webpack_require__(41)('keys');
-var uid = __webpack_require__(27);
-module.exports = function (key) {
-  return shared[key] || (shared[key] = uid(key));
-};
- }),
- (function(module, exports, __webpack_require__) {
-var global = __webpack_require__(2);
-var SHARED = '__core-js_shared__';
-var store = global[SHARED] || (global[SHARED] = {});
-module.exports = function (key) {
-  return store[key] || (store[key] = {});
-};
- }),
- (function(module, exports) {
-module.exports = (
-  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-).split(',');
- }),
- (function(module, exports, __webpack_require__) {
-var cof = __webpack_require__(20);
-var TAG = __webpack_require__(1)('toStringTag');
-var ARG = cof(function () { return arguments; }()) == 'Arguments';
-var tryGet = function (it, key) {
-  try {
-    return it[key];
-  } catch (e) {  }
-};
-module.exports = function (it) {
-  var O, T, B;
-  return it === undefined ? 'Undefined' : it === null ? 'Null'
-    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
-    : ARG ? cof(O)
-    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
-};
- }),
- (function(module, exports, __webpack_require__) {
-var classof = __webpack_require__(43);
-var ITERATOR = __webpack_require__(1)('iterator');
-var Iterators = __webpack_require__(15);
-module.exports = __webpack_require__(0).getIteratorMethod = function (it) {
-  if (it != undefined) return it[ITERATOR]
-    || it['@@iterator']
-    || Iterators[classof(it)];
-};
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-var aFunction = __webpack_require__(26);
-function PromiseCapability(C) {
-  var resolve, reject;
-  this.promise = new C(function ($$resolve, $$reject) {
-    if (resolve !== undefined || reject !== undefined) throw TypeError('Bad Promise constructor');
-    resolve = $$resolve;
-    reject = $$reject;
-  });
-  this.resolve = aFunction(resolve);
-  this.reject = aFunction(reject);
-}
-module.exports.f = function (C) {
-  return new PromiseCapability(C);
-};
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(104), __esModule: true };
- }),
- (function(module, exports) {
-exports.f = Object.getOwnPropertySymbols;
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(118), __esModule: true };
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-exports.__esModule = true;
-exports.default = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-exports.__esModule = true;
-var _defineProperty = __webpack_require__(76);
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
-    }
-  }
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-exports.__esModule = true;
-var _typeof2 = __webpack_require__(32);
-var _typeof3 = _interopRequireDefault(_typeof2);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
-};
- }),
- (function(module, exports, __webpack_require__) {
-exports.f = __webpack_require__(1);
- }),
- (function(module, exports, __webpack_require__) {
-var global = __webpack_require__(2);
-var core = __webpack_require__(0);
-var LIBRARY = __webpack_require__(25);
-var wksExt = __webpack_require__(52);
-var defineProperty = __webpack_require__(6).f;
-module.exports = function (name) {
-  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
-  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
-};
- }),
- (function(module, exports, __webpack_require__) {
-var pIE = __webpack_require__(23);
-var createDesc = __webpack_require__(19);
-var toIObject = __webpack_require__(9);
-var toPrimitive = __webpack_require__(37);
-var has = __webpack_require__(12);
-var IE8_DOM_DEFINE = __webpack_require__(59);
-var gOPD = Object.getOwnPropertyDescriptor;
-exports.f = __webpack_require__(8) ? gOPD : function getOwnPropertyDescriptor(O, P) {
-  O = toIObject(O);
-  P = toPrimitive(P, true);
-  if (IE8_DOM_DEFINE) try {
-    return gOPD(O, P);
-  } catch (e) {  }
-  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
-};
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-exports.__esModule = true;
-var _setPrototypeOf = __webpack_require__(132);
-var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
-var _create = __webpack_require__(136);
-var _create2 = _interopRequireDefault(_create);
-var _typeof2 = __webpack_require__(32);
-var _typeof3 = _interopRequireDefault(_typeof2);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-exports.default = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
-  }
-  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
-};
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.findHandler = exports.register = undefined;
-var _slicedToArray2 = __webpack_require__(17);
-var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
-var _core = __webpack_require__(4);
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var patterns = [];
-function register(pattern) {
-  patterns.push(pattern);
-}
-function dispatchByObject(rule, url_6) {
-  var matched = (0, _core.map)(rule, function (pattern, part) {
-    if (pattern instanceof RegExp) {
-      return url_6[part].match(pattern);
-    }
-    if (Array.isArray(pattern)) {
-      var _find = (0, _core.find)(pattern, function (sp) {
-        var m = url_6[part].match(sp);
-        return m || _core.none;
-      }),
-          _find2 = (0, _slicedToArray3.default)(_find, 3),
-          r = _find2[2];
-      return r !== _core.none ? r : null;
-    }
-    throw new _core.AdsBypasserError('invalid rule');
-  });
-  var passed = (0, _core.every)(matched, function (v) {
-    return !!v;
-  });
-  return passed ? matched : null;
-}
-function dispatchByRegExp(rule, url_1) {
-  return url_1.match(rule);
-}
-function dispatchByArray(rules, url_1, url_3, url_6) {
-  var _find3 = (0, _core.find)(rules, function (rule) {
-    var m = dispatch(rule, url_1, url_3, url_6);
-    return m ? m : _core.none;
-  }),
-      _find4 = (0, _slicedToArray3.default)(_find3, 3),
-      r = _find4[2];
-  return r !== _core.none ? r : null;
-}
-function dispatchByString(rule, url_3) {
-  var scheme = /\*|https?|file|ftp|chrome-extension/;
-  var host = /\*|(\*\.)?([^/*]+)/;
-  var path = /\/.*/;
-  var tmp = '^(' + scheme.source + ')://(' + host.source + ')?(' + path.source + ')$';
-  var up = new RegExp(tmp);
-  var matched = rule.match(up);
-  if (!matched) {
-    return null;
-  }
-  scheme = matched[1];
-  host = matched[2];
-  var wc = matched[3];
-  var sd = matched[4];
-  path = matched[5];
-  if (scheme === '*' && !/https?/.test(url_3.scheme)) {
-    return null;
-  }
-  if (scheme !== url_3.scheme) {
-    return null;
-  }
-  if (scheme !== 'file' && host !== '*') {
-    if (wc) {
-      up = url_3.host.indexOf(sd);
-      if (up < 0 || up + sd.length !== url_3.host.length) {
-        return null;
-      }
-    } else if (host !== url_3.host) {
-      return null;
-    }
-  }
-  tmp = path.replace(/[*.[\]?+#]/g, function (c) {
-    if (c === '*') {
-      return '.*';
-    }
-    return '\\' + c;
-  });
-  path = new RegExp('^' + tmp + '$');
-  if (!path.test(url_3.path)) {
-    return null;
-  }
-  return url_3;
-}
-function dispatchByFunction(rule, url_1, url_3, url_6) {
-  return rule(url_1, url_3, url_6);
-}
-function dispatch(rule, url_1, url_3, url_6) {
-  if (Array.isArray(rule)) {
-    return dispatchByArray(rule, url_1, url_3, url_6);
-  }
-  if (typeof rule === 'function') {
-    return dispatchByFunction(rule, url_1, url_3, url_6);
-  }
-  if (rule instanceof RegExp) {
-    return dispatchByRegExp(rule, url_1);
-  }
-  if ((0, _core.isString)(rule)) {
-    return dispatchByString(rule, url_3);
-  }
-  return dispatchByObject(rule, url_6);
-}
-function findHandler() {
-  var url_1 = window.location.toString();
-  var url_3 = {
-    scheme: window.location.protocol.slice(0, -1),
-    host: window.location.host,
-    path: window.location.pathname + window.location.search + window.location.hash
-  };
-  var url_6 = {
-    scheme: window.location.protocol,
-    host: window.location.hostname,
-    port: window.location.port,
-    path: window.location.pathname,
-    query: window.location.search,
-    hash: window.location.hash
-  };
-  var _find5 = (0, _core.find)(patterns, function (pattern) {
-    var m = dispatch(pattern.rule, url_1, url_3, url_6);
-    return m ? m : _core.none;
-  }),
-      _find6 = (0, _slicedToArray3.default)(_find5, 3),
-      i = _find6[0],
-      pattern = _find6[1],
-      matched = _find6[2];
-  if (i === _core.none) {
-    return null;
-  }
-  if (!pattern.start && !pattern.ready) {
-    return null;
-  }
-  return {
-    start: pattern.start ? (0, _core.partial)(pattern.start, matched) : _core.nop,
-    ready: pattern.ready ? (0, _core.partial)(pattern.ready, matched) : _core.nop
-  };
-}
-exports.register = register;
-exports.findHandler = findHandler;
- }),
- (function(module, exports) {
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-var LIBRARY = __webpack_require__(25);
-var $export = __webpack_require__(3);
-var redefine = __webpack_require__(60);
-var hide = __webpack_require__(11);
-var has = __webpack_require__(12);
-var Iterators = __webpack_require__(15);
-var $iterCreate = __webpack_require__(80);
-var setToStringTag = __webpack_require__(28);
-var getPrototypeOf = __webpack_require__(64);
-var ITERATOR = __webpack_require__(1)('iterator');
-var BUGGY = !([].keys && 'next' in [].keys()); 
-var FF_ITERATOR = '@@iterator';
-var KEYS = 'keys';
-var VALUES = 'values';
-var returnThis = function () { return this; };
-module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
-  $iterCreate(Constructor, NAME, next);
-  var getMethod = function (kind) {
-    if (!BUGGY && kind in proto) return proto[kind];
-    switch (kind) {
-      case KEYS: return function keys() { return new Constructor(this, kind); };
-      case VALUES: return function values() { return new Constructor(this, kind); };
-    } return function entries() { return new Constructor(this, kind); };
-  };
-  var TAG = NAME + ' Iterator';
-  var DEF_VALUES = DEFAULT == VALUES;
-  var VALUES_BUG = false;
-  var proto = Base.prototype;
-  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
-  var $default = (!BUGGY && $native) || getMethod(DEFAULT);
-  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
-  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
-  var methods, key, IteratorPrototype;
-  if ($anyNative) {
-    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
-    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
-      setToStringTag(IteratorPrototype, TAG, true);
-      if (!LIBRARY && !has(IteratorPrototype, ITERATOR)) hide(IteratorPrototype, ITERATOR, returnThis);
-    }
-  }
-  if (DEF_VALUES && $native && $native.name !== VALUES) {
-    VALUES_BUG = true;
-    $default = function values() { return $native.call(this); };
-  }
-  if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
-    hide(proto, ITERATOR, $default);
-  }
-  Iterators[NAME] = $default;
-  Iterators[TAG] = returnThis;
-  if (DEFAULT) {
-    methods = {
-      values: DEF_VALUES ? $default : getMethod(VALUES),
-      keys: IS_SET ? $default : getMethod(KEYS),
-      entries: $entries
-    };
-    if (FORCED) for (key in methods) {
-      if (!(key in proto)) redefine(proto, key, methods[key]);
-    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
-  }
-  return methods;
-};
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = !__webpack_require__(8) && !__webpack_require__(14)(function () {
-  return Object.defineProperty(__webpack_require__(36)('div'), 'a', { get: function () { return 7; } }).a != 7;
-});
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = __webpack_require__(11);
- }),
- (function(module, exports, __webpack_require__) {
-var has = __webpack_require__(12);
-var toIObject = __webpack_require__(9);
-var arrayIndexOf = __webpack_require__(82)(false);
-var IE_PROTO = __webpack_require__(40)('IE_PROTO');
-module.exports = function (object, names) {
-  var O = toIObject(object);
-  var i = 0;
-  var result = [];
-  var key;
-  for (key in O) if (key != IE_PROTO) has(O, key) && result.push(key);
-  while (names.length > i) if (has(O, key = names[i++])) {
-    ~arrayIndexOf(result, key) || result.push(key);
-  }
-  return result;
-};
- }),
- (function(module, exports, __webpack_require__) {
-var cof = __webpack_require__(20);
-module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
-  return cof(it) == 'String' ? it.split('') : Object(it);
-};
- }),
- (function(module, exports, __webpack_require__) {
-var document = __webpack_require__(2).document;
-module.exports = document && document.documentElement;
- }),
- (function(module, exports, __webpack_require__) {
-var has = __webpack_require__(12);
-var toObject = __webpack_require__(21);
-var IE_PROTO = __webpack_require__(40)('IE_PROTO');
-var ObjectProto = Object.prototype;
-module.exports = Object.getPrototypeOf || function (O) {
-  O = toObject(O);
-  if (has(O, IE_PROTO)) return O[IE_PROTO];
-  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
-    return O.constructor.prototype;
-  } return O instanceof Object ? ObjectProto : null;
-};
- }),
- (function(module, exports, __webpack_require__) {
-var anObject = __webpack_require__(5);
-module.exports = function (iterator, fn, value, entries) {
-  try {
-    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
-  } catch (e) {
-    var ret = iterator['return'];
-    if (ret !== undefined) anObject(ret.call(iterator));
-    throw e;
-  }
-};
- }),
- (function(module, exports, __webpack_require__) {
-var Iterators = __webpack_require__(15);
-var ITERATOR = __webpack_require__(1)('iterator');
-var ArrayProto = Array.prototype;
-module.exports = function (it) {
-  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
-};
- }),
- (function(module, exports, __webpack_require__) {
-var anObject = __webpack_require__(5);
-var aFunction = __webpack_require__(26);
-var SPECIES = __webpack_require__(1)('species');
-module.exports = function (O, D) {
-  var C = anObject(O).constructor;
-  var S;
-  return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
-};
- }),
- (function(module, exports, __webpack_require__) {
-var ctx = __webpack_require__(13);
-var invoke = __webpack_require__(90);
-var html = __webpack_require__(63);
-var cel = __webpack_require__(36);
-var global = __webpack_require__(2);
-var process = global.process;
-var setTask = global.setImmediate;
-var clearTask = global.clearImmediate;
-var MessageChannel = global.MessageChannel;
-var Dispatch = global.Dispatch;
-var counter = 0;
-var queue = {};
-var ONREADYSTATECHANGE = 'onreadystatechange';
-var defer, channel, port;
-var run = function () {
-  var id = +this;
-  if (queue.hasOwnProperty(id)) {
-    var fn = queue[id];
-    delete queue[id];
-    fn();
-  }
-};
-var listener = function (event) {
-  run.call(event.data);
-};
-if (!setTask || !clearTask) {
-  setTask = function setImmediate(fn) {
-    var args = [];
-    var i = 1;
-    while (arguments.length > i) args.push(arguments[i++]);
-    queue[++counter] = function () {
-      invoke(typeof fn == 'function' ? fn : Function(fn), args);
-    };
-    defer(counter);
-    return counter;
-  };
-  clearTask = function clearImmediate(id) {
-    delete queue[id];
-  };
-  if (__webpack_require__(20)(process) == 'process') {
-    defer = function (id) {
-      process.nextTick(ctx(run, id, 1));
-    };
-  } else if (Dispatch && Dispatch.now) {
-    defer = function (id) {
-      Dispatch.now(ctx(run, id, 1));
-    };
-  } else if (MessageChannel) {
-    channel = new MessageChannel();
-    port = channel.port2;
-    channel.port1.onmessage = listener;
-    defer = ctx(port.postMessage, port, 1);
-  } else if (global.addEventListener && typeof postMessage == 'function' && !global.importScripts) {
-    defer = function (id) {
-      global.postMessage(id + '', '*');
-    };
-    global.addEventListener('message', listener, false);
-  } else if (ONREADYSTATECHANGE in cel('script')) {
-    defer = function (id) {
-      html.appendChild(cel('script'))[ONREADYSTATECHANGE] = function () {
-        html.removeChild(this);
-        run.call(id);
-      };
-    };
-  } else {
-    defer = function (id) {
-      setTimeout(ctx(run, id, 1), 0);
-    };
-  }
-}
-module.exports = {
-  set: setTask,
-  clear: clearTask
-};
- }),
- (function(module, exports) {
-module.exports = function (exec) {
-  try {
-    return { e: false, v: exec() };
-  } catch (e) {
-    return { e: true, v: e };
-  }
-};
- }),
- (function(module, exports, __webpack_require__) {
-var anObject = __webpack_require__(5);
-var isObject = __webpack_require__(7);
-var newPromiseCapability = __webpack_require__(45);
-module.exports = function (C, x) {
-  anObject(C);
-  if (isObject(x) && x.constructor === C) return x;
-  var promiseCapability = newPromiseCapability.f(C);
-  var resolve = promiseCapability.resolve;
-  resolve(x);
-  return promiseCapability.promise;
-};
- }),
- (function(module, exports, __webpack_require__) {
-var ITERATOR = __webpack_require__(1)('iterator');
-var SAFE_CLOSING = false;
-try {
-  var riter = [7][ITERATOR]();
-  riter['return'] = function () { SAFE_CLOSING = true; };
-  Array.from(riter, function () { throw 2; });
-} catch (e) {  }
-module.exports = function (exec, skipClosing) {
-  if (!skipClosing && !SAFE_CLOSING) return false;
-  var safe = false;
-  try {
-    var arr = [7];
-    var iter = arr[ITERATOR]();
-    iter.next = function () { return { done: safe = true }; };
-    arr[ITERATOR] = function () { return iter; };
-    exec(arr);
-  } catch (e) {  }
-  return safe;
-};
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(98), __esModule: true };
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(109), __esModule: true };
- }),
- (function(module, exports, __webpack_require__) {
-var toIObject = __webpack_require__(9);
-var gOPN = __webpack_require__(75).f;
-var toString = {}.toString;
-var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
-  ? Object.getOwnPropertyNames(window) : [];
-var getWindowNames = function (it) {
-  try {
-    return gOPN(it);
-  } catch (e) {
-    return windowNames.slice();
-  }
-};
-module.exports.f = function getOwnPropertyNames(it) {
-  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
-};
- }),
- (function(module, exports, __webpack_require__) {
-var $keys = __webpack_require__(61);
-var hiddenKeys = __webpack_require__(42).concat('length', 'prototype');
-exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
-  return $keys(O, hiddenKeys);
-};
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(120), __esModule: true };
- }),
- (function(module, exports, __webpack_require__) {
-"use strict";
-var _promise = __webpack_require__(10);
-var _promise2 = _interopRequireDefault(_promise);
-var _regenerator = __webpack_require__(22);
-var _regenerator2 = _interopRequireDefault(_regenerator);
-var _stringify = __webpack_require__(72);
+var _stringify = __webpack_require__(74);
 var _stringify2 = _interopRequireDefault(_stringify);
-var _asyncToGenerator2 = __webpack_require__(30);
+var _asyncToGenerator2 = __webpack_require__(76);
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 var beforeDOMReady = function () {
   var _ref = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee(handler) {
@@ -1650,11 +172,11 @@ var main = function () {
     return _ref3.apply(this, arguments);
   };
 }();
-var _core = __webpack_require__(4);
-var _dispatcher = __webpack_require__(56);
-var _platform = __webpack_require__(24);
-var _config = __webpack_require__(142);
-var _logger = __webpack_require__(33);
+var _core = __webpack_require__(77);
+var _dispatcher = __webpack_require__(136);
+var _platform = __webpack_require__(137);
+var _config = __webpack_require__(141);
+var _logger = __webpack_require__(146);
 __webpack_require__(147);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
@@ -1716,17 +238,38 @@ main().catch(function (e) {
 });
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(57);
-__webpack_require__(18);
-__webpack_require__(29);
-__webpack_require__(87);
-__webpack_require__(94);
-__webpack_require__(95);
-module.exports = __webpack_require__(0).Promise;
+module.exports = { "default": __webpack_require__(2), __esModule: true };
  }),
  (function(module, exports, __webpack_require__) {
-var toInteger = __webpack_require__(34);
-var defined = __webpack_require__(35);
+__webpack_require__(3);
+__webpack_require__(4);
+__webpack_require__(48);
+__webpack_require__(52);
+__webpack_require__(69);
+__webpack_require__(70);
+module.exports = __webpack_require__(12).Promise;
+ }),
+ (function(module, exports) {
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var $at = __webpack_require__(5)(true);
+__webpack_require__(8)(String, 'String', function (iterated) {
+  this._t = String(iterated); 
+  this._i = 0;                
+}, function () {
+  var O = this._t;
+  var index = this._i;
+  var point;
+  if (index >= O.length) return { value: undefined, done: true };
+  point = $at(O, index);
+  this._i += point.length;
+  return { value: point, done: false };
+});
+ }),
+ (function(module, exports, __webpack_require__) {
+var toInteger = __webpack_require__(6);
+var defined = __webpack_require__(7);
 module.exports = function (TO_STRING) {
   return function (that, pos) {
     var s = String(defined(that));
@@ -1741,23 +284,327 @@ module.exports = function (TO_STRING) {
   };
 };
  }),
+ (function(module, exports) {
+var ceil = Math.ceil;
+var floor = Math.floor;
+module.exports = function (it) {
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+};
+ }),
+ (function(module, exports) {
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on  " + it);
+  return it;
+};
+ }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-var create = __webpack_require__(38);
-var descriptor = __webpack_require__(19);
-var setToStringTag = __webpack_require__(28);
+var LIBRARY = __webpack_require__(9);
+var $export = __webpack_require__(10);
+var redefine = __webpack_require__(26);
+var hide = __webpack_require__(15);
+var Iterators = __webpack_require__(27);
+var $iterCreate = __webpack_require__(28);
+var setToStringTag = __webpack_require__(44);
+var getPrototypeOf = __webpack_require__(46);
+var ITERATOR = __webpack_require__(45)('iterator');
+var BUGGY = !([].keys && 'next' in [].keys()); 
+var FF_ITERATOR = '@@iterator';
+var KEYS = 'keys';
+var VALUES = 'values';
+var returnThis = function () { return this; };
+module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
+  $iterCreate(Constructor, NAME, next);
+  var getMethod = function (kind) {
+    if (!BUGGY && kind in proto) return proto[kind];
+    switch (kind) {
+      case KEYS: return function keys() { return new Constructor(this, kind); };
+      case VALUES: return function values() { return new Constructor(this, kind); };
+    } return function entries() { return new Constructor(this, kind); };
+  };
+  var TAG = NAME + ' Iterator';
+  var DEF_VALUES = DEFAULT == VALUES;
+  var VALUES_BUG = false;
+  var proto = Base.prototype;
+  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
+  var $default = $native || getMethod(DEFAULT);
+  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
+  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
+  var methods, key, IteratorPrototype;
+  if ($anyNative) {
+    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
+    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
+      setToStringTag(IteratorPrototype, TAG, true);
+      if (!LIBRARY && typeof IteratorPrototype[ITERATOR] != 'function') hide(IteratorPrototype, ITERATOR, returnThis);
+    }
+  }
+  if (DEF_VALUES && $native && $native.name !== VALUES) {
+    VALUES_BUG = true;
+    $default = function values() { return $native.call(this); };
+  }
+  if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
+    hide(proto, ITERATOR, $default);
+  }
+  Iterators[NAME] = $default;
+  Iterators[TAG] = returnThis;
+  if (DEFAULT) {
+    methods = {
+      values: DEF_VALUES ? $default : getMethod(VALUES),
+      keys: IS_SET ? $default : getMethod(KEYS),
+      entries: $entries
+    };
+    if (FORCED) for (key in methods) {
+      if (!(key in proto)) redefine(proto, key, methods[key]);
+    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
+  }
+  return methods;
+};
+ }),
+ (function(module, exports) {
+module.exports = true;
+ }),
+ (function(module, exports, __webpack_require__) {
+var global = __webpack_require__(11);
+var core = __webpack_require__(12);
+var ctx = __webpack_require__(13);
+var hide = __webpack_require__(15);
+var has = __webpack_require__(25);
+var PROTOTYPE = 'prototype';
+var $export = function (type, name, source) {
+  var IS_FORCED = type & $export.F;
+  var IS_GLOBAL = type & $export.G;
+  var IS_STATIC = type & $export.S;
+  var IS_PROTO = type & $export.P;
+  var IS_BIND = type & $export.B;
+  var IS_WRAP = type & $export.W;
+  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
+  var expProto = exports[PROTOTYPE];
+  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
+  var key, own, out;
+  if (IS_GLOBAL) source = name;
+  for (key in source) {
+    own = !IS_FORCED && target && target[key] !== undefined;
+    if (own && has(exports, key)) continue;
+    out = own ? target[key] : source[key];
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    : IS_BIND && own ? ctx(out, global)
+    : IS_WRAP && target[key] == out ? (function (C) {
+      var F = function (a, b, c) {
+        if (this instanceof C) {
+          switch (arguments.length) {
+            case 0: return new C();
+            case 1: return new C(a);
+            case 2: return new C(a, b);
+          } return new C(a, b, c);
+        } return C.apply(this, arguments);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    if (IS_PROTO) {
+      (exports.virtual || (exports.virtual = {}))[key] = out;
+      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
+    }
+  }
+};
+$export.F = 1;   
+$export.G = 2;   
+$export.S = 4;   
+$export.P = 8;   
+$export.B = 16;  
+$export.W = 32;  
+$export.U = 64;  
+$export.R = 128; 
+module.exports = $export;
+ }),
+ (function(module, exports) {
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  : Function('return this')();
+if (typeof __g == 'number') __g = global; 
+ }),
+ (function(module, exports) {
+var core = module.exports = { version: '2.5.5' };
+if (typeof __e == 'number') __e = core; 
+ }),
+ (function(module, exports, __webpack_require__) {
+var aFunction = __webpack_require__(14);
+module.exports = function (fn, that, length) {
+  aFunction(fn);
+  if (that === undefined) return fn;
+  switch (length) {
+    case 1: return function (a) {
+      return fn.call(that, a);
+    };
+    case 2: return function (a, b) {
+      return fn.call(that, a, b);
+    };
+    case 3: return function (a, b, c) {
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function () {
+    return fn.apply(that, arguments);
+  };
+};
+ }),
+ (function(module, exports) {
+module.exports = function (it) {
+  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
+  return it;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var dP = __webpack_require__(16);
+var createDesc = __webpack_require__(24);
+module.exports = __webpack_require__(20) ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var anObject = __webpack_require__(17);
+var IE8_DOM_DEFINE = __webpack_require__(19);
+var toPrimitive = __webpack_require__(23);
+var dP = Object.defineProperty;
+exports.f = __webpack_require__(20) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return dP(O, P, Attributes);
+  } catch (e) {  }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var isObject = __webpack_require__(18);
+module.exports = function (it) {
+  if (!isObject(it)) throw TypeError(it + ' is not an object!');
+  return it;
+};
+ }),
+ (function(module, exports) {
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = !__webpack_require__(20) && !__webpack_require__(21)(function () {
+  return Object.defineProperty(__webpack_require__(22)('div'), 'a', { get: function () { return 7; } }).a != 7;
+});
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = !__webpack_require__(21)(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+ }),
+ (function(module, exports) {
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (e) {
+    return true;
+  }
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var isObject = __webpack_require__(18);
+var document = __webpack_require__(11).document;
+var is = isObject(document) && isObject(document.createElement);
+module.exports = function (it) {
+  return is ? document.createElement(it) : {};
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var isObject = __webpack_require__(18);
+module.exports = function (it, S) {
+  if (!isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+ }),
+ (function(module, exports) {
+module.exports = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+ }),
+ (function(module, exports) {
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = __webpack_require__(15);
+ }),
+ (function(module, exports) {
+module.exports = {};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var create = __webpack_require__(29);
+var descriptor = __webpack_require__(24);
+var setToStringTag = __webpack_require__(44);
 var IteratorPrototype = {};
-__webpack_require__(11)(IteratorPrototype, __webpack_require__(1)('iterator'), function () { return this; });
+__webpack_require__(15)(IteratorPrototype, __webpack_require__(45)('iterator'), function () { return this; });
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
   setToStringTag(Constructor, NAME + ' Iterator');
 };
  }),
  (function(module, exports, __webpack_require__) {
-var dP = __webpack_require__(6);
-var anObject = __webpack_require__(5);
-var getKeys = __webpack_require__(16);
-module.exports = __webpack_require__(8) ? Object.defineProperties : function defineProperties(O, Properties) {
+var anObject = __webpack_require__(17);
+var dPs = __webpack_require__(30);
+var enumBugKeys = __webpack_require__(42);
+var IE_PROTO = __webpack_require__(39)('IE_PROTO');
+var Empty = function () {  };
+var PROTOTYPE = 'prototype';
+var createDict = function () {
+  var iframe = __webpack_require__(22)('iframe');
+  var i = enumBugKeys.length;
+  var lt = '<';
+  var gt = '>';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  __webpack_require__(43).appendChild(iframe);
+  iframe.src = 'javascript:'; 
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty();
+    Empty[PROTOTYPE] = null;
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var dP = __webpack_require__(16);
+var anObject = __webpack_require__(17);
+var getKeys = __webpack_require__(31);
+module.exports = __webpack_require__(20) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -1768,9 +615,52 @@ module.exports = __webpack_require__(8) ? Object.defineProperties : function def
 };
  }),
  (function(module, exports, __webpack_require__) {
-var toIObject = __webpack_require__(9);
-var toLength = __webpack_require__(39);
-var toAbsoluteIndex = __webpack_require__(83);
+var $keys = __webpack_require__(32);
+var enumBugKeys = __webpack_require__(42);
+module.exports = Object.keys || function keys(O) {
+  return $keys(O, enumBugKeys);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var has = __webpack_require__(25);
+var toIObject = __webpack_require__(33);
+var arrayIndexOf = __webpack_require__(36)(false);
+var IE_PROTO = __webpack_require__(39)('IE_PROTO');
+module.exports = function (object, names) {
+  var O = toIObject(object);
+  var i = 0;
+  var result = [];
+  var key;
+  for (key in O) if (key != IE_PROTO) has(O, key) && result.push(key);
+  while (names.length > i) if (has(O, key = names[i++])) {
+    ~arrayIndexOf(result, key) || result.push(key);
+  }
+  return result;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var IObject = __webpack_require__(34);
+var defined = __webpack_require__(7);
+module.exports = function (it) {
+  return IObject(defined(it));
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var cof = __webpack_require__(35);
+module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
+  return cof(it) == 'String' ? it.split('') : Object(it);
+};
+ }),
+ (function(module, exports) {
+var toString = {}.toString;
+module.exports = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var toIObject = __webpack_require__(33);
+var toLength = __webpack_require__(37);
+var toAbsoluteIndex = __webpack_require__(38);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -1787,7 +677,14 @@ module.exports = function (IS_INCLUDES) {
 };
  }),
  (function(module, exports, __webpack_require__) {
-var toInteger = __webpack_require__(34);
+var toInteger = __webpack_require__(6);
+var min = Math.min;
+module.exports = function (it) {
+  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; 
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var toInteger = __webpack_require__(6);
 var max = Math.max;
 var min = Math.min;
 module.exports = function (index, length) {
@@ -1796,12 +693,100 @@ module.exports = function (index, length) {
 };
  }),
  (function(module, exports, __webpack_require__) {
+var shared = __webpack_require__(40)('keys');
+var uid = __webpack_require__(41);
+module.exports = function (key) {
+  return shared[key] || (shared[key] = uid(key));
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var global = __webpack_require__(11);
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || (global[SHARED] = {});
+module.exports = function (key) {
+  return store[key] || (store[key] = {});
+};
+ }),
+ (function(module, exports) {
+var id = 0;
+var px = Math.random();
+module.exports = function (key) {
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+ }),
+ (function(module, exports) {
+module.exports = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+ }),
+ (function(module, exports, __webpack_require__) {
+var document = __webpack_require__(11).document;
+module.exports = document && document.documentElement;
+ }),
+ (function(module, exports, __webpack_require__) {
+var def = __webpack_require__(16).f;
+var has = __webpack_require__(25);
+var TAG = __webpack_require__(45)('toStringTag');
+module.exports = function (it, tag, stat) {
+  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var store = __webpack_require__(40)('wks');
+var uid = __webpack_require__(41);
+var Symbol = __webpack_require__(11).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+$exports.store = store;
+ }),
+ (function(module, exports, __webpack_require__) {
+var has = __webpack_require__(25);
+var toObject = __webpack_require__(47);
+var IE_PROTO = __webpack_require__(39)('IE_PROTO');
+var ObjectProto = Object.prototype;
+module.exports = Object.getPrototypeOf || function (O) {
+  O = toObject(O);
+  if (has(O, IE_PROTO)) return O[IE_PROTO];
+  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
+    return O.constructor.prototype;
+  } return O instanceof Object ? ObjectProto : null;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var defined = __webpack_require__(7);
+module.exports = function (it) {
+  return Object(defined(it));
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(49);
+var global = __webpack_require__(11);
+var hide = __webpack_require__(15);
+var Iterators = __webpack_require__(27);
+var TO_STRING_TAG = __webpack_require__(45)('toStringTag');
+var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
+  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
+  'MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,' +
+  'SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,' +
+  'TextTrackList,TouchList').split(',');
+for (var i = 0; i < DOMIterables.length; i++) {
+  var NAME = DOMIterables[i];
+  var Collection = global[NAME];
+  var proto = Collection && Collection.prototype;
+  if (proto && !proto[TO_STRING_TAG]) hide(proto, TO_STRING_TAG, NAME);
+  Iterators[NAME] = Iterators.Array;
+}
+ }),
+ (function(module, exports, __webpack_require__) {
 "use strict";
-var addToUnscopables = __webpack_require__(85);
-var step = __webpack_require__(86);
-var Iterators = __webpack_require__(15);
-var toIObject = __webpack_require__(9);
-module.exports = __webpack_require__(58)(Array, 'Array', function (iterated, kind) {
+var addToUnscopables = __webpack_require__(50);
+var step = __webpack_require__(51);
+var Iterators = __webpack_require__(27);
+var toIObject = __webpack_require__(33);
+module.exports = __webpack_require__(8)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); 
   this._i = 0;                   
   this._k = kind;                
@@ -1832,21 +817,21 @@ module.exports = function (done, value) {
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-var LIBRARY = __webpack_require__(25);
-var global = __webpack_require__(2);
+var LIBRARY = __webpack_require__(9);
+var global = __webpack_require__(11);
 var ctx = __webpack_require__(13);
-var classof = __webpack_require__(43);
-var $export = __webpack_require__(3);
-var isObject = __webpack_require__(7);
-var aFunction = __webpack_require__(26);
-var anInstance = __webpack_require__(88);
-var forOf = __webpack_require__(89);
-var speciesConstructor = __webpack_require__(67);
-var task = __webpack_require__(68).set;
-var microtask = __webpack_require__(91)();
-var newPromiseCapabilityModule = __webpack_require__(45);
-var perform = __webpack_require__(69);
-var promiseResolve = __webpack_require__(70);
+var classof = __webpack_require__(53);
+var $export = __webpack_require__(10);
+var isObject = __webpack_require__(18);
+var aFunction = __webpack_require__(14);
+var anInstance = __webpack_require__(54);
+var forOf = __webpack_require__(55);
+var speciesConstructor = __webpack_require__(59);
+var task = __webpack_require__(60).set;
+var microtask = __webpack_require__(62)();
+var newPromiseCapabilityModule = __webpack_require__(63);
+var perform = __webpack_require__(64);
+var promiseResolve = __webpack_require__(65);
 var PROMISE = 'Promise';
 var TypeError = global.TypeError;
 var process = global.process;
@@ -1858,7 +843,7 @@ var newPromiseCapability = newGenericPromiseCapability = newPromiseCapabilityMod
 var USE_NATIVE = !!function () {
   try {
     var promise = $Promise.resolve(1);
-    var FakePromise = (promise.constructor = {})[__webpack_require__(1)('species')] = function (exec) {
+    var FakePromise = (promise.constructor = {})[__webpack_require__(45)('species')] = function (exec) {
       exec(empty, empty);
     };
     return (isNode || typeof PromiseRejectionEvent == 'function') && promise.then(empty) instanceof FakePromise;
@@ -1881,7 +866,7 @@ var notify = function (promise, isReject) {
       var resolve = reaction.resolve;
       var reject = reaction.reject;
       var domain = reaction.domain;
-      var result, then;
+      var result, then, exited;
       try {
         if (handler) {
           if (!ok) {
@@ -1891,8 +876,11 @@ var notify = function (promise, isReject) {
           if (handler === true) result = value;
           else {
             if (domain) domain.enter();
-            result = handler(value);
-            if (domain) domain.exit();
+            result = handler(value); 
+            if (domain) {
+              domain.exit();
+              exited = true;
+            }
           }
           if (result === reaction.promise) {
             reject(TypeError('Promise-chain cycle'));
@@ -1901,6 +889,7 @@ var notify = function (promise, isReject) {
           } else resolve(result);
         } else reject(value);
       } catch (e) {
+        if (domain && !exited) domain.exit();
         reject(e);
       }
     };
@@ -1999,7 +988,7 @@ if (!USE_NATIVE) {
     this._h = 0;              
     this._n = false;          
   };
-  Internal.prototype = __webpack_require__(92)($Promise.prototype, {
+  Internal.prototype = __webpack_require__(66)($Promise.prototype, {
     then: function then(onFulfilled, onRejected) {
       var reaction = newPromiseCapability(speciesConstructor(this, $Promise));
       reaction.ok = typeof onFulfilled == 'function' ? onFulfilled : true;
@@ -2027,9 +1016,9 @@ if (!USE_NATIVE) {
   };
 }
 $export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
-__webpack_require__(28)($Promise, PROMISE);
-__webpack_require__(93)(PROMISE);
-Wrapper = __webpack_require__(0)[PROMISE];
+__webpack_require__(44)($Promise, PROMISE);
+__webpack_require__(67)(PROMISE);
+Wrapper = __webpack_require__(12)[PROMISE];
 $export($export.S + $export.F * !USE_NATIVE, PROMISE, {
   reject: function reject(r) {
     var capability = newPromiseCapability(this);
@@ -2043,7 +1032,7 @@ $export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
     return promiseResolve(LIBRARY && this === Wrapper ? $Promise : this, x);
   }
 });
-$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(71)(function (iter) {
+$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(68)(function (iter) {
   $Promise.all(iter)['catch'](empty);
 })), PROMISE, {
   all: function all(iterable) {
@@ -2086,6 +1075,23 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(71)(function
   }
 });
  }),
+ (function(module, exports, __webpack_require__) {
+var cof = __webpack_require__(35);
+var TAG = __webpack_require__(45)('toStringTag');
+var ARG = cof(function () { return arguments; }()) == 'Arguments';
+var tryGet = function (it, key) {
+  try {
+    return it[key];
+  } catch (e) {  }
+};
+module.exports = function (it) {
+  var O, T, B;
+  return it === undefined ? 'Undefined' : it === null ? 'Null'
+    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
+    : ARG ? cof(O)
+    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+};
+ }),
  (function(module, exports) {
 module.exports = function (it, Constructor, name, forbiddenField) {
   if (!(it instanceof Constructor) || (forbiddenField !== undefined && forbiddenField in it)) {
@@ -2095,11 +1101,11 @@ module.exports = function (it, Constructor, name, forbiddenField) {
  }),
  (function(module, exports, __webpack_require__) {
 var ctx = __webpack_require__(13);
-var call = __webpack_require__(65);
-var isArrayIter = __webpack_require__(66);
-var anObject = __webpack_require__(5);
-var toLength = __webpack_require__(39);
-var getIterFn = __webpack_require__(44);
+var call = __webpack_require__(56);
+var isArrayIter = __webpack_require__(57);
+var anObject = __webpack_require__(17);
+var toLength = __webpack_require__(37);
+var getIterFn = __webpack_require__(58);
 var BREAK = {};
 var RETURN = {};
 var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
@@ -2119,6 +1125,122 @@ var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) 
 exports.BREAK = BREAK;
 exports.RETURN = RETURN;
  }),
+ (function(module, exports, __webpack_require__) {
+var anObject = __webpack_require__(17);
+module.exports = function (iterator, fn, value, entries) {
+  try {
+    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
+  } catch (e) {
+    var ret = iterator['return'];
+    if (ret !== undefined) anObject(ret.call(iterator));
+    throw e;
+  }
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var Iterators = __webpack_require__(27);
+var ITERATOR = __webpack_require__(45)('iterator');
+var ArrayProto = Array.prototype;
+module.exports = function (it) {
+  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var classof = __webpack_require__(53);
+var ITERATOR = __webpack_require__(45)('iterator');
+var Iterators = __webpack_require__(27);
+module.exports = __webpack_require__(12).getIteratorMethod = function (it) {
+  if (it != undefined) return it[ITERATOR]
+    || it['@@iterator']
+    || Iterators[classof(it)];
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var anObject = __webpack_require__(17);
+var aFunction = __webpack_require__(14);
+var SPECIES = __webpack_require__(45)('species');
+module.exports = function (O, D) {
+  var C = anObject(O).constructor;
+  var S;
+  return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var ctx = __webpack_require__(13);
+var invoke = __webpack_require__(61);
+var html = __webpack_require__(43);
+var cel = __webpack_require__(22);
+var global = __webpack_require__(11);
+var process = global.process;
+var setTask = global.setImmediate;
+var clearTask = global.clearImmediate;
+var MessageChannel = global.MessageChannel;
+var Dispatch = global.Dispatch;
+var counter = 0;
+var queue = {};
+var ONREADYSTATECHANGE = 'onreadystatechange';
+var defer, channel, port;
+var run = function () {
+  var id = +this;
+  if (queue.hasOwnProperty(id)) {
+    var fn = queue[id];
+    delete queue[id];
+    fn();
+  }
+};
+var listener = function (event) {
+  run.call(event.data);
+};
+if (!setTask || !clearTask) {
+  setTask = function setImmediate(fn) {
+    var args = [];
+    var i = 1;
+    while (arguments.length > i) args.push(arguments[i++]);
+    queue[++counter] = function () {
+      invoke(typeof fn == 'function' ? fn : Function(fn), args);
+    };
+    defer(counter);
+    return counter;
+  };
+  clearTask = function clearImmediate(id) {
+    delete queue[id];
+  };
+  if (__webpack_require__(35)(process) == 'process') {
+    defer = function (id) {
+      process.nextTick(ctx(run, id, 1));
+    };
+  } else if (Dispatch && Dispatch.now) {
+    defer = function (id) {
+      Dispatch.now(ctx(run, id, 1));
+    };
+  } else if (MessageChannel) {
+    channel = new MessageChannel();
+    port = channel.port2;
+    channel.port1.onmessage = listener;
+    defer = ctx(port.postMessage, port, 1);
+  } else if (global.addEventListener && typeof postMessage == 'function' && !global.importScripts) {
+    defer = function (id) {
+      global.postMessage(id + '', '*');
+    };
+    global.addEventListener('message', listener, false);
+  } else if (ONREADYSTATECHANGE in cel('script')) {
+    defer = function (id) {
+      html.appendChild(cel('script'))[ONREADYSTATECHANGE] = function () {
+        html.removeChild(this);
+        run.call(id);
+      };
+    };
+  } else {
+    defer = function (id) {
+      setTimeout(ctx(run, id, 1), 0);
+    };
+  }
+}
+module.exports = {
+  set: setTask,
+  clear: clearTask
+};
+ }),
  (function(module, exports) {
 module.exports = function (fn, args, that) {
   var un = that === undefined;
@@ -2137,12 +1259,12 @@ module.exports = function (fn, args, that) {
 };
  }),
  (function(module, exports, __webpack_require__) {
-var global = __webpack_require__(2);
-var macrotask = __webpack_require__(68).set;
+var global = __webpack_require__(11);
+var macrotask = __webpack_require__(60).set;
 var Observer = global.MutationObserver || global.WebKitMutationObserver;
 var process = global.process;
 var Promise = global.Promise;
-var isNode = __webpack_require__(20)(process) == 'process';
+var isNode = __webpack_require__(35)(process) == 'process';
 module.exports = function () {
   var head, last, notify;
   var flush = function () {
@@ -2193,7 +1315,46 @@ module.exports = function () {
 };
  }),
  (function(module, exports, __webpack_require__) {
-var hide = __webpack_require__(11);
+"use strict";
+var aFunction = __webpack_require__(14);
+function PromiseCapability(C) {
+  var resolve, reject;
+  this.promise = new C(function ($$resolve, $$reject) {
+    if (resolve !== undefined || reject !== undefined) throw TypeError('Bad Promise constructor');
+    resolve = $$resolve;
+    reject = $$reject;
+  });
+  this.resolve = aFunction(resolve);
+  this.reject = aFunction(reject);
+}
+module.exports.f = function (C) {
+  return new PromiseCapability(C);
+};
+ }),
+ (function(module, exports) {
+module.exports = function (exec) {
+  try {
+    return { e: false, v: exec() };
+  } catch (e) {
+    return { e: true, v: e };
+  }
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var anObject = __webpack_require__(17);
+var isObject = __webpack_require__(18);
+var newPromiseCapability = __webpack_require__(63);
+module.exports = function (C, x) {
+  anObject(C);
+  if (isObject(x) && x.constructor === C) return x;
+  var promiseCapability = newPromiseCapability.f(C);
+  var resolve = promiseCapability.resolve;
+  resolve(x);
+  return promiseCapability.promise;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var hide = __webpack_require__(15);
 module.exports = function (target, src, safe) {
   for (var key in src) {
     if (safe && target[key]) target[key] = src[key];
@@ -2203,11 +1364,11 @@ module.exports = function (target, src, safe) {
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-var global = __webpack_require__(2);
-var core = __webpack_require__(0);
-var dP = __webpack_require__(6);
-var DESCRIPTORS = __webpack_require__(8);
-var SPECIES = __webpack_require__(1)('species');
+var global = __webpack_require__(11);
+var core = __webpack_require__(12);
+var dP = __webpack_require__(16);
+var DESCRIPTORS = __webpack_require__(20);
+var SPECIES = __webpack_require__(45)('species');
 module.exports = function (KEY) {
   var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
   if (DESCRIPTORS && C && !C[SPECIES]) dP.f(C, SPECIES, {
@@ -2217,12 +1378,33 @@ module.exports = function (KEY) {
 };
  }),
  (function(module, exports, __webpack_require__) {
+var ITERATOR = __webpack_require__(45)('iterator');
+var SAFE_CLOSING = false;
+try {
+  var riter = [7][ITERATOR]();
+  riter['return'] = function () { SAFE_CLOSING = true; };
+  Array.from(riter, function () { throw 2; });
+} catch (e) {  }
+module.exports = function (exec, skipClosing) {
+  if (!skipClosing && !SAFE_CLOSING) return false;
+  var safe = false;
+  try {
+    var arr = [7];
+    var iter = arr[ITERATOR]();
+    iter.next = function () { return { done: safe = true }; };
+    arr[ITERATOR] = function () { return iter; };
+    exec(arr);
+  } catch (e) {  }
+  return safe;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
 "use strict";
-var $export = __webpack_require__(3);
-var core = __webpack_require__(0);
-var global = __webpack_require__(2);
-var speciesConstructor = __webpack_require__(67);
-var promiseResolve = __webpack_require__(70);
+var $export = __webpack_require__(10);
+var core = __webpack_require__(12);
+var global = __webpack_require__(11);
+var speciesConstructor = __webpack_require__(59);
+var promiseResolve = __webpack_require__(65);
 $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
   var C = speciesConstructor(this, core.Promise || global.Promise);
   var isFunction = typeof onFinally == 'function';
@@ -2238,9 +1420,9 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-var $export = __webpack_require__(3);
-var newPromiseCapability = __webpack_require__(45);
-var perform = __webpack_require__(69);
+var $export = __webpack_require__(10);
+var newPromiseCapability = __webpack_require__(63);
+var perform = __webpack_require__(64);
 $export($export.S, 'Promise', { 'try': function (callbackfn) {
   var promiseCapability = newPromiseCapability.f(this);
   var result = perform(callbackfn);
@@ -2249,12 +1431,15 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
 } });
  }),
  (function(module, exports, __webpack_require__) {
+module.exports = __webpack_require__(72);
+ }),
+ (function(module, exports, __webpack_require__) {
 var g = (function() { return this })() || Function("return this")();
 var hadRuntime = g.regeneratorRuntime &&
   Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
 var oldRuntime = hadRuntime && g.regeneratorRuntime;
 g.regeneratorRuntime = undefined;
-module.exports = __webpack_require__(97);
+module.exports = __webpack_require__(73);
 if (hadRuntime) {
   g.regeneratorRuntime = oldRuntime;
 } else {
@@ -2745,7 +1930,10 @@ if (hadRuntime) {
 );
  }),
  (function(module, exports, __webpack_require__) {
-var core = __webpack_require__(0);
+module.exports = { "default": __webpack_require__(75), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+var core = __webpack_require__(12);
 var $JSON = core.JSON || (core.JSON = { stringify: JSON.stringify });
 module.exports = function stringify(it) { 
   return $JSON.stringify.apply($JSON, arguments);
@@ -2754,7 +1942,262 @@ module.exports = function stringify(it) {
  (function(module, exports, __webpack_require__) {
 "use strict";
 exports.__esModule = true;
-var _from = __webpack_require__(100);
+var _promise = __webpack_require__(1);
+var _promise2 = _interopRequireDefault(_promise);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = function (fn) {
+  return function () {
+    var gen = fn.apply(this, arguments);
+    return new _promise2.default(function (resolve, reject) {
+      function step(key, arg) {
+        try {
+          var info = gen[key](arg);
+          var value = info.value;
+        } catch (error) {
+          reject(error);
+          return;
+        }
+        if (info.done) {
+          resolve(value);
+        } else {
+          return _promise2.default.resolve(value).then(function (value) {
+            step("next", value);
+          }, function (err) {
+            step("throw", err);
+          });
+        }
+      }
+      return step("next");
+    });
+  };
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.wait = exports.tryEvery = exports.partial = exports.nop = exports.none = exports.map = exports.isString = exports.forEach = exports.find = exports.every = exports.AdsBypasserError = undefined;
+var _promise = __webpack_require__(1);
+var _promise2 = _interopRequireDefault(_promise);
+var _toConsumableArray2 = __webpack_require__(78);
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+var _regenerator = __webpack_require__(71);
+var _regenerator2 = _interopRequireDefault(_regenerator);
+var _getIterator2 = __webpack_require__(83);
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+var _slicedToArray2 = __webpack_require__(86);
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+var _getOwnPropertyNames = __webpack_require__(90);
+var _getOwnPropertyNames2 = _interopRequireDefault(_getOwnPropertyNames);
+var _assign = __webpack_require__(96);
+var _assign2 = _interopRequireDefault(_assign);
+var _keys = __webpack_require__(102);
+var _keys2 = _interopRequireDefault(_keys);
+var _getPrototypeOf = __webpack_require__(105);
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+var _classCallCheck2 = __webpack_require__(108);
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+var _createClass2 = __webpack_require__(109);
+var _createClass3 = _interopRequireDefault(_createClass2);
+var _possibleConstructorReturn2 = __webpack_require__(113);
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+var _inherits2 = __webpack_require__(128);
+var _inherits3 = _interopRequireDefault(_inherits2);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _marked = _regenerator2.default.mark(enumerate);
+var AdsBypasserError = function (_Error) {
+  (0, _inherits3.default)(AdsBypasserError, _Error);
+  function AdsBypasserError(message) {
+    (0, _classCallCheck3.default)(this, AdsBypasserError);
+    return (0, _possibleConstructorReturn3.default)(this, (AdsBypasserError.__proto__ || (0, _getPrototypeOf2.default)(AdsBypasserError)).call(this, message));
+  }
+  (0, _createClass3.default)(AdsBypasserError, [{
+    key: 'name',
+    get: function get() {
+      return 'AdsBypasserError';
+    }
+  }]);
+  return AdsBypasserError;
+}(Error);
+function forEach(collection, fn) {
+  if (isArrayLike(collection)) {
+    return Array.prototype.forEach.call(collection, fn);
+  }
+  return (0, _keys2.default)(collection).forEach(function (k) {
+    return fn(collection[k], k, collection);
+  });
+}
+function every(collection, fn) {
+  if (isArrayLike(collection)) {
+    return Array.prototype.every.call(collection, fn);
+  }
+  return (0, _keys2.default)(collection).every(function (k) {
+    return fn(collection[k], k, collection);
+  });
+}
+function map(collection, fn) {
+  if (isArrayLike(collection)) {
+    return Array.prototype.map.call(collection, fn);
+  }
+  var mapped = (0, _assign2.default)({}, collection);
+  (0, _getOwnPropertyNames2.default)(mapped).forEach(function (k) {
+    mapped[k] = fn(collection[k], k, collection);
+  });
+  return mapped;
+}
+function find(collection, fn) {
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+  try {
+    for (var _iterator = (0, _getIterator3.default)(enumerate(collection)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var _ref = _step.value;
+      var _ref2 = (0, _slicedToArray3.default)(_ref, 2);
+      var k = _ref2[0];
+      var v = _ref2[1];
+      var r = fn(v, k, collection);
+      if (r !== none) {
+        return [k, v, r];
+      }
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+  return [none, none, none];
+}
+function enumerate(collection) {
+  var keys, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, k;
+  return _regenerator2.default.wrap(function enumerate$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          if (!isArrayLike(collection)) {
+            _context.next = 3;
+            break;
+          }
+          return _context.delegateYield(Array.prototype.entries.call(collection), 't0', 2);
+        case 2:
+          return _context.abrupt('return');
+        case 3:
+          keys = (0, _getOwnPropertyNames2.default)(collection);
+          _iteratorNormalCompletion2 = true;
+          _didIteratorError2 = false;
+          _iteratorError2 = undefined;
+          _context.prev = 7;
+          _iterator2 = (0, _getIterator3.default)(keys);
+        case 9:
+          if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
+            _context.next = 16;
+            break;
+          }
+          k = _step2.value;
+          _context.next = 13;
+          return [k, collection[k]];
+        case 13:
+          _iteratorNormalCompletion2 = true;
+          _context.next = 9;
+          break;
+        case 16:
+          _context.next = 22;
+          break;
+        case 18:
+          _context.prev = 18;
+          _context.t1 = _context['catch'](7);
+          _didIteratorError2 = true;
+          _iteratorError2 = _context.t1;
+        case 22:
+          _context.prev = 22;
+          _context.prev = 23;
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        case 25:
+          _context.prev = 25;
+          if (!_didIteratorError2) {
+            _context.next = 28;
+            break;
+          }
+          throw _iteratorError2;
+        case 28:
+          return _context.finish(25);
+        case 29:
+          return _context.finish(22);
+        case 30:
+        case 'end':
+          return _context.stop();
+      }
+    }
+  }, _marked, this, [[7, 18, 22, 30], [23,, 25, 29]]);
+}
+function isArrayLike(collection) {
+  return Array.isArray(collection) || isNodeList(collection);
+}
+function isNodeList(collection) {
+  return collection.constructor.name === 'NodeList';
+}
+function partial(fn) {
+  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    args[_key - 1] = arguments[_key];
+  }
+  if (typeof fn !== 'function') {
+    throw new AdsBypasserError('must give a function');
+  }
+  return function () {
+    for (var _len2 = arguments.length, innerArgs = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      innerArgs[_key2] = arguments[_key2];
+    }
+    return fn.apply(undefined, (0, _toConsumableArray3.default)(args.concat(innerArgs)));
+  };
+}
+function isString(value) {
+  return typeof value === 'string' || value instanceof String;
+}
+function nop() {}
+var none = nop;
+function wait(msDelay) {
+  return new _promise2.default(function (resolve) {
+    setTimeout(resolve, msDelay);
+  });
+}
+function tryEvery(msInterval, fn) {
+  return new _promise2.default(function (resolve) {
+    var handle = setInterval(function () {
+      var result = fn();
+      if (result !== none) {
+        clearInterval(handle);
+        resolve(result);
+      }
+    }, msInterval);
+  });
+}
+exports.AdsBypasserError = AdsBypasserError;
+exports.every = every;
+exports.find = find;
+exports.forEach = forEach;
+exports.isString = isString;
+exports.map = map;
+exports.none = none;
+exports.nop = nop;
+exports.partial = partial;
+exports.tryEvery = tryEvery;
+exports.wait = wait;
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+exports.__esModule = true;
+var _from = __webpack_require__(79);
 var _from2 = _interopRequireDefault(_from);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 exports.default = function (arr) {
@@ -2769,24 +2212,24 @@ exports.default = function (arr) {
 };
  }),
  (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(101), __esModule: true };
+module.exports = { "default": __webpack_require__(80), __esModule: true };
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(18);
-__webpack_require__(102);
-module.exports = __webpack_require__(0).Array.from;
+__webpack_require__(4);
+__webpack_require__(81);
+module.exports = __webpack_require__(12).Array.from;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
 var ctx = __webpack_require__(13);
-var $export = __webpack_require__(3);
-var toObject = __webpack_require__(21);
-var call = __webpack_require__(65);
-var isArrayIter = __webpack_require__(66);
-var toLength = __webpack_require__(39);
-var createProperty = __webpack_require__(103);
-var getIterFn = __webpack_require__(44);
-$export($export.S + $export.F * !__webpack_require__(71)(function (iter) { Array.from(iter); }), 'Array', {
+var $export = __webpack_require__(10);
+var toObject = __webpack_require__(47);
+var call = __webpack_require__(56);
+var isArrayIter = __webpack_require__(57);
+var toLength = __webpack_require__(37);
+var createProperty = __webpack_require__(82);
+var getIterFn = __webpack_require__(58);
+$export($export.S + $export.F * !__webpack_require__(68)(function (iter) { Array.from(iter); }), 'Array', {
   from: function from(arrayLike ) {
     var O = toObject(arrayLike);
     var C = typeof this == 'function' ? this : Array;
@@ -2814,40 +2257,85 @@ $export($export.S + $export.F * !__webpack_require__(71)(function (iter) { Array
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-var $defineProperty = __webpack_require__(6);
-var createDesc = __webpack_require__(19);
+var $defineProperty = __webpack_require__(16);
+var createDesc = __webpack_require__(24);
 module.exports = function (object, index, value) {
   if (index in object) $defineProperty.f(object, index, createDesc(0, value));
   else object[index] = value;
 };
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(29);
-__webpack_require__(18);
-module.exports = __webpack_require__(105);
+module.exports = { "default": __webpack_require__(84), __esModule: true };
  }),
  (function(module, exports, __webpack_require__) {
-var anObject = __webpack_require__(5);
-var get = __webpack_require__(44);
-module.exports = __webpack_require__(0).getIterator = function (it) {
+__webpack_require__(48);
+__webpack_require__(4);
+module.exports = __webpack_require__(85);
+ }),
+ (function(module, exports, __webpack_require__) {
+var anObject = __webpack_require__(17);
+var get = __webpack_require__(58);
+module.exports = __webpack_require__(12).getIterator = function (it) {
   var iterFn = get(it);
   if (typeof iterFn != 'function') throw TypeError(it + ' is not iterable!');
   return anObject(iterFn.call(it));
 };
  }),
  (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(107), __esModule: true };
+"use strict";
+exports.__esModule = true;
+var _isIterable2 = __webpack_require__(87);
+var _isIterable3 = _interopRequireDefault(_isIterable2);
+var _getIterator2 = __webpack_require__(83);
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+    try {
+      for (var _i = (0, _getIterator3.default)(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+    return _arr;
+  }
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if ((0, _isIterable3.default)(Object(arr))) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    }
+  };
+}();
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(29);
-__webpack_require__(18);
-module.exports = __webpack_require__(108);
+module.exports = { "default": __webpack_require__(88), __esModule: true };
  }),
  (function(module, exports, __webpack_require__) {
-var classof = __webpack_require__(43);
-var ITERATOR = __webpack_require__(1)('iterator');
-var Iterators = __webpack_require__(15);
-module.exports = __webpack_require__(0).isIterable = function (it) {
+__webpack_require__(48);
+__webpack_require__(4);
+module.exports = __webpack_require__(89);
+ }),
+ (function(module, exports, __webpack_require__) {
+var classof = __webpack_require__(53);
+var ITERATOR = __webpack_require__(45)('iterator');
+var Iterators = __webpack_require__(27);
+module.exports = __webpack_require__(12).isIterable = function (it) {
   var O = Object(it);
   return O[ITERATOR] !== undefined
     || '@@iterator' in O
@@ -2855,37 +2343,75 @@ module.exports = __webpack_require__(0).isIterable = function (it) {
 };
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(110);
-var $Object = __webpack_require__(0).Object;
+module.exports = { "default": __webpack_require__(91), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(92);
+var $Object = __webpack_require__(12).Object;
 module.exports = function getOwnPropertyNames(it) {
   return $Object.getOwnPropertyNames(it);
 };
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(31)('getOwnPropertyNames', function () {
-  return __webpack_require__(74).f;
+__webpack_require__(93)('getOwnPropertyNames', function () {
+  return __webpack_require__(94).f;
 });
  }),
  (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(112), __esModule: true };
+var $export = __webpack_require__(10);
+var core = __webpack_require__(12);
+var fails = __webpack_require__(21);
+module.exports = function (KEY, exec) {
+  var fn = (core.Object || {})[KEY] || Object[KEY];
+  var exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
+};
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(113);
-module.exports = __webpack_require__(0).Object.assign;
+var toIObject = __webpack_require__(33);
+var gOPN = __webpack_require__(95).f;
+var toString = {}.toString;
+var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
+  ? Object.getOwnPropertyNames(window) : [];
+var getWindowNames = function (it) {
+  try {
+    return gOPN(it);
+  } catch (e) {
+    return windowNames.slice();
+  }
+};
+module.exports.f = function getOwnPropertyNames(it) {
+  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
+};
  }),
  (function(module, exports, __webpack_require__) {
-var $export = __webpack_require__(3);
-$export($export.S + $export.F, 'Object', { assign: __webpack_require__(114) });
+var $keys = __webpack_require__(32);
+var hiddenKeys = __webpack_require__(42).concat('length', 'prototype');
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return $keys(O, hiddenKeys);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(97), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(98);
+module.exports = __webpack_require__(12).Object.assign;
+ }),
+ (function(module, exports, __webpack_require__) {
+var $export = __webpack_require__(10);
+$export($export.S + $export.F, 'Object', { assign: __webpack_require__(99) });
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-var getKeys = __webpack_require__(16);
-var gOPS = __webpack_require__(47);
-var pIE = __webpack_require__(23);
-var toObject = __webpack_require__(21);
-var IObject = __webpack_require__(62);
+var getKeys = __webpack_require__(31);
+var gOPS = __webpack_require__(100);
+var pIE = __webpack_require__(101);
+var toObject = __webpack_require__(47);
+var IObject = __webpack_require__(34);
 var $assign = Object.assign;
-module.exports = !$assign || __webpack_require__(14)(function () {
+module.exports = !$assign || __webpack_require__(21)(function () {
   var A = {};
   var B = {};
   var S = Symbol();
@@ -2909,91 +2435,166 @@ module.exports = !$assign || __webpack_require__(14)(function () {
   } return T;
 } : $assign;
  }),
- (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(116), __esModule: true };
+ (function(module, exports) {
+exports.f = Object.getOwnPropertySymbols;
+ }),
+ (function(module, exports) {
+exports.f = {}.propertyIsEnumerable;
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(117);
-module.exports = __webpack_require__(0).Object.keys;
+module.exports = { "default": __webpack_require__(103), __esModule: true };
  }),
  (function(module, exports, __webpack_require__) {
-var toObject = __webpack_require__(21);
-var $keys = __webpack_require__(16);
-__webpack_require__(31)('keys', function () {
+__webpack_require__(104);
+module.exports = __webpack_require__(12).Object.keys;
+ }),
+ (function(module, exports, __webpack_require__) {
+var toObject = __webpack_require__(47);
+var $keys = __webpack_require__(31);
+__webpack_require__(93)('keys', function () {
   return function keys(it) {
     return $keys(toObject(it));
   };
 });
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(119);
-module.exports = __webpack_require__(0).Object.getPrototypeOf;
+module.exports = { "default": __webpack_require__(106), __esModule: true };
  }),
  (function(module, exports, __webpack_require__) {
-var toObject = __webpack_require__(21);
-var $getPrototypeOf = __webpack_require__(64);
-__webpack_require__(31)('getPrototypeOf', function () {
+__webpack_require__(107);
+module.exports = __webpack_require__(12).Object.getPrototypeOf;
+ }),
+ (function(module, exports, __webpack_require__) {
+var toObject = __webpack_require__(47);
+var $getPrototypeOf = __webpack_require__(46);
+__webpack_require__(93)('getPrototypeOf', function () {
   return function getPrototypeOf(it) {
     return $getPrototypeOf(toObject(it));
   };
 });
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(121);
-var $Object = __webpack_require__(0).Object;
+"use strict";
+exports.__esModule = true;
+exports.default = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+exports.__esModule = true;
+var _defineProperty = __webpack_require__(110);
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
+    }
+  }
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(111), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(112);
+var $Object = __webpack_require__(12).Object;
 module.exports = function defineProperty(it, key, desc) {
   return $Object.defineProperty(it, key, desc);
 };
  }),
  (function(module, exports, __webpack_require__) {
-var $export = __webpack_require__(3);
-$export($export.S + $export.F * !__webpack_require__(8), 'Object', { defineProperty: __webpack_require__(6).f });
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(123), __esModule: true };
- }),
- (function(module, exports, __webpack_require__) {
-__webpack_require__(18);
-__webpack_require__(29);
-module.exports = __webpack_require__(52).f('iterator');
- }),
- (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(125), __esModule: true };
- }),
- (function(module, exports, __webpack_require__) {
-__webpack_require__(126);
-__webpack_require__(57);
-__webpack_require__(130);
-__webpack_require__(131);
-module.exports = __webpack_require__(0).Symbol;
+var $export = __webpack_require__(10);
+$export($export.S + $export.F * !__webpack_require__(20), 'Object', { defineProperty: __webpack_require__(16).f });
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-var global = __webpack_require__(2);
-var has = __webpack_require__(12);
-var DESCRIPTORS = __webpack_require__(8);
-var $export = __webpack_require__(3);
-var redefine = __webpack_require__(60);
-var META = __webpack_require__(127).KEY;
-var $fails = __webpack_require__(14);
-var shared = __webpack_require__(41);
-var setToStringTag = __webpack_require__(28);
-var uid = __webpack_require__(27);
-var wks = __webpack_require__(1);
-var wksExt = __webpack_require__(52);
-var wksDefine = __webpack_require__(53);
-var enumKeys = __webpack_require__(128);
-var isArray = __webpack_require__(129);
-var anObject = __webpack_require__(5);
-var isObject = __webpack_require__(7);
-var toIObject = __webpack_require__(9);
-var toPrimitive = __webpack_require__(37);
-var createDesc = __webpack_require__(19);
-var _create = __webpack_require__(38);
-var gOPNExt = __webpack_require__(74);
-var $GOPD = __webpack_require__(54);
-var $DP = __webpack_require__(6);
-var $keys = __webpack_require__(16);
+exports.__esModule = true;
+var _typeof2 = __webpack_require__(114);
+var _typeof3 = _interopRequireDefault(_typeof2);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+exports.__esModule = true;
+var _iterator = __webpack_require__(115);
+var _iterator2 = _interopRequireDefault(_iterator);
+var _symbol = __webpack_require__(118);
+var _symbol2 = _interopRequireDefault(_symbol);
+var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+} : function (obj) {
+  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(116), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(4);
+__webpack_require__(48);
+module.exports = __webpack_require__(117).f('iterator');
+ }),
+ (function(module, exports, __webpack_require__) {
+exports.f = __webpack_require__(45);
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(119), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(120);
+__webpack_require__(3);
+__webpack_require__(126);
+__webpack_require__(127);
+module.exports = __webpack_require__(12).Symbol;
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var global = __webpack_require__(11);
+var has = __webpack_require__(25);
+var DESCRIPTORS = __webpack_require__(20);
+var $export = __webpack_require__(10);
+var redefine = __webpack_require__(26);
+var META = __webpack_require__(121).KEY;
+var $fails = __webpack_require__(21);
+var shared = __webpack_require__(40);
+var setToStringTag = __webpack_require__(44);
+var uid = __webpack_require__(41);
+var wks = __webpack_require__(45);
+var wksExt = __webpack_require__(117);
+var wksDefine = __webpack_require__(122);
+var enumKeys = __webpack_require__(123);
+var isArray = __webpack_require__(124);
+var anObject = __webpack_require__(17);
+var isObject = __webpack_require__(18);
+var toIObject = __webpack_require__(33);
+var toPrimitive = __webpack_require__(23);
+var createDesc = __webpack_require__(24);
+var _create = __webpack_require__(29);
+var gOPNExt = __webpack_require__(94);
+var $GOPD = __webpack_require__(125);
+var $DP = __webpack_require__(16);
+var $keys = __webpack_require__(31);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
 var gOPN = gOPNExt.f;
@@ -3107,10 +2708,10 @@ if (!USE_NATIVE) {
   });
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(75).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(23).f = $propertyIsEnumerable;
-  __webpack_require__(47).f = $getOwnPropertySymbols;
-  if (DESCRIPTORS && !__webpack_require__(25)) {
+  __webpack_require__(95).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(101).f = $propertyIsEnumerable;
+  __webpack_require__(100).f = $getOwnPropertySymbols;
+  if (DESCRIPTORS && !__webpack_require__(9)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
   wksExt.f = function (name) {
@@ -3162,21 +2763,21 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
     return _stringify.apply($JSON, args);
   }
 });
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(11)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(15)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 setToStringTag($Symbol, 'Symbol');
 setToStringTag(Math, 'Math', true);
 setToStringTag(global.JSON, 'JSON', true);
  }),
  (function(module, exports, __webpack_require__) {
-var META = __webpack_require__(27)('meta');
-var isObject = __webpack_require__(7);
-var has = __webpack_require__(12);
-var setDesc = __webpack_require__(6).f;
+var META = __webpack_require__(41)('meta');
+var isObject = __webpack_require__(18);
+var has = __webpack_require__(25);
+var setDesc = __webpack_require__(16).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
 };
-var FREEZE = !__webpack_require__(14)(function () {
+var FREEZE = !__webpack_require__(21)(function () {
   return isExtensible(Object.preventExtensions({}));
 });
 var setMeta = function (it) {
@@ -3213,9 +2814,20 @@ var meta = module.exports = {
 };
  }),
  (function(module, exports, __webpack_require__) {
-var getKeys = __webpack_require__(16);
-var gOPS = __webpack_require__(47);
-var pIE = __webpack_require__(23);
+var global = __webpack_require__(11);
+var core = __webpack_require__(12);
+var LIBRARY = __webpack_require__(9);
+var wksExt = __webpack_require__(117);
+var defineProperty = __webpack_require__(16).f;
+module.exports = function (name) {
+  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
+  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
+};
+ }),
+ (function(module, exports, __webpack_require__) {
+var getKeys = __webpack_require__(31);
+var gOPS = __webpack_require__(100);
+var pIE = __webpack_require__(101);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -3229,31 +2841,73 @@ module.exports = function (it) {
 };
  }),
  (function(module, exports, __webpack_require__) {
-var cof = __webpack_require__(20);
+var cof = __webpack_require__(35);
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(53)('asyncIterator');
+var pIE = __webpack_require__(101);
+var createDesc = __webpack_require__(24);
+var toIObject = __webpack_require__(33);
+var toPrimitive = __webpack_require__(23);
+var has = __webpack_require__(25);
+var IE8_DOM_DEFINE = __webpack_require__(19);
+var gOPD = Object.getOwnPropertyDescriptor;
+exports.f = __webpack_require__(20) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+  O = toIObject(O);
+  P = toPrimitive(P, true);
+  if (IE8_DOM_DEFINE) try {
+    return gOPD(O, P);
+  } catch (e) {  }
+  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
+};
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(53)('observable');
+__webpack_require__(122)('asyncIterator');
  }),
  (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(133), __esModule: true };
+__webpack_require__(122)('observable');
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(134);
-module.exports = __webpack_require__(0).Object.setPrototypeOf;
+"use strict";
+exports.__esModule = true;
+var _setPrototypeOf = __webpack_require__(129);
+var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
+var _create = __webpack_require__(133);
+var _create2 = _interopRequireDefault(_create);
+var _typeof2 = __webpack_require__(114);
+var _typeof3 = _interopRequireDefault(_typeof2);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+exports.default = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
+  }
+  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
+};
  }),
  (function(module, exports, __webpack_require__) {
-var $export = __webpack_require__(3);
-$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(135).set });
+module.exports = { "default": __webpack_require__(130), __esModule: true };
  }),
  (function(module, exports, __webpack_require__) {
-var isObject = __webpack_require__(7);
-var anObject = __webpack_require__(5);
+__webpack_require__(131);
+module.exports = __webpack_require__(12).Object.setPrototypeOf;
+ }),
+ (function(module, exports, __webpack_require__) {
+var $export = __webpack_require__(10);
+$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(132).set });
+ }),
+ (function(module, exports, __webpack_require__) {
+var isObject = __webpack_require__(18);
+var anObject = __webpack_require__(17);
 var check = function (O, proto) {
   anObject(O);
   if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
@@ -3262,7 +2916,7 @@ module.exports = {
   set: Object.setPrototypeOf || ('__proto__' in {} ? 
     function (test, buggy, set) {
       try {
-        set = __webpack_require__(13)(Function.call, __webpack_require__(54).f(Object.prototype, '__proto__').set, 2);
+        set = __webpack_require__(13)(Function.call, __webpack_require__(125).f(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) { buggy = true; }
@@ -3277,33 +2931,354 @@ module.exports = {
 };
  }),
  (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(137), __esModule: true };
+module.exports = { "default": __webpack_require__(134), __esModule: true };
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(138);
-var $Object = __webpack_require__(0).Object;
+__webpack_require__(135);
+var $Object = __webpack_require__(12).Object;
 module.exports = function create(P, D) {
   return $Object.create(P, D);
 };
  }),
  (function(module, exports, __webpack_require__) {
-var $export = __webpack_require__(3);
-$export($export.S, 'Object', { create: __webpack_require__(38) });
+var $export = __webpack_require__(10);
+$export($export.S, 'Object', { create: __webpack_require__(29) });
  }),
  (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(140), __esModule: true };
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.findHandler = exports.register = undefined;
+var _slicedToArray2 = __webpack_require__(86);
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+var _core = __webpack_require__(77);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var patterns = [];
+function register(pattern) {
+  patterns.push(pattern);
+}
+function dispatchByObject(rule, url_6) {
+  var matched = (0, _core.map)(rule, function (pattern, part) {
+    if (pattern instanceof RegExp) {
+      return url_6[part].match(pattern);
+    }
+    if (Array.isArray(pattern)) {
+      var _find = (0, _core.find)(pattern, function (sp) {
+        var m = url_6[part].match(sp);
+        return m || _core.none;
+      }),
+          _find2 = (0, _slicedToArray3.default)(_find, 3),
+          r = _find2[2];
+      return r !== _core.none ? r : null;
+    }
+    throw new _core.AdsBypasserError('invalid rule');
+  });
+  var passed = (0, _core.every)(matched, function (v) {
+    return !!v;
+  });
+  return passed ? matched : null;
+}
+function dispatchByRegExp(rule, url_1) {
+  return url_1.match(rule);
+}
+function dispatchByArray(rules, url_1, url_3, url_6) {
+  var _find3 = (0, _core.find)(rules, function (rule) {
+    var m = dispatch(rule, url_1, url_3, url_6);
+    return m ? m : _core.none;
+  }),
+      _find4 = (0, _slicedToArray3.default)(_find3, 3),
+      r = _find4[2];
+  return r !== _core.none ? r : null;
+}
+function dispatchByString(rule, url_3) {
+  var scheme = /\*|https?|file|ftp|chrome-extension/;
+  var host = /\*|(\*\.)?([^/*]+)/;
+  var path = /\/.*/;
+  var tmp = '^(' + scheme.source + ')://(' + host.source + ')?(' + path.source + ')$';
+  var up = new RegExp(tmp);
+  var matched = rule.match(up);
+  if (!matched) {
+    return null;
+  }
+  scheme = matched[1];
+  host = matched[2];
+  var wc = matched[3];
+  var sd = matched[4];
+  path = matched[5];
+  if (scheme === '*' && !/https?/.test(url_3.scheme)) {
+    return null;
+  }
+  if (scheme !== url_3.scheme) {
+    return null;
+  }
+  if (scheme !== 'file' && host !== '*') {
+    if (wc) {
+      up = url_3.host.indexOf(sd);
+      if (up < 0 || up + sd.length !== url_3.host.length) {
+        return null;
+      }
+    } else if (host !== url_3.host) {
+      return null;
+    }
+  }
+  tmp = path.replace(/[*.[\]?+#]/g, function (c) {
+    if (c === '*') {
+      return '.*';
+    }
+    return '\\' + c;
+  });
+  path = new RegExp('^' + tmp + '$');
+  if (!path.test(url_3.path)) {
+    return null;
+  }
+  return url_3;
+}
+function dispatchByFunction(rule, url_1, url_3, url_6) {
+  return rule(url_1, url_3, url_6);
+}
+function dispatch(rule, url_1, url_3, url_6) {
+  if (Array.isArray(rule)) {
+    return dispatchByArray(rule, url_1, url_3, url_6);
+  }
+  if (typeof rule === 'function') {
+    return dispatchByFunction(rule, url_1, url_3, url_6);
+  }
+  if (rule instanceof RegExp) {
+    return dispatchByRegExp(rule, url_1);
+  }
+  if ((0, _core.isString)(rule)) {
+    return dispatchByString(rule, url_3);
+  }
+  return dispatchByObject(rule, url_6);
+}
+function findHandler() {
+  var url_1 = window.location.toString();
+  var url_3 = {
+    scheme: window.location.protocol.slice(0, -1),
+    host: window.location.host,
+    path: window.location.pathname + window.location.search + window.location.hash
+  };
+  var url_6 = {
+    scheme: window.location.protocol,
+    host: window.location.hostname,
+    port: window.location.port,
+    path: window.location.pathname,
+    query: window.location.search,
+    hash: window.location.hash
+  };
+  var _find5 = (0, _core.find)(patterns, function (pattern) {
+    var m = dispatch(pattern.rule, url_1, url_3, url_6);
+    return m ? m : _core.none;
+  }),
+      _find6 = (0, _slicedToArray3.default)(_find5, 3),
+      i = _find6[0],
+      pattern = _find6[1],
+      matched = _find6[2];
+  if (i === _core.none) {
+    return null;
+  }
+  if (!pattern.start && !pattern.ready) {
+    return null;
+  }
+  return {
+    start: pattern.start ? (0, _core.partial)(pattern.start, matched) : _core.nop,
+    ready: pattern.ready ? (0, _core.partial)(pattern.ready, matched) : _core.nop
+  };
+}
+exports.register = register;
+exports.findHandler = findHandler;
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(141);
-var $Object = __webpack_require__(0).Object;
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GMAPI = exports.usw = exports.rawUSW = undefined;
+var _defineProperty = __webpack_require__(110);
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+var _getOwnPropertyDescriptor = __webpack_require__(138);
+var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
+var _typeof2 = __webpack_require__(114);
+var _typeof3 = _interopRequireDefault(_typeof2);
+var _promise = __webpack_require__(1);
+var _promise2 = _interopRequireDefault(_promise);
+var _core = __webpack_require__(77);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var rawUSW = getUnsafeWindow(); 
+var usw = getUnsafeWindowProxy();
+var GMAPI = getGreaseMonkeyAPI();
+function getUnsafeWindow() {
+  var w = null;
+  try {
+    w = unsafeWindow;
+  } catch (e) {
+    try {
+      w = (0, eval)('this').global;
+    } catch (e) {
+    }
+  }
+  return w ? w : (0, eval)('this').window;
+}
+function getGreaseMonkeyAPI() {
+  if (rawUSW.global) {
+    return null;
+  }
+  var gm = {};
+  if (typeof GM_openInTab === 'function') {
+    gm.openInTab = GM_openInTab;
+  } else {
+    gm.openInTab = GM.openInTab;
+  }
+  if (typeof GM_getValue === 'function') {
+    gm.getValue = function (name, default_) {
+      return _promise2.default.resolve(GM_getValue(name, default_));
+    };
+  } else {
+    gm.getValue = GM.getValue;
+  }
+  if (typeof GM_setValue === 'function') {
+    gm.setValue = function (name, value) {
+      return _promise2.default.resolve(GM_setValue(name, value));
+    };
+  } else {
+    gm.setValue = GM.setValue;
+  }
+  if (typeof GM_deleteValue === 'function') {
+    gm.deleteValue = function (name) {
+      return _promise2.default.resolve(GM_deleteValue(name));
+    };
+  } else {
+    gm.deleteValue = GM.deleteValue;
+  }
+  if (typeof GM_xmlhttpRequest === 'function') {
+    gm.xmlHttpRequest = GM_xmlhttpRequest;
+  } else {
+    gm.xmlHttpRequest = GM.xmlHttpRequest;
+  }
+  if (typeof GM_registerMenuCommand === 'function') {
+    gm.registerMenuCommand = GM_registerMenuCommand;
+  } else {
+    gm.registerMenuCommand = _core.nop;
+  }
+  if (typeof GM_getResourceURL === 'function') {
+    gm.getResourceUrl = function (resourceName) {
+      return _promise2.default.resolve(GM_getResourceURL(resourceName));
+    };
+  } else if ((typeof GM === 'undefined' ? 'undefined' : (0, _typeof3.default)(GM)) === 'object' && GM && GM.getResourceUrl) {
+    gm.getResourceUrl = GM.getResourceUrl;
+  }
+  return gm;
+}
+var MAGIC_KEY = '__adsbypasser_reverse_proxy__';
+function getUnsafeWindowProxy() {
+  var isFirefox = typeof InstallTrigger !== 'undefined';
+  var isWebExtension = typeof cloneInto === 'undefined' || typeof exportFunction === 'undefined';
+  if (!isFirefox || isWebExtension) {
+    return rawUSW;
+  }
+  var decorator = {
+    set: function set(target, key, value) {
+      if (key === MAGIC_KEY) {
+        return false;
+      }
+      if (target === unsafeWindow && key === 'open') {
+        var d = (0, _getOwnPropertyDescriptor2.default)(target, key);
+        d.value = clone(function () {
+          var rv = value();
+          return cloneInto(rv, unsafeWindow);
+        });
+        (0, _defineProperty2.default)(target, key, d);
+      } else {
+        target[key] = clone(value);
+      }
+      return true;
+    },
+    get: function get(target, key) {
+      if (key === MAGIC_KEY) {
+        return target;
+      }
+      var value = target[key];
+      var type = typeof value === 'undefined' ? 'undefined' : (0, _typeof3.default)(value);
+      if (value === null || type !== 'function' && type !== 'object') {
+        return value;
+      }
+      return new Proxy(value, decorator);
+    },
+    apply: function apply(target, self, args) {
+      args = Array.prototype.slice.call(args);
+      if (target === unsafeWindow.Object.defineProperty) {
+        args[0] = args[0][MAGIC_KEY];
+      }
+      if (target === unsafeWindow.Function.apply) {
+        self = self[MAGIC_KEY];
+        args[1] = Array.prototype.slice.call(args[1]);
+      }
+      if (target === unsafeWindow.document.querySelector) {
+        self = self[MAGIC_KEY];
+      }
+      if (target === unsafeWindow.document.write) {
+        self = self[MAGIC_KEY];
+      }
+      var usargs = clone(args);
+      return target.apply(self, usargs);
+    },
+    construct: function construct(target, args) {
+      args = Array.prototype.slice.call(args);
+      args.unshift(undefined);
+      var usargs = clone(args);
+      var bind = unsafeWindow.Function.prototype.bind;
+      return new (bind.apply(target, usargs))();
+    }
+  };
+  return new Proxy(unsafeWindow, decorator);
+}
+function clone(safe) {
+  if (safe === null || !(safe instanceof Object)) {
+    return safe;
+  }
+  if (safe === unsafeWindow) {
+    return safe;
+  }
+  if (safe instanceof String) {
+    return safe.toString();
+  }
+  if (safe instanceof Function) {
+    return exportFunction(safe, unsafeWindow, {
+      allowCrossOriginArguments: true
+    });
+  }
+  if (safe instanceof Array) {
+    var _unsafe = new unsafeWindow.Array();
+    for (var i = 0; i < safe.length; ++i) {
+      _unsafe.push(clone(safe[i]));
+    }
+    return _unsafe;
+  }
+  var unsafe = new unsafeWindow.Object();
+  (0, _core.forEach)(safe, function (v, k) {
+    unsafe[k] = clone(v);
+  });
+  return unsafe;
+}
+exports.rawUSW = rawUSW;
+exports.usw = usw;
+exports.GMAPI = GMAPI;
+ }),
+ (function(module, exports, __webpack_require__) {
+module.exports = { "default": __webpack_require__(139), __esModule: true };
+ }),
+ (function(module, exports, __webpack_require__) {
+__webpack_require__(140);
+var $Object = __webpack_require__(12).Object;
 module.exports = function getOwnPropertyDescriptor(it, key) {
   return $Object.getOwnPropertyDescriptor(it, key);
 };
  }),
  (function(module, exports, __webpack_require__) {
-var toIObject = __webpack_require__(9);
-var $getOwnPropertyDescriptor = __webpack_require__(54).f;
-__webpack_require__(31)('getOwnPropertyDescriptor', function () {
+var toIObject = __webpack_require__(33);
+var $getOwnPropertyDescriptor = __webpack_require__(125).f;
+__webpack_require__(93)('getOwnPropertyDescriptor', function () {
   return function getOwnPropertyDescriptor(it, key) {
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
@@ -3315,17 +3290,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.loadConfig = exports.dumpConfig = undefined;
-var _entries = __webpack_require__(143);
+var _entries = __webpack_require__(142);
 var _entries2 = _interopRequireDefault(_entries);
-var _getIterator2 = __webpack_require__(46);
+var _getIterator2 = __webpack_require__(83);
 var _getIterator3 = _interopRequireDefault(_getIterator2);
-var _slicedToArray2 = __webpack_require__(17);
+var _slicedToArray2 = __webpack_require__(86);
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
-var _promise = __webpack_require__(10);
+var _promise = __webpack_require__(1);
 var _promise2 = _interopRequireDefault(_promise);
-var _regenerator = __webpack_require__(22);
+var _regenerator = __webpack_require__(71);
 var _regenerator2 = _interopRequireDefault(_regenerator);
-var _asyncToGenerator2 = __webpack_require__(30);
+var _asyncToGenerator2 = __webpack_require__(76);
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 var senityCheck = function () {
   var _ref5 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee6() {
@@ -3685,9 +3660,9 @@ var dumpConfig = function () {
     return _ref13.apply(this, arguments);
   };
 }();
-var _core = __webpack_require__(4);
-var _dispatcher = __webpack_require__(56);
-var _platform = __webpack_require__(24);
+var _core = __webpack_require__(77);
+var _dispatcher = __webpack_require__(136);
+var _platform = __webpack_require__(137);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var MANIFEST = [{
   key: 'version',
@@ -3861,15 +3836,15 @@ exports.dumpConfig = dumpConfig;
 exports.loadConfig = loadConfig;
  }),
  (function(module, exports, __webpack_require__) {
-module.exports = { "default": __webpack_require__(144), __esModule: true };
+module.exports = { "default": __webpack_require__(143), __esModule: true };
  }),
  (function(module, exports, __webpack_require__) {
-__webpack_require__(145);
-module.exports = __webpack_require__(0).Object.entries;
+__webpack_require__(144);
+module.exports = __webpack_require__(12).Object.entries;
  }),
  (function(module, exports, __webpack_require__) {
-var $export = __webpack_require__(3);
-var $entries = __webpack_require__(146)(true);
+var $export = __webpack_require__(10);
+var $entries = __webpack_require__(145)(true);
 $export($export.S, 'Object', {
   entries: function entries(it) {
     return $entries(it);
@@ -3877,9 +3852,9 @@ $export($export.S, 'Object', {
 });
  }),
  (function(module, exports, __webpack_require__) {
-var getKeys = __webpack_require__(16);
-var toIObject = __webpack_require__(9);
-var isEnum = __webpack_require__(23).f;
+var getKeys = __webpack_require__(31);
+var toIObject = __webpack_require__(33);
+var isEnum = __webpack_require__(101).f;
 module.exports = function (isEntries) {
   return function (it) {
     var O = toIObject(it);
@@ -3896,13 +3871,49 @@ module.exports = function (isEntries) {
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
-var _promise = __webpack_require__(10);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.warn = exports.info = exports.debug = undefined;
+var _core = __webpack_require__(77);
+var quiet = false;
+function log(method, args) {
+  if (quiet) {
+    return;
+  }
+  args = Array.prototype.slice.call(args);
+  if ((0, _core.isString)(args[0])) {
+    args[0] = 'AdsBypasser: ' + args[0];
+  } else {
+    args.unshift('AdsBypasser:');
+  }
+  var f = console[method];
+  if (typeof f === 'function') {
+    f.apply(console, args);
+  }
+}
+function debug() {
+  log('debug', arguments);
+}
+function info() {
+  log('info', arguments);
+}
+function warn() {
+  log('warn', arguments);
+}
+exports.debug = debug;
+exports.info = info;
+exports.warn = warn;
+ }),
+ (function(module, exports, __webpack_require__) {
+"use strict";
+var _promise = __webpack_require__(1);
 var _promise2 = _interopRequireDefault(_promise);
-var _slicedToArray2 = __webpack_require__(17);
+var _slicedToArray2 = __webpack_require__(86);
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
-var _regenerator = __webpack_require__(22);
+var _regenerator = __webpack_require__(71);
 var _regenerator2 = _interopRequireDefault(_regenerator);
-var _asyncToGenerator2 = __webpack_require__(30);
+var _asyncToGenerator2 = __webpack_require__(76);
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 var _ADSBYPASSER_NAMESPACE__ = __webpack_require__(148);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -4425,18 +4436,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.multiupfile\.com$/,
-    path: /^\/f\//
+    host: /^(www\.)?mirrorcreator\.com$/,
+    path: /^\/files\//
   },
   ready: function () {
     var _ref17 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee15() {
-      var f;
+      var b;
       return _regenerator2.default.wrap(function _callee15$(_context15) {
         while (1) {
           switch (_context15.prev = _context15.next) {
             case 0:
-              f = (0, _ADSBYPASSER_NAMESPACE__.$)('#yw0');
-              f.submit();
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.downloadarea.downlinks form button');
+              b.click();
             case 2:
             case 'end':
               return _context15.stop();
@@ -4452,17 +4463,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^mylinkgen\.com$/,
-    path: /^\/p\/(.+)$/
+    host: /^www\.multiupfile\.com$/,
+    path: /^\/f\//
   },
-  start: function () {
-    var _ref18 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee16(m) {
+  ready: function () {
+    var _ref18 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee16() {
+      var f;
       return _regenerator2.default.wrap(function _callee16$(_context16) {
         while (1) {
           switch (_context16.prev = _context16.next) {
             case 0:
-              _context16.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink('/g/' + m.path[1]);
+              f = (0, _ADSBYPASSER_NAMESPACE__.$)('#yw0');
+              f.submit();
             case 2:
             case 'end':
               return _context16.stop();
@@ -4470,8 +4482,34 @@ _ADSBYPASSER_NAMESPACE__._.register({
         }
       }, _callee16, this);
     }));
-    function start(_x) {
+    function ready() {
       return _ref18.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^mylinkgen\.com$/,
+    path: /^\/p\/(.+)$/
+  },
+  start: function () {
+    var _ref19 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee17(m) {
+      return _regenerator2.default.wrap(function _callee17$(_context17) {
+        while (1) {
+          switch (_context17.prev = _context17.next) {
+            case 0:
+              _context17.next = 2;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink('/g/' + m.path[1]);
+            case 2:
+            case 'end':
+              return _context17.stop();
+          }
+        }
+      }, _callee17, this);
+    }));
+    function start(_x) {
+      return _ref19.apply(this, arguments);
     }
     return start;
   }()
@@ -4482,24 +4520,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/g\//
   },
   ready: function () {
-    var _ref19 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee17() {
+    var _ref20 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee18() {
       var a;
-      return _regenerator2.default.wrap(function _callee17$(_context17) {
+      return _regenerator2.default.wrap(function _callee18$(_context18) {
         while (1) {
-          switch (_context17.prev = _context17.next) {
+          switch (_context18.prev = _context18.next) {
             case 0:
               a = (0, _ADSBYPASSER_NAMESPACE__.$)('#main-content a.btn.btn-default');
-              _context17.next = 3;
+              _context18.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
             case 'end':
-              return _context17.stop();
+              return _context18.stop();
           }
         }
-      }, _callee17, this);
+      }, _callee18, this);
     }));
     function ready() {
-      return _ref19.apply(this, arguments);
+      return _ref20.apply(this, arguments);
     }
     return ready;
   }()
@@ -4510,34 +4548,34 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/f\/.*/
   },
   start: function () {
-    var _ref20 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee18() {
-      return _regenerator2.default.wrap(function _callee18$(_context18) {
+    var _ref21 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee19() {
+      return _regenerator2.default.wrap(function _callee19$(_context19) {
         while (1) {
-          switch (_context18.prev = _context18.next) {
+          switch (_context19.prev = _context19.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.window.adblock = false;
               _ADSBYPASSER_NAMESPACE__.$.window.adblock2 = false;
               _ADSBYPASSER_NAMESPACE__.$.window.popAdsLoaded = true;
             case 3:
             case 'end':
-              return _context18.stop();
+              return _context19.stop();
           }
         }
-      }, _callee18, this);
+      }, _callee19, this);
     }));
     function start() {
-      return _ref20.apply(this, arguments);
+      return _ref21.apply(this, arguments);
     }
     return start;
   }(),
   ready: function () {
-    var _ref21 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee19() {
+    var _ref22 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee20() {
       var timer, dlCtn, dlBtn, ePath, videoCtn, overlay;
-      return _regenerator2.default.wrap(function _callee19$(_context19) {
+      return _regenerator2.default.wrap(function _callee20$(_context20) {
         while (1) {
-          switch (_context19.prev = _context19.next) {
+          switch (_context20.prev = _context20.next) {
             case 0:
-              _context19.next = 2;
+              _context20.next = 2;
               return _ADSBYPASSER_NAMESPACE__._.wait(500);
             case 2:
               timer = (0, _ADSBYPASSER_NAMESPACE__.$)('#downloadTimer');
@@ -4549,7 +4587,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
               dlBtn.href = '/stream/' + ePath.textContent;
               videoCtn = _ADSBYPASSER_NAMESPACE__.$.$('.videocontainer');
               if (!videoCtn) {
-                _context19.next = 18;
+                _context20.next = 18;
                 break;
               }
               overlay = (0, _ADSBYPASSER_NAMESPACE__.$)('#videooverlay', videoCtn);
@@ -4563,42 +4601,12 @@ _ADSBYPASSER_NAMESPACE__._.register({
               });
               _ADSBYPASSER_NAMESPACE__._.info(window.location + ' -> ' + dlBtn.href);
               dlBtn.click();
-              _context19.next = 20;
+              _context20.next = 20;
               break;
             case 18:
-              _context19.next = 20;
+              _context20.next = 20;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(dlBtn.href);
             case 20:
-            case 'end':
-              return _context19.stop();
-          }
-        }
-      }, _callee19, this);
-    }));
-    function ready() {
-      return _ref21.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^(www\.)?upmirror\.info$/
-  },
-  ready: function () {
-    var _ref22 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee20() {
-      return _regenerator2.default.wrap(function _callee20$(_context20) {
-        while (1) {
-          switch (_context20.prev = _context20.next) {
-            case 0:
-              _ADSBYPASSER_NAMESPACE__.$.setCookie('user', 'ppp');
-              if (!_ADSBYPASSER_NAMESPACE__.$.$('#countDownText')) {
-                _context20.next = 4;
-                break;
-              }
-              _context20.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(document.location.toString());
-            case 4:
             case 'end':
               return _context20.stop();
           }
@@ -4613,20 +4621,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?vidto\.me$/
+    host: /^(www\.)?upmirror\.info$/
   },
   ready: function () {
     var _ref23 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee21() {
-      var f;
       return _regenerator2.default.wrap(function _callee21$(_context21) {
         while (1) {
           switch (_context21.prev = _context21.next) {
             case 0:
-              f = (0, _ADSBYPASSER_NAMESPACE__.$)('#btn_download').form;
-              _context21.next = 3;
-              return _ADSBYPASSER_NAMESPACE__._.wait(6 * 1000);
-            case 3:
-              f.submit();
+              _ADSBYPASSER_NAMESPACE__.$.setCookie('user', 'ppp');
+              if (!_ADSBYPASSER_NAMESPACE__.$.$('#countDownText')) {
+                _context21.next = 4;
+                break;
+              }
+              _context21.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(document.location.toString());
             case 4:
             case 'end':
               return _context21.stop();
@@ -4642,7 +4651,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^01\.nl$/
+    host: /^(www\.)?vidto\.me$/
   },
   ready: function () {
     var _ref24 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee22() {
@@ -4651,10 +4660,12 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context22.prev = _context22.next) {
             case 0:
-              f = (0, _ADSBYPASSER_NAMESPACE__.$)('iframe#redirectframe');
+              f = (0, _ADSBYPASSER_NAMESPACE__.$)('#btn_download').form;
               _context22.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(f.src);
+              return _ADSBYPASSER_NAMESPACE__._.wait(6 * 1000);
             case 3:
+              f.submit();
+            case 4:
             case 'end':
               return _context22.stop();
           }
@@ -4669,18 +4680,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^10co\.(biz|xyz|co|me)$/
+    host: /^01\.nl$/
   },
   ready: function () {
     var _ref25 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee23() {
-      var d;
+      var f;
       return _regenerator2.default.wrap(function _callee23$(_context23) {
         while (1) {
           switch (_context23.prev = _context23.next) {
             case 0:
-              d = (0, _ADSBYPASSER_NAMESPACE__.$)('.go');
+              f = (0, _ADSBYPASSER_NAMESPACE__.$)('iframe#redirectframe');
               _context23.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(d.dataset.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(f.src);
             case 3:
             case 'end':
               return _context23.stop();
@@ -4696,27 +4707,54 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?1be\.biz$/,
-    path: /^\/s\.php$/,
-    query: /^\?(.+)/
+    host: /^10co\.(biz|xyz|co|me)$/
   },
-  start: function () {
-    var _ref26 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee24(m) {
+  ready: function () {
+    var _ref26 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee24() {
+      var d;
       return _regenerator2.default.wrap(function _callee24$(_context24) {
         while (1) {
           switch (_context24.prev = _context24.next) {
             case 0:
-              _context24.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(m.query[1]);
-            case 2:
+              d = (0, _ADSBYPASSER_NAMESPACE__.$)('.go');
+              _context24.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(d.dataset.href);
+            case 3:
             case 'end':
               return _context24.stop();
           }
         }
       }, _callee24, this);
     }));
-    function start(_x2) {
+    function ready() {
       return _ref26.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^(www\.)?1be\.biz$/,
+    path: /^\/s\.php$/,
+    query: /^\?(.+)/
+  },
+  start: function () {
+    var _ref27 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee25(m) {
+      return _regenerator2.default.wrap(function _callee25$(_context25) {
+        while (1) {
+          switch (_context25.prev = _context25.next) {
+            case 0:
+              _context25.next = 2;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(m.query[1]);
+            case 2:
+            case 'end':
+              return _context25.stop();
+          }
+        }
+      }, _callee25, this);
+    }));
+    function start(_x2) {
+      return _ref27.apply(this, arguments);
     }
     return start;
   }()
@@ -4727,53 +4765,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function () {
-    var _ref27 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee25() {
+    var _ref28 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee26() {
       var url, urlCheck;
-      return _regenerator2.default.wrap(function _callee25$(_context25) {
+      return _regenerator2.default.wrap(function _callee26$(_context26) {
         while (1) {
-          switch (_context25.prev = _context25.next) {
+          switch (_context26.prev = _context26.next) {
             case 0:
               url = document.head.querySelector('[name=keywords]').content;
               urlCheck = url.match(/^https?:\/\//);
               if (!urlCheck) {
                 url = 'http://' + url;
               }
-              _context25.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
-            case 5:
-            case 'end':
-              return _context25.stop();
-          }
-        }
-      }, _callee25, this);
-    }));
-    function ready() {
-      return _ref27.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^(www\.)?1tiny\.net$/,
-    path: /\/\w+/
-  },
-  ready: function () {
-    var _ref28 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee26() {
-      var directUrl;
-      return _regenerator2.default.wrap(function _callee26$(_context26) {
-        while (1) {
-          switch (_context26.prev = _context26.next) {
-            case 0:
-              directUrl = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/window\.location='([^']+)';/);
-              if (directUrl) {
-                _context26.next = 3;
-                break;
-              }
-              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('script content changed');
-            case 3:
               _context26.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(directUrl[1]);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
             case 5:
             case 'end':
               return _context26.stop();
@@ -4789,21 +4793,26 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^2ty\.cc$/,
-    path: /^\/.+/
+    host: /^(www\.)?1tiny\.net$/,
+    path: /\/\w+/
   },
   ready: function () {
     var _ref29 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee27() {
-      var a;
+      var directUrl;
       return _regenerator2.default.wrap(function _callee27$(_context27) {
         while (1) {
           switch (_context27.prev = _context27.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#close');
-              _context27.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 4:
+              directUrl = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/window\.location='([^']+)';/);
+              if (directUrl) {
+                _context27.next = 3;
+                break;
+              }
+              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('script content changed');
+            case 3:
+              _context27.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(directUrl[1]);
+            case 5:
             case 'end':
               return _context27.stop();
           }
@@ -4818,34 +4827,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?3ra\.be$/
+    host: /^2ty\.cc$/,
+    path: /^\/.+/
   },
   ready: function () {
     var _ref30 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee28() {
-      var f;
+      var a;
       return _regenerator2.default.wrap(function _callee28$(_context28) {
         while (1) {
           switch (_context28.prev = _context28.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              f = _ADSBYPASSER_NAMESPACE__.$.window.fc;
-              if (f) {
-                _context28.next = 4;
-                break;
-              }
-              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('window.fc is undefined');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#close');
+              _context28.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 4:
-              f = f.toString();
-              f = f.match(/href="([^"]*)/);
-              if (f) {
-                _context28.next = 8;
-                break;
-              }
-              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('url pattern outdated');
-            case 8:
-              _context28.next = 10;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(f[1]);
-            case 10:
             case 'end':
               return _context28.stop();
           }
@@ -4860,19 +4856,34 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?4fun\.tw$/
+    host: /^(www\.)?3ra\.be$/
   },
   ready: function () {
     var _ref31 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee29() {
-      var i;
+      var f;
       return _regenerator2.default.wrap(function _callee29$(_context29) {
         while (1) {
           switch (_context29.prev = _context29.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#original_url');
-              _context29.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(i.value);
-            case 3:
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              f = _ADSBYPASSER_NAMESPACE__.$.window.fc;
+              if (f) {
+                _context29.next = 4;
+                break;
+              }
+              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('window.fc is undefined');
+            case 4:
+              f = f.toString();
+              f = f.match(/href="([^"]*)/);
+              if (f) {
+                _context29.next = 8;
+                break;
+              }
+              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('url pattern outdated');
+            case 8:
+              _context29.next = 10;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(f[1]);
+            case 10:
             case 'end':
               return _context29.stop();
           }
@@ -4887,22 +4898,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^ad2links\.com$/,
-    path: /^\/\w-.+$/
+    host: /^(www\.)?4fun\.tw$/
   },
   ready: function () {
     var _ref32 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee30() {
+      var i;
       return _regenerator2.default.wrap(function _callee30$(_context30) {
         while (1) {
           switch (_context30.prev = _context30.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#original_url');
               _context30.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(window.location.toString(), {
-                post: {
-                  image: 'Skip Ad.'
-                }
-              });
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(i.value);
             case 3:
             case 'end':
               return _context30.stop();
@@ -4918,27 +4925,23 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^ad4\.fr$/
+    host: /^ad2links\.com$/,
+    path: /^\/\w-.+$/
   },
   ready: function () {
     var _ref33 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee31() {
-      var s;
       return _regenerator2.default.wrap(function _callee31$(_context31) {
         while (1) {
           switch (_context31.prev = _context31.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              s = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/"src", "([^"]+)"/);
-              if (s) {
-                _context31.next = 5;
-                break;
-              }
-              _ADSBYPASSER_NAMESPACE__._.warn('changed');
-              return _context31.abrupt('return');
-            case 5:
-              _context31.next = 7;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(s[1]);
-            case 7:
+              _context31.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(window.location.toString(), {
+                post: {
+                  image: 'Skip Ad.'
+                }
+              });
+            case 3:
             case 'end':
               return _context31.stop();
           }
@@ -4951,6 +4954,41 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return ready;
   }()
 });
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^ad4\.fr$/
+  },
+  ready: function () {
+    var _ref34 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee32() {
+      var s;
+      return _regenerator2.default.wrap(function _callee32$(_context32) {
+        while (1) {
+          switch (_context32.prev = _context32.next) {
+            case 0:
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              s = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/"src", "([^"]+)"/);
+              if (s) {
+                _context32.next = 5;
+                break;
+              }
+              _ADSBYPASSER_NAMESPACE__._.warn('changed');
+              return _context32.abrupt('return');
+            case 5:
+              _context32.next = 7;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(s[1]);
+            case 7:
+            case 'end':
+              return _context32.stop();
+          }
+        }
+      }, _callee32, this);
+    }));
+    function ready() {
+      return _ref34.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
@@ -4958,28 +4996,28 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/\d+\/(.*)$/
     },
     start: function () {
-      var _ref34 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee32(m) {
+      var _ref35 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee33(m) {
         var redirectLink;
-        return _regenerator2.default.wrap(function _callee32$(_context32) {
+        return _regenerator2.default.wrap(function _callee33$(_context33) {
           while (1) {
-            switch (_context32.prev = _context32.next) {
+            switch (_context33.prev = _context33.next) {
               case 0:
                 _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
                 redirectLink = m.path[1];
                 if (!redirectLink.match(/^https?:\/\//)) {
                   redirectLink = 'http://' + redirectLink;
                 }
-                _context32.next = 5;
+                _context33.next = 5;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(redirectLink);
               case 5:
               case 'end':
-                return _context32.stop();
+                return _context33.stop();
             }
           }
-        }, _callee32, this);
+        }, _callee33, this);
       }));
       function start(_x3) {
-        return _ref34.apply(this, arguments);
+        return _ref35.apply(this, arguments);
       }
       return start;
     }()
@@ -4990,27 +5028,27 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/\w+$/
     },
     ready: function () {
-      var _ref35 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee33() {
+      var _ref36 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee34() {
         var script, url;
-        return _regenerator2.default.wrap(function _callee33$(_context33) {
+        return _regenerator2.default.wrap(function _callee34$(_context34) {
           while (1) {
-            switch (_context33.prev = _context33.next) {
+            switch (_context34.prev = _context34.next) {
               case 0:
                 _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
                 script = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts('const r_url');
                 url = script.match(/&url=([^&]+)/);
                 url = url[1];
-                _context33.next = 6;
+                _context34.next = 6;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
               case 6:
               case 'end':
-                return _context33.stop();
+                return _context34.stop();
             }
           }
-        }, _callee33, this);
+        }, _callee34, this);
       }));
       function ready() {
-        return _ref35.apply(this, arguments);
+        return _ref36.apply(this, arguments);
       }
       return ready;
     }()
@@ -5023,37 +5061,37 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/
     },
     ready: function () {
-      var _ref36 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee34() {
+      var _ref37 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee35() {
         var m, args;
-        return _regenerator2.default.wrap(function _callee34$(_context34) {
+        return _regenerator2.default.wrap(function _callee35$(_context35) {
           while (1) {
-            switch (_context34.prev = _context34.next) {
+            switch (_context35.prev = _context35.next) {
               case 0:
                 _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
                 m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/top\.location\.href="([^"]+)"/);
                 if (!m) {
-                  _context34.next = 6;
+                  _context35.next = 6;
                   break;
                 }
-                _context34.next = 5;
+                _context35.next = 5;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
               case 5:
-                return _context34.abrupt('return');
+                return _context35.abrupt('return');
               case 6:
-                _context34.next = 8;
+                _context35.next = 8;
                 return getArguments();
               case 8:
-                args = _context34.sent;
+                args = _context35.sent;
                 tryLink(args);
               case 10:
               case 'end':
-                return _context34.stop();
+                return _context35.stop();
             }
           }
-        }, _callee34, this);
+        }, _callee35, this);
       }));
       function ready() {
-        return _ref36.apply(this, arguments);
+        return _ref37.apply(this, arguments);
       }
       return ready;
     }()
@@ -5106,24 +5144,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/redirecting\/(.+)$/
     },
     start: function () {
-      var _ref37 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee35(m) {
+      var _ref38 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee36(m) {
         var url;
-        return _regenerator2.default.wrap(function _callee35$(_context35) {
+        return _regenerator2.default.wrap(function _callee36$(_context36) {
           while (1) {
-            switch (_context35.prev = _context35.next) {
+            switch (_context36.prev = _context36.next) {
               case 0:
                 url = atob(m.path[1]);
-                _context35.next = 3;
+                _context36.next = 3;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
               case 3:
               case 'end':
-                return _context35.stop();
+                return _context36.stop();
             }
           }
-        }, _callee35, this);
+        }, _callee36, this);
       }));
       function start(_x4) {
-        return _ref37.apply(this, arguments);
+        return _ref38.apply(this, arguments);
       }
       return start;
     }()
@@ -5134,35 +5172,35 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /url=([^&]+)/
     },
     start: function () {
-      var _ref38 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee36(m) {
+      var _ref39 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee37(m) {
         var url;
-        return _regenerator2.default.wrap(function _callee36$(_context36) {
+        return _regenerator2.default.wrap(function _callee37$(_context37) {
           while (1) {
-            switch (_context36.prev = _context36.next) {
+            switch (_context37.prev = _context37.next) {
               case 0:
                 _ADSBYPASSER_NAMESPACE__.$.resetCookies();
                 url = decodeURIComponent(m.query[1]);
                 if (!url.match(/^http/)) {
-                  _context36.next = 7;
+                  _context37.next = 7;
                   break;
                 }
-                _context36.next = 5;
+                _context37.next = 5;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
               case 5:
-                _context36.next = 9;
+                _context37.next = 9;
                 break;
               case 7:
-                _context36.next = 9;
+                _context37.next = 9;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink('/' + url);
               case 9:
               case 'end':
-                return _context36.stop();
+                return _context37.stop();
             }
           }
-        }, _callee36, this);
+        }, _callee37, this);
       }));
       function start(_x5) {
-        return _ref38.apply(this, arguments);
+        return _ref39.apply(this, arguments);
       }
       return start;
     }()
@@ -5177,113 +5215,66 @@ _ADSBYPASSER_NAMESPACE__._.register({
       }
     },
     start: function () {
-      var _ref39 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee37() {
-        var token, url;
-        return _regenerator2.default.wrap(function _callee37$(_context37) {
-          while (1) {
-            switch (_context37.prev = _context37.next) {
-              case 0:
-                _ADSBYPASSER_NAMESPACE__.$.window.document.write = _ADSBYPASSER_NAMESPACE__._.nop;
-                _ADSBYPASSER_NAMESPACE__.$.window.btoa = _ADSBYPASSER_NAMESPACE__._.nop;
-                _context37.next = 4;
-                return waitDocumentHead();
-              case 4:
-                _context37.next = 6;
-                return waitToken();
-              case 6:
-                token = _context37.sent;
-                url = decodeToken(token);
-                _context37.next = 10;
-                return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
-              case 10:
-              case 'end':
-                return _context37.stop();
-            }
-          }
-        }, _callee37, this);
-      }));
-      function start() {
-        return _ref39.apply(this, arguments);
-      }
-      return start;
-    }(),
-    ready: function () {
       var _ref40 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee38() {
-        var h, b, token;
         return _regenerator2.default.wrap(function _callee38$(_context38) {
           while (1) {
             switch (_context38.prev = _context38.next) {
               case 0:
-                h = _ADSBYPASSER_NAMESPACE__.$.$('#main_html'), b = _ADSBYPASSER_NAMESPACE__.$.$('#home');
-                if (!(!h || !b || h.nodeName !== 'HTML' || b.nodeName !== 'BODY')) {
-                  _context38.next = 3;
-                  break;
-                }
-                return _context38.abrupt('return');
-              case 3:
-                _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-                _ADSBYPASSER_NAMESPACE__.$.window.cookieCheck = _ADSBYPASSER_NAMESPACE__._.nop;
-                token = getTokenFromRocketScript();
-                if (token) {
-                  _context38.next = 10;
-                  break;
-                }
-                token = (0, _ADSBYPASSER_NAMESPACE__.$)('#adfly_bar');
-                _ADSBYPASSER_NAMESPACE__.$.window.close_bar();
-                return _context38.abrupt('return');
-              case 10:
-                token = decodeToken(token);
-                _context38.next = 13;
-                return _ADSBYPASSER_NAMESPACE__.$.openLink(token);
-              case 13:
+                _ADSBYPASSER_NAMESPACE__.$.window.document.write = _ADSBYPASSER_NAMESPACE__._.nop;
+                _ADSBYPASSER_NAMESPACE__.$.window.btoa = _ADSBYPASSER_NAMESPACE__._.nop;
+              case 2:
               case 'end':
                 return _context38.stop();
             }
           }
         }, _callee38, this);
       }));
-      function ready() {
+      function start() {
         return _ref40.apply(this, arguments);
+      }
+      return start;
+    }(),
+    ready: function () {
+      var _ref41 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee39() {
+        var rv;
+        return _regenerator2.default.wrap(function _callee39$(_context39) {
+          while (1) {
+            switch (_context39.prev = _context39.next) {
+              case 0:
+                _ADSBYPASSER_NAMESPACE__.$.setCookie('FLYSESSID', generateRandomSessionCookie(40));
+                _context39.next = 3;
+                return _ADSBYPASSER_NAMESPACE__.$.get(location.href, '', {
+                  'Origin': _ADSBYPASSER_NAMESPACE__._.none,
+                  'Referer': _ADSBYPASSER_NAMESPACE__._.none,
+                  'X-Requested-With': _ADSBYPASSER_NAMESPACE__._.none
+                });
+              case 3:
+                rv = _context39.sent;
+                rv = _ADSBYPASSER_NAMESPACE__.$.toDOM(rv);
+                rv = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/var ysmm = '([^']+)'/, rv);
+                rv = rv[1];
+                rv = decodeToken(rv);
+                _context39.next = 10;
+                return _ADSBYPASSER_NAMESPACE__.$.openLink(rv);
+              case 10:
+              case 'end':
+                return _context39.stop();
+            }
+          }
+        }, _callee39, this);
+      }));
+      function ready() {
+        return _ref41.apply(this, arguments);
       }
       return ready;
     }()
   });
-  function waitToken() {
-    return new _promise2.default(function (resolve) {
-      var o = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-          _ADSBYPASSER_NAMESPACE__._.forEach(mutation.addedNodes, function (node) {
-            if (node.localName === 'script') {
-              var m = node.textContent.match(/var ysmm = '([^']+)'/);
-              if (m) {
-                o.disconnect();
-                resolve(m[1]);
-              }
-            }
-          });
-        });
-      });
-      o.observe(document.head, {
-        childList: true
-      });
-    });
-  }
-  function waitDocumentHead() {
-    return new _promise2.default(function (resolve) {
-      if (document.head) {
-        resolve();
-        return;
-      }
-      var o = new MutationObserver(function () {
-        if (document.head) {
-          o.disconnect();
-          resolve();
-        }
-      });
-      o.observe(document.documentElement, {
-        childList: true
-      });
-    });
+  function generateRandomSessionCookie(length) {
+    var rv = [];
+    for (var i = 0; i < length; ++i) {
+      rv.push(Math.random().toString(36).charAt(2));
+    }
+    return rv.join('');
   }
   function decodeToken(token) {
     var a = '';
@@ -5320,10 +5311,6 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }
     return token;
   }
-  function getTokenFromRocketScript() {
-    var a = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/const eu = '(?!false)(.*)'/);
-    return a ? a[1] : null;
-  }
 })();
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
@@ -5331,29 +5318,29 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function () {
-    var _ref41 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee39() {
+    var _ref42 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee40() {
       var f;
-      return _regenerator2.default.wrap(function _callee39$(_context39) {
+      return _regenerator2.default.wrap(function _callee40$(_context40) {
         while (1) {
-          switch (_context39.prev = _context39.next) {
+          switch (_context40.prev = _context40.next) {
             case 0:
               f = (0, _ADSBYPASSER_NAMESPACE__.$)('#frmvideo');
               if (f.STEP4) {
-                _context39.next = 3;
+                _context40.next = 3;
                 break;
               }
-              return _context39.abrupt('return');
+              return _context40.abrupt('return');
             case 3:
               f.submit();
             case 4:
             case 'end':
-              return _context39.stop();
+              return _context40.stop();
           }
         }
-      }, _callee39, this);
+      }, _callee40, this);
     }));
     function ready() {
-      return _ref41.apply(this, arguments);
+      return _ref42.apply(this, arguments);
     }
     return ready;
   }()
@@ -5361,11 +5348,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://adfoc.us/*',
   ready: function () {
-    var _ref42 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee40() {
+    var _ref43 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee41() {
       var promise, url;
-      return _regenerator2.default.wrap(function _callee40$(_context40) {
+      return _regenerator2.default.wrap(function _callee41$(_context41) {
         while (1) {
-          switch (_context40.prev = _context40.next) {
+          switch (_context41.prev = _context41.next) {
             case 0:
               promise = new _promise2.default(function (resolve) {
                 var root = document.body;
@@ -5382,46 +5369,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   subtree: true
                 });
               });
-              _context40.next = 3;
+              _context41.next = 3;
               return promise;
             case 3:
-              url = _context40.sent;
-              _context40.next = 6;
+              url = _context41.sent;
+              _context41.next = 6;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
             case 6:
-            case 'end':
-              return _context40.stop();
-          }
-        }
-      }, _callee40, this);
-    }));
-    function ready() {
-      return _ref42.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^(www\.)?adjet\.biz$/
-  },
-  ready: function () {
-    var _ref43 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee41() {
-      var m;
-      return _regenerator2.default.wrap(function _callee41$(_context41) {
-        while (1) {
-          switch (_context41.prev = _context41.next) {
-            case 0:
-              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/href=(\S+)/);
-              if (m) {
-                _context41.next = 3;
-                break;
-              }
-              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('site changed');
-            case 3:
-              _context41.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
-            case 5:
             case 'end':
               return _context41.stop();
           }
@@ -5436,33 +5390,25 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^adlock\.org$/
+    host: /^(www\.)?adjet\.biz$/
   },
   ready: function () {
     var _ref44 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee42() {
-      var a;
+      var m;
       return _regenerator2.default.wrap(function _callee42$(_context42) {
         while (1) {
           switch (_context42.prev = _context42.next) {
             case 0:
-              a = _ADSBYPASSER_NAMESPACE__.$.$('#xre a.xxr, #downloadButton1');
-              if (!a) {
-                _context42.next = 5;
+              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/href=(\S+)/);
+              if (m) {
+                _context42.next = 3;
                 break;
               }
-              _context42.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 4:
-              return _context42.abrupt('return');
+              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('site changed');
+            case 3:
+              _context42.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
             case 5:
-              a = _ADSBYPASSER_NAMESPACE__.$.window.fileLocation;
-              if (!a) {
-                _context42.next = 9;
-                break;
-              }
-              _context42.next = 9;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a);
-            case 9:
             case 'end':
               return _context42.stop();
           }
@@ -5477,30 +5423,33 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?adlot\.us$/
+    host: /^adlock\.org$/
   },
   ready: function () {
     var _ref45 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee43() {
-      var script, p, opt, tmp;
+      var a;
       return _regenerator2.default.wrap(function _callee43$(_context43) {
         while (1) {
           switch (_context43.prev = _context43.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              script = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts('form');
-              p = /name='([^']+)' value='([^']+)'/g;
-              opt = {
-                image: ' '
-              };
-              tmp = null;
-              while (tmp = p.exec(script)) {
-                opt[tmp[1]] = tmp[2];
+              a = _ADSBYPASSER_NAMESPACE__.$.$('#xre a.xxr, #downloadButton1');
+              if (!a) {
+                _context43.next = 5;
+                break;
               }
-              _context43.next = 8;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink('', {
-                path: opt
-              });
-            case 8:
+              _context43.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 4:
+              return _context43.abrupt('return');
+            case 5:
+              a = _ADSBYPASSER_NAMESPACE__.$.window.fileLocation;
+              if (!a) {
+                _context43.next = 9;
+                break;
+              }
+              _context43.next = 9;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a);
+            case 9:
             case 'end':
               return _context43.stop();
           }
@@ -5515,18 +5464,30 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^admy\.link$/
+    host: /^(www\.)?adlot\.us$/
   },
   ready: function () {
     var _ref46 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee44() {
-      var f;
+      var script, p, opt, tmp;
       return _regenerator2.default.wrap(function _callee44$(_context44) {
         while (1) {
           switch (_context44.prev = _context44.next) {
             case 0:
-              f = (0, _ADSBYPASSER_NAMESPACE__.$)('form.edit_link');
-              f.submit();
-            case 2:
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              script = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts('form');
+              p = /name='([^']+)' value='([^']+)'/g;
+              opt = {
+                image: ' '
+              };
+              tmp = null;
+              while (tmp = p.exec(script)) {
+                opt[tmp[1]] = tmp[2];
+              }
+              _context44.next = 8;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink('', {
+                path: opt
+              });
+            case 8:
             case 'end':
               return _context44.stop();
           }
@@ -5541,20 +5502,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?ah-informatique\.com$/,
-    path: /^\/ZipUrl/
+    host: /^admy\.link$/
   },
   ready: function () {
     var _ref47 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee45() {
-      var a;
+      var f;
       return _regenerator2.default.wrap(function _callee45$(_context45) {
         while (1) {
           switch (_context45.prev = _context45.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#zip3 a');
-              _context45.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+              f = (0, _ADSBYPASSER_NAMESPACE__.$)('form.edit_link');
+              f.submit();
+            case 2:
             case 'end':
               return _context45.stop();
           }
@@ -5567,17 +5526,45 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return ready;
   }()
 });
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^(www\.)?ah-informatique\.com$/,
+    path: /^\/ZipUrl/
+  },
+  ready: function () {
+    var _ref48 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee46() {
+      var a;
+      return _regenerator2.default.wrap(function _callee46$(_context46) {
+        while (1) {
+          switch (_context46.prev = _context46.next) {
+            case 0:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#zip3 a');
+              _context46.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
+            case 'end':
+              return _context46.stop();
+          }
+        }
+      }, _callee46, this);
+    }));
+    function ready() {
+      return _ref48.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: /^ah\.pe$/
     },
     ready: function () {
-      var _ref48 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee46() {
+      var _ref49 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee47() {
         var script, path;
-        return _regenerator2.default.wrap(function _callee46$(_context46) {
+        return _regenerator2.default.wrap(function _callee47$(_context47) {
           while (1) {
-            switch (_context46.prev = _context46.next) {
+            switch (_context47.prev = _context47.next) {
               case 0:
                 script = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts('eval');
                 script = decodeScript(script);
@@ -5585,30 +5572,30 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 script = decodeScript(script);
                 path = script.match(/([^;= ]+)=([^+ ;]+)\+"\."\+([^+ ]+)\+"\."\+([^; ]+);/);
                 if (path) {
-                  _context46.next = 7;
+                  _context47.next = 7;
                   break;
                 }
                 throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('script changed');
               case 7:
                 if (!(typeof _ADSBYPASSER_NAMESPACE__.$.window[path[2]] === 'undefined')) {
-                  _context46.next = 10;
+                  _context47.next = 10;
                   break;
                 }
                 _ADSBYPASSER_NAMESPACE__._.info('recaptcha');
-                return _context46.abrupt('return');
+                return _context47.abrupt('return');
               case 10:
                 path = [_ADSBYPASSER_NAMESPACE__.$.window[path[2]], _ADSBYPASSER_NAMESPACE__.$.window[path[3]], _ADSBYPASSER_NAMESPACE__.$.window[path[4]]].join('.');
-                _context46.next = 13;
+                _context47.next = 13;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
               case 13:
               case 'end':
-                return _context46.stop();
+                return _context47.stop();
             }
           }
-        }, _callee46, this);
+        }, _callee47, this);
       }));
       function ready() {
-        return _ref48.apply(this, arguments);
+        return _ref49.apply(this, arguments);
       }
       return ready;
     }()
@@ -5626,59 +5613,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^aka\.gr$/
   },
   ready: function () {
-    var _ref49 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee47() {
-      var l;
-      return _regenerator2.default.wrap(function _callee47$(_context47) {
-        while (1) {
-          switch (_context47.prev = _context47.next) {
-            case 0:
-              l = (0, _ADSBYPASSER_NAMESPACE__.$)('iframe#yourls-frame');
-              _context47.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(l.src);
-            case 3:
-            case 'end':
-              return _context47.stop();
-          }
-        }
-      }, _callee47, this);
-    }));
-    function ready() {
-      return _ref49.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: [/^al\.ly$/, /^ally\.sh$/]
-  },
-  ready: function () {
     var _ref50 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee48() {
-      var i;
+      var l;
       return _regenerator2.default.wrap(function _callee48$(_context48) {
         while (1) {
           switch (_context48.prev = _context48.next) {
             case 0:
-              i = _ADSBYPASSER_NAMESPACE__.$.$('#html_element');
-              if (!i) {
-                _context48.next = 5;
-                break;
-              }
-              _ADSBYPASSER_NAMESPACE__.$.remove('#messa');
-              i.classList.remove('hidden');
-              return _context48.abrupt('return');
-            case 5:
-              i = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/"href","([^"]+)" \+ hash\)\.remove/);
-              if (i) {
-                _context48.next = 9;
-                break;
-              }
-              _ADSBYPASSER_NAMESPACE__._.warn('site changed');
-              return _context48.abrupt('return');
-            case 9:
-              i = i[1] + location.hash;
-              _ADSBYPASSER_NAMESPACE__.$.openLink(i);
-            case 11:
+              l = (0, _ADSBYPASSER_NAMESPACE__.$)('iframe#yourls-frame');
+              _context48.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(l.src);
+            case 3:
             case 'end':
               return _context48.stop();
           }
@@ -5693,21 +5637,35 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^(www\.)?allkeyshop\.com$/, /^cshort\.org$/]
+    host: [/^al\.ly$/, /^ally\.sh$/]
   },
   ready: function () {
     var _ref51 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee49() {
-      var matches;
+      var i;
       return _regenerator2.default.wrap(function _callee49$(_context49) {
         while (1) {
           switch (_context49.prev = _context49.next) {
             case 0:
-              matches = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/window\.location\.href = "([^"]+)"/);
-              matches = matches[1];
-              _ADSBYPASSER_NAMESPACE__.$.nuke(matches);
-              _context49.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(matches);
+              i = _ADSBYPASSER_NAMESPACE__.$.$('#html_element');
+              if (!i) {
+                _context49.next = 5;
+                break;
+              }
+              _ADSBYPASSER_NAMESPACE__.$.remove('#messa');
+              i.classList.remove('hidden');
+              return _context49.abrupt('return');
             case 5:
+              i = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/"href","([^"]+)" \+ hash\)\.remove/);
+              if (i) {
+                _context49.next = 9;
+                break;
+              }
+              _ADSBYPASSER_NAMESPACE__._.warn('site changed');
+              return _context49.abrupt('return');
+            case 9:
+              i = i[1] + location.hash;
+              _ADSBYPASSER_NAMESPACE__.$.openLink(i);
+            case 11:
             case 'end':
               return _context49.stop();
           }
@@ -5722,18 +5680,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^anonymbucks\.com$/
+    host: [/^(www\.)?allkeyshop\.com$/, /^cshort\.org$/]
   },
   ready: function () {
     var _ref52 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee50() {
-      var a;
+      var matches;
       return _regenerator2.default.wrap(function _callee50$(_context50) {
         while (1) {
           switch (_context50.prev = _context50.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#boton-continuar');
-              a.click();
-            case 2:
+              matches = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/window\.location\.href = "([^"]+)"/);
+              matches = matches[1];
+              _ADSBYPASSER_NAMESPACE__.$.nuke(matches);
+              _context50.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(matches);
+            case 5:
             case 'end':
               return _context50.stop();
           }
@@ -5746,43 +5707,69 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return ready;
   }()
 });
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^anonymbucks\.com$/
+  },
+  ready: function () {
+    var _ref53 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee51() {
+      var a;
+      return _regenerator2.default.wrap(function _callee51$(_context51) {
+        while (1) {
+          switch (_context51.prev = _context51.next) {
+            case 0:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#boton-continuar');
+              a.click();
+            case 2:
+            case 'end':
+              return _context51.stop();
+          }
+        }
+      }, _callee51, this);
+    }));
+    function ready() {
+      return _ref53.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
 (function () {
   var run = function () {
-    var _ref59 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee57(dirtyFix) {
+    var _ref60 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee58(dirtyFix) {
       var result;
-      return _regenerator2.default.wrap(function _callee57$(_context57) {
+      return _regenerator2.default.wrap(function _callee58$(_context58) {
         while (1) {
-          switch (_context57.prev = _context57.next) {
+          switch (_context58.prev = _context58.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
               result = searchScript(true);
               if (result.direct) {
-                _context57.next = 6;
+                _context58.next = 6;
                 break;
               }
               knockServer(result.script, dirtyFix);
-              _context57.next = 12;
+              _context58.next = 12;
               break;
             case 6:
               result = result.script.match(/top\.location\.href='([^']+)'/);
               if (result) {
-                _context57.next = 9;
+                _context58.next = 9;
                 break;
               }
               throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('script changed');
             case 9:
               result = result[1];
-              _context57.next = 12;
+              _context58.next = 12;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(result);
             case 12:
             case 'end':
-              return _context57.stop();
+              return _context58.stop();
           }
         }
-      }, _callee57, this);
+      }, _callee58, this);
     }));
     return function run(_x7) {
-      return _ref59.apply(this, arguments);
+      return _ref60.apply(this, arguments);
     };
   }();
   var ajaxPattern = /\$.post\('([^']*)'[^{]+(\{\s*opt:\s*'make_log'[^}]+\}\s*\}),/i;
@@ -5792,22 +5779,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^.+(https?:\/\/.+)$/
     },
     start: function () {
-      var _ref53 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee51(m) {
-        return _regenerator2.default.wrap(function _callee51$(_context51) {
+      var _ref54 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee52(m) {
+        return _regenerator2.default.wrap(function _callee52$(_context52) {
           while (1) {
-            switch (_context51.prev = _context51.next) {
+            switch (_context52.prev = _context52.next) {
               case 0:
-                _context51.next = 2;
+                _context52.next = 2;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(m.path[1] + document.location.search + document.location.hash);
               case 2:
               case 'end':
-                return _context51.stop();
+                return _context52.stop();
             }
           }
-        }, _callee51, this);
+        }, _callee52, this);
       }));
       function start(_x6) {
-        return _ref53.apply(this, arguments);
+        return _ref54.apply(this, arguments);
       }
       return start;
     }()
@@ -5818,20 +5805,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/.+/
     },
     ready: function () {
-      var _ref54 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee52() {
+      var _ref55 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee53() {
         var token, time, url, rv;
-        return _regenerator2.default.wrap(function _callee52$(_context52) {
+        return _regenerator2.default.wrap(function _callee53$(_context53) {
           while (1) {
-            switch (_context52.prev = _context52.next) {
+            switch (_context53.prev = _context53.next) {
               case 0:
                 _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
                 token = findAJAXToken();
                 time = fakeAJAXToken();
                 url = '/fly/ajax.php?wds=' + token.wds + '&time=' + time;
-                _context52.next = 6;
+                _context53.next = 6;
                 return _ADSBYPASSER_NAMESPACE__._.wait(5000);
               case 6:
-                _context52.next = 8;
+                _context53.next = 8;
                 return _ADSBYPASSER_NAMESPACE__.$.post(url, {
                   xdf: {
                     afg: _ADSBYPASSER_NAMESPACE__.$.window.tZ,
@@ -5844,56 +5831,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   ojk: token.ojk
                 });
               case 8:
-                rv = _context52.sent;
+                rv = _context53.sent;
                 rv = JSON.parse(rv);
                 if (!rv.error) {
-                  _context52.next = 12;
+                  _context53.next = 12;
                   break;
                 }
                 throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('auth error');
               case 12:
-                _context52.next = 14;
+                _context53.next = 14;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(rv.message.url);
               case 14:
-              case 'end':
-                return _context52.stop();
-            }
-          }
-        }, _callee52, this);
-      }));
-      function ready() {
-        return _ref54.apply(this, arguments);
-      }
-      return ready;
-    }()
-  });
-  _ADSBYPASSER_NAMESPACE__._.register({
-    rule: {
-      host: /^adcrun\.ch$/,
-      path: /^\/\w+$/
-    },
-    ready: function () {
-      var _ref55 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee53() {
-        var rSurveyLink, l;
-        return _regenerator2.default.wrap(function _callee53$(_context53) {
-          while (1) {
-            switch (_context53.prev = _context53.next) {
-              case 0:
-                _ADSBYPASSER_NAMESPACE__.$.remove('.user_content');
-                rSurveyLink = /http\.open\("GET", "api_ajax\.php\?sid=\d*&ip=[^&]*&longurl=([^"]+)" \+ first_time, (?:true|false)\);/;
-                l = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(rSurveyLink);
-                if (!l) {
-                  _context53.next = 7;
-                  break;
-                }
-                _context53.next = 6;
-                return _ADSBYPASSER_NAMESPACE__.$.openLink(l[1]);
-              case 6:
-                return _context53.abrupt('return');
-              case 7:
-                _context53.next = 9;
-                return run(true);
-              case 9:
               case 'end':
                 return _context53.stop();
             }
@@ -5908,37 +5856,30 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^(1tk|hit|adbla|tl7)\.us$/, /^mylink\.(us|zone)$/, /^gx\.si$/, /^adwat\.ch$/, /^(fly2url|urlwiz|xafox)\.com$/, /^(zpoz|ultry)\.net$/, /^(wwy|myam)\.me$/, /^(ssl|srk)\.gs$/, /^shortit\.in$/, /^www\.adjet\.eu$/, /^cun\.bz$/, /^miniurl\.tk$/, /^vizzy\.es$/, /^kazan\.vc$/, /^linkcash\.ml$/],
-      path: /^\/.+/
-    },
-    ready: run
-  });
-  _ADSBYPASSER_NAMESPACE__._.register({
-    rule: {
-      host: /^adtr\.im|ysear\.ch|xip\.ir$/,
-      path: /^\/.+/
+      host: /^adcrun\.ch$/,
+      path: /^\/\w+$/
     },
     ready: function () {
       var _ref56 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee54() {
-        var a, f;
+        var rSurveyLink, l;
         return _regenerator2.default.wrap(function _callee54$(_context54) {
           while (1) {
             switch (_context54.prev = _context54.next) {
               case 0:
-                a = _ADSBYPASSER_NAMESPACE__.$.$('div.fly_head a.close');
-                f = _ADSBYPASSER_NAMESPACE__.$.$('iframe.fly_frame');
-                if (!(a && f)) {
+                _ADSBYPASSER_NAMESPACE__.$.remove('.user_content');
+                rSurveyLink = /http\.open\("GET", "api_ajax\.php\?sid=\d*&ip=[^&]*&longurl=([^"]+)" \+ first_time, (?:true|false)\);/;
+                l = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(rSurveyLink);
+                if (!l) {
                   _context54.next = 7;
                   break;
                 }
-                _context54.next = 5;
-                return _ADSBYPASSER_NAMESPACE__.$.openLink(f.src);
-              case 5:
-                _context54.next = 9;
-                break;
+                _context54.next = 6;
+                return _ADSBYPASSER_NAMESPACE__.$.openLink(l[1]);
+              case 6:
+                return _context54.abrupt('return');
               case 7:
                 _context54.next = 9;
-                return run();
+                return run(true);
               case 9:
               case 'end':
                 return _context54.stop();
@@ -5954,35 +5895,38 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: /^ad5\.eu$/,
-      path: /^\/[^.]+$/
+      host: [/^(1tk|hit|adbla|tl7)\.us$/, /^mylink\.(us|zone)$/, /^gx\.si$/, /^adwat\.ch$/, /^(fly2url|urlwiz|xafox)\.com$/, /^(zpoz|ultry)\.net$/, /^(wwy|myam)\.me$/, /^(ssl|srk)\.gs$/, /^www\.adjet\.eu$/, /^cun\.bz$/, /^miniurl\.tk$/, /^vizzy\.es$/, /^kazan\.vc$/, /^linkcash\.ml$/],
+      path: /^\/.+/
+    },
+    ready: run
+  });
+  _ADSBYPASSER_NAMESPACE__._.register({
+    rule: {
+      host: /^adtr\.im|ysear\.ch|xip\.ir$/,
+      path: /^\/.+/
     },
     ready: function () {
       var _ref57 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee55() {
-        var s, m, tz, d;
+        var a, f;
         return _regenerator2.default.wrap(function _callee55$(_context55) {
           while (1) {
             switch (_context55.prev = _context55.next) {
               case 0:
-                _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-                s = searchScript(true);
-                m = s.script.match(/(<form name="form1"method="post".*(?!<\\form>)<\/form>)/);
-                if (m) {
-                  _context55.next = 5;
+                a = _ADSBYPASSER_NAMESPACE__.$.$('div.fly_head a.close');
+                f = _ADSBYPASSER_NAMESPACE__.$.$('iframe.fly_frame');
+                if (!(a && f)) {
+                  _context55.next = 7;
                   break;
                 }
-                return _context55.abrupt('return');
+                _context55.next = 5;
+                return _ADSBYPASSER_NAMESPACE__.$.openLink(f.src);
               case 5:
-                m = m[1];
-                tz = -(new Date().getTimezoneOffset() / 60);
-                m = m.replace('\'+timezone+\'', tz);
-                d = document.createElement('div');
-                d.setAttribute('id', 'AdsBypasserFTW');
-                d.setAttribute('style', 'display:none;');
-                d.innerHTML = m;
-                document.body.appendChild(d);
-                (0, _ADSBYPASSER_NAMESPACE__.$)('#AdsBypasserFTW > form[name=form1]').submit();
-              case 14:
+                _context55.next = 9;
+                break;
+              case 7:
+                _context55.next = 9;
+                return run();
+              case 9:
               case 'end':
                 return _context55.stop();
             }
@@ -5997,18 +5941,35 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: /^tr5\.in$/,
-      path: /^\/.+/
+      host: /^ad5\.eu$/,
+      path: /^\/[^.]+$/
     },
     ready: function () {
       var _ref58 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee56() {
+        var s, m, tz, d;
         return _regenerator2.default.wrap(function _callee56$(_context56) {
           while (1) {
             switch (_context56.prev = _context56.next) {
               case 0:
-                _context56.next = 2;
-                return run(true);
-              case 2:
+                _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+                s = searchScript(true);
+                m = s.script.match(/(<form name="form1"method="post".*(?!<\\form>)<\/form>)/);
+                if (m) {
+                  _context56.next = 5;
+                  break;
+                }
+                return _context56.abrupt('return');
+              case 5:
+                m = m[1];
+                tz = -(new Date().getTimezoneOffset() / 60);
+                m = m.replace('\'+timezone+\'', tz);
+                d = document.createElement('div');
+                d.setAttribute('id', 'AdsBypasserFTW');
+                d.setAttribute('style', 'display:none;');
+                d.innerHTML = m;
+                document.body.appendChild(d);
+                (0, _ADSBYPASSER_NAMESPACE__.$)('#AdsBypasserFTW > form[name=form1]').submit();
+              case 14:
               case 'end':
                 return _context56.stop();
             }
@@ -6017,6 +5978,32 @@ _ADSBYPASSER_NAMESPACE__._.register({
       }));
       function ready() {
         return _ref58.apply(this, arguments);
+      }
+      return ready;
+    }()
+  });
+  _ADSBYPASSER_NAMESPACE__._.register({
+    rule: {
+      host: /^tr5\.in$/,
+      path: /^\/.+/
+    },
+    ready: function () {
+      var _ref59 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee57() {
+        return _regenerator2.default.wrap(function _callee57$(_context57) {
+          while (1) {
+            switch (_context57.prev = _context57.next) {
+              case 0:
+                _context57.next = 2;
+                return run(true);
+              case 2:
+              case 'end':
+                return _context57.stop();
+            }
+          }
+        }, _callee57, this);
+      }));
+      function ready() {
+        return _ref59.apply(this, arguments);
       }
       return ready;
     }()
@@ -6123,22 +6110,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\/(\w+\.\w+)$/
   },
   start: function () {
-    var _ref60 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee58(m) {
-      return _regenerator2.default.wrap(function _callee58$(_context58) {
+    var _ref61 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee59(m) {
+      return _regenerator2.default.wrap(function _callee59$(_context59) {
         while (1) {
-          switch (_context58.prev = _context58.next) {
+          switch (_context59.prev = _context59.next) {
             case 0:
-              _context58.next = 2;
+              _context59.next = 2;
               return _ADSBYPASSER_NAMESPACE__.$.openLink('http://' + m.path[1]);
             case 2:
             case 'end':
-              return _context58.stop();
+              return _context59.stop();
           }
         }
-      }, _callee58, this);
+      }, _callee59, this);
     }));
     function start(_x8) {
-      return _ref60.apply(this, arguments);
+      return _ref61.apply(this, arguments);
     }
     return start;
   }()
@@ -6146,38 +6133,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.bild.me/bild.php?file=*',
   ready: function () {
-    var _ref61 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee59() {
-      var i;
-      return _regenerator2.default.wrap(function _callee59$(_context59) {
-        while (1) {
-          switch (_context59.prev = _context59.next) {
-            case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#Bild');
-              _context59.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(i.src);
-            case 3:
-            case 'end':
-              return _context59.stop();
-          }
-        }
-      }, _callee59, this);
-    }));
-    function ready() {
-      return _ref61.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://bildr.no/view/*',
-  ready: function () {
     var _ref62 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee60() {
       var i;
       return _regenerator2.default.wrap(function _callee60$(_context60) {
         while (1) {
           switch (_context60.prev = _context60.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('img.bilde');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#Bild');
               _context60.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(i.src);
             case 3:
@@ -6194,20 +6156,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
-    path: /\/o\/([a-zA-Z0-9]+)/
-  },
-  start: function () {
-    var _ref63 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee61(m) {
-      var direct_link;
+  rule: 'http://bildr.no/view/*',
+  ready: function () {
+    var _ref63 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee61() {
+      var i;
       return _regenerator2.default.wrap(function _callee61$(_context61) {
         while (1) {
           switch (_context61.prev = _context61.next) {
             case 0:
-              direct_link = window.atob(m.path[1]);
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('img.bilde');
               _context61.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(direct_link);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(i.src);
             case 3:
             case 'end':
               return _context61.stop();
@@ -6215,8 +6174,36 @@ _ADSBYPASSER_NAMESPACE__._.register({
         }
       }, _callee61, this);
     }));
-    function start(_x9) {
+    function ready() {
       return _ref63.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
+    path: /\/o\/([a-zA-Z0-9]+)/
+  },
+  start: function () {
+    var _ref64 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee62(m) {
+      var direct_link;
+      return _regenerator2.default.wrap(function _callee62$(_context62) {
+        while (1) {
+          switch (_context62.prev = _context62.next) {
+            case 0:
+              direct_link = window.atob(m.path[1]);
+              _context62.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(direct_link);
+            case 3:
+            case 'end':
+              return _context62.stop();
+          }
+        }
+      }, _callee62, this);
+    }));
+    function start(_x9) {
+      return _ref64.apply(this, arguments);
     }
     return start;
   }()
@@ -6227,20 +6214,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[\w~]+$/
   },
   ready: function () {
-    var _ref64 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee62() {
+    var _ref65 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee63() {
       var m, response, l;
-      return _regenerator2.default.wrap(function _callee62$(_context62) {
+      return _regenerator2.default.wrap(function _callee63$(_context63) {
         while (1) {
-          switch (_context62.prev = _context62.next) {
+          switch (_context63.prev = _context63.next) {
             case 0:
               m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/'\/ajax_link\.php',\s*\{key:\s*'(\w+)',\s*url:\s*'(\d+)',\s*t:\s*'(\d+)',\s*r:\s*'(\w*)'\}/);
               if (m) {
-                _context62.next = 3;
+                _context63.next = 3;
                 break;
               }
-              return _context62.abrupt('return');
+              return _context63.abrupt('return');
             case 3:
-              _context62.next = 5;
+              _context63.next = 5;
               return _ADSBYPASSER_NAMESPACE__.$.post('/ajax_link.php', {
                 key: m[1],
                 url: m[2],
@@ -6248,19 +6235,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 r: m[4]
               });
             case 5:
-              response = _context62.sent;
+              response = _context63.sent;
               l = response.match(/window(?:.top.window)\.location="([^"]+)"/);
-              _context62.next = 9;
+              _context63.next = 9;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(l[1]);
             case 9:
             case 'end':
-              return _context62.stop();
+              return _context63.stop();
           }
         }
-      }, _callee62, this);
+      }, _callee63, this);
     }));
     function ready() {
-      return _ref64.apply(this, arguments);
+      return _ref65.apply(this, arguments);
     }
     return ready;
   }()
@@ -6272,24 +6259,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /url=(.+)$/
   },
   start: function () {
-    var _ref65 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee63(m) {
+    var _ref66 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee64(m) {
       var l;
-      return _regenerator2.default.wrap(function _callee63$(_context63) {
+      return _regenerator2.default.wrap(function _callee64$(_context64) {
         while (1) {
-          switch (_context63.prev = _context63.next) {
+          switch (_context64.prev = _context64.next) {
             case 0:
               l = decodeURIComponent(m.query[1]);
-              _context63.next = 3;
+              _context64.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
             case 3:
             case 'end':
-              return _context63.stop();
+              return _context64.stop();
           }
         }
-      }, _callee63, this);
+      }, _callee64, this);
     }));
     function start(_x10) {
-      return _ref65.apply(this, arguments);
+      return _ref66.apply(this, arguments);
     }
     return start;
   }()
@@ -6299,44 +6286,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?(buz|vzt)url\.com$/
   },
   ready: function () {
-    var _ref66 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee64() {
-      var frame;
-      return _regenerator2.default.wrap(function _callee64$(_context64) {
-        while (1) {
-          switch (_context64.prev = _context64.next) {
-            case 0:
-              frame = (0, _ADSBYPASSER_NAMESPACE__.$)('frame[scrolling=yes]');
-              _context64.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(frame.src);
-            case 3:
-            case 'end':
-              return _context64.stop();
-          }
-        }
-      }, _callee64, this);
-    }));
-    function ready() {
-      return _ref66.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^(cf|ex|xt)\d\.(me|co)$/
-  },
-  ready: function () {
     var _ref67 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee65() {
-      var a;
+      var frame;
       return _regenerator2.default.wrap(function _callee65$(_context65) {
         while (1) {
           switch (_context65.prev = _context65.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#skip_button');
-              _context65.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 4:
+              frame = (0, _ADSBYPASSER_NAMESPACE__.$)('frame[scrolling=yes]');
+              _context65.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(frame.src);
+            case 3:
             case 'end':
               return _context65.stop();
           }
@@ -6351,7 +6310,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^catcut\.net$/
+    host: /^(cf|ex|xt)\d\.(me|co)$/
   },
   ready: function () {
     var _ref68 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee66() {
@@ -6360,10 +6319,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context66.prev = _context66.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#rbs');
-              _context66.next = 3;
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#skip_button');
+              _context66.next = 4;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+            case 4:
             case 'end':
               return _context66.stop();
           }
@@ -6378,18 +6338,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^cf\.ly$/,
-    path: /^\/[^/]+$/
+    host: /^catcut\.net$/
   },
-  start: function () {
-    var _ref69 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee67(m) {
+  ready: function () {
+    var _ref69 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee67() {
+      var a;
       return _regenerator2.default.wrap(function _callee67$(_context67) {
         while (1) {
           switch (_context67.prev = _context67.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#rbs');
               _context67.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink('/skip' + m.path[0]);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
             case 'end':
               return _context67.stop();
@@ -6397,8 +6357,35 @@ _ADSBYPASSER_NAMESPACE__._.register({
         }
       }, _callee67, this);
     }));
-    function start(_x11) {
+    function ready() {
       return _ref69.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^cf\.ly$/,
+    path: /^\/[^/]+$/
+  },
+  start: function () {
+    var _ref70 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee68(m) {
+      return _regenerator2.default.wrap(function _callee68$(_context68) {
+        while (1) {
+          switch (_context68.prev = _context68.next) {
+            case 0:
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              _context68.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink('/skip' + m.path[0]);
+            case 3:
+            case 'end':
+              return _context68.stop();
+          }
+        }
+      }, _callee68, this);
+    }));
+    function start(_x11) {
+      return _ref70.apply(this, arguments);
     }
     return start;
   }()
@@ -6408,46 +6395,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?cli\.gs$/
   },
   ready: function () {
-    var _ref70 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee68() {
-      var a;
-      return _regenerator2.default.wrap(function _callee68$(_context68) {
-        while (1) {
-          switch (_context68.prev = _context68.next) {
-            case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a.RedirectLink');
-              _context68.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
-            case 'end':
-              return _context68.stop();
-          }
-        }
-      }, _callee68, this);
-    }));
-    function ready() {
-      return _ref70.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^(www\.)?clictune\.com$/,
-    path: /^\/[^/]+$/
-  },
-  ready: function () {
     var _ref71 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee69() {
-      var matches, url;
+      var a;
       return _regenerator2.default.wrap(function _callee69$(_context69) {
         while (1) {
           switch (_context69.prev = _context69.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              matches = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/<a href="http:\/\/(?:www\.)?clictune\.com\/link\/redirect\/\?url=([^&]+)&/);
-              url = decodeURIComponent(matches[1]);
-              _context69.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
-            case 5:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a.RedirectLink');
+              _context69.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
             case 'end':
               return _context69.stop();
           }
@@ -6529,7 +6486,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             switch (_context72.prev = _context72.next) {
               case 0:
                 mapper = hostMapper(m.host[0]);
-                b64 = mapper().match(/\?r=(\w+={0,2}?)/);
+                b64 = mapper().match(/\?r=([\w/]+={0,2})/);
                 _context72.next = 4;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(atob(b64[1]));
               case 4:
@@ -8337,7 +8294,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }();
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^(www\.)?linkdrop\.net$/, /^dmus\.in$/, /^ulshare\.net$/, /^adurl\.id$/, /^goolink\.me$/, /^earningurl\.com$/, /^earn-guide\.com$/, /^(cutwin|cut-earn)\.com$/, /^(cutwi|cut-w)\.in$/, /^(www\.)?(ourl|jurl)\.io$/, /^(urlcloud|mitly)\.us$/, /^adpop\.me$/, /^wi\.cr$/, /^clk\.press$/, /^tui\.click$/, /^megaurl\.in$/]
+      host: [/^dmus\.in$/, /^ulshare\.net$/, /^adurl\.id$/, /^goolink\.me$/, /^earningurl\.com$/, /^earn-guide\.com$/, /^(cutwin|cut-earn)\.com$/, /^(cutwi|cut-w|cutl)\.in$/, /^(www\.)?jurl\.io$/, /^mitly\.us$/, /^adpop\.me$/, /^wi\.cr$/, /^tui\.click$/, /^megaurl\.in$/]
     },
     ready: function () {
       var _ref124 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee122() {
@@ -8372,7 +8329,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^sflnk\.me$/, /^idsly\.com$/, /^adbilty\.me$/, /^oke\.io$/, /^linkrex\.net$/, /^safelinku\.net$/, /^3rabshort\.com$/, /^shink\.xyz$/, /^mlink\.club$/, /^zlshorte\.net$/, /^(igram|gram)\.im$/, /^(trlink|wolink)\.in$/]
+      host: [/^sflnk\.me$/, /^idsly\.com$/, /^adbilty\.me$/, /^oke\.io$/, /^linkrex\.net$/, /^safelinku\.net$/, /^3bst\.co$/, /^3rab(short|cut)\.com$/, /^shink\.xyz$/, /^mlink\.club$/, /^zlshorte\.net$/, /^(igram|gram)\.im$/, /^(trlink|wolink)\.in$/, /^clk\.press$/, /^short\.pe$/, /^urlcloud\.us$/, /^(www\.)?ourl\.io$/, /^(www\.)?linkdrop\.net$/]
     },
     ready: function () {
       var _ref125 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee123() {
@@ -8381,25 +8338,34 @@ _ADSBYPASSER_NAMESPACE__._.register({
           while (1) {
             switch (_context123.prev = _context123.next) {
               case 0:
-                _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
                 f = _ADSBYPASSER_NAMESPACE__.$.$('#captchaShortlink');
                 if (!f) {
-                  _context123.next = 4;
+                  _context123.next = 6;
                   break;
                 }
+                _ADSBYPASSER_NAMESPACE__.$.remove('[class$="Overlay"]');
+                _ADSBYPASSER_NAMESPACE__.$.block('[class$="Overlay"]', document.body);
+                _ADSBYPASSER_NAMESPACE__._.info('recaptcha detected, stop');
                 return _context123.abrupt('return');
-              case 4:
+              case 6:
+                _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
                 f = getForm();
                 if (f) {
-                  _context123.next = 9;
+                  _context123.next = 12;
                   break;
                 }
                 f = (0, _ADSBYPASSER_NAMESPACE__.$)('#link-view');
                 f.submit();
                 return _context123.abrupt('return');
-              case 9:
+              case 12:
+                if (false) {}
+                _context123.next = 15;
+                return _ADSBYPASSER_NAMESPACE__._.wait(2000);
+              case 15:
                 sendRequest(f);
-              case 10:
+                _context123.next = 12;
+                break;
+              case 18:
               case 'end':
                 return _context123.stop();
             }
@@ -8414,7 +8380,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^adlink\.guru$/, /^(clik|psl)\.pw$/, /^short\.pe$/, /^coshink\.co$/, /^(curs|cuon)\.io$/, /^shark\.vn$/, /^cypt\.ga$/, /^(filesbucks|tmearn|cut-urls|link-earn|shrinkearn)\.com$/, /^adslink\.pw$/, /^dzurl\.ml$/, /^(elink|petty)\.link$/, /^(payurl|urlst)\.me$/, /^u2s\.io$/, /^shortad\.cf$/, /^link4\.me$/, /^url\.ht$/, /^urle\.co$/, /^hashe\.in$/, /^www\.worldhack\.net$/, /^123link\.(io|co|press|pw)$/, /^pir\.im$/, /^bol\.tl$/, /^(tl|adfly|git)\.tc$/, /^(adfu|linkhits)\.us$/, /^short\.pastewma\.com$/, /^l2s\.io$/, /^adbilty\.in$/, /^gg-l\.xyz$/, /^linkfly\.gaosmedia\.com$/, /^linclik\.com$/, /^zeiz\.me$/, /^adbull\.me$/, /^adshort\.(in|im|pro)$/, /^(adshorte|adsrt)\.com$/, /^weefy\.me$/, /^bit-url\.com$/, /^premiumzen\.com$/, /^cut4links\.com$/, /^coinlink\.co$/, /^kokemoon\.com$/, /^(icutit|cutearn|earnbig)\.ca$/, /^(www\.)?viralukk\.com$/, /^shrt10\.com$/]
+      host: [/^adlink\.guru$/, /^(clik|psl|twik)\.pw$/, /^coshink\.co$/, /^(curs|cuon)\.io$/, /^shark\.vn$/, /^cypt\.ga$/, /^(filesbucks|tmearn|cut-urls|link-earn|shrinkearn)\.com$/, /^adslink\.pw$/, /^dzurl\.ml$/, /^(elink|petty)\.link$/, /^(payurl|urlst)\.me$/, /^u2s\.io$/, /^shortad\.cf$/, /^link4\.me$/, /^url\.ht$/, /^urle\.co$/, /^hashe\.in$/, /^www\.worldhack\.net$/, /^123link\.(io|co|press|pw)$/, /^pir\.im$/, /^(www\.)?(pnd|bol)\.tl$/, /^(tl|adfly|git)\.tc$/, /^(adfu|linkhits)\.us$/, /^short\.pastewma\.com$/, /^l2s\.io$/, /^adbilty\.in$/, /^gg-l\.xyz$/, /^linkfly\.gaosmedia\.com$/, /^linclik\.com$/, /^zeiz\.me$/, /^adbull\.me$/, /^adshort\.(in|im|pro)$/, /^(adshorte|adsrt)\.com$/, /^weefy\.me$/, /^bit-url\.com$/, /^premiumzen\.com$/, /^cut4(links|link)\.com$/, /^coinlink\.co$/, /^kokemoon\.com$/, /^(icutit|cutearn|earnbig|shortit)\.ca$/, /^(www\.)?viralukk\.com$/, /^shrt10\.com$/, /^mikymoons\.com$/, /^spamlink\.org$/, /^top9space\.com$/]
     },
     ready: function () {
       var _ref126 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee124() {
@@ -8636,10 +8602,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
               pattern = /https?:\/\//g;
               lastURL = '';
             case 6:
-              if (false) {
-                _context129.next = 13;
-                break;
-              }
+              if (false) {}
               matched = pattern.exec(url);
               if (matched) {
                 _context129.next = 10;
@@ -9071,18 +9034,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^susutin\.com$/
+    host: /^www\.mije\.net$/,
+    path: /^\/\w+\/(.+)$/
   },
-  ready: function () {
-    var _ref145 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee143() {
-      var s;
+  start: function () {
+    var _ref145 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee143(m) {
+      var url;
       return _regenerator2.default.wrap(function _callee143$(_context143) {
         while (1) {
           switch (_context143.prev = _context143.next) {
             case 0:
-              s = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/="([^"]+)",/);
+              url = atob(m.path[1]);
               _context143.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(s[1]);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
             case 3:
             case 'end':
               return _context143.stop();
@@ -9090,36 +9054,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
         }
       }, _callee143, this);
     }));
-    function ready() {
-      return _ref145.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^www\.mije\.net$/,
-    path: /^\/\w+\/(.+)$/
-  },
-  start: function () {
-    var _ref146 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee144(m) {
-      var url;
-      return _regenerator2.default.wrap(function _callee144$(_context144) {
-        while (1) {
-          switch (_context144.prev = _context144.next) {
-            case 0:
-              url = atob(m.path[1]);
-              _context144.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
-            case 3:
-            case 'end':
-              return _context144.stop();
-          }
-        }
-      }, _callee144, this);
-    }));
     function start(_x37) {
-      return _ref146.apply(this, arguments);
+      return _ref145.apply(this, arguments);
     }
     return start;
   }()
@@ -9129,13 +9065,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^mirrorfilehost\.com$/
   },
   ready: function () {
-    var _ref147 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee145() {
+    var _ref146 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee144() {
       var frame, form, input;
-      return _regenerator2.default.wrap(function _callee145$(_context145) {
+      return _regenerator2.default.wrap(function _callee144$(_context144) {
         while (1) {
-          switch (_context145.prev = _context145.next) {
+          switch (_context144.prev = _context144.next) {
             case 0:
-              _context145.next = 2;
+              _context144.next = 2;
               return _ADSBYPASSER_NAMESPACE__._.wait(3 * 1000);
             case 2:
               frame = frames[0];
@@ -9150,6 +9086,33 @@ _ADSBYPASSER_NAMESPACE__._.register({
               input.click();
             case 12:
             case 'end':
+              return _context144.stop();
+          }
+        }
+      }, _callee144, this);
+    }));
+    function ready() {
+      return _ref146.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: [/^moe\.god\.jp$/, /^moesubs\.akurapopo\.pro$/, /^dl\.nsfk\.in$/]
+  },
+  ready: function () {
+    var _ref147 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee145() {
+      var a;
+      return _regenerator2.default.wrap(function _callee145$(_context145) {
+        while (1) {
+          switch (_context145.prev = _context145.next) {
+            case 0:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div div center a');
+              _context145.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
+            case 'end':
               return _context145.stop();
           }
         }
@@ -9163,19 +9126,23 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^moe\.god\.jp$/, /^moesubs\.akurapopo\.pro$/, /^dl\.nsfk\.in$/]
+    host: /^moesubs\.com$/,
+    path: /^\/url\//
   },
   ready: function () {
     var _ref148 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee146() {
-      var a;
+      var a, i;
       return _regenerator2.default.wrap(function _callee146$(_context146) {
         while (1) {
           switch (_context146.prev = _context146.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div div center a');
-              _context146.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('body > div:nth-child(4) > i:nth-child(1)');
+              a = a.textContent;
+              i = a.lastIndexOf('http');
+              a = a.substr(i);
+              _context146.next = 6;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a);
+            case 6:
             case 'end':
               return _context146.stop();
           }
@@ -9190,46 +9157,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^moesubs\.com$/,
-    path: /^\/url\//
-  },
-  ready: function () {
-    var _ref149 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee147() {
-      var a, i;
-      return _regenerator2.default.wrap(function _callee147$(_context147) {
-        while (1) {
-          switch (_context147.prev = _context147.next) {
-            case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('body > div:nth-child(4) > i:nth-child(1)');
-              a = a.textContent;
-              i = a.lastIndexOf('http');
-              a = a.substr(i);
-              _context147.next = 6;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a);
-            case 6:
-            case 'end':
-              return _context147.stop();
-          }
-        }
-      }, _callee147, this);
-    }));
-    function ready() {
-      return _ref149.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
     host: /^mt0\.org$/,
     path: /^\/[^/]+\/$/
   },
   ready: function () {
-    var _ref150 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee148() {
+    var _ref149 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee147() {
       var f, i;
-      return _regenerator2.default.wrap(function _callee148$(_context148) {
+      return _regenerator2.default.wrap(function _callee147$(_context147) {
         while (1) {
-          switch (_context148.prev = _context148.next) {
+          switch (_context147.prev = _context147.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('frame[name=bottom]');
               f = (0, _ADSBYPASSER_NAMESPACE__.$)('frame[name=top]');
@@ -9243,6 +9179,35 @@ _ADSBYPASSER_NAMESPACE__._.register({
               }, 1000);
             case 3:
             case 'end':
+              return _context147.stop();
+          }
+        }
+      }, _callee147, this);
+    }));
+    function ready() {
+      return _ref149.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: 'http://my-link.pro/*',
+  ready: function () {
+    var _ref150 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee148() {
+      var i;
+      return _regenerator2.default.wrap(function _callee148$(_context148) {
+        while (1) {
+          switch (_context148.prev = _context148.next) {
+            case 0:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('iframe[scrolling=auto]');
+              if (!i) {
+                _context148.next = 4;
+                break;
+              }
+              _context148.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(i.src);
+            case 4:
+            case 'end':
               return _context148.stop();
           }
         }
@@ -9255,22 +9220,23 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://my-link.pro/*',
+  rule: {
+    host: /^(www\.)?mylink\.zone$/,
+    path: /^\/[^/]+$/
+  },
   ready: function () {
     var _ref151 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee149() {
-      var i;
+      var matches, url;
       return _regenerator2.default.wrap(function _callee149$(_context149) {
         while (1) {
           switch (_context149.prev = _context149.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('iframe[scrolling=auto]');
-              if (!i) {
-                _context149.next = 4;
-                break;
-              }
-              _context149.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(i.src);
-            case 4:
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              matches = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/<a href="http:\/\/(?:www\.)?mylink\.zone\/link\/redirect\/\?url=([^&]+)&/);
+              url = decodeURIComponent(matches[1]);
+              _context149.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
+            case 5:
             case 'end':
               return _context149.stop();
           }
@@ -10583,27 +10549,74 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^srnk\.co$/,
-    path: /^\/i\//
+    host: /^www\.spaste\.com$/,
+    path: /^\/s\/\w+$/
   },
   ready: function () {
     var _ref192 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee190() {
-      var a, href, method, csrfParam, csrfToken, form, input, script, m;
+      var captcha, i, word;
       return _regenerator2.default.wrap(function _callee190$(_context190) {
         while (1) {
           switch (_context190.prev = _context190.next) {
             case 0:
-              a = _ADSBYPASSER_NAMESPACE__.$.$('#btn-with-link');
-              if (a) {
-                _context190.next = 3;
+              captcha = (0, _ADSBYPASSER_NAMESPACE__.$)('#globalCaptchaConfirm');
+              captcha.click();
+              _context190.next = 4;
+              return _ADSBYPASSER_NAMESPACE__._.wait(1000);
+            case 4:
+              i = 0;
+            case 5:
+              if (!(i < 3)) {
+                _context190.next = 13;
                 break;
               }
-              return _context190.abrupt('return');
+              word = (0, _ADSBYPASSER_NAMESPACE__.$)('#currentCapQue').textContent;
+              _context190.next = 9;
+              return _ADSBYPASSER_NAMESPACE__._.wait(100);
+            case 9:
+              (0, _ADSBYPASSER_NAMESPACE__.$)('[data-id=\'' + word + '\']').click();
+            case 10:
+              ++i;
+              _context190.next = 5;
+              break;
+            case 13:
+              (0, _ADSBYPASSER_NAMESPACE__.$)('#template-contactform-submit').click();
+            case 14:
+            case 'end':
+              return _context190.stop();
+          }
+        }
+      }, _callee190, this);
+    }));
+    function ready() {
+      return _ref192.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^srnk\.co$/,
+    path: /^\/i\//
+  },
+  ready: function () {
+    var _ref193 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee191() {
+      var a, href, method, csrfParam, csrfToken, form, input, script, m;
+      return _regenerator2.default.wrap(function _callee191$(_context191) {
+        while (1) {
+          switch (_context191.prev = _context191.next) {
+            case 0:
+              a = _ADSBYPASSER_NAMESPACE__.$.$('#btn-with-link');
+              if (a) {
+                _context191.next = 3;
+                break;
+              }
+              return _context191.abrupt('return');
             case 3:
               href = a.href;
               method = a.dataset.method;
               if (!method) {
-                _context190.next = 22;
+                _context191.next = 22;
                 break;
               }
               csrfParam = (0, _ADSBYPASSER_NAMESPACE__.$)('meta[name="csrf-param"]').content;
@@ -10621,31 +10634,31 @@ _ADSBYPASSER_NAMESPACE__._.register({
               form.appendChild(input);
               document.body.appendChild(form);
               form.submit();
-              return _context190.abrupt('return');
+              return _context191.abrupt('return');
             case 22:
-              _context190.next = 24;
+              _context191.next = 24;
               return _ADSBYPASSER_NAMESPACE__.$.post(location.pathname + '.js');
             case 24:
-              script = _context190.sent;
+              script = _context191.sent;
               m = script.match(/const link = "([^"]+)";/);
               if (m) {
-                _context190.next = 29;
+                _context191.next = 29;
                 break;
               }
               _ADSBYPASSER_NAMESPACE__._.warn('script changed');
-              return _context190.abrupt('return');
+              return _context191.abrupt('return');
             case 29:
-              _context190.next = 31;
+              _context191.next = 31;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
             case 31:
             case 'end':
-              return _context190.stop();
+              return _context191.stop();
           }
         }
-      }, _callee190, this);
+      }, _callee191, this);
     }));
     function ready() {
-      return _ref192.apply(this, arguments);
+      return _ref193.apply(this, arguments);
     }
     return ready;
   }()
@@ -10655,26 +10668,26 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^stash-coins\.com$/
   },
   start: function () {
-    var _ref193 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee191() {
+    var _ref194 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee192() {
       var url, i;
-      return _regenerator2.default.wrap(function _callee191$(_context191) {
+      return _regenerator2.default.wrap(function _callee192$(_context192) {
         while (1) {
-          switch (_context191.prev = _context191.next) {
+          switch (_context192.prev = _context192.next) {
             case 0:
               url = window.location.toString();
               i = url.lastIndexOf('http');
               url = url.substr(i);
-              _context191.next = 5;
+              _context192.next = 5;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
             case 5:
             case 'end':
-              return _context191.stop();
+              return _context192.stop();
           }
         }
-      }, _callee191, this);
+      }, _callee192, this);
     }));
     function start() {
-      return _ref193.apply(this, arguments);
+      return _ref194.apply(this, arguments);
     }
     return start;
   }()
@@ -10686,24 +10699,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?xb=(.+)$/
   },
   start: function () {
-    var _ref194 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee192(m) {
+    var _ref195 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee193(m) {
       var url;
-      return _regenerator2.default.wrap(function _callee192$(_context192) {
+      return _regenerator2.default.wrap(function _callee193$(_context193) {
         while (1) {
-          switch (_context192.prev = _context192.next) {
+          switch (_context193.prev = _context193.next) {
             case 0:
               url = decodeURIComponent(m.query[1]);
-              _context192.next = 3;
+              _context193.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
             case 3:
             case 'end':
-              return _context192.stop();
+              return _context193.stop();
           }
         }
-      }, _callee192, this);
+      }, _callee193, this);
     }));
     function start(_x44) {
-      return _ref194.apply(this, arguments);
+      return _ref195.apply(this, arguments);
     }
     return start;
   }()
@@ -10715,22 +10728,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /(?:\?|&)oldurl=([^&]+)(?:$|&)/
   },
   start: function () {
-    var _ref195 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee193(m) {
-      return _regenerator2.default.wrap(function _callee193$(_context193) {
+    var _ref196 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee194(m) {
+      return _regenerator2.default.wrap(function _callee194$(_context194) {
         while (1) {
-          switch (_context193.prev = _context193.next) {
+          switch (_context194.prev = _context194.next) {
             case 0:
-              _context193.next = 2;
+              _context194.next = 2;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(m.query[1]);
             case 2:
             case 'end':
-              return _context193.stop();
+              return _context194.stop();
           }
         }
-      }, _callee193, this);
+      }, _callee194, this);
     }));
     function start(_x45) {
-      return _ref195.apply(this, arguments);
+      return _ref196.apply(this, arguments);
     }
     return start;
   }()
@@ -10781,24 +10794,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?p=([a-zA-Z0-9/=]+)$/
   }],
   start: function () {
-    var _ref196 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee194(m) {
+    var _ref197 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee195(m) {
       var rawLink;
-      return _regenerator2.default.wrap(function _callee194$(_context194) {
+      return _regenerator2.default.wrap(function _callee195$(_context195) {
         while (1) {
-          switch (_context194.prev = _context194.next) {
+          switch (_context195.prev = _context195.next) {
             case 0:
               rawLink = atob(m.query[1]);
-              _context194.next = 3;
+              _context195.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(rawLink);
             case 3:
             case 'end':
-              return _context194.stop();
+              return _context195.stop();
           }
         }
-      }, _callee194, this);
+      }, _callee195, this);
     }));
     function start(_x46) {
-      return _ref196.apply(this, arguments);
+      return _ref197.apply(this, arguments);
     }
     return start;
   }()
@@ -10807,18 +10820,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
   rule: [{
     host: [
     /(^|\.)safelinkconverter2?\.com$/,
-    /^safelink(s?review(er)?)\.com?$/, /^susutin\.com$/, /^(getcomics|miuitutorial)\.gq$/, /^awsubs\.cf$/, /^awsubsco\.ga$/],
+    /^safelink(s?review(er)?)\.com?$/, /^(getcomics|miuitutorial)\.gq$/, /^awsubs\.cf$/, /^awsubsco\.ga$/],
     query: /id=([\w\\]+=*)/
   }, {
     host: [/^(www\.)?dlneko\.com$/, /^(satuasia|tawaku)\.com$/, /^ww3\.manteb\.in$/, /^link\.filmku\.net$/, /^www\.muucih\.com$/, /^(naisho|filmku|henpoi)\.lompat\.in$/, /^edogawa\.lon\.pw$/, /^telolet\.in$/],
     query: /go=([\w\\]+=*)/
   }],
   start: function () {
-    var _ref197 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee195(m) {
+    var _ref198 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee196(m) {
       var l, table;
-      return _regenerator2.default.wrap(function _callee195$(_context195) {
+      return _regenerator2.default.wrap(function _callee196$(_context196) {
         while (1) {
-          switch (_context195.prev = _context195.next) {
+          switch (_context196.prev = _context196.next) {
             case 0:
               l = atob(m.query[1]);
               table = {
@@ -10831,17 +10844,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
               l = l.replace(/[!)_(*]/g, function (m) {
                 return table[m];
               });
-              _context195.next = 5;
+              _context196.next = 5;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
             case 5:
             case 'end':
-              return _context195.stop();
+              return _context196.stop();
           }
         }
-      }, _callee195, this);
+      }, _callee196, this);
     }));
     function start(_x47) {
-      return _ref197.apply(this, arguments);
+      return _ref198.apply(this, arguments);
     }
     return start;
   }()
@@ -10852,24 +10865,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+\/cost\/([\w.]+)\/?$/
   },
   start: function () {
-    var _ref198 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee196(m) {
+    var _ref199 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee197(m) {
       var l;
-      return _regenerator2.default.wrap(function _callee196$(_context196) {
+      return _regenerator2.default.wrap(function _callee197$(_context197) {
         while (1) {
-          switch (_context196.prev = _context196.next) {
+          switch (_context197.prev = _context197.next) {
             case 0:
               l = 'http://' + m.path[1];
-              _context196.next = 3;
+              _context197.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
             case 3:
             case 'end':
-              return _context196.stop();
+              return _context197.stop();
           }
         }
-      }, _callee196, this);
+      }, _callee197, this);
     }));
     function start(_x48) {
-      return _ref198.apply(this, arguments);
+      return _ref199.apply(this, arguments);
     }
     return start;
   }()
@@ -10883,34 +10896,34 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /\.html$/
   }],
   ready: function () {
-    var _ref199 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee197(m) {
+    var _ref200 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee198(m) {
       var s;
-      return _regenerator2.default.wrap(function _callee197$(_context197) {
+      return _regenerator2.default.wrap(function _callee198$(_context198) {
         while (1) {
-          switch (_context197.prev = _context197.next) {
+          switch (_context198.prev = _context198.next) {
             case 0:
               s = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/(const|var) a='([^']+)'/);
               if (!s) {
-                _context197.next = 5;
+                _context198.next = 5;
                 break;
               }
-              _context197.next = 4;
+              _context198.next = 4;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(s[2]);
             case 4:
-              return _context197.abrupt('return');
+              return _context198.abrupt('return');
             case 5:
               s = atob(m.query[1]);
-              _context197.next = 8;
+              _context198.next = 8;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(s);
             case 8:
             case 'end':
-              return _context197.stop();
+              return _context198.stop();
           }
         }
-      }, _callee197, this);
+      }, _callee198, this);
     }));
     function ready(_x49) {
-      return _ref199.apply(this, arguments);
+      return _ref200.apply(this, arguments);
     }
     return ready;
   }()
@@ -10920,45 +10933,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^kombatch\.loncat\.pw$/
   },
   ready: function () {
-    var _ref200 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee198() {
-      var s;
-      return _regenerator2.default.wrap(function _callee198$(_context198) {
-        while (1) {
-          switch (_context198.prev = _context198.next) {
-            case 0:
-              s = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/\.open\("([^"]+)",/);
-              s = s[1].match(/go=([^&]+)/);
-              s = atob(s[1]);
-              _context198.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(s);
-            case 5:
-            case 'end':
-              return _context198.stop();
-          }
-        }
-      }, _callee198, this);
-    }));
-    function ready() {
-      return _ref200.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: [/^ww[23]\.picnictrans\.com$/, /^short\.awsubs\.(co|me)$/]
-  },
-  ready: function () {
     var _ref201 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee199() {
-      var a;
+      var s;
       return _regenerator2.default.wrap(function _callee199$(_context199) {
         while (1) {
           switch (_context199.prev = _context199.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div.kiri > center > a');
-              _context199.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+              s = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/\.open\("([^"]+)",/);
+              s = s[1].match(/go=([^&]+)/);
+              s = atob(s[1]);
+              _context199.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(s);
+            case 5:
             case 'end':
               return _context199.stop();
           }
@@ -10973,7 +10959,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^aw-games\.net$/
+    host: [/^ww[23]\.picnictrans\.com$/, /^short\.awsubs\.(co|me)$/]
   },
   ready: function () {
     var _ref202 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee200() {
@@ -10982,7 +10968,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context200.prev = _context200.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.iklan a');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div.kiri > center > a');
               _context200.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
@@ -11000,26 +10986,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^susutinv2\.com$/
+    host: /^aw-games\.net$/
   },
   ready: function () {
     var _ref203 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee201() {
-      var s;
+      var a;
       return _regenerator2.default.wrap(function _callee201$(_context201) {
         while (1) {
           switch (_context201.prev = _context201.next) {
             case 0:
-              s = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/="([^"]+)",/);
-              if (s) {
-                _context201.next = 4;
-                break;
-              }
-              _ADSBYPASSER_NAMESPACE__._.warn('site changed');
-              return _context201.abrupt('return');
-            case 4:
-              _context201.next = 6;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(s[1]);
-            case 6:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.iklan a');
+              _context201.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
             case 'end':
               return _context201.stop();
           }
@@ -11034,21 +11013,26 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.njiir\.com$/
+    host: /^susutinv2\.com$/
   },
   ready: function () {
     var _ref204 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee202() {
-      var a;
+      var s;
       return _regenerator2.default.wrap(function _callee202$(_context202) {
         while (1) {
           switch (_context202.prev = _context202.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div.download-link > a');
-              a = a.href.match(/r=(.*)$/);
-              a = atob(a[1]);
-              _context202.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a);
-            case 5:
+              s = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/="([^"]+)",/);
+              if (s) {
+                _context202.next = 4;
+                break;
+              }
+              _ADSBYPASSER_NAMESPACE__._.warn('site changed');
+              return _context202.abrupt('return');
+            case 4:
+              _context202.next = 6;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(s[1]);
+            case 6:
             case 'end':
               return _context202.stop();
           }
@@ -11063,8 +11047,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^techfunda\.net$/,
-    path: [/^\/link\//, /^\/safe\//]
+    host: /^www\.njiir\.com$/
   },
   ready: function () {
     var _ref205 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee203() {
@@ -11073,10 +11056,12 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context203.prev = _context203.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.hide a.btn');
-              _context203.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div.download-link > a');
+              a = a.href.match(/r=(.*)$/);
+              a = atob(a[1]);
+              _context203.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a);
+            case 5:
             case 'end':
               return _context203.stop();
           }
@@ -11091,7 +11076,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^thinfi\.com$/
+    host: /^techfunda\.net$/,
+    path: [/^\/link\//, /^\/safe\//]
   },
   ready: function () {
     var _ref206 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee204() {
@@ -11100,7 +11086,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context204.prev = _context204.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div p a');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.hide a.btn');
               _context204.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
@@ -11118,27 +11104,54 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^tinyarrows\.com$/,
-    path: /^\/preview\.php$/,
-    query: /^\?page=([^&]+)/
+    host: /^thinfi\.com$/
   },
-  start: function () {
-    var _ref207 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee205(m) {
+  ready: function () {
+    var _ref207 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee205() {
+      var a;
       return _regenerator2.default.wrap(function _callee205$(_context205) {
         while (1) {
           switch (_context205.prev = _context205.next) {
             case 0:
-              _context205.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(decodeURIComponent(m.query[1]));
-            case 2:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div p a');
+              _context205.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
             case 'end':
               return _context205.stop();
           }
         }
       }, _callee205, this);
     }));
-    function start(_x50) {
+    function ready() {
       return _ref207.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^tinyarrows\.com$/,
+    path: /^\/preview\.php$/,
+    query: /^\?page=([^&]+)/
+  },
+  start: function () {
+    var _ref208 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee206(m) {
+      return _regenerator2.default.wrap(function _callee206$(_context206) {
+        while (1) {
+          switch (_context206.prev = _context206.next) {
+            case 0:
+              _context206.next = 2;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(decodeURIComponent(m.query[1]));
+            case 2:
+            case 'end':
+              return _context206.stop();
+          }
+        }
+      }, _callee206, this);
+    }));
+    function start(_x50) {
+      return _ref208.apply(this, arguments);
     }
     return start;
   }()
@@ -11148,24 +11161,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^topload\.pro$/
   },
   ready: function () {
-    var _ref208 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee206() {
+    var _ref209 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee207() {
       var a;
-      return _regenerator2.default.wrap(function _callee206$(_context206) {
+      return _regenerator2.default.wrap(function _callee207$(_context207) {
         while (1) {
-          switch (_context206.prev = _context206.next) {
+          switch (_context207.prev = _context207.next) {
             case 0:
               a = (0, _ADSBYPASSER_NAMESPACE__.$)('.hide a.btn');
-              _context206.next = 3;
+              _context207.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
             case 'end':
-              return _context206.stop();
+              return _context207.stop();
           }
         }
-      }, _callee206, this);
+      }, _callee207, this);
     }));
     function ready() {
-      return _ref208.apply(this, arguments);
+      return _ref209.apply(this, arguments);
     }
     return ready;
   }()
@@ -11177,24 +11190,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /\?ads=([a-zA-Z0-9=]+)$/
   },
   start: function () {
-    var _ref209 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee207(m) {
+    var _ref210 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee208(m) {
       var l;
-      return _regenerator2.default.wrap(function _callee207$(_context207) {
+      return _regenerator2.default.wrap(function _callee208$(_context208) {
         while (1) {
-          switch (_context207.prev = _context207.next) {
+          switch (_context208.prev = _context208.next) {
             case 0:
               l = atob(m.query[1]);
-              _context207.next = 3;
+              _context208.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
             case 3:
             case 'end':
-              return _context207.stop();
+              return _context208.stop();
           }
         }
-      }, _callee207, this);
+      }, _callee208, this);
     }));
     function start(_x51) {
-      return _ref209.apply(this, arguments);
+      return _ref210.apply(this, arguments);
     }
     return start;
   }()
@@ -11204,24 +11217,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?typ\.me$/
   },
   ready: function () {
-    var _ref210 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee208() {
+    var _ref211 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee209() {
       var a;
-      return _regenerator2.default.wrap(function _callee208$(_context208) {
+      return _regenerator2.default.wrap(function _callee209$(_context209) {
         while (1) {
-          switch (_context208.prev = _context208.next) {
+          switch (_context209.prev = _context209.next) {
             case 0:
               a = (0, _ADSBYPASSER_NAMESPACE__.$)('#skipAdBtn');
-              _context208.next = 3;
+              _context209.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
             case 'end':
-              return _context208.stop();
+              return _context209.stop();
           }
         }
-      }, _callee208, this);
+      }, _callee209, this);
     }));
     function ready() {
-      return _ref210.apply(this, arguments);
+      return _ref211.apply(this, arguments);
     }
     return ready;
   }()
@@ -11233,25 +11246,25 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^(?:\?a=\d&c=(\d+))?$/
   },
   start: function () {
-    var _ref211 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee209(m) {
+    var _ref212 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee210(m) {
       var linkId, directLink;
-      return _regenerator2.default.wrap(function _callee209$(_context209) {
+      return _regenerator2.default.wrap(function _callee210$(_context210) {
         while (1) {
-          switch (_context209.prev = _context209.next) {
+          switch (_context210.prev = _context210.next) {
             case 0:
               linkId = m.path[1] ? m.path[1] : m.query[1];
               directLink = '/3-' + linkId;
-              _context209.next = 4;
+              _context210.next = 4;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(directLink);
             case 4:
             case 'end':
-              return _context209.stop();
+              return _context210.stop();
           }
         }
-      }, _callee209, this);
+      }, _callee210, this);
     }));
     function start(_x52) {
-      return _ref211.apply(this, arguments);
+      return _ref212.apply(this, arguments);
     }
     return start;
   }()
@@ -11261,45 +11274,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^unfake\.it$/
   },
   ready: function () {
-    var _ref212 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee210() {
-      var frame, i;
-      return _regenerator2.default.wrap(function _callee210$(_context210) {
-        while (1) {
-          switch (_context210.prev = _context210.next) {
-            case 0:
-              frame = (0, _ADSBYPASSER_NAMESPACE__.$)('frame');
-              i = frame.src.lastIndexOf('http://');
-              _context210.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(frame.src.substr(i));
-            case 4:
-            case 'end':
-              return _context210.stop();
-          }
-        }
-      }, _callee210, this);
-    }));
-    function ready() {
-      return _ref212.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^(www\.)?(upan|gxp)\.so$/,
-    path: /^\/\w+$/
-  },
-  ready: function () {
     var _ref213 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee211() {
-      var a;
+      var frame, i;
       return _regenerator2.default.wrap(function _callee211$(_context211) {
         while (1) {
           switch (_context211.prev = _context211.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('table.td_line a[onclick="down_process_s();"]');
-              _context211.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+              frame = (0, _ADSBYPASSER_NAMESPACE__.$)('frame');
+              i = frame.src.lastIndexOf('http://');
+              _context211.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(frame.src.substr(i));
+            case 4:
             case 'end':
               return _context211.stop();
           }
@@ -11314,19 +11299,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^ur\.ly$/, /^urly\.mobi$/],
-    path: /^\/x(.+)/
+    host: /^(www\.)?(upan|gxp)\.so$/,
+    path: /^\/\w+$/
   },
   ready: function () {
     var _ref214 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee212() {
-      var path;
+      var a;
       return _regenerator2.default.wrap(function _callee212$(_context212) {
         while (1) {
           switch (_context212.prev = _context212.next) {
             case 0:
-              path = window.location.href.replace('/x', '/goii/');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('table.td_line a[onclick="down_process_s();"]');
               _context212.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
             case 'end':
               return _context212.stop();
@@ -11342,18 +11327,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^url\.ie$/
+    host: [/^ur\.ly$/, /^urly\.mobi$/],
+    path: /^\/x(.+)/
   },
   ready: function () {
     var _ref215 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee213() {
-      var a;
+      var path;
       return _regenerator2.default.wrap(function _callee213$(_context213) {
         while (1) {
           switch (_context213.prev = _context213.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a[title="Link to original URL"]');
+              path = window.location.href.replace('/x', '/goii/');
               _context213.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
             case 3:
             case 'end':
               return _context213.stop();
@@ -11369,34 +11355,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/(^|\.)urlcash\.(com|net|org)$/, /^(bat5|detonating|celebclk|eightteen|smilinglinks|peekatmygirlfriend|pornyhost|clb1|urlgalleries)\.com$/, /^looble\.net$/, /^xxxs\.org$/]
+    host: /^url\.ie$/
   },
   ready: function () {
     var _ref216 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee214() {
-      var matches;
+      var a;
       return _regenerator2.default.wrap(function _callee214$(_context214) {
         while (1) {
           switch (_context214.prev = _context214.next) {
             case 0:
-              if (!(_ADSBYPASSER_NAMESPACE__.$.window && _ADSBYPASSER_NAMESPACE__.$.window.linkDestUrl)) {
-                _context214.next = 4;
-                break;
-              }
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a[title="Link to original URL"]');
               _context214.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(_ADSBYPASSER_NAMESPACE__.$.window.linkDestUrl);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
-              return _context214.abrupt('return');
-            case 4:
-              matches = document.body.innerHTML.match(/linkDestUrl = '(.+)'/);
-              if (!matches) {
-                _context214.next = 9;
-                break;
-              }
-              _context214.next = 8;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(matches[1]);
-            case 8:
-              return _context214.abrupt('return');
-            case 9:
             case 'end':
               return _context214.stop();
           }
@@ -11411,23 +11382,34 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^urlinn\.com$/
+    host: [/(^|\.)urlcash\.(com|net|org)$/, /^(bat5|detonating|celebclk|eightteen|smilinglinks|peekatmygirlfriend|pornyhost|clb1|urlgalleries)\.com$/, /^looble\.net$/, /^xxxs\.org$/]
   },
   ready: function () {
     var _ref217 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee215() {
-      var m;
+      var matches;
       return _regenerator2.default.wrap(function _callee215$(_context215) {
         while (1) {
           switch (_context215.prev = _context215.next) {
             case 0:
-              m = (0, _ADSBYPASSER_NAMESPACE__.$)('META[HTTP-EQUIV=refresh]').getAttribute('CONTENT').match(/url='([^']+)'/);
-              if (!m) {
+              if (!(_ADSBYPASSER_NAMESPACE__.$.window && _ADSBYPASSER_NAMESPACE__.$.window.linkDestUrl)) {
                 _context215.next = 4;
                 break;
               }
-              _context215.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
+              _context215.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(_ADSBYPASSER_NAMESPACE__.$.window.linkDestUrl);
+            case 3:
+              return _context215.abrupt('return');
             case 4:
+              matches = document.body.innerHTML.match(/linkDestUrl = '(.+)'/);
+              if (!matches) {
+                _context215.next = 9;
+                break;
+              }
+              _context215.next = 8;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(matches[1]);
+            case 8:
+              return _context215.abrupt('return');
+            case 9:
             case 'end':
               return _context215.stop();
           }
@@ -11442,19 +11424,23 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^urlms\.com$/
+    host: /^urlinn\.com$/
   },
   ready: function () {
     var _ref218 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee216() {
-      var iframe;
+      var m;
       return _regenerator2.default.wrap(function _callee216$(_context216) {
         while (1) {
           switch (_context216.prev = _context216.next) {
             case 0:
-              iframe = (0, _ADSBYPASSER_NAMESPACE__.$)('#content');
-              _context216.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(iframe.src);
-            case 3:
+              m = (0, _ADSBYPASSER_NAMESPACE__.$)('META[HTTP-EQUIV=refresh]').getAttribute('CONTENT').match(/url='([^']+)'/);
+              if (!m) {
+                _context216.next = 4;
+                break;
+              }
+              _context216.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
+            case 4:
             case 'end':
               return _context216.stop();
           }
@@ -11469,33 +11455,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?urlv2\.com$/
+    host: /^urlms\.com$/
   },
   ready: function () {
     var _ref219 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee217() {
-      var path, m, l;
+      var iframe;
       return _regenerator2.default.wrap(function _callee217$(_context217) {
         while (1) {
           switch (_context217.prev = _context217.next) {
             case 0:
-              if (!(window.location.pathname.indexOf('locked') >= 0)) {
-                _context217.next = 5;
-                break;
-              }
-              path = window.location.pathname.replace('/locked', '');
-              _context217.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
-            case 4:
-              return _context217.abrupt('return');
-            case 5:
-              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/jeton=([\w]+)/);
-              l = 'http://urlv2.com/algo.php?action=passer&px=0&so=1&jeton=' + m[1];
-              _context217.next = 9;
-              return _ADSBYPASSER_NAMESPACE__._.wait(5 * 1000);
-            case 9:
-              _context217.next = 11;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
-            case 11:
+              iframe = (0, _ADSBYPASSER_NAMESPACE__.$)('#content');
+              _context217.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(iframe.src);
+            case 3:
             case 'end':
               return _context217.stop();
           }
@@ -11510,20 +11482,33 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?uskip\.me$/,
-    path: /^\/go\/\w+$/
+    host: /^(www\.)?urlv2\.com$/
   },
   ready: function () {
     var _ref220 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee218() {
-      var a;
+      var path, m, l;
       return _regenerator2.default.wrap(function _callee218$(_context218) {
         while (1) {
           switch (_context218.prev = _context218.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#btn-main');
-              _context218.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+              if (!(window.location.pathname.indexOf('locked') >= 0)) {
+                _context218.next = 5;
+                break;
+              }
+              path = window.location.pathname.replace('/locked', '');
+              _context218.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
+            case 4:
+              return _context218.abrupt('return');
+            case 5:
+              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/jeton=([\w]+)/);
+              l = 'http://urlv2.com/algo.php?action=passer&px=0&so=1&jeton=' + m[1];
+              _context218.next = 9;
+              return _ADSBYPASSER_NAMESPACE__._.wait(5 * 1000);
+            case 9:
+              _context218.next = 11;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
+            case 11:
             case 'end':
               return _context218.stop();
           }
@@ -11538,18 +11523,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^vavi\.co$/
+    host: /^(www\.)?uskip\.me$/,
+    path: /^\/go\/\w+$/
   },
   ready: function () {
     var _ref221 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee219() {
-      var l;
+      var a;
       return _regenerator2.default.wrap(function _callee219$(_context219) {
         while (1) {
           switch (_context219.prev = _context219.next) {
             case 0:
-              l = (0, _ADSBYPASSER_NAMESPACE__.$)('#goLink');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#btn-main');
               _context219.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(l.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
             case 'end':
               return _context219.stop();
@@ -11565,35 +11551,62 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?victly\.com$/,
-    path: /^\/\w+$/
+    host: /^vavi\.co$/
   },
-  start: function () {
+  ready: function () {
     var _ref222 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee220() {
-      var text, m;
+      var l;
       return _regenerator2.default.wrap(function _callee220$(_context220) {
         while (1) {
           switch (_context220.prev = _context220.next) {
             case 0:
-              _context220.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.post(document.location.href, {
-                hidden: '',
-                image: 'Skip+Ads'
-              });
-            case 2:
-              text = _context220.sent;
-              m = text.match(/window\.location\.replace\('([^']+)'\)/);
-              _context220.next = 6;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
-            case 6:
+              l = (0, _ADSBYPASSER_NAMESPACE__.$)('#goLink');
+              _context220.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(l.href);
+            case 3:
             case 'end':
               return _context220.stop();
           }
         }
       }, _callee220, this);
     }));
-    function start() {
+    function ready() {
       return _ref222.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^(www\.)?victly\.com$/,
+    path: /^\/\w+$/
+  },
+  start: function () {
+    var _ref223 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee221() {
+      var text, m;
+      return _regenerator2.default.wrap(function _callee221$(_context221) {
+        while (1) {
+          switch (_context221.prev = _context221.next) {
+            case 0:
+              _context221.next = 2;
+              return _ADSBYPASSER_NAMESPACE__.$.post(document.location.href, {
+                hidden: '',
+                image: 'Skip+Ads'
+              });
+            case 2:
+              text = _context221.sent;
+              m = text.match(/window\.location\.replace\('([^']+)'\)/);
+              _context221.next = 6;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
+            case 6:
+            case 'end':
+              return _context221.stop();
+          }
+        }
+      }, _callee221, this);
+    }));
+    function start() {
+      return _ref223.apply(this, arguments);
     }
     return start;
   }()
@@ -11603,49 +11616,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.viidii\.info$/
   },
   ready: function () {
-    var _ref223 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee221() {
-      var o;
-      return _regenerator2.default.wrap(function _callee221$(_context221) {
-        while (1) {
-          switch (_context221.prev = _context221.next) {
-            case 0:
-              o = (0, _ADSBYPASSER_NAMESPACE__.$)('#directlink');
-              _context221.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(o.href);
-            case 3:
-            case 'end':
-              return _context221.stop();
-          }
-        }
-      }, _callee221, this);
-    }));
-    function ready() {
-      return _ref223.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^(www\.)?vir\.al$/
-  },
-  ready: function () {
     var _ref224 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee222() {
-      var m;
+      var o;
       return _regenerator2.default.wrap(function _callee222$(_context222) {
         while (1) {
           switch (_context222.prev = _context222.next) {
             case 0:
-              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/const target_url = '([^']+)';/);
-              if (m) {
-                _context222.next = 3;
-                break;
-              }
-              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('site changed');
+              o = (0, _ADSBYPASSER_NAMESPACE__.$)('#directlink');
+              _context222.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(o.href);
             case 3:
-              _context222.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
-            case 5:
             case 'end':
               return _context222.stop();
           }
@@ -11660,19 +11640,25 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?wzzq\.me$/
+    host: /^(www\.)?vir\.al$/
   },
   ready: function () {
     var _ref225 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee223() {
-      var l;
+      var m;
       return _regenerator2.default.wrap(function _callee223$(_context223) {
         while (1) {
           switch (_context223.prev = _context223.next) {
             case 0:
-              l = (0, _ADSBYPASSER_NAMESPACE__.$)('#img_loading_table2  div.wz_img_hit a[target=_blank]').href;
-              _context223.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
+              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/const target_url = '([^']+)';/);
+              if (m) {
+                _context223.next = 3;
+                break;
+              }
+              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('site changed');
             case 3:
+              _context223.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
+            case 5:
             case 'end':
               return _context223.stop();
           }
@@ -11687,25 +11673,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^xlink\.me$/
+    host: /^(www\.)?wzzq\.me$/
   },
   ready: function () {
     var _ref226 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee224() {
-      var a;
+      var l;
       return _regenerator2.default.wrap(function _callee224$(_context224) {
         while (1) {
           switch (_context224.prev = _context224.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#main_form > center > a');
-              if (a) {
-                _context224.next = 3;
-                break;
-              }
-              return _context224.abrupt('return');
+              l = (0, _ADSBYPASSER_NAMESPACE__.$)('#img_loading_table2  div.wz_img_hit a[target=_blank]').href;
+              _context224.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
             case 3:
-              _context224.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 5:
             case 'end':
               return _context224.stop();
           }
@@ -11719,18 +11699,26 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://yep.it/preview.php?p=*',
+  rule: {
+    host: /^xlink\.me$/
+  },
   ready: function () {
     var _ref227 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee225() {
-      var link;
+      var a;
       return _regenerator2.default.wrap(function _callee225$(_context225) {
         while (1) {
           switch (_context225.prev = _context225.next) {
             case 0:
-              link = (0, _ADSBYPASSER_NAMESPACE__.$)('font[color="grey"]').innerHTML;
-              _context225.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(link);
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#main_form > center > a');
+              if (a) {
+                _context225.next = 3;
+                break;
+              }
+              return _context225.abrupt('return');
             case 3:
+              _context225.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 5:
             case 'end':
               return _context225.stop();
           }
@@ -11743,74 +11731,99 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return ready;
   }()
 });
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: 'http://yep.it/preview.php?p=*',
+  ready: function () {
+    var _ref228 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee226() {
+      var link;
+      return _regenerator2.default.wrap(function _callee226$(_context226) {
+        while (1) {
+          switch (_context226.prev = _context226.next) {
+            case 0:
+              link = (0, _ADSBYPASSER_NAMESPACE__.$)('font[color="grey"]').innerHTML;
+              _context226.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(link);
+            case 3:
+            case 'end':
+              return _context226.stop();
+          }
+        }
+      }, _callee226, this);
+    }));
+    function ready() {
+      return _ref228.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
 (function () {
   var getURL = function () {
-    var _ref229 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee227(url) {
+    var _ref230 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee228(url) {
       var text, goodURL;
-      return _regenerator2.default.wrap(function _callee227$(_context227) {
+      return _regenerator2.default.wrap(function _callee228$(_context228) {
         while (1) {
-          switch (_context227.prev = _context227.next) {
+          switch (_context228.prev = _context228.next) {
             case 0:
-              _context227.next = 2;
+              _context228.next = 2;
               return _ADSBYPASSER_NAMESPACE__.$.get(url);
             case 2:
-              text = _context227.sent;
+              text = _context228.sent;
               goodURL = /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!$&'()*+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!$&'()*+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!$&'()*+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!$&'()*+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!$&'()*+,;=]|:|@)|\/|\?)*)?$/i.test(text);
               if (!goodURL) {
-                _context227.next = 8;
+                _context228.next = 8;
                 break;
               }
-              _context227.next = 7;
+              _context228.next = 7;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(text);
             case 7:
-              return _context227.abrupt('return');
+              return _context228.abrupt('return');
             case 8:
-              _context227.next = 10;
+              _context228.next = 10;
               return _ADSBYPASSER_NAMESPACE__._.wait(500);
             case 10:
-              _context227.next = 12;
+              _context228.next = 12;
               return getURL(url);
             case 12:
             case 'end':
-              return _context227.stop();
+              return _context228.stop();
           }
         }
-      }, _callee227, this);
+      }, _callee228, this);
     }));
     return function getURL(_x53) {
-      return _ref229.apply(this, arguments);
+      return _ref230.apply(this, arguments);
     };
   }();
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: 'http://www.yooclick.com/l/*',
     ready: function () {
-      var _ref228 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee226() {
+      var _ref229 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee227() {
         var uniq, path, url;
-        return _regenerator2.default.wrap(function _callee226$(_context226) {
+        return _regenerator2.default.wrap(function _callee227$(_context227) {
           while (1) {
-            switch (_context226.prev = _context226.next) {
+            switch (_context227.prev = _context227.next) {
               case 0:
                 _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
                 uniq = _ADSBYPASSER_NAMESPACE__.$.window.uniq || _ADSBYPASSER_NAMESPACE__.$.window.uniqi;
                 if (uniq) {
-                  _context226.next = 4;
+                  _context227.next = 4;
                   break;
                 }
-                return _context226.abrupt('return');
+                return _context227.abrupt('return');
               case 4:
                 path = window.location.pathname;
                 url = path + '?ajax=true&adblock=false&old=false&framed=false&uniq=' + uniq;
-                _context226.next = 8;
+                _context227.next = 8;
                 return getURL(url);
               case 8:
               case 'end':
-                return _context226.stop();
+                return _context227.stop();
             }
           }
-        }, _callee226, this);
+        }, _callee227, this);
       }));
       function ready() {
-        return _ref228.apply(this, arguments);
+        return _ref229.apply(this, arguments);
       }
       return ready;
     }()
@@ -11822,24 +11835,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/3\/(.+)$/
   },
   start: function () {
-    var _ref230 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee228(m) {
+    var _ref231 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee229(m) {
       var url;
-      return _regenerator2.default.wrap(function _callee228$(_context228) {
+      return _regenerator2.default.wrap(function _callee229$(_context229) {
         while (1) {
-          switch (_context228.prev = _context228.next) {
+          switch (_context229.prev = _context229.next) {
             case 0:
               url = atob(m.path[1]);
-              _context228.next = 3;
+              _context229.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
             case 3:
             case 'end':
-              return _context228.stop();
+              return _context229.stop();
           }
         }
-      }, _callee228, this);
+      }, _callee229, this);
     }));
     function start(_x54) {
-      return _ref230.apply(this, arguments);
+      return _ref231.apply(this, arguments);
     }
     return start;
   }()
@@ -11850,26 +11863,26 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/2\/(.+)$/
   },
   start: function () {
-    var _ref231 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee229(m) {
+    var _ref232 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee230(m) {
       var url;
-      return _regenerator2.default.wrap(function _callee229$(_context229) {
+      return _regenerator2.default.wrap(function _callee230$(_context230) {
         while (1) {
-          switch (_context229.prev = _context229.next) {
+          switch (_context230.prev = _context230.next) {
             case 0:
               url = m.path[1].match(/.{2}/g).map(function (h) {
                 return String.fromCharCode(parseInt(h, 16));
               }).join('');
-              _context229.next = 3;
+              _context230.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
             case 3:
             case 'end':
-              return _context229.stop();
+              return _context230.stop();
           }
         }
-      }, _callee229, this);
+      }, _callee230, this);
     }));
     function start(_x55) {
-      return _ref231.apply(this, arguments);
+      return _ref232.apply(this, arguments);
     }
     return start;
   }()
@@ -11880,39 +11893,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/link\/$/
   },
   ready: function () {
-    var _ref232 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee230() {
-      var a;
-      return _regenerator2.default.wrap(function _callee230$(_context230) {
-        while (1) {
-          switch (_context230.prev = _context230.next) {
-            case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#one > center:nth-child(3) > a:nth-child(1)');
-              _context230.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
-            case 'end':
-              return _context230.stop();
-          }
-        }
-      }, _callee230, this);
-    }));
-    function ready() {
-      return _ref232.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://zo.mu/redirector/process?link=*',
-  ready: function () {
     var _ref233 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee231() {
+      var a;
       return _regenerator2.default.wrap(function _callee231$(_context231) {
         while (1) {
           switch (_context231.prev = _context231.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              window.location.reload();
-            case 2:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#one > center:nth-child(3) > a:nth-child(1)');
+              _context231.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
             case 'end':
               return _context231.stop();
           }
@@ -11926,26 +11916,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^zzz\.gl$/
-  },
+  rule: 'http://zo.mu/redirector/process?link=*',
   ready: function () {
     var _ref234 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee232() {
-      var m;
       return _regenerator2.default.wrap(function _callee232$(_context232) {
         while (1) {
           switch (_context232.prev = _context232.next) {
             case 0:
-              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/const domainurl = '([^']+)';/);
-              if (m) {
-                _context232.next = 3;
-                break;
-              }
-              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('site changed');
-            case 3:
-              _context232.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
-            case 5:
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              window.location.reload();
+            case 2:
             case 'end':
               return _context232.stop();
           }
@@ -11958,6 +11938,39 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return ready;
   }()
 });
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^zzz\.gl$/
+  },
+  ready: function () {
+    var _ref235 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee233() {
+      var m;
+      return _regenerator2.default.wrap(function _callee233$(_context233) {
+        while (1) {
+          switch (_context233.prev = _context233.next) {
+            case 0:
+              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/const domainurl = '([^']+)';/);
+              if (m) {
+                _context233.next = 3;
+                break;
+              }
+              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('site changed');
+            case 3:
+              _context233.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
+            case 5:
+            case 'end':
+              return _context233.stop();
+          }
+        }
+      }, _callee233, this);
+    }));
+    function ready() {
+      return _ref235.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
@@ -11966,17 +11979,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
       hash: /(?:#([a-zA-Z0-9]+))?/
     },
     ready: function () {
-      var _ref235 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee233(m) {
+      var _ref236 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee234(m) {
         var sjcl, paste_id, paste_salt, API_URL, pasteInfo, raw_paste, elm, frame;
-        return _regenerator2.default.wrap(function _callee233$(_context233) {
+        return _regenerator2.default.wrap(function _callee234$(_context234) {
           while (1) {
-            switch (_context233.prev = _context233.next) {
+            switch (_context234.prev = _context234.next) {
               case 0:
                 sjcl = _ADSBYPASSER_NAMESPACE__.$.window.sjcl;
                 paste_id = m.path[1];
                 paste_salt = m.hash[1];
                 API_URL = 'https://binbox.io/' + paste_id + '.json';
-                _context233.next = 6;
+                _context234.next = 6;
                 return _ADSBYPASSER_NAMESPACE__.$.get(API_URL, false, {
                   Origin: _ADSBYPASSER_NAMESPACE__._.none,
                   Referer: _ADSBYPASSER_NAMESPACE__._.none,
@@ -11984,32 +11997,32 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   'X-Requested-With': _ADSBYPASSER_NAMESPACE__._.none
                 });
               case 6:
-                pasteInfo = _context233.sent;
+                pasteInfo = _context234.sent;
                 pasteInfo = JSON.parse(pasteInfo);
                 if (pasteInfo.ok) {
-                  _context233.next = 10;
+                  _context234.next = 10;
                   break;
                 }
                 throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('error when getting paste information');
               case 10:
                 if (!pasteInfo.paste.url) {
-                  _context233.next = 14;
+                  _context234.next = 14;
                   break;
                 }
-                _context233.next = 13;
+                _context234.next = 13;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(pasteInfo.paste.url);
               case 13:
-                return _context233.abrupt('return');
+                return _context234.abrupt('return');
               case 14:
                 raw_paste = sjcl.decrypt(paste_salt, pasteInfo.paste.text);
                 if (!isLink(raw_paste)) {
-                  _context233.next = 19;
+                  _context234.next = 19;
                   break;
                 }
-                _context233.next = 18;
+                _context234.next = 18;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(raw_paste);
               case 18:
-                return _context233.abrupt('return');
+                return _context234.abrupt('return');
               case 19:
                 elm = document.createElement('pre');
                 elm.id = 'paste-text';
@@ -12018,13 +12031,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 frame.parentNode.replaceChild(elm, frame);
               case 24:
               case 'end':
-                return _context233.stop();
+                return _context234.stop();
             }
           }
-        }, _callee233, this);
+        }, _callee234, this);
       }));
       function ready(_x56) {
-        return _ref235.apply(this, arguments);
+        return _ref236.apply(this, arguments);
       }
       return ready;
     }()
@@ -12047,21 +12060,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function () {
-    var _ref236 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee234() {
-      return _regenerator2.default.wrap(function _callee234$(_context234) {
+    var _ref237 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee235() {
+      return _regenerator2.default.wrap(function _callee235$(_context235) {
         while (1) {
-          switch (_context234.prev = _context234.next) {
+          switch (_context235.prev = _context235.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('#captcha_overlay');
             case 1:
             case 'end':
-              return _context234.stop();
+              return _context235.stop();
           }
         }
-      }, _callee234, this);
+      }, _callee235, this);
     }));
     function ready() {
-      return _ref236.apply(this, arguments);
+      return _ref237.apply(this, arguments);
     }
     return ready;
   }()
@@ -12075,13 +12088,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.$ = exports._ = undefined;
 var _ajax = __webpack_require__(149);
 var _cookie = __webpack_require__(150);
-var _core = __webpack_require__(4);
-var _dispatcher = __webpack_require__(56);
+var _core = __webpack_require__(77);
+var _dispatcher = __webpack_require__(136);
 var _dom = __webpack_require__(151);
 var _link = __webpack_require__(152);
-var _logger = __webpack_require__(33);
+var _logger = __webpack_require__(146);
 var _misc = __webpack_require__(153);
-var _platform = __webpack_require__(24);
+var _platform = __webpack_require__(137);
 var _ = {
   AdsBypasserError: _core.AdsBypasserError,
   find: _core.find,
@@ -12122,26 +12135,27 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.post = exports.get = undefined;
-var _promise = __webpack_require__(10);
+var _promise = __webpack_require__(1);
 var _promise2 = _interopRequireDefault(_promise);
-var _stringify = __webpack_require__(72);
+var _stringify = __webpack_require__(74);
 var _stringify2 = _interopRequireDefault(_stringify);
-var _typeof2 = __webpack_require__(32);
+var _typeof2 = __webpack_require__(114);
 var _typeof3 = _interopRequireDefault(_typeof2);
-var _getOwnPropertyNames = __webpack_require__(73);
+var _getOwnPropertyNames = __webpack_require__(90);
 var _getOwnPropertyNames2 = _interopRequireDefault(_getOwnPropertyNames);
-var _getPrototypeOf = __webpack_require__(48);
+var _getPrototypeOf = __webpack_require__(105);
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-var _classCallCheck2 = __webpack_require__(49);
+var _classCallCheck2 = __webpack_require__(108);
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-var _createClass2 = __webpack_require__(50);
+var _createClass2 = __webpack_require__(109);
 var _createClass3 = _interopRequireDefault(_createClass2);
-var _possibleConstructorReturn2 = __webpack_require__(51);
+var _possibleConstructorReturn2 = __webpack_require__(113);
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-var _inherits2 = __webpack_require__(55);
+var _inherits2 = __webpack_require__(128);
 var _inherits3 = _interopRequireDefault(_inherits2);
-var _core = __webpack_require__(4);
-var _platform = __webpack_require__(24);
+var _core = __webpack_require__(77);
+var _platform = __webpack_require__(137);
+var _logger = __webpack_require__(146);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var AjaxError = function (_AdsBypasserError) {
   (0, _inherits3.default)(AjaxError, _AdsBypasserError);
@@ -12229,6 +12243,7 @@ function toQuery(data) {
   }).join('&');
 }
 function ajax(method, url, data, headers) {
+  (0, _logger.debug)('ajax', method, url, data, headers);
   var l = document.createElement('a');
   l.href = url;
   var reqHost = l.hostname;
@@ -12300,9 +12315,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.resetCookies = exports.getCookie = exports.setCookie = undefined;
-var _slicedToArray2 = __webpack_require__(17);
+var _slicedToArray2 = __webpack_require__(86);
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
-var _core = __webpack_require__(4);
+var _core = __webpack_require__(77);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function setCookie(key, value) {
   document.cookie = key + '=' + value + ';path=' + location.pathname + ';';
@@ -12352,19 +12367,20 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.toDOM = exports.searchFromScripts = exports.remove = exports.querySelectorOrNull = exports.querySelectorAll = exports.querySelector = exports.block = undefined;
-var _slicedToArray2 = __webpack_require__(17);
+var _slicedToArray2 = __webpack_require__(86);
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
-var _getPrototypeOf = __webpack_require__(48);
+var _getPrototypeOf = __webpack_require__(105);
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-var _classCallCheck2 = __webpack_require__(49);
+var _classCallCheck2 = __webpack_require__(108);
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-var _createClass2 = __webpack_require__(50);
+var _createClass2 = __webpack_require__(109);
 var _createClass3 = _interopRequireDefault(_createClass2);
-var _possibleConstructorReturn2 = __webpack_require__(51);
+var _possibleConstructorReturn2 = __webpack_require__(113);
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-var _inherits2 = __webpack_require__(55);
+var _inherits2 = __webpack_require__(128);
 var _inherits3 = _interopRequireDefault(_inherits2);
-var _core = __webpack_require__(4);
+var _core = __webpack_require__(77);
+var _logger = __webpack_require__(146);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var DomNotFoundError = function (_AdsBypasserError) {
   (0, _inherits3.default)(DomNotFoundError, _AdsBypasserError);
@@ -12416,7 +12432,8 @@ function toDOM(rawHTML) {
 function remove(selector, context) {
   var nodes = querySelectorAll(selector, context);
   (0, _core.forEach)(nodes, function (e) {
-    e.parentNode.removeChild(e);
+    (0, _logger.debug)('removed', e);
+    e.remove();
   });
 }
 function block(selector) {
@@ -12505,9 +12522,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.openLink = undefined;
-var _regenerator = __webpack_require__(22);
+var _regenerator = __webpack_require__(71);
 var _regenerator2 = _interopRequireDefault(_regenerator);
-var _asyncToGenerator2 = __webpack_require__(30);
+var _asyncToGenerator2 = __webpack_require__(76);
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 var get = function () {
   var _ref = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee(url) {
@@ -12522,7 +12539,7 @@ var get = function () {
             a.addEventListener('click', function (event) {
               event.stopPropagation();
               clicked = true;
-            });
+            }, true);
             _context.next = 6;
             return prepare(a);
           case 6:
@@ -12535,7 +12552,7 @@ var get = function () {
               }
               (0, _logger.info)('try again');
               a.click();
-            }, 50);
+            }, 500);
           case 8:
           case 'end':
             return _context.stop();
@@ -12629,8 +12646,8 @@ var openLink = function () {
     return _ref3.apply(this, arguments);
   };
 }();
-var _core = __webpack_require__(4);
-var _logger = __webpack_require__(33);
+var _core = __webpack_require__(77);
+var _logger = __webpack_require__(146);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function prepare(e) {
   if (!document.body) {
@@ -12647,9 +12664,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.generateRandomIP = exports.nuke = exports.removeAllTimer = undefined;
-var _core = __webpack_require__(4);
-var _platform = __webpack_require__(24);
-var _logger = __webpack_require__(33);
+var _core = __webpack_require__(77);
+var _platform = __webpack_require__(137);
+var _logger = __webpack_require__(146);
 function removeAllTimer() {
   var handle = window.setInterval(_core.nop, 10);
   while (handle > 0) {
