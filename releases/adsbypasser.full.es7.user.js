@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.10.0
+// @version        6.11.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.10.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.11.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.10.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.10.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.10.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.11.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.11.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.11.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -829,33 +829,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^www\.anafile\.com$/,
-  },
-  async ready () {
-    let b = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('#btn_download');
-    if (!b) {
-      b = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#plans_free form [type=submit]');
-      b.click();
-      return;
-    }
-    b.disabled = false;
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('div[align=center]');
-    return;
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^(www\.)?arab\.sh$/,
-    path: /^\/\w+$/,
-  },
-  async ready () {
-    const f = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('form[name=F1]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(20 * 1000);
-    f.submit();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
     host: /^(www\.)?coolrom\.com$/,
     path: /^\/dlpop\.php$/,
   },
@@ -946,25 +919,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^(www\.)?(firedrive|putlocker)\.com$/,
-    path: /^\/file\/[0-9A-F]+$/,
-  },
-  async ready () {
-    const c = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#confirm_form');
-    c.submit();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^iori\.us$/,
-  },
-  async ready () {
-    const a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#wrapper .tombol a');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
     host: /^(www\.)?jheberg\.net$/,
     path: /^\/captcha\//,
   },
@@ -989,26 +943,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     });
     const respJSON = JSON.parse(response);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(respJSON.url);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^(www\.)?larashare\.com$/,
-    path: /^\/do\.php$/,
-    query: /id=\d+/,
-  },
-  async start () {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(document.location.href.replace('id=','down='));
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^(www\.)?maxmirror\.com$/,
-    path: /^\/redirect\//,
-  },
-  async ready () {
-    const l = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#download_url > a');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(l.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -1073,7 +1007,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
       /^openload\.co$/,
-      /^oload\.(stream|info|site|tv)$/,
+      /^oload\.(stream|info|site|tv|win)$/,
     ],
     path: /^\/f\/.*/,
   },
@@ -1108,6 +1042,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(dlBtn.href);
     }
   }
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^(www\.)?putlocker\.com$/,
+    path: /^\/file\/[0-9A-F]+$/,
+  },
+  async ready () {
+    const c = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#confirm_form');
+    c.submit();
+  },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
@@ -1150,8 +1094,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^(www\.)?1be\.biz$/,
-    path: /^\/s\.php$/,
+    host: /^(www\.)?1(be|dl)\.biz$/,
+    path: /^\/z\.php$/,
     query: /^\?(.+)/,
   },
   async start (m) {
@@ -1360,11 +1304,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
     async start (m) {
       _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].resetCookies();
+      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].setCookie('FLYSESSID', generateRandomSessionCookie(40));
       const url = decodeURIComponent(m.query[1]);
       if (url.match(/^http/)) {
         await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(url);
       } else {
-        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink('/' + url);
+        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(document.referrer);
       }
     },
   });
@@ -1382,6 +1327,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window.btoa = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].nop;
     },
     async ready () {
+      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('iframe');
       _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].setCookie('FLYSESSID', generateRandomSessionCookie(40));
       let rv = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].get(location.href, '', {
         'Origin': _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].none,
@@ -2340,6 +2286,25 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
+    host: /^iiv\.pl$/,
+  },
+  async ready () {
+    let d = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#counting');
+    let rv = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].post(location.pathname, {
+      blocker: 0,
+      salt: d.dataset.salt,
+    }, {
+      'X-OCTOBER-REQUEST-HANDLER': 'onAfterShortcutView',
+      'X-OCTOBER-REQUEST-PARTIALS': 'shortcut/link_show',
+    });
+    rv = JSON.parse(rv);
+    d = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].toDOM(rv['shortcut/link_show']);
+    rv = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('a', d);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(rv.href);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
     host: /^(www\.)?(ilix\.in|priva\.us)$/,
     path: /\/(\w+)/,
   },
@@ -2569,8 +2534,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 })();
 (function() {
   const hostRules = [
-    /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|freegaysitepass|(gone|tube)viral|(pic|tna)bucks|whackyvidz|fuestfka)\.com$/,
-    /^(([\w]{8}|www)\.)?(a[mn]y|deb|dyo|sexpalace)\.gs$/,
+    /^(([\w]{8}|www)\.)?(allanalpass|cash4files|drstickyfingers|fapoff|(gone|tube)viral|(pic|tna)bucks|whackyvidz)\.com$/,
     /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|ultrafiles|urlbeat|zatnawqy|zbqhfbetlmni)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?galleries\.bz$/,
@@ -2834,12 +2798,19 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^mlink\.club$/,
         /^zlshorte\.net$/,
         /^(igram|gram)\.im$/,
-        /^(trlink|wolink)\.in$/,
+        /^(trlink|wolink|tocdo)\.in$/,
+        /^dz4link\.com$/,
+        /^short2win\.com$/,
+        /^vnurl\.net$/,
         /^clk\.press$/,
         /^short\.pe$/,
         /^urlcloud\.us$/,
         /^(www\.)?ourl\.io$/,
         /^(www\.)?linkdrop\.net$/,
+        /^(123link|clik)\.pw$/,
+        /^(vy\.)?adsvy\.com$/,
+        /^cut4links\.com$/,
+        /^tmearn\.com$/,
       ],
     },
     async ready () {
@@ -2867,12 +2838,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
         /^adlink\.guru$/,
-        /^(clik|psl|twik)\.pw$/,
+        /^(psl|twik)\.pw$/,
         /^coshink\.co$/,
         /^(curs|cuon)\.io$/,
         /^shark\.vn$/,
         /^cypt\.ga$/,
-        /^(filesbucks|tmearn|cut-urls|link-earn|shrinkearn)\.com$/,
+        /^(filesbucks|cut-urls|link-earn|shrinkearn)\.com$/,
         /^adslink\.pw$/,
         /^dzurl\.ml$/,
         /^(elink|petty)\.link$/,
@@ -2884,7 +2855,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^urle\.co$/,
         /^hashe\.in$/,
         /^www\.worldhack\.net$/,
-        /^123link\.(io|co|press|pw)$/,
+        /^123link\.(io|co|press)$/,
         /^pir\.im$/,
         /^(www\.)?(pnd|bol)\.tl$/,
         /^(tl|adfly|git)\.tc$/,
@@ -2897,12 +2868,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^linclik\.com$/,
         /^zeiz\.me$/,
         /^adbull\.me$/,
-        /^adshort\.(in|im|pro)$/,
+        /^adshort\.co$/,
         /^(adshorte|adsrt)\.com$/,
         /^weefy\.me$/,
         /^bit-url\.com$/,
         /^premiumzen\.com$/,
-        /^cut4(links|link)\.com$/,
+        /^cut4link\.com$/,
         /^coinlink\.co$/,
         /^kokemoon\.com$/,
         /^(icutit|cutearn|earnbig|shortit)\.ca$/,
@@ -2911,6 +2882,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^mikymoons\.com$/,
         /^spamlink\.org$/,
         /^top9space\.com$/,
+        /^royurls\.bid$/,
       ],
     },
     async ready () {
@@ -3108,7 +3080,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^(rd?)lnk\.co|reducelnk\.com$/,
+    host: /^(rd?)lnk\.co$/,
     path: /^\/[^.]+$/,
   },
   async ready () {
@@ -3138,7 +3110,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     host: [
       /^lnx\.lu$/,
       /^url\.fm$/,
-      /^z\.gs$/,
     ],
   },
   async ready () {
@@ -4052,6 +4023,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       path: /^\/go2/,
       query: /^\?p=([a-zA-Z0-9/=]+)$/,
     },
+    {
+      host: /^animeforce\.stream$/,
+      query: /^\?l=([a-zA-Z0-9/=]+)$/,
+    },
   ],
   async start (m) {
     const rawLink = atob(m.query[1]);
@@ -4115,7 +4090,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /^(designinghomey|ani-share|sinopsisfilmku|autolinkach)\.com$/,
         /^motonews\.club$/,
-        /^(autofans|landscapenature|apasih)\.pw$/,
+        /^(autofans|landscapenature|apasih|gameinfo)\.pw$/,
         /^(sidespace|erogedownload)\.net$/,
         /^otoviral\.racing$/,
         /^www\.lifesurance\.info$/,
@@ -4474,53 +4449,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 })();
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^ysf\.pl$/,
-    path: /^\/3\/(.+)$/,
-  },
-  async start (m) {
-    const url = atob(m.path[1]);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(url);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^ysf\.pl$/,
-    path: /^\/2\/(.+)$/,
-  },
-  async start (m) {
-    const url = m.path[1].match(/.{2}/g).map((h) => {
-      return String.fromCharCode(parseInt(h, 16));
-    }).join('');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(url);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
     host: /^www\.zintata\.com$/,
     path: /^\/link\/$/,
   },
   async ready () {
     const a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#one > center:nth-child(3) > a:nth-child(1)');
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: 'http://zo.mu/redirector/process?link=*',
-  async ready () {
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('iframe');
-    window.location.reload();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^zzz\.gl$/,
-  },
-  async ready () {
-    const m = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/const domainurl = '([^']+)';/);
-    if (!m) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].AdsBypasserError('site changed');
-    }
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(m[1]);
   },
 });
 (function () {
@@ -4583,35 +4517,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: [
-    {
-      host: /^1(dl|be)\.biz$/,
-      path: /^\/\w\.php$/,
-      query: /^\?\w\/\d+$/,
-    },
-    {
-      host: /^img\.1dl\.biz$/,
-      path: /^\/\w\.php$/,
-      query: /^\?\w\/([\d/]+)$/,
-    },
-  ],
-  async ready () {
-    const a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.main a, .main-l a');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(a.href, {
-      referer: true,
-    });
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^1pics\.ru$/,
-  },
-  async ready () {
-    const img = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('img[alt$="1Pics.Ru"]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(img.src);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: /^www\.(2i\.(sk|cz)|2imgs\.com)$/,
   },
@@ -4621,23 +4526,9 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^(www\.)?image(pearl|crest)\.com$/,
-    path: /^\/verify\/(.+)$/,
-  },
-  async ready (m) {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(`/view/${m.path[1]}`);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: [
     'http://*.abload.de/image.php?img=*',
     'http://www.imageup.ru/*/*/*.html',
-    'http://itmages.ru/image/view/*/*',
-    {
-      host: /^(www\.)?image(pearl|crest)\.com$/,
-      path: /^\/view\//,
-    },
   ],
   async ready () {
     const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#image');
@@ -4727,22 +4618,13 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
       /^www\.x45x\.info$/,
-      /^(imadul|mypixxx\.lonestarnaughtygirls)\.com$/,
+      /^imadul\.com$/,
       /^ghanaimages\.co$/,
-      /^imgurban\.info$/,
-      /^d69\.in$/,
     ],
     query: /\?p[mt]=(.+)/,
   },
   async start (m) {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage('/?di=' + m.query[1]);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: 'http://javelite.tk/viewer.php?id=*',
-  async ready () {
-    const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('table img');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -4764,15 +4646,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^crd\.ht$/,
-  },
-  async ready () {
-    const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.continue > form > input[name=link]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.value);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: 'http://cubeupload.com/im/*',
   async ready () {
     const img = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('img.galleryBigImg');
@@ -4783,9 +4656,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
       /^dailyss\.net$/,
-      /daily-img\.com$/,
-      /img-365\.com$/,
-      /^365-img\.com$/,
       /^i\.hentai-ddl\.org$/,
       /^imghost\.top$/,
     ],
@@ -4798,20 +4668,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^xxx\.porn0day\.com$/,
-    path: /^\/image\/.+$/,
-  },
-  async ready () {
-    const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('link[rel^=image_src]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: [
-      /^depic\.me$/,
-      /^(www\.)?picamatic\.com$/,
-    ],
+    host: /^depic\.me$/,
   },
   async ready () {
     const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#pic');
@@ -4834,48 +4691,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   async ready () {
     const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#ImgFrame');
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^ehdwallpapers\.org$/,
-    path: /^\/images\/.*$/,
-  },
-  async ready () {
-    const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.entry-content.clearfix img');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: [
-    {
-      host: [
-        /^(emptypix|imgdomino)\.com$/,
-        /^overdream\.cz$/,
-        /^www\.sexseeimage\.com$/,
-      ],
-      path: /^\/image\//,
-    },
-    {
-      host: /^10\.imageleon\.com$/,
-      path: /^\/img-(.+)\.html$/,
-    },
-  ],
-  async ready () {
-    const img = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#full_image');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(img.src);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^sexyxpixels\.com$/,
-    query: /^\?v=/,
-  },
-  async ready () {
-    const img = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#full_image');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(img.src, {
-      referer: true,
-    });
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -4951,32 +4766,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src);
   },
 });
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^(www\.)?gallery(nova|sense)\.se$/,
-    path: /^\/site\/v\//,
-  },
-  async ready () {
-    const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#myUniqueImg').parentNode;
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^(www\.)?gallerynova\.se$/,
-    path: /^\/site\/viewImage\/(\w+)/,
-  },
-  async ready (m) {
-    const confirm = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/\$\("#confirmImage"\).val\("([^"]+)"\)/)[1];
-    const rawJson = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].post('/site/viewConfirmCode/' + m.path[1], {
-      confirm,
-    });
-    const json = JSON.parse(rawJson);
-    const decodedHTML = document.createTextNode(json.content).data;
-    const imgURL = decodedHTML.match(/<a href="([^"]+)" target="_blank">/)[1];
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(imgURL);
-  },
-});
 (function () {
   const hostRule = /^goimagehost\.com$/;
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -5004,16 +4793,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
   });
 })();
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^www\.(h-animes|adultmove)\.info/,
-    path: /^\/.+\/.+\/.+\.html$/,
-  },
-  async ready () {
-    const a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.dlbutton2 > a');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(a.href);
-  },
-});
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: 'http://hentaimg.com/mg/lndex-1.php?img=*',
   async ready () {
@@ -5848,12 +5627,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^(hentai-hosting|miragepics|funextra\.hostzi|imgrex|cdn\.javtotal|img3x)\.com$/,
+        /^(miragepics|funextra\.hostzi|imgrex|img3x)\.com$/,
         /^bilder\.nixhelp\.de$/,
         /^imagecurl\.(com|org)$/,
         /^imagevau\.eu$/,
         /^img\.deli\.sh$/,
-        /^img(dream|soo|nm|silo)\.net$/,
         /^imgsicily\.it$/,
         /^www\.imghere\.net$/,
       ],
@@ -5879,9 +5657,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
         /^img(nip|central|cream)\.com$/,
-        /^imageview\.me$/,
         /^244pix\.com$/,
-        /^postimg\.net$/,
       ],
       path: /^\/viewerr.*\.php$/,
       query: /file=([^&]+)/,
@@ -5895,18 +5671,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     async ready () {
       const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#main_img');
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src);
-    },
-  });
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-    rule: {
-      host: /^dumppix\.com$/,
-      path: /^\/viewer\.php$/,
-      query: /file=([^&]+)/,
-    },
-    async start (m) {
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage('/images/' + m.query[1], {
-        referer: true,
-      });
     },
   });
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -5941,6 +5705,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   async ready () {
     const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#elt_to_aff');
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^overdream\.cz$/,
+    path: /^\/image\//,
+  },
+  async ready () {
+    const img = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#full_image');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(img.src);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -6001,18 +5775,13 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: [
     'http://amateurfreak.org/share-*.html',
     'http://amateurfreak.org/share.php?id=*',
-    'http://images.maxigame.by/share-*.html',
     'http://picfox.org/*',
     'http://www.euro-pic.eu/share.php?id=*',
-    'http://www.gratisimage.dk/share-*.html',
     'http://xxx.freeimage.us/share.php?id=*',
-    'http://npicture.net/share-*.html',
-    'http://www.onlinepic.net/share.php?id=*',
     'http://www.pixsor.com/share.php?id=*',
     'http://www.pixsor.com/share-*.html',
     'http://pixsor.com/XXX/share-*.html',
     'http://holdthemoan.net/x/share-*.html',
-    'http://imgurx.net/x/share-*.html',
     'http://www.imgz.pw/share-*.html',
   ],
   async ready () {
@@ -6264,10 +6033,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       {
         host: /^imgbb\.net$/,
         path: /^\/.-.+$/,
-      },
-      {
-        host: /^cdn\.javtotal\.com$/,
-        path: /^\/img\/.+$/,
       },
       {
         host: /^imgtor\.pw$/,
