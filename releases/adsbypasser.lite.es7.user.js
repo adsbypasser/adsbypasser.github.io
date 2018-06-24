@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.13.0
+// @version        6.14.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.13.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.14.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -895,7 +895,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: /^(www\.)?embedupload\.com$/,
     path: /^\/$/,
-    query: /^\?\w{2}=\w+$/
+    query: /^\?\w{2}=\w+$/,
   },
   async ready () {
     const downloadPage = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.categories a[target=_blank]');
@@ -943,7 +943,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: /^(www\.)?mirrorcreator\.com$/,
-    path: /^\/downlink\.php$/,
+    path: /^\/downlink\//,
   },
   async ready () {
     let a = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('#redirectlink a');
@@ -1443,7 +1443,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 })();
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^aka\.gr$/
+    host: /^aka\.gr$/,
   },
   async ready () {
     const l = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('iframe#yourls-frame');
@@ -1701,7 +1701,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: /^(www\.)?biglistofwebsites\.com$/,
-    path: /^\/go\/(\w+\.\w+)$/
+    path: /^\/go\/(\w+\.\w+)$/,
   },
   async start (m) {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink('http://' + m.path[1]);
@@ -1736,8 +1736,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     host: /^catcut\.net$/,
   },
   async ready () {
-    const a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#rbs');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a.href);
+    let a = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/decodeURIComponent\('([^']+)'\)/);
+    a = decodeURIComponent(a[1]);
+    a = new URL(a);
+    a = a.searchParams.get('a');
+    a = atob(a);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -1826,7 +1830,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       /^(?:(\w+)\.)?coinurl\.com$/,
       /^(?:(\w+)\.)?cur\.lv$/,
     ],
-    path: /^\/([-\w]+)$/
+    path: /^\/([-\w]+)$/,
   },
   async ready (m) {
     _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('iframe');
@@ -2002,7 +2006,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
       /^gsurl\.(me|in)$/,
-      /^(gsul|getsl)\.me$/,
+      /^(gsul|getsl|glinks)\.me$/,
       /^gsur\.in$/,
       /^g5u\.pw$/,
       /^gurl\.ly$/,
@@ -2364,6 +2368,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(www\.)?jurl\.io$/,
         /^mitly\.us$/,
         /^tui\.click$/,
+        /^met\.bz$/
       ],
     },
     async ready () {
@@ -2379,7 +2384,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(oke|cuon)\.io$/,
         /^linkrex\.net$/,
         /^safelinku\.net$/,
-        /^3bst\.co$/,
+        /^(3bst|coinlink|itiurl)\.co$/,
         /^3rabcut\.com$/,
         /^(shink|shrten|gg-l)\.xyz$/,
         /^mlink\.club$/,
@@ -2389,23 +2394,23 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^tr\.link$/,
         /^dz4link\.com$/,
         /^short2win\.com$/,
-        /^(vn|vina)url\.net$/,
+        /^(vn|vina|fox)url\.net$/,
         /^clk\.press$/,
         /^short\.pe$/,
         /^urlcloud\.us$/,
         /^(www\.)?linkdrop\.net$/,
-        /^(123link|clik)\.pw$/,
+        /^(123link|clik|tokenfly)\.pw$/,
         /^(vy\.)?adsvy\.com$/,
         /^cut4links\.com$/,
         /^(tmearn|payshorturl|urltips|shrinkearn)\.com$/,
-        /^earn-url\.com$/,
+        /^(earn-url|bit-url)\.com$/,
         /^megaurl\.in$/,
         /^(icutit|earnbig)\.ca$/,
         /^koylinks\.win$/,
         /^lopte\.pro$/,
         /^(www\.)?pnd\.tl$/,
         /^(tny|tiny)\.ec$/,
-        /^(linkexa|admew|shrtfly)\.com$/,
+        /^(linkexa|admew|shrtfly|kuylink)\.com$/,
         /^tl\.tc$/,
         /^petty\.link$/,
         /^wi\.cr$/,
@@ -2453,18 +2458,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^adbull\.me$/,
         /^adshort\.co$/,
         /^(adshorte|adsrt)\.com$/,
-        /^weefy\.me$/,
-        /^bit-url\.com$/,
+        /^(weefy|payskip)\.me$/,
         /^premiumzen\.com$/,
         /^cut4link\.com$/,
-        /^coinlink\.co$/,
         /^(cutearn|shortit)\.ca$/,
         /^(www\.)?viralukk\.com$/,
         /^shrt10\.com$/,
         /^mikymoons\.com$/,
         /^spamlink\.org$/,
         /^royurls\.bid$/,
-        /^itiad\.com$/,
+        /^(itiad|by6dk)\.com$/,
         /^(ot|load)url\.com$/,
         /^man2pro\.com$/,
         /^raolink\.com$/,
@@ -2742,19 +2745,18 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: 'http://lix.in/-*',
+  rule: {
+    host: /^dwindly\.io$/,
+  },
   async ready () {
-    let i = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('#ibdc');
-    if (i) {
+    let l = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/encD\("([^"]+)"\)/);
+    if (l) {
+      l = atob(l[1]);
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink('/' + l);
       return;
     }
-    i = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('form');
-    if (i) {
-      i.submit();
-      return;
-    }
-    i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('iframe');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(i.src);
+    l = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/document\.location\.href = "([^"]+)"/);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(l[1]);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -2839,7 +2841,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     path: /^\/url\//,
   },
   async ready () {
-    let a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('body > div:nth-child(4) > i:nth-child(1)');
+    let a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.gotolink > center:nth-child(1) > div:nth-child(1) > i:nth-child(2)');
     a = a.textContent;
     const i = a.lastIndexOf('http');
     a = a.substr(i);
@@ -3296,10 +3298,14 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(www\.)?designmyhomee\.com$/,
         /^(www\.)?anjay\.info$/,
         /^(www\.)?kakkoiisafe\.us$/,
+        /^(www\.)?kurosafe\.(website|online)$/,
+        /^(www\.)?losstor\.com$/,
+        /^kurosafe\.menantisenja\.com$/,
       ],
       query: [
         /^\?url=([a-zA-Z0-9/=]+)$/,
         /^\?id=([a-zA-Z0-9/=]+)$/,
+        /^\?site=([a-zA-Z0-9/=]+)$/,
       ],
     },
     {
@@ -3371,6 +3377,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     host: [
       /^(gameinfo|apasih)\.pw$/,
       /^(www\.)?lifesurance\.info$/,
+      /^intercelestial\.com$/,
     ],
     query: /^\?id=([a-zA-Z0-9/=]+)$/,
   },
@@ -3385,6 +3392,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /^(ani-share|autolinkach)\.com$/,
         /^motonews\.club$/,
+        /^sehatsegar\.net$/,
         /^(autofans|landscapenature)\.pw$/,
         /^(www\.)?lifesurance\.info$/,
         /^(www\.)?bolaoke\.club$/,
@@ -3395,6 +3403,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /^(gameinfo|apasih)\.pw$/,
         /^(www\.)?lifesurance\.info$/,
+        /^intercelestial\.com$/,
       ],
     },
   ],
@@ -3446,7 +3455,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^www\.njiir\.com$/,
+    host: [
+      /^www\.njiir\.com$/,
+      /^(www\.)?anjay\.info$/,
+      /^(www\.)?tetew\.info$/,
+    ],
   },
   async ready () {
     let a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('div.download-link > a');
@@ -3710,16 +3723,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     await getURL(url);
   }
 })();
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^www\.zintata\.com$/,
-    path: /^\/link\/$/,
-  },
-  async ready () {
-    const a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#one > center:nth-child(3) > a:nth-child(1)');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a.href);
-  },
-});
 (function () {
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {

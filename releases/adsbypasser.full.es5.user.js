@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.13.0
+// @version        6.14.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.13.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.14.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.13.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.13.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.13.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.14.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.14.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.14.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -4236,7 +4236,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?mirrorcreator\.com$/,
-    path: /^\/downlink\.php$/
+    path: /^\/downlink\//
   },
   ready: function () {
     var _ref10 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee8() {
@@ -5849,10 +5849,14 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context51.prev = _context51.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#rbs');
-              _context51.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+              a = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/decodeURIComponent\('([^']+)'\)/);
+              a = decodeURIComponent(a[1]);
+              a = new URL(a);
+              a = a.searchParams.get('a');
+              a = atob(a);
+              _context51.next = 7;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a);
+            case 7:
             case 'end':
               return _context51.stop();
           }
@@ -6392,7 +6396,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^gsurl\.(me|in)$/, /^(gsul|getsl)\.me$/, /^gsur\.in$/, /^g5u\.pw$/, /^gurl\.ly$/]
+    host: [/^gsurl\.(me|in)$/, /^(gsul|getsl|glinks)\.me$/, /^gsur\.in$/, /^g5u\.pw$/, /^gurl\.ly$/]
   },
   ready: function () {
     var _ref70 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee68() {
@@ -7151,7 +7155,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^dmus\.in$/, /^ulshare\.net$/, /^adurl\.id$/, /^earn-guide\.com$/, /^(cutwin|cut-earn)\.com$/, /^(cutwi|cut-w|cutl)\.in$/, /^(www\.)?jurl\.io$/, /^mitly\.us$/, /^tui\.click$/]
+      host: [/^dmus\.in$/, /^ulshare\.net$/, /^adurl\.id$/, /^earn-guide\.com$/, /^(cutwin|cut-earn)\.com$/, /^(cutwi|cut-w|cutl)\.in$/, /^(www\.)?jurl\.io$/, /^mitly\.us$/, /^tui\.click$/, /^met\.bz$/]
     },
     ready: function () {
       var _ref89 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee87() {
@@ -7178,7 +7182,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^idsly\.com$/, /^(adbilty|adpop)\.me$/, /^(oke|cuon)\.io$/, /^linkrex\.net$/, /^safelinku\.net$/, /^3bst\.co$/, /^3rabcut\.com$/, /^(shink|shrten|gg-l)\.xyz$/, /^mlink\.club$/, /^zlshorte\.net$/, /^(igram|gram)\.im$/, /^(trlink|wolink|tocdo)\.in$/, /^tr\.link$/, /^dz4link\.com$/, /^short2win\.com$/, /^(vn|vina)url\.net$/, /^clk\.press$/, /^short\.pe$/, /^urlcloud\.us$/, /^(www\.)?linkdrop\.net$/, /^(123link|clik)\.pw$/, /^(vy\.)?adsvy\.com$/, /^cut4links\.com$/, /^(tmearn|payshorturl|urltips|shrinkearn)\.com$/, /^earn-url\.com$/, /^megaurl\.in$/, /^(icutit|earnbig)\.ca$/, /^koylinks\.win$/, /^lopte\.pro$/, /^(www\.)?pnd\.tl$/, /^(tny|tiny)\.ec$/, /^(linkexa|admew|shrtfly)\.com$/, /^tl\.tc$/, /^petty\.link$/, /^wi\.cr$/]
+      host: [/^idsly\.com$/, /^(adbilty|adpop)\.me$/, /^(oke|cuon)\.io$/, /^linkrex\.net$/, /^safelinku\.net$/, /^(3bst|coinlink|itiurl)\.co$/, /^3rabcut\.com$/, /^(shink|shrten|gg-l)\.xyz$/, /^mlink\.club$/, /^zlshorte\.net$/, /^(igram|gram)\.im$/, /^(trlink|wolink|tocdo)\.in$/, /^tr\.link$/, /^dz4link\.com$/, /^short2win\.com$/, /^(vn|vina|fox)url\.net$/, /^clk\.press$/, /^short\.pe$/, /^urlcloud\.us$/, /^(www\.)?linkdrop\.net$/, /^(123link|clik|tokenfly)\.pw$/, /^(vy\.)?adsvy\.com$/, /^cut4links\.com$/, /^(tmearn|payshorturl|urltips|shrinkearn)\.com$/, /^(earn-url|bit-url)\.com$/, /^megaurl\.in$/, /^(icutit|earnbig)\.ca$/, /^koylinks\.win$/, /^lopte\.pro$/, /^(www\.)?pnd\.tl$/, /^(tny|tiny)\.ec$/, /^(linkexa|admew|shrtfly|kuylink)\.com$/, /^tl\.tc$/, /^petty\.link$/, /^wi\.cr$/]
     },
     ready: function () {
       var _ref90 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee88() {
@@ -7232,7 +7236,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^(psl|twik)\.pw$/, /^coshink\.co$/, /^(curs|crus|4cut)\.io$/, /^(cut-urls|link-zero)\.com$/, /^adslink\.pw$/, /^dzurl\.ml$/, /^petty\.link$/, /^u2s\.io$/, /^shortad\.cf$/, /^link4\.me$/, /^urle\.co$/, /^taive\.in$/, /^www\.worldhack\.net$/, /^123link\.(io|co|press)$/, /^git\.tc$/, /^adfu\.us$/, /^short\.pastewma\.com$/, /^l2s\.io$/, /^adbilty\.in$/, /^linkfly\.gaosmedia\.com$/, /^linclik\.com$/, /^zeiz\.me$/, /^adbull\.me$/, /^adshort\.co$/, /^(adshorte|adsrt)\.com$/, /^weefy\.me$/, /^bit-url\.com$/, /^premiumzen\.com$/, /^cut4link\.com$/, /^coinlink\.co$/, /^(cutearn|shortit)\.ca$/, /^(www\.)?viralukk\.com$/, /^shrt10\.com$/, /^mikymoons\.com$/, /^spamlink\.org$/, /^royurls\.bid$/, /^itiad\.com$/, /^(ot|load)url\.com$/, /^man2pro\.com$/, /^raolink\.com$/, /^eklink\.net$/]
+      host: [/^(psl|twik)\.pw$/, /^coshink\.co$/, /^(curs|crus|4cut)\.io$/, /^(cut-urls|link-zero)\.com$/, /^adslink\.pw$/, /^dzurl\.ml$/, /^petty\.link$/, /^u2s\.io$/, /^shortad\.cf$/, /^link4\.me$/, /^urle\.co$/, /^taive\.in$/, /^www\.worldhack\.net$/, /^123link\.(io|co|press)$/, /^git\.tc$/, /^adfu\.us$/, /^short\.pastewma\.com$/, /^l2s\.io$/, /^adbilty\.in$/, /^linkfly\.gaosmedia\.com$/, /^linclik\.com$/, /^zeiz\.me$/, /^adbull\.me$/, /^adshort\.co$/, /^(adshorte|adsrt)\.com$/, /^(weefy|payskip)\.me$/, /^premiumzen\.com$/, /^cut4link\.com$/, /^(cutearn|shortit)\.ca$/, /^(www\.)?viralukk\.com$/, /^shrt10\.com$/, /^mikymoons\.com$/, /^spamlink\.org$/, /^royurls\.bid$/, /^(itiad|by6dk)\.com$/, /^(ot|load)url\.com$/, /^man2pro\.com$/, /^raolink\.com$/, /^eklink\.net$/]
     },
     ready: function () {
       var _ref92 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee90() {
@@ -7885,33 +7889,31 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://lix.in/-*',
+  rule: {
+    host: /^dwindly\.io$/
+  },
   ready: function () {
     var _ref108 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee106() {
-      var i;
+      var l;
       return _regenerator2.default.wrap(function _callee106$(_context106) {
         while (1) {
           switch (_context106.prev = _context106.next) {
             case 0:
-              i = _ADSBYPASSER_NAMESPACE__.$.$('#ibdc');
-              if (!i) {
-                _context106.next = 3;
+              l = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/encD\("([^"]+)"\)/);
+              if (!l) {
+                _context106.next = 6;
                 break;
               }
+              l = atob(l[1]);
+              _context106.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink('/' + l);
+            case 5:
               return _context106.abrupt('return');
-            case 3:
-              i = _ADSBYPASSER_NAMESPACE__.$.$('form');
-              if (!i) {
-                _context106.next = 7;
-                break;
-              }
-              i.submit();
-              return _context106.abrupt('return');
-            case 7:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('iframe');
-              _context106.next = 10;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(i.src);
-            case 10:
+            case 6:
+              l = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/document\.location\.href = "([^"]+)"/);
+              _context106.next = 9;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(l[1]);
+            case 9:
             case 'end':
               return _context106.stop();
           }
@@ -8114,7 +8116,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context112.prev = _context112.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('body > div:nth-child(4) > i:nth-child(1)');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.gotolink > center:nth-child(1) > div:nth-child(1) > i:nth-child(2)');
               a = a.textContent;
               i = a.lastIndexOf('http');
               a = a.substr(i);
@@ -9110,9 +9112,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?([a-zA-Z0-9/=]+)$/
   },
   {
-    host: [/\.blogspot\.com?/, /^simaholina\.xyz$/, /^(www\.)?id-securelink\.xyz$/, /^(www\.)?tojros\.tk$/, /^(www\.)?designmyhomee\.com$/, /^(www\.)?anjay\.info$/, /^(www\.)?kakkoiisafe\.us$/],
+    host: [/\.blogspot\.com?/, /^simaholina\.xyz$/, /^(www\.)?id-securelink\.xyz$/, /^(www\.)?tojros\.tk$/, /^(www\.)?designmyhomee\.com$/, /^(www\.)?anjay\.info$/, /^(www\.)?kakkoiisafe\.us$/, /^(www\.)?kurosafe\.(website|online)$/, /^(www\.)?losstor\.com$/, /^kurosafe\.menantisenja\.com$/],
     query: [
-    /^\?url=([a-zA-Z0-9/=]+)$/, /^\?id=([a-zA-Z0-9/=]+)$/]
+    /^\?url=([a-zA-Z0-9/=]+)$/, /^\?id=([a-zA-Z0-9/=]+)$/, /^\?site=([a-zA-Z0-9/=]+)$/]
   }, {
     host: [/^sehatlega\.com$/, /^businessforyouand\.me$/],
     query: /^\?r=([a-zA-Z0-9/=]+)$/
@@ -9220,7 +9222,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^(gameinfo|apasih)\.pw$/, /^(www\.)?lifesurance\.info$/],
+    host: [/^(gameinfo|apasih)\.pw$/, /^(www\.)?lifesurance\.info$/, /^intercelestial\.com$/],
     query: /^\?id=([a-zA-Z0-9/=]+)$/
   },
   ready: function () {
@@ -9247,10 +9249,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: [{
-    host: [/^(ani-share|autolinkach)\.com$/, /^motonews\.club$/, /^(autofans|landscapenature)\.pw$/, /^(www\.)?lifesurance\.info$/, /^(www\.)?bolaoke\.club$/],
+    host: [/^(ani-share|autolinkach)\.com$/, /^motonews\.club$/, /^sehatsegar\.net$/, /^(autofans|landscapenature)\.pw$/, /^(www\.)?lifesurance\.info$/, /^(www\.)?bolaoke\.club$/],
     query: /get=([^&]+)/
   }, {
-    host: [/^(gameinfo|apasih)\.pw$/, /^(www\.)?lifesurance\.info$/]
+    host: [/^(gameinfo|apasih)\.pw$/, /^(www\.)?lifesurance\.info$/, /^intercelestial\.com$/]
   }],
   ready: function () {
     var _ref149 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee147(m) {
@@ -9377,7 +9379,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.njiir\.com$/
+    host: [/^www\.njiir\.com$/, /^(www\.)?anjay\.info$/, /^(www\.)?tetew\.info$/]
   },
   ready: function () {
     var _ref153 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee151() {
@@ -10096,34 +10098,6 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }()
   });
 })();
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^www\.zintata\.com$/,
-    path: /^\/link\/$/
-  },
-  ready: function () {
-    var _ref177 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee175() {
-      var a;
-      return _regenerator2.default.wrap(function _callee175$(_context175) {
-        while (1) {
-          switch (_context175.prev = _context175.next) {
-            case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#one > center:nth-child(3) > a:nth-child(1)');
-              _context175.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
-            case 'end':
-              return _context175.stop();
-          }
-        }
-      }, _callee175, this);
-    }));
-    function ready() {
-      return _ref177.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
@@ -10132,17 +10106,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
       hash: /(?:#([a-zA-Z0-9]+))?/
     },
     ready: function () {
-      var _ref178 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee176(m) {
+      var _ref177 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee175(m) {
         var sjcl, paste_id, paste_salt, API_URL, pasteInfo, raw_paste, elm, frame;
-        return _regenerator2.default.wrap(function _callee176$(_context176) {
+        return _regenerator2.default.wrap(function _callee175$(_context175) {
           while (1) {
-            switch (_context176.prev = _context176.next) {
+            switch (_context175.prev = _context175.next) {
               case 0:
                 sjcl = _ADSBYPASSER_NAMESPACE__.$.window.sjcl;
                 paste_id = m.path[1];
                 paste_salt = m.hash[1];
                 API_URL = 'https://binbox.io/' + paste_id + '.json';
-                _context176.next = 6;
+                _context175.next = 6;
                 return _ADSBYPASSER_NAMESPACE__.$.get(API_URL, false, {
                   Origin: _ADSBYPASSER_NAMESPACE__._.none,
                   Referer: _ADSBYPASSER_NAMESPACE__._.none,
@@ -10150,32 +10124,32 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   'X-Requested-With': _ADSBYPASSER_NAMESPACE__._.none
                 });
               case 6:
-                pasteInfo = _context176.sent;
+                pasteInfo = _context175.sent;
                 pasteInfo = JSON.parse(pasteInfo);
                 if (pasteInfo.ok) {
-                  _context176.next = 10;
+                  _context175.next = 10;
                   break;
                 }
                 throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('error when getting paste information');
               case 10:
                 if (!pasteInfo.paste.url) {
-                  _context176.next = 14;
+                  _context175.next = 14;
                   break;
                 }
-                _context176.next = 13;
+                _context175.next = 13;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(pasteInfo.paste.url);
               case 13:
-                return _context176.abrupt('return');
+                return _context175.abrupt('return');
               case 14:
                 raw_paste = sjcl.decrypt(paste_salt, pasteInfo.paste.text);
                 if (!isLink(raw_paste)) {
-                  _context176.next = 19;
+                  _context175.next = 19;
                   break;
                 }
-                _context176.next = 18;
+                _context175.next = 18;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(raw_paste);
               case 18:
-                return _context176.abrupt('return');
+                return _context175.abrupt('return');
               case 19:
                 elm = document.createElement('pre');
                 elm.id = 'paste-text';
@@ -10184,13 +10158,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 frame.parentNode.replaceChild(elm, frame);
               case 24:
               case 'end':
-                return _context176.stop();
+                return _context175.stop();
             }
           }
-        }, _callee176, this);
+        }, _callee175, this);
       }));
       function ready(_x42) {
-        return _ref178.apply(this, arguments);
+        return _ref177.apply(this, arguments);
       }
       return ready;
     }()
@@ -10213,13 +10187,40 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function () {
+    var _ref178 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee176() {
+      return _regenerator2.default.wrap(function _callee176$(_context176) {
+        while (1) {
+          switch (_context176.prev = _context176.next) {
+            case 0:
+              _ADSBYPASSER_NAMESPACE__.$.remove('#captcha_overlay');
+            case 1:
+            case 'end':
+              return _context176.stop();
+          }
+        }
+      }, _callee176, this);
+    }));
+    function ready() {
+      return _ref178.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^www\.2i\.(sk|cz)$/
+  },
+  ready: function () {
     var _ref179 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee177() {
+      var img;
       return _regenerator2.default.wrap(function _callee177$(_context177) {
         while (1) {
           switch (_context177.prev = _context177.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('#captcha_overlay');
-            case 1:
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#wrap3 img');
+              _context177.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
+            case 3:
             case 'end':
               return _context177.stop();
           }
@@ -10233,19 +10234,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^www\.2i\.(sk|cz)$/
-  },
+  rule: ['http://*.abload.de/image.php?img=*', 'http://www.imageup.ru/*/*/*.html'],
   ready: function () {
     var _ref180 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee178() {
-      var img;
+      var i;
       return _regenerator2.default.wrap(function _callee178$(_context178) {
         while (1) {
           switch (_context178.prev = _context178.next) {
             case 0:
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#wrap3 img');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#image');
               _context178.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case 'end':
               return _context178.stop();
@@ -10260,7 +10259,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: ['http://*.abload.de/image.php?img=*', 'http://www.imageup.ru/*/*/*.html'],
+  rule: {
+    host: /^all-poster\.ru$/,
+    query: /^\?v=/
+  },
   ready: function () {
     var _ref181 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee179() {
       var i;
@@ -10268,7 +10270,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context179.prev = _context179.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#image');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#imagen img');
               _context179.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
@@ -10286,7 +10288,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^all-poster\.ru$/,
+    host: /^bunnyforum\.org$/,
     query: /^\?v=/
   },
   ready: function () {
@@ -10296,7 +10298,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context180.prev = _context180.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#imagen img');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('img[title^=Click]');
               _context180.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
@@ -10314,8 +10316,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^bunnyforum\.org$/,
-    query: /^\?v=/
+    host: /^bayimg\.com$/
   },
   ready: function () {
     var _ref183 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee181() {
@@ -10324,7 +10325,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context181.prev = _context181.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('img[title^=Click]');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#mainImage');
               _context181.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
@@ -10342,18 +10343,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^bayimg\.com$/
+    host: /^beeimg\.com$/,
+    path: /\/view\/.*/
   },
   ready: function () {
     var _ref184 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee182() {
-      var i;
+      var img;
       return _regenerator2.default.wrap(function _callee182$(_context182) {
         while (1) {
           switch (_context182.prev = _context182.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#mainImage');
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('img.img-responsive');
               _context182.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
             case 3:
             case 'end':
               return _context182.stop();
@@ -10368,20 +10370,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^beeimg\.com$/,
-    path: /\/view\/.*/
-  },
+  rule: 'http://www.bilder-upload.eu/show.php?file=*',
   ready: function () {
     var _ref185 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee183() {
-      var img;
+      var i;
       return _regenerator2.default.wrap(function _callee183$(_context183) {
         while (1) {
           switch (_context183.prev = _context183.next) {
             case 0:
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('img.img-responsive');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('input[type=image]');
               _context183.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case 'end':
               return _context183.stop();
@@ -10396,17 +10395,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://www.bilder-upload.eu/show.php?file=*',
+  rule: 'http://www.casimages.com/img.php?*',
   ready: function () {
     var _ref186 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee184() {
-      var i;
+      var img;
       return _regenerator2.default.wrap(function _callee184$(_context184) {
         while (1) {
           switch (_context184.prev = _context184.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('input[type=image]');
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('td a img');
               _context184.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
             case 3:
             case 'end':
               return _context184.stop();
@@ -10421,7 +10420,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://www.casimages.com/img.php?*',
+  rule: 'http://cubeupload.com/im/*',
   ready: function () {
     var _ref187 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee185() {
       var img;
@@ -10429,7 +10428,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context185.prev = _context185.next) {
             case 0:
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('td a img');
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('img.galleryBigImg');
               _context185.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
             case 3:
@@ -10446,17 +10445,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://cubeupload.com/im/*',
+  rule: {
+    host: [/^dailyss\.net$/, /^i\.hentai-ddl\.org$/, /^imghost\.top$/],
+    path: /^\/image\/.+$/
+  },
   ready: function () {
     var _ref188 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee186() {
-      var img;
+      var i;
       return _regenerator2.default.wrap(function _callee186$(_context186) {
         while (1) {
           switch (_context186.prev = _context186.next) {
             case 0:
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('img.galleryBigImg');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#image-viewer-container img');
               _context186.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case 'end':
               return _context186.stop();
@@ -10472,8 +10474,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^dailyss\.net$/, /^i\.hentai-ddl\.org$/, /^imghost\.top$/],
-    path: /^\/image\/.+$/
+    host: /^depic\.me$/
   },
   ready: function () {
     var _ref189 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee187() {
@@ -10482,7 +10483,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context187.prev = _context187.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#image-viewer-container img');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#pic');
               _context187.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
@@ -10500,18 +10501,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^depic\.me$/
+    host: /^img(dino|tiger|zap)\.com$/,
+    path: /^\/viewer\.php$/,
+    query: /^\?file=/
   },
   ready: function () {
     var _ref190 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee188() {
-      var i;
+      var o;
       return _regenerator2.default.wrap(function _callee188$(_context188) {
         while (1) {
           switch (_context188.prev = _context188.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#pic');
+              o = (0, _ADSBYPASSER_NAMESPACE__.$)('#cursor_lupa');
               _context188.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(o.src);
             case 3:
             case 'end':
               return _context188.stop();
@@ -10526,21 +10529,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^img(dino|tiger|zap)\.com$/,
-    path: /^\/viewer\.php$/,
-    query: /^\?file=/
-  },
+  rule: 'http://*.directupload.net/file/*.htm',
   ready: function () {
     var _ref191 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee189() {
-      var o;
+      var i;
       return _regenerator2.default.wrap(function _callee189$(_context189) {
         while (1) {
           switch (_context189.prev = _context189.next) {
             case 0:
-              o = (0, _ADSBYPASSER_NAMESPACE__.$)('#cursor_lupa');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#ImgFrame');
               _context189.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(o.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case 'end':
               return _context189.stop();
@@ -10555,63 +10554,38 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://*.directupload.net/file/*.htm',
+  rule: {
+    host: /^ewa\.ac$/,
+    path: /^\/(.*)$/
+  },
   ready: function () {
-    var _ref192 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee190() {
-      var i;
+    var _ref192 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee190(m) {
+      var url;
       return _regenerator2.default.wrap(function _callee190$(_context190) {
         while (1) {
           switch (_context190.prev = _context190.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#ImgFrame');
-              _context190.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 3:
+              _context190.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(5000);
+            case 2:
+              _context190.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.post('/site/get-new-redirect-link', {
+                code: m.path[1],
+                ads_blocked: false
+              });
+            case 4:
+              url = _context190.sent;
+              _context190.next = 7;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(url);
+            case 7:
             case 'end':
               return _context190.stop();
           }
         }
       }, _callee190, this);
     }));
-    function ready() {
-      return _ref192.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^ewa\.ac$/,
-    path: /^\/(.*)$/
-  },
-  ready: function () {
-    var _ref193 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee191(m) {
-      var url;
-      return _regenerator2.default.wrap(function _callee191$(_context191) {
-        while (1) {
-          switch (_context191.prev = _context191.next) {
-            case 0:
-              _context191.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(5000);
-            case 2:
-              _context191.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.post('/site/get-new-redirect-link', {
-                code: m.path[1],
-                ads_blocked: false
-              });
-            case 4:
-              url = _context191.sent;
-              _context191.next = 7;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(url);
-            case 7:
-            case 'end':
-              return _context191.stop();
-          }
-        }
-      }, _callee191, this);
-    }));
     function ready(_x43) {
-      return _ref193.apply(this, arguments);
+      return _ref192.apply(this, arguments);
     }
     return ready;
   }()
@@ -10622,17 +10596,42 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/view\//
   },
   ready: function () {
-    var _ref194 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee192() {
+    var _ref193 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee191() {
       var img;
+      return _regenerator2.default.wrap(function _callee191$(_context191) {
+        while (1) {
+          switch (_context191.prev = _context191.next) {
+            case 0:
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#picContainer #image');
+              _context191.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src, {
+                referer: true
+              });
+            case 3:
+            case 'end':
+              return _context191.stop();
+          }
+        }
+      }, _callee191, this);
+    }));
+    function ready() {
+      return _ref193.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: 'http://www.fotolink.su/v.php?id=*',
+  ready: function () {
+    var _ref194 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee192() {
+      var i;
       return _regenerator2.default.wrap(function _callee192$(_context192) {
         while (1) {
           switch (_context192.prev = _context192.next) {
             case 0:
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#picContainer #image');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#content img');
               _context192.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src, {
-                referer: true
-              });
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case 'end':
               return _context192.stop();
@@ -10647,7 +10646,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://www.fotolink.su/v.php?id=*',
+  rule: 'http://www.fotosik.pl/pokaz_obrazek/pelny/*.html',
   ready: function () {
     var _ref195 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee193() {
       var i;
@@ -10655,7 +10654,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context193.prev = _context193.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#content img');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('a.noborder img');
               _context193.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
@@ -10672,53 +10671,28 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://www.fotosik.pl/pokaz_obrazek/pelny/*.html',
-  ready: function () {
-    var _ref196 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee194() {
-      var i;
-      return _regenerator2.default.wrap(function _callee194$(_context194) {
-        while (1) {
-          switch (_context194.prev = _context194.next) {
-            case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('a.noborder img');
-              _context194.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 3:
-            case 'end':
-              return _context194.stop();
-          }
-        }
-      }, _callee194, this);
-    }));
-    function ready() {
-      return _ref196.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^freakimage\.com$/, /^www\.hostpic\.org$/],
     path: /^\/view\.php$/,
     query: /^\?filename=([^&]+)/
   },
   start: function () {
-    var _ref197 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee195(m) {
-      return _regenerator2.default.wrap(function _callee195$(_context195) {
+    var _ref196 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee194(m) {
+      return _regenerator2.default.wrap(function _callee194$(_context194) {
         while (1) {
-          switch (_context195.prev = _context195.next) {
+          switch (_context194.prev = _context194.next) {
             case 0:
-              _context195.next = 2;
+              _context194.next = 2;
               return _ADSBYPASSER_NAMESPACE__.$.openImage('/images/' + m.query[1]);
             case 2:
             case 'end':
-              return _context195.stop();
+              return _context194.stop();
           }
         }
-      }, _callee195, this);
+      }, _callee194, this);
     }));
     function start(_x44) {
-      return _ref197.apply(this, arguments);
+      return _ref196.apply(this, arguments);
     }
     return start;
   }()
@@ -10729,24 +10703,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/xxx\//
   },
   ready: function () {
-    var _ref198 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee196() {
+    var _ref197 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee195() {
       var img;
-      return _regenerator2.default.wrap(function _callee196$(_context196) {
+      return _regenerator2.default.wrap(function _callee195$(_context195) {
         while (1) {
-          switch (_context196.prev = _context196.next) {
+          switch (_context195.prev = _context195.next) {
             case 0:
               img = (0, _ADSBYPASSER_NAMESPACE__.$)('#mainimage');
-              _context196.next = 3;
+              _context195.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
             case 3:
             case 'end':
-              return _context196.stop();
+              return _context195.stop();
           }
         }
-      }, _callee196, this);
+      }, _callee195, this);
     }));
     function ready() {
-      return _ref198.apply(this, arguments);
+      return _ref197.apply(this, arguments);
     }
     return ready;
   }()
@@ -10757,22 +10731,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?v=([^&]+)/
   },
   start: function () {
-    var _ref199 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee197(m) {
-      return _regenerator2.default.wrap(function _callee197$(_context197) {
+    var _ref198 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee196(m) {
+      return _regenerator2.default.wrap(function _callee196$(_context196) {
         while (1) {
-          switch (_context197.prev = _context197.next) {
+          switch (_context196.prev = _context196.next) {
             case 0:
-              _context197.next = 2;
+              _context196.next = 2;
               return _ADSBYPASSER_NAMESPACE__.$.openImage('/images/' + m.query[1]);
             case 2:
             case 'end':
-              return _context197.stop();
+              return _context196.stop();
           }
         }
-      }, _callee197, this);
+      }, _callee196, this);
     }));
     function start(_x45) {
-      return _ref199.apply(this, arguments);
+      return _ref198.apply(this, arguments);
     }
     return start;
   }()
@@ -10783,22 +10757,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?v=([^&]+)/
   },
   start: function () {
-    var _ref200 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee198(m) {
-      return _regenerator2.default.wrap(function _callee198$(_context198) {
+    var _ref199 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee197(m) {
+      return _regenerator2.default.wrap(function _callee197$(_context197) {
         while (1) {
-          switch (_context198.prev = _context198.next) {
+          switch (_context197.prev = _context197.next) {
             case 0:
-              _context198.next = 2;
+              _context197.next = 2;
               return _ADSBYPASSER_NAMESPACE__.$.openImage('/images/' + m.query[1] + '.jpeg');
             case 2:
             case 'end':
-              return _context198.stop();
+              return _context197.stop();
           }
         }
-      }, _callee198, this);
+      }, _callee197, this);
     }));
     function start(_x46) {
-      return _ref200.apply(this, arguments);
+      return _ref199.apply(this, arguments);
     }
     return start;
   }()
@@ -10806,24 +10780,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: ['http://funkyimg.com/viewer.php?img=*', 'http://funkyimg.com/view/*'],
   ready: function () {
-    var _ref201 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee199() {
+    var _ref200 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee198() {
       var i;
-      return _regenerator2.default.wrap(function _callee199$(_context199) {
+      return _regenerator2.default.wrap(function _callee198$(_context198) {
         while (1) {
-          switch (_context199.prev = _context199.next) {
+          switch (_context198.prev = _context198.next) {
             case 0:
               i = (0, _ADSBYPASSER_NAMESPACE__.$)('#viewer img');
-              _context199.next = 3;
+              _context198.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case 'end':
-              return _context199.stop();
+              return _context198.stop();
           }
         }
-      }, _callee199, this);
+      }, _callee198, this);
     }));
     function ready() {
-      return _ref201.apply(this, arguments);
+      return _ref200.apply(this, arguments);
     }
     return ready;
   }()
@@ -10842,22 +10816,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/xxx\/(.+)/
     },
     start: function () {
-      var _ref202 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee200(m) {
-        return _regenerator2.default.wrap(function _callee200$(_context200) {
+      var _ref201 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee199(m) {
+        return _regenerator2.default.wrap(function _callee199$(_context199) {
           while (1) {
-            switch (_context200.prev = _context200.next) {
+            switch (_context199.prev = _context199.next) {
               case 0:
-                _context200.next = 2;
+                _context199.next = 2;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage('/xxx/images/' + m.path[1]);
               case 2:
               case 'end':
-                return _context200.stop();
+                return _context199.stop();
             }
           }
-        }, _callee200, this);
+        }, _callee199, this);
       }));
       function start(_x47) {
-        return _ref202.apply(this, arguments);
+        return _ref201.apply(this, arguments);
       }
       return start;
     }()
@@ -10868,22 +10842,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /^\?v=(.+)/
     },
     start: function () {
-      var _ref203 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee201(m) {
-        return _regenerator2.default.wrap(function _callee201$(_context201) {
+      var _ref202 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee200(m) {
+        return _regenerator2.default.wrap(function _callee200$(_context200) {
           while (1) {
-            switch (_context201.prev = _context201.next) {
+            switch (_context200.prev = _context200.next) {
               case 0:
-                _context201.next = 2;
+                _context200.next = 2;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage('/xxx/images/' + m.query[1]);
               case 2:
               case 'end':
-                return _context201.stop();
+                return _context200.stop();
             }
           }
-        }, _callee201, this);
+        }, _callee200, this);
       }));
       function start(_x48) {
-        return _ref203.apply(this, arguments);
+        return _ref202.apply(this, arguments);
       }
       return start;
     }()
@@ -10892,15 +10866,40 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.hostingpics.net/viewer.php?id=*',
   ready: function () {
-    var _ref204 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee202() {
+    var _ref203 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee201() {
       var i;
+      return _regenerator2.default.wrap(function _callee201$(_context201) {
+        while (1) {
+          switch (_context201.prev = _context201.next) {
+            case 0:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#img_viewer');
+              _context201.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+            case 3:
+            case 'end':
+              return _context201.stop();
+          }
+        }
+      }, _callee201, this);
+    }));
+    function ready() {
+      return _ref203.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: 'http://ifotos.pl/zobacz/*',
+  ready: function () {
+    var _ref204 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee202() {
+      var m;
       return _regenerator2.default.wrap(function _callee202$(_context202) {
         while (1) {
           switch (_context202.prev = _context202.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#img_viewer');
+              m = (0, _ADSBYPASSER_NAMESPACE__.$)('meta[property="og:image"]');
               _context202.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(m.content);
             case 3:
             case 'end':
               return _context202.stop();
@@ -10915,17 +10914,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://ifotos.pl/zobacz/*',
+  rule: {
+    host: /^ima\.so$/
+  },
   ready: function () {
     var _ref205 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee203() {
-      var m;
+      var a;
       return _regenerator2.default.wrap(function _callee203$(_context203) {
         while (1) {
           switch (_context203.prev = _context203.next) {
             case 0:
-              m = (0, _ADSBYPASSER_NAMESPACE__.$)('meta[property="og:image"]');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#image_block a');
               _context203.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(m.content);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(a.href);
             case 3:
             case 'end':
               return _context203.stop();
@@ -10941,53 +10942,26 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^ima\.so$/
+    host: /^imadul\.com$/,
+    query: /\?p[mt]=(.+)/
   },
-  ready: function () {
-    var _ref206 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee204() {
-      var a;
+  start: function () {
+    var _ref206 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee204(m) {
       return _regenerator2.default.wrap(function _callee204$(_context204) {
         while (1) {
           switch (_context204.prev = _context204.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#image_block a');
-              _context204.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(a.href);
-            case 3:
+              _context204.next = 2;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage('/?di=' + m.query[1]);
+            case 2:
             case 'end':
               return _context204.stop();
           }
         }
       }, _callee204, this);
     }));
-    function ready() {
-      return _ref206.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^imadul\.com$/,
-    query: /\?p[mt]=(.+)/
-  },
-  start: function () {
-    var _ref207 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee205(m) {
-      return _regenerator2.default.wrap(function _callee205$(_context205) {
-        while (1) {
-          switch (_context205.prev = _context205.next) {
-            case 0:
-              _context205.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage('/?di=' + m.query[1]);
-            case 2:
-            case 'end':
-              return _context205.stop();
-          }
-        }
-      }, _callee205, this);
-    }));
     function start(_x49) {
-      return _ref207.apply(this, arguments);
+      return _ref206.apply(this, arguments);
     }
     return start;
   }()
@@ -10998,29 +10972,66 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\d+\/\d+/
   },
   ready: function () {
-    var _ref208 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee206() {
+    var _ref207 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee205() {
       var i;
-      return _regenerator2.default.wrap(function _callee206$(_context206) {
+      return _regenerator2.default.wrap(function _callee205$(_context205) {
         while (1) {
-          switch (_context206.prev = _context206.next) {
+          switch (_context205.prev = _context205.next) {
             case 0:
               i = _ADSBYPASSER_NAMESPACE__.$.$('div.t_tips2 div > img');
               if (i) {
-                _context206.next = 5;
+                _context205.next = 5;
                 break;
               }
-              _context206.next = 4;
+              _context205.next = 4;
               return _ADSBYPASSER_NAMESPACE__.$.openLink('', {
                 post: {
                   _confirm: ''
                 }
               });
             case 4:
-              return _context206.abrupt('return');
+              return _context205.abrupt('return');
             case 5:
-              _context206.next = 7;
+              _context205.next = 7;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 7:
+            case 'end':
+              return _context205.stop();
+          }
+        }
+      }, _callee205, this);
+    }));
+    function ready() {
+      return _ref207.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: 'http://www.imagebam.com/image/*',
+  ready: function () {
+    var _ref208 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee206() {
+      var o;
+      return _regenerator2.default.wrap(function _callee206$(_context206) {
+        while (1) {
+          switch (_context206.prev = _context206.next) {
+            case 0:
+              o = _ADSBYPASSER_NAMESPACE__.$.$('.image-container img[id]');
+              if (!o) {
+                _context206.next = 5;
+                break;
+              }
+              _context206.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(o.src, {
+                replace: true
+              });
+            case 4:
+              return _context206.abrupt('return');
+            case 5:
+              o = (0, _ADSBYPASSER_NAMESPACE__.$)('body > div > div > a');
+              _context206.next = 8;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(o.href);
+            case 8:
             case 'end':
               return _context206.stop();
           }
@@ -11034,30 +11045,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://www.imagebam.com/image/*',
+  rule: 'http://www.imagehousing.com/image/*',
   ready: function () {
     var _ref209 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee207() {
-      var o;
+      var i;
       return _regenerator2.default.wrap(function _callee207$(_context207) {
         while (1) {
           switch (_context207.prev = _context207.next) {
             case 0:
-              o = _ADSBYPASSER_NAMESPACE__.$.$('.image-container img[id]');
-              if (!o) {
-                _context207.next = 5;
-                break;
-              }
-              _context207.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(o.src, {
-                replace: true
-              });
-            case 4:
-              return _context207.abrupt('return');
-            case 5:
-              o = (0, _ADSBYPASSER_NAMESPACE__.$)('body > div > div > a');
-              _context207.next = 8;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(o.href);
-            case 8:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('td.text_item img');
+              _context207.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+            case 3:
             case 'end':
               return _context207.stop();
           }
@@ -11071,7 +11070,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://www.imagehousing.com/image/*',
+  rule: 'http://imageno.com/*.html',
   ready: function () {
     var _ref210 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee208() {
       var i;
@@ -11079,7 +11078,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context208.prev = _context208.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('td.text_item img');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#image_div img');
               _context208.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
@@ -11095,18 +11094,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return ready;
   }()
 });
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://imageno.com/*.html',
-  ready: function () {
+(function () {
+  var run = function () {
     var _ref211 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee209() {
-      var i;
+      var o;
       return _regenerator2.default.wrap(function _callee209$(_context209) {
         while (1) {
           switch (_context209.prev = _context209.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#image_div img');
+              o = (0, _ADSBYPASSER_NAMESPACE__.$)('#download_box img[id]');
               _context209.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(o.src);
             case 3:
             case 'end':
               return _context209.stop();
@@ -11114,32 +11112,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
         }
       }, _callee209, this);
     }));
-    function ready() {
-      return _ref211.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-(function () {
-  var run = function () {
-    var _ref212 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee210() {
-      var o;
-      return _regenerator2.default.wrap(function _callee210$(_context210) {
-        while (1) {
-          switch (_context210.prev = _context210.next) {
-            case 0:
-              o = (0, _ADSBYPASSER_NAMESPACE__.$)('#download_box img[id]');
-              _context210.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(o.src);
-            case 3:
-            case 'end':
-              return _context210.stop();
-          }
-        }
-      }, _callee210, this);
-    }));
     return function run() {
-      return _ref212.apply(this, arguments);
+      return _ref211.apply(this, arguments);
     };
   }();
   _ADSBYPASSER_NAMESPACE__._.register({
@@ -11164,22 +11138,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/photo\/.+\/(.+)\/([^/]+)/
     },
     start: function () {
-      var _ref213 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee211(m) {
-        return _regenerator2.default.wrap(function _callee211$(_context211) {
+      var _ref212 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee210(m) {
+        return _regenerator2.default.wrap(function _callee210$(_context210) {
           while (1) {
-            switch (_context211.prev = _context211.next) {
+            switch (_context210.prev = _context210.next) {
               case 0:
-                _context211.next = 2;
+                _context210.next = 2;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage('/f/' + m.path[1] + '/' + m.path[2] + '/');
               case 2:
               case 'end':
-                return _context211.stop();
+                return _context210.stop();
             }
           }
-        }, _callee211, this);
+        }, _callee210, this);
       }));
       function start(_x50) {
-        return _ref213.apply(this, arguments);
+        return _ref212.apply(this, arguments);
       }
       return start;
     }()
@@ -11190,24 +11164,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/f\/.+\/[^/]+/
     },
     ready: function () {
-      var _ref214 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee212() {
+      var _ref213 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee211() {
         var i;
-        return _regenerator2.default.wrap(function _callee212$(_context212) {
+        return _regenerator2.default.wrap(function _callee211$(_context211) {
           while (1) {
-            switch (_context212.prev = _context212.next) {
+            switch (_context211.prev = _context211.next) {
               case 0:
                 i = (0, _ADSBYPASSER_NAMESPACE__.$)('#fullimg');
-                _context212.next = 3;
+                _context211.next = 3;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
               case 3:
               case 'end':
-                return _context212.stop();
+                return _context211.stop();
             }
           }
-        }, _callee212, this);
+        }, _callee211, this);
       }));
       function ready() {
-        return _ref214.apply(this, arguments);
+        return _ref213.apply(this, arguments);
       }
       return ready;
     }()
@@ -11216,15 +11190,41 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://imageshost.ru/photo/*/id*.html',
   ready: function () {
-    var _ref215 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee213() {
+    var _ref214 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee212() {
       var a;
+      return _regenerator2.default.wrap(function _callee212$(_context212) {
+        while (1) {
+          switch (_context212.prev = _context212.next) {
+            case 0:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#bphoto a');
+              _context212.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(a.href);
+            case 3:
+            case 'end':
+              return _context212.stop();
+          }
+        }
+      }, _callee212, this);
+    }));
+    function ready() {
+      return _ref214.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+(function () {
+  var run = function () {
+    var _ref215 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee213() {
+      var i;
       return _regenerator2.default.wrap(function _callee213$(_context213) {
         while (1) {
           switch (_context213.prev = _context213.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#bphoto a');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#img_obj');
               _context213.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(a.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src, {
+                referer: true
+              });
             case 3:
             case 'end':
               return _context213.stop();
@@ -11232,14 +11232,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
         }
       }, _callee213, this);
     }));
-    function ready() {
+    return function run() {
       return _ref215.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-(function () {
-  var run = function () {
+    };
+  }();
+  var run2 = function () {
     var _ref216 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee214() {
       var i;
       return _regenerator2.default.wrap(function _callee214$(_context214) {
@@ -11249,7 +11246,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
               i = (0, _ADSBYPASSER_NAMESPACE__.$)('#img_obj');
               _context214.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src, {
-                referer: true
+                replace: true
               });
             case 3:
             case 'end':
@@ -11258,31 +11255,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
         }
       }, _callee214, this);
     }));
-    return function run() {
-      return _ref216.apply(this, arguments);
-    };
-  }();
-  var run2 = function () {
-    var _ref217 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee215() {
-      var i;
-      return _regenerator2.default.wrap(function _callee215$(_context215) {
-        while (1) {
-          switch (_context215.prev = _context215.next) {
-            case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#img_obj');
-              _context215.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src, {
-                replace: true
-              });
-            case 3:
-            case 'end':
-              return _context215.stop();
-          }
-        }
-      }, _callee215, this);
-    }));
     return function run2() {
-      return _ref217.apply(this, arguments);
+      return _ref216.apply(this, arguments);
     };
   }();
   _ADSBYPASSER_NAMESPACE__._.register({
@@ -11315,41 +11289,43 @@ _ADSBYPASSER_NAMESPACE__._.register({
 })();
 (function () {
   var run = function () {
-    var _ref218 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee216(rp) {
+    var _ref217 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee215(rp) {
       var i;
-      return _regenerator2.default.wrap(function _callee216$(_context216) {
+      return _regenerator2.default.wrap(function _callee215$(_context215) {
         while (1) {
-          switch (_context216.prev = _context216.next) {
+          switch (_context215.prev = _context215.next) {
             case 0:
               if (_ADSBYPASSER_NAMESPACE__.$.window.jQuery) {
                 _ADSBYPASSER_NAMESPACE__.$.window.jQuery.prototype.append = undefined;
               }
               i = (0, _ADSBYPASSER_NAMESPACE__.$)('img.pic');
-              _context216.next = 4;
+              _context215.next = 4;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src, {
                 replace: rp
               });
             case 4:
             case 'end':
-              return _context216.stop();
+              return _context215.stop();
           }
         }
-      }, _callee216, this);
+      }, _callee215, this);
     }));
     return function run(_x51) {
-      return _ref218.apply(this, arguments);
+      return _ref217.apply(this, arguments);
     };
   }();
   _ADSBYPASSER_NAMESPACE__._.register({
-    rule: {
+    rule: [{
       host: /^imagenpic\.com$/,
       path: /^\/.*\/.+\.html?$/
-    },
+    }, {
+      host: /^imagetwist\.com$/
+    }],
     ready: _ADSBYPASSER_NAMESPACE__._.partial(run, true)
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^imagetwist\.com$/, /^imagexport\.com$/, /^imageshimage\.com$/]
+      host: [/^imagexport\.com$/, /^imageshimage\.com$/]
     },
     ready: _ADSBYPASSER_NAMESPACE__._.partial(run, false)
   });
@@ -11357,13 +11333,38 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://imageupper.com/i/?*',
   ready: function () {
+    var _ref218 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee216() {
+      var i;
+      return _regenerator2.default.wrap(function _callee216$(_context216) {
+        while (1) {
+          switch (_context216.prev = _context216.next) {
+            case 0:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#img');
+              _context216.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+            case 3:
+            case 'end':
+              return _context216.stop();
+          }
+        }
+      }, _callee216, this);
+    }));
+    function ready() {
+      return _ref218.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: ['http://*.imagevenue.com/img.php?*', 'http://hotchyx.com/d/adult-image-hosting-view-08.php?id=*'],
+  ready: function () {
     var _ref219 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee217() {
       var i;
       return _regenerator2.default.wrap(function _callee217$(_context217) {
         while (1) {
           switch (_context217.prev = _context217.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#img');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#thepic');
               _context217.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
@@ -11380,7 +11381,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: ['http://*.imagevenue.com/img.php?*', 'http://hotchyx.com/d/adult-image-hosting-view-08.php?id=*'],
+  rule: {
+    host: /^imagezilla\.net$/
+  },
   ready: function () {
     var _ref220 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee218() {
       var i;
@@ -11388,9 +11391,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context218.prev = _context218.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#thepic');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#photo');
               _context218.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src, {
+                referer: true
+              });
             case 3:
             case 'end':
               return _context218.stop();
@@ -11405,21 +11410,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^imagezilla\.net$/
-  },
+  rule: 'http://img.3ezy.net/*.htm',
   ready: function () {
     var _ref221 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee219() {
-      var i;
+      var l;
       return _regenerator2.default.wrap(function _callee219$(_context219) {
         while (1) {
           switch (_context219.prev = _context219.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#photo');
+              l = (0, _ADSBYPASSER_NAMESPACE__.$)('link[rel="image_src"]');
               _context219.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src, {
-                referer: true
-              });
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(l.href);
             case 3:
             case 'end':
               return _context219.stop();
@@ -11434,18 +11435,28 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://img.3ezy.net/*.htm',
+  rule: 'http://img1.imagilive.com/*/*',
   ready: function () {
     var _ref222 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee220() {
-      var l;
+      var a, i;
       return _regenerator2.default.wrap(function _callee220$(_context220) {
         while (1) {
           switch (_context220.prev = _context220.next) {
             case 0:
-              l = (0, _ADSBYPASSER_NAMESPACE__.$)('link[rel="image_src"]');
-              _context220.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(l.href);
-            case 3:
+              a = _ADSBYPASSER_NAMESPACE__.$.$('#page a.button');
+              if (!a) {
+                _context220.next = 5;
+                break;
+              }
+              _context220.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 4:
+              return _context220.abrupt('return');
+            case 5:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#page > img:not([id])');
+              _context220.next = 8;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+            case 8:
             case 'end':
               return _context220.stop();
           }
@@ -11459,28 +11470,28 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://img1.imagilive.com/*/*',
+  rule: {
+    host: /^www\.img(babes|flare)\.com$/
+  },
   ready: function () {
     var _ref223 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee221() {
-      var a, i;
+      var i;
       return _regenerator2.default.wrap(function _callee221$(_context221) {
         while (1) {
           switch (_context221.prev = _context221.next) {
             case 0:
-              a = _ADSBYPASSER_NAMESPACE__.$.$('#page a.button');
-              if (!a) {
-                _context221.next = 5;
+              i = _ADSBYPASSER_NAMESPACE__.$.$('input[onclick]');
+              if (!i) {
+                _context221.next = 4;
                 break;
               }
-              _context221.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 4:
+              _ADSBYPASSER_NAMESPACE__.$.window.Decode();
               return _context221.abrupt('return');
-            case 5:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#page > img:not([id])');
-              _context221.next = 8;
+            case 4:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#this_image');
+              _context221.next = 7;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 8:
+            case 7:
             case 'end':
               return _context221.stop();
           }
@@ -11495,7 +11506,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.img(babes|flare)\.com$/
+    host: /^imgbar\.net$/,
+    path: /^\/img_show\.php$/,
+    query: /^\?view_id=/
   },
   ready: function () {
     var _ref224 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee222() {
@@ -11504,18 +11517,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context222.prev = _context222.next) {
             case 0:
-              i = _ADSBYPASSER_NAMESPACE__.$.$('input[onclick]');
-              if (!i) {
-                _context222.next = 4;
-                break;
-              }
-              _ADSBYPASSER_NAMESPACE__.$.window.Decode();
-              return _context222.abrupt('return');
-            case 4:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#this_image');
-              _context222.next = 7;
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('center img');
+              _context222.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 7:
+            case 3:
             case 'end':
               return _context222.stop();
           }
@@ -11530,9 +11535,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^imgbar\.net$/,
-    path: /^\/img_show\.php$/,
-    query: /^\?view_id=/
+    host: /^imgbar\.net$/
   },
   ready: function () {
     var _ref225 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee223() {
@@ -11541,9 +11544,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context223.prev = _context223.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('center img');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('div.panel.top form input[name=sid]');
               _context223.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink('/img_show.php?view_id=' + i.value);
             case 3:
             case 'end':
               return _context223.stop();
@@ -11559,7 +11562,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^imgbar\.net$/
+    host: /^imgbox\.com$/,
+    path: /^\/[\d\w]+$/
   },
   ready: function () {
     var _ref226 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee224() {
@@ -11568,10 +11572,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context224.prev = _context224.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('div.panel.top form input[name=sid]');
-              _context224.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink('/img_show.php?view_id=' + i.value);
-            case 3:
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#img');
+              _context224.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+            case 4:
             case 'end':
               return _context224.stop();
           }
@@ -11584,64 +11589,35 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return ready;
   }()
 });
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^imgbox\.com$/,
-    path: /^\/[\d\w]+$/
-  },
-  ready: function () {
-    var _ref227 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee225() {
+(function () {
+  var helper = function () {
+    var _ref227 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee225(doReplace) {
       var i;
       return _regenerator2.default.wrap(function _callee225$(_context225) {
         while (1) {
           switch (_context225.prev = _context225.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#img');
-              _context225.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 4:
+              if (!_ADSBYPASSER_NAMESPACE__.$.window.confirmAge) {
+                _context225.next = 3;
+                break;
+              }
+              _ADSBYPASSER_NAMESPACE__.$.window.confirmAge(1);
+              return _context225.abrupt('return');
+            case 3:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#container-home img[onclick]');
+              _context225.next = 6;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src, {
+                replace: doReplace
+              });
+            case 6:
             case 'end':
               return _context225.stop();
           }
         }
       }, _callee225, this);
     }));
-    function ready() {
-      return _ref227.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-(function () {
-  var helper = function () {
-    var _ref228 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee226(doReplace) {
-      var i;
-      return _regenerator2.default.wrap(function _callee226$(_context226) {
-        while (1) {
-          switch (_context226.prev = _context226.next) {
-            case 0:
-              if (!_ADSBYPASSER_NAMESPACE__.$.window.confirmAge) {
-                _context226.next = 3;
-                break;
-              }
-              _ADSBYPASSER_NAMESPACE__.$.window.confirmAge(1);
-              return _context226.abrupt('return');
-            case 3:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#container-home img[onclick]');
-              _context226.next = 6;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src, {
-                replace: doReplace
-              });
-            case 6:
-            case 'end':
-              return _context226.stop();
-          }
-        }
-      }, _callee226, this);
-    }));
     return function helper(_x52) {
-      return _ref228.apply(this, arguments);
+      return _ref227.apply(this, arguments);
     };
   }();
   _ADSBYPASSER_NAMESPACE__._.register({
@@ -11665,11 +11641,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/image\/[\d\w]+$/
   },
   ready: function () {
-    var _ref229 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee227() {
+    var _ref228 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee226() {
       var d;
-      return _regenerator2.default.wrap(function _callee227$(_context227) {
+      return _regenerator2.default.wrap(function _callee226$(_context226) {
         while (1) {
-          switch (_context227.prev = _context227.next) {
+          switch (_context226.prev = _context226.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('#loading2');
               d = (0, _ADSBYPASSER_NAMESPACE__.$)('.box');
@@ -11677,29 +11653,29 @@ _ADSBYPASSER_NAMESPACE__._.register({
               d.style.opacity = 'initial';
             case 4:
             case 'end':
-              return _context227.stop();
+              return _context226.stop();
           }
         }
-      }, _callee227, this);
+      }, _callee226, this);
     }));
     function ready() {
-      return _ref229.apply(this, arguments);
+      return _ref228.apply(this, arguments);
     }
     return ready;
   }()
 });
 (function () {
   var getAmbiguousForm = function () {
-    var _ref238 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee236(selector, shellNormalizer) {
+    var _ref237 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee235(selector, shellNormalizer) {
       var d, style, visibleClasses, forms, _loop, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, form, _ret;
-      return _regenerator2.default.wrap(function _callee236$(_context236) {
+      return _regenerator2.default.wrap(function _callee235$(_context235) {
         while (1) {
-          switch (_context236.prev = _context236.next) {
+          switch (_context235.prev = _context235.next) {
             case 0:
-              _context236.next = 2;
+              _context235.next = 2;
               return waitFormShell(selector, shellNormalizer);
             case 2:
-              d = _context236.sent;
+              d = _context235.sent;
               style = (0, _ADSBYPASSER_NAMESPACE__.$)('style', d);
               visibleClasses = parseStyle(style);
               forms = _ADSBYPASSER_NAMESPACE__.$.$$('form', d);
@@ -11720,123 +11696,123 @@ _ADSBYPASSER_NAMESPACE__._.register({
               _iteratorNormalCompletion = true;
               _didIteratorError = false;
               _iteratorError = undefined;
-              _context236.prev = 10;
+              _context235.prev = 10;
               _iterator = (0, _getIterator3.default)(forms);
             case 12:
               if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-                _context236.next = 24;
+                _context235.next = 24;
                 break;
               }
               form = _step.value;
               _ret = _loop(form);
-              _context236.t0 = _ret;
-              _context236.next = _context236.t0 === 'continue' ? 18 : 19;
+              _context235.t0 = _ret;
+              _context235.next = _context235.t0 === 'continue' ? 18 : 19;
               break;
             case 18:
-              return _context236.abrupt('continue', 21);
+              return _context235.abrupt('continue', 21);
             case 19:
               if (!((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3.default)(_ret)) === "object")) {
-                _context236.next = 21;
+                _context235.next = 21;
                 break;
               }
-              return _context236.abrupt('return', _ret.v);
+              return _context235.abrupt('return', _ret.v);
             case 21:
               _iteratorNormalCompletion = true;
-              _context236.next = 12;
+              _context235.next = 12;
               break;
             case 24:
-              _context236.next = 30;
+              _context235.next = 30;
               break;
             case 26:
-              _context236.prev = 26;
-              _context236.t1 = _context236['catch'](10);
+              _context235.prev = 26;
+              _context235.t1 = _context235['catch'](10);
               _didIteratorError = true;
-              _iteratorError = _context236.t1;
+              _iteratorError = _context235.t1;
             case 30:
-              _context236.prev = 30;
-              _context236.prev = 31;
+              _context235.prev = 30;
+              _context235.prev = 31;
               if (!_iteratorNormalCompletion && _iterator.return) {
                 _iterator.return();
               }
             case 33:
-              _context236.prev = 33;
+              _context235.prev = 33;
               if (!_didIteratorError) {
-                _context236.next = 36;
+                _context235.next = 36;
                 break;
               }
               throw _iteratorError;
             case 36:
-              return _context236.finish(33);
+              return _context235.finish(33);
             case 37:
-              return _context236.finish(30);
+              return _context235.finish(30);
             case 38:
-              return _context236.abrupt('return', null);
+              return _context235.abrupt('return', null);
             case 39:
             case 'end':
-              return _context236.stop();
+              return _context235.stop();
           }
         }
-      }, _callee236, this, [[10, 26, 30, 38], [31,, 33, 37]]);
+      }, _callee235, this, [[10, 26, 30, 38], [31,, 33, 37]]);
     }));
     return function getAmbiguousForm(_x54, _x55) {
-      return _ref238.apply(this, arguments);
+      return _ref237.apply(this, arguments);
     };
   }();
   var helper = function () {
-    var _ref239 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee237(id, getNext) {
+    var _ref238 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee236(id, getNext) {
       var recaptcha, i, next;
-      return _regenerator2.default.wrap(function _callee237$(_context237) {
+      return _regenerator2.default.wrap(function _callee236$(_context236) {
         while (1) {
-          switch (_context237.prev = _context237.next) {
+          switch (_context236.prev = _context236.next) {
             case 0:
               recaptcha = _ADSBYPASSER_NAMESPACE__.$.$('#recaptcha_widget, #captcha');
               if (!recaptcha) {
-                _context237.next = 4;
+                _context236.next = 4;
                 break;
               }
               _ADSBYPASSER_NAMESPACE__._.info('stop because recaptcha');
-              return _context237.abrupt('return');
+              return _context236.abrupt('return');
             case 4:
               i = _ADSBYPASSER_NAMESPACE__.$.$('input[name="next"]');
               if (!i) {
-                _context237.next = 10;
+                _context236.next = 10;
                 break;
               }
               next = getNext(i);
-              _context237.next = 9;
+              _context236.next = 9;
               return go(id, (0, _ADSBYPASSER_NAMESPACE__.$)('input[name="pre"]').value, next);
             case 9:
-              return _context237.abrupt('return');
+              return _context236.abrupt('return');
             case 10:
               i = _ADSBYPASSER_NAMESPACE__.$.$('img.picview');
               if (!i) {
-                _context237.next = 15;
+                _context236.next = 15;
                 break;
               }
-              _context237.next = 14;
+              _context236.next = 14;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 14:
-              return _context237.abrupt('return');
+              return _context236.abrupt('return');
             case 15:
               _ADSBYPASSER_NAMESPACE__._.info('do nothing');
             case 16:
             case 'end':
-              return _context237.stop();
+              return _context236.stop();
           }
         }
-      }, _callee237, this);
+      }, _callee236, this);
     }));
     return function helper(_x56, _x57) {
-      return _ref239.apply(this, arguments);
+      return _ref238.apply(this, arguments);
     };
   }();
   var go = function () {
-    var _ref240 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee238(id, pre, next) {
-      return _regenerator2.default.wrap(function _callee238$(_context238) {
+    var _ref239 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee237(id, pre, next) {
+      return _regenerator2.default.wrap(function _callee237$(_context237) {
         while (1) {
-          switch (_context238.prev = _context238.next) {
+          switch (_context237.prev = _context237.next) {
             case 0:
-              _context238.next = 2;
+              _context237.next = 2;
               return _ADSBYPASSER_NAMESPACE__.$.openLink('', {
                 post: {
                   op: 'view',
@@ -11848,13 +11824,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
               });
             case 2:
             case 'end':
-              return _context238.stop();
+              return _context237.stop();
           }
         }
-      }, _callee238, this);
+      }, _callee237, this);
     }));
     return function go(_x58, _x59, _x60) {
-      return _ref240.apply(this, arguments);
+      return _ref239.apply(this, arguments);
     };
   }();
   var PATH_RULE = /^\/([0-9a-zA-Z-_]+)(\.|\/|$)/;
@@ -11864,22 +11840,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: PATH_RULE
     },
     ready: function () {
-      var _ref230 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee228(m) {
-        return _regenerator2.default.wrap(function _callee228$(_context228) {
+      var _ref229 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee227(m) {
+        return _regenerator2.default.wrap(function _callee227$(_context227) {
           while (1) {
-            switch (_context228.prev = _context228.next) {
+            switch (_context227.prev = _context227.next) {
               case 0:
-                _context228.next = 2;
+                _context227.next = 2;
                 return helper(m.path[1], getNext1);
               case 2:
               case 'end':
-                return _context228.stop();
+                return _context227.stop();
             }
           }
-        }, _callee228, this);
+        }, _callee227, this);
       }));
       function ready(_x53) {
-        return _ref230.apply(this, arguments);
+        return _ref229.apply(this, arguments);
       }
       return ready;
     }()
@@ -11890,13 +11866,56 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: PATH_RULE
     },
     ready: function () {
-      var _ref231 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee229() {
+      var _ref230 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee228() {
         var i, d, node;
+        return _regenerator2.default.wrap(function _callee228$(_context228) {
+          while (1) {
+            switch (_context228.prev = _context228.next) {
+              case 0:
+                i = _ADSBYPASSER_NAMESPACE__.$.$('img.pic');
+                if (!i) {
+                  _context228.next = 5;
+                  break;
+                }
+                _context228.next = 4;
+                return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              case 4:
+                return _context228.abrupt('return');
+              case 5:
+                d = (0, _ADSBYPASSER_NAMESPACE__.$)('div[id^="imageviewi"]');
+                _context228.next = 8;
+                return waitDOM(d, function (node) {
+                  return node.nodeName === 'FORM' && _ADSBYPASSER_NAMESPACE__.$.$('input[name="id"]', node);
+                });
+              case 8:
+                node = _context228.sent;
+                node.submit();
+              case 10:
+              case 'end':
+                return _context228.stop();
+            }
+          }
+        }, _callee228, this);
+      }));
+      function ready() {
+        return _ref230.apply(this, arguments);
+      }
+      return ready;
+    }()
+  });
+  _ADSBYPASSER_NAMESPACE__._.register({
+    rule: {
+      host: [/^imgtown\.net$/, /^imgrock\.info$/],
+      path: PATH_RULE
+    },
+    ready: function () {
+      var _ref231 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee229() {
+        var i, node;
         return _regenerator2.default.wrap(function _callee229$(_context229) {
           while (1) {
             switch (_context229.prev = _context229.next) {
               case 0:
-                i = _ADSBYPASSER_NAMESPACE__.$.$('img.pic');
+                i = _ADSBYPASSER_NAMESPACE__.$.$('img.picview');
                 if (!i) {
                   _context229.next = 5;
                   break;
@@ -11906,15 +11925,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
               case 4:
                 return _context229.abrupt('return');
               case 5:
-                d = (0, _ADSBYPASSER_NAMESPACE__.$)('div[id^="imageviewi"]');
+                _ADSBYPASSER_NAMESPACE__.$.window._0x337c4b = null;
                 _context229.next = 8;
-                return waitDOM(d, function (node) {
-                  return node.nodeName === 'FORM' && _ADSBYPASSER_NAMESPACE__.$.$('input[name="id"]', node);
+                return getAmbiguousForm('div[id] + div[id] > style', function (node) {
+                  return node.parentElement;
                 });
               case 8:
                 node = _context229.sent;
-                node.submit();
-              case 10:
+                node.click();
+                node.click();
+                node.click();
+              case 12:
               case 'end':
                 return _context229.stop();
             }
@@ -11929,7 +11950,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^imgtown\.net$/, /^imgrock\.info$/],
+      host: /^imgoutlet\.pw$/,
       path: PATH_RULE
     },
     ready: function () {
@@ -11941,25 +11962,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
               case 0:
                 i = _ADSBYPASSER_NAMESPACE__.$.$('img.picview');
                 if (!i) {
-                  _context230.next = 5;
+                  _context230.next = 6;
                   break;
                 }
-                _context230.next = 4;
+                _ADSBYPASSER_NAMESPACE__.$.window._0x2cd123 = null;
+                _context230.next = 5;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-              case 4:
-                return _context230.abrupt('return');
               case 5:
+                return _context230.abrupt('return');
+              case 6:
                 _ADSBYPASSER_NAMESPACE__.$.window._0x337c4b = null;
-                _context230.next = 8;
+                _context230.next = 9;
                 return getAmbiguousForm('div[id] + div[id] > style', function (node) {
                   return node.parentElement;
                 });
-              case 8:
+              case 9:
                 node = _context230.sent;
                 node.click();
-                node.click();
-                node.click();
-              case 12:
+              case 11:
               case 'end':
                 return _context230.stop();
             }
@@ -11974,36 +11994,29 @@ _ADSBYPASSER_NAMESPACE__._.register({
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: /^imgoutlet\.pw$/,
+      host: /^imgfiles\.org$/,
       path: PATH_RULE
     },
     ready: function () {
       var _ref233 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee231() {
-        var i, node;
+        var i, f;
         return _regenerator2.default.wrap(function _callee231$(_context231) {
           while (1) {
             switch (_context231.prev = _context231.next) {
               case 0:
-                i = _ADSBYPASSER_NAMESPACE__.$.$('img.picview');
+                i = _ADSBYPASSER_NAMESPACE__.$.$('img.pic');
                 if (!i) {
-                  _context231.next = 6;
+                  _context231.next = 5;
                   break;
                 }
-                _ADSBYPASSER_NAMESPACE__.$.window._0x2cd123 = null;
-                _context231.next = 5;
+                _context231.next = 4;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-              case 5:
+              case 4:
                 return _context231.abrupt('return');
-              case 6:
-                _ADSBYPASSER_NAMESPACE__.$.window._0x337c4b = null;
-                _context231.next = 9;
-                return getAmbiguousForm('div[id] + div[id] > style', function (node) {
-                  return node.parentElement;
-                });
-              case 9:
-                node = _context231.sent;
-                node.click();
-              case 11:
+              case 5:
+                f = (0, _ADSBYPASSER_NAMESPACE__.$)('form');
+                f.submit();
+              case 7:
               case 'end':
                 return _context231.stop();
             }
@@ -12017,13 +12030,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }()
   });
   _ADSBYPASSER_NAMESPACE__._.register({
-    rule: {
-      host: /^imgfiles\.org$/,
-      path: PATH_RULE
-    },
+    rule: 'http://imgview.net/tpind.php',
     ready: function () {
       var _ref234 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee232() {
-        var i, f;
+        var i, d;
         return _regenerator2.default.wrap(function _callee232$(_context232) {
           while (1) {
             switch (_context232.prev = _context232.next) {
@@ -12034,13 +12044,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   break;
                 }
                 _context232.next = 4;
-                return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+                return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src, { replace: true });
               case 4:
                 return _context232.abrupt('return');
               case 5:
-                f = (0, _ADSBYPASSER_NAMESPACE__.$)('form');
-                f.submit();
+                _context232.next = 7;
+                return _ADSBYPASSER_NAMESPACE__._.wait(500);
               case 7:
+                d = (0, _ADSBYPASSER_NAMESPACE__.$)('div[id^="imageviewi"] input[type="submit"][style=""]');
+                d = d.parentNode;
+                d.submit();
+              case 10:
               case 'end':
                 return _context232.stop();
             }
@@ -12054,10 +12068,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }()
   });
   _ADSBYPASSER_NAMESPACE__._.register({
-    rule: 'http://imgview.net/tpind.php',
+    rule: /^http:\/\/imgdragon\.com\/(getfil\.php|dl)$/,
     ready: function () {
       var _ref235 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee233() {
-        var i, d;
+        var i, f;
         return _regenerator2.default.wrap(function _callee233$(_context233) {
           while (1) {
             switch (_context233.prev = _context233.next) {
@@ -12068,17 +12082,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   break;
                 }
                 _context233.next = 4;
-                return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src, { replace: true });
+                return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
               case 4:
                 return _context233.abrupt('return');
               case 5:
                 _context233.next = 7;
                 return _ADSBYPASSER_NAMESPACE__._.wait(500);
               case 7:
-                d = (0, _ADSBYPASSER_NAMESPACE__.$)('div[id^="imageviewi"] input[type="submit"][style=""]');
-                d = d.parentNode;
-                d.submit();
-              case 10:
+                f = (0, _ADSBYPASSER_NAMESPACE__.$)('#ContinueFRM');
+                f.submit();
+              case 9:
               case 'end':
                 return _context233.stop();
             }
@@ -12092,15 +12105,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }()
   });
   _ADSBYPASSER_NAMESPACE__._.register({
-    rule: /^http:\/\/imgdragon\.com\/(getfil\.php|dl)$/,
+    rule: {
+      host: /^imgrock\.pw$/,
+      path: PATH_RULE
+    },
     ready: function () {
       var _ref236 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee234() {
-        var i, f;
+        var i, node;
         return _regenerator2.default.wrap(function _callee234$(_context234) {
           while (1) {
             switch (_context234.prev = _context234.next) {
               case 0:
-                i = _ADSBYPASSER_NAMESPACE__.$.$('img.pic');
+                i = _ADSBYPASSER_NAMESPACE__.$.$('img.picview');
                 if (!i) {
                   _context234.next = 5;
                   break;
@@ -12111,10 +12127,14 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 return _context234.abrupt('return');
               case 5:
                 _context234.next = 7;
-                return _ADSBYPASSER_NAMESPACE__._.wait(500);
+                return getAmbiguousForm('div[id] + div[id] > input:not([style])', function (node) {
+                  var d = node.parentElement;
+                  node.click();
+                  return d;
+                });
               case 7:
-                f = (0, _ADSBYPASSER_NAMESPACE__.$)('#ContinueFRM');
-                f.submit();
+                node = _context234.sent;
+                node.click();
               case 9:
               case 'end':
                 return _context234.stop();
@@ -12124,50 +12144,6 @@ _ADSBYPASSER_NAMESPACE__._.register({
       }));
       function ready() {
         return _ref236.apply(this, arguments);
-      }
-      return ready;
-    }()
-  });
-  _ADSBYPASSER_NAMESPACE__._.register({
-    rule: {
-      host: /^imgrock\.pw$/,
-      path: PATH_RULE
-    },
-    ready: function () {
-      var _ref237 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee235() {
-        var i, node;
-        return _regenerator2.default.wrap(function _callee235$(_context235) {
-          while (1) {
-            switch (_context235.prev = _context235.next) {
-              case 0:
-                i = _ADSBYPASSER_NAMESPACE__.$.$('img.picview');
-                if (!i) {
-                  _context235.next = 5;
-                  break;
-                }
-                _context235.next = 4;
-                return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-              case 4:
-                return _context235.abrupt('return');
-              case 5:
-                _context235.next = 7;
-                return getAmbiguousForm('div[id] + div[id] > input:not([style])', function (node) {
-                  var d = node.parentElement;
-                  node.click();
-                  return d;
-                });
-              case 7:
-                node = _context235.sent;
-                node.click();
-              case 9:
-              case 'end':
-                return _context235.stop();
-            }
-          }
-        }, _callee235, this);
-      }));
-      function ready() {
-        return _ref237.apply(this, arguments);
       }
       return ready;
     }()
@@ -12230,15 +12206,43 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?id=.*/
   },
   ready: function () {
-    var _ref241 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee239() {
+    var _ref240 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee238() {
       var img;
+      return _regenerator2.default.wrap(function _callee238$(_context238) {
+        while (1) {
+          switch (_context238.prev = _context238.next) {
+            case 0:
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('center div table.tg tbody tr td center img');
+              _context238.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
+            case 3:
+            case 'end':
+              return _context238.stop();
+          }
+        }
+      }, _callee238, this);
+    }));
+    function ready() {
+      return _ref240.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^imgvault\.pw$/,
+    path: /^\/view-image\//
+  },
+  ready: function () {
+    var _ref241 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee239() {
+      var a;
       return _regenerator2.default.wrap(function _callee239$(_context239) {
         while (1) {
           switch (_context239.prev = _context239.next) {
             case 0:
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('center div table.tg tbody tr td center img');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('article div.span7 a[target="_blank"]');
               _context239.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(a.href);
             case 3:
             case 'end':
               return _context239.stop();
@@ -12253,20 +12257,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^imgvault\.pw$/,
-    path: /^\/view-image\//
-  },
+  rule: 'http://ipic.su/?page=img&pic=*',
   ready: function () {
     var _ref242 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee240() {
-      var a;
+      var i;
       return _regenerator2.default.wrap(function _callee240$(_context240) {
         while (1) {
           switch (_context240.prev = _context240.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('article div.span7 a[target="_blank"]');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#fz');
               _context240.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(a.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case 'end':
               return _context240.stop();
@@ -12281,52 +12282,27 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://ipic.su/?page=img&pic=*',
-  ready: function () {
-    var _ref243 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee241() {
-      var i;
+  rule: {
+    host: /^keptarolo\.hu$/,
+    path: /^(\/[^/]+\/[^/]+\.jpg)$/
+  },
+  start: function () {
+    var _ref243 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee241(m) {
       return _regenerator2.default.wrap(function _callee241$(_context241) {
         while (1) {
           switch (_context241.prev = _context241.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#fz');
-              _context241.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 3:
+              _context241.next = 2;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage('http://www.keptarolo.hu/kep' + m.path[1]);
+            case 2:
             case 'end':
               return _context241.stop();
           }
         }
       }, _callee241, this);
     }));
-    function ready() {
-      return _ref243.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^keptarolo\.hu$/,
-    path: /^(\/[^/]+\/[^/]+\.jpg)$/
-  },
-  start: function () {
-    var _ref244 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee242(m) {
-      return _regenerator2.default.wrap(function _callee242$(_context242) {
-        while (1) {
-          switch (_context242.prev = _context242.next) {
-            case 0:
-              _context242.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage('http://www.keptarolo.hu/kep' + m.path[1]);
-            case 2:
-            case 'end':
-              return _context242.stop();
-          }
-        }
-      }, _callee242, this);
-    }));
     function start(_x61) {
-      return _ref244.apply(this, arguments);
+      return _ref243.apply(this, arguments);
     }
     return start;
   }()
@@ -12337,46 +12313,46 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?photo=\d+$/
   },
   ready: function () {
-    var _ref245 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee243() {
+    var _ref244 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee242() {
       var i;
-      return _regenerator2.default.wrap(function _callee243$(_context243) {
+      return _regenerator2.default.wrap(function _callee242$(_context242) {
         while (1) {
-          switch (_context243.prev = _context243.next) {
+          switch (_context242.prev = _context242.next) {
             case 0:
               i = (0, _ADSBYPASSER_NAMESPACE__.$)('img.notinline.circle');
-              _context243.next = 3;
+              _context242.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case 'end':
-              return _context243.stop();
+              return _context242.stop();
           }
         }
-      }, _callee243, this);
+      }, _callee242, this);
     }));
     function ready() {
-      return _ref245.apply(this, arguments);
+      return _ref244.apply(this, arguments);
     }
     return ready;
   }()
 });
 (function () {
   var helper = function () {
-    var _ref249 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee247(m) {
-      return _regenerator2.default.wrap(function _callee247$(_context247) {
+    var _ref248 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee246(m) {
+      return _regenerator2.default.wrap(function _callee246$(_context246) {
         while (1) {
-          switch (_context247.prev = _context247.next) {
+          switch (_context246.prev = _context246.next) {
             case 0:
-              _context247.next = 2;
+              _context246.next = 2;
               return _ADSBYPASSER_NAMESPACE__.$.openImage('/images/' + m.query[1]);
             case 2:
             case 'end':
-              return _context247.stop();
+              return _context246.stop();
           }
         }
-      }, _callee247, this);
+      }, _callee246, this);
     }));
     return function helper(_x64) {
-      return _ref249.apply(this, arguments);
+      return _ref248.apply(this, arguments);
     };
   }();
   _ADSBYPASSER_NAMESPACE__._.register({
@@ -12394,22 +12370,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /file=([^&]+)/
     },
     start: function () {
-      var _ref246 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee244(m) {
-        return _regenerator2.default.wrap(function _callee244$(_context244) {
+      var _ref245 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee243(m) {
+        return _regenerator2.default.wrap(function _callee243$(_context243) {
           while (1) {
-            switch (_context244.prev = _context244.next) {
+            switch (_context243.prev = _context243.next) {
               case 0:
-                _context244.next = 2;
+                _context243.next = 2;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage('/files/' + m.query[1]);
               case 2:
               case 'end':
-                return _context244.stop();
+                return _context243.stop();
             }
           }
-        }, _callee244, this);
+        }, _callee243, this);
       }));
       function start(_x62) {
-        return _ref246.apply(this, arguments);
+        return _ref245.apply(this, arguments);
       }
       return start;
     }()
@@ -12425,24 +12401,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: ['http://www.overpic.net/viewer.php?file=*'],
     ready: function () {
-      var _ref247 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee245() {
+      var _ref246 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee244() {
         var i;
-        return _regenerator2.default.wrap(function _callee245$(_context245) {
+        return _regenerator2.default.wrap(function _callee244$(_context244) {
           while (1) {
-            switch (_context245.prev = _context245.next) {
+            switch (_context244.prev = _context244.next) {
               case 0:
                 i = (0, _ADSBYPASSER_NAMESPACE__.$)('#main_img');
-                _context245.next = 3;
+                _context244.next = 3;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
               case 3:
               case 'end':
-                return _context245.stop();
+                return _context244.stop();
             }
           }
-        }, _callee245, this);
+        }, _callee244, this);
       }));
       function ready() {
-        return _ref247.apply(this, arguments);
+        return _ref246.apply(this, arguments);
       }
       return ready;
     }()
@@ -12454,22 +12430,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /file=([^&]+)/
     },
     start: function () {
-      var _ref248 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee246(m) {
-        return _regenerator2.default.wrap(function _callee246$(_context246) {
+      var _ref247 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee245(m) {
+        return _regenerator2.default.wrap(function _callee245$(_context245) {
           while (1) {
-            switch (_context246.prev = _context246.next) {
+            switch (_context245.prev = _context245.next) {
               case 0:
-                _context246.next = 2;
+                _context245.next = 2;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage('files/' + m.query[1]);
               case 2:
               case 'end':
-                return _context246.stop();
+                return _context245.stop();
             }
           }
-        }, _callee246, this);
+        }, _callee245, this);
       }));
       function start(_x63) {
-        return _ref248.apply(this, arguments);
+        return _ref247.apply(this, arguments);
       }
       return start;
     }()
@@ -12482,24 +12458,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?entry=(.+)$/
   },
   ready: function () {
-    var _ref250 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee248(m) {
+    var _ref249 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee247(m) {
       var url;
-      return _regenerator2.default.wrap(function _callee248$(_context248) {
+      return _regenerator2.default.wrap(function _callee247$(_context247) {
         while (1) {
-          switch (_context248.prev = _context248.next) {
+          switch (_context247.prev = _context247.next) {
             case 0:
               url = m.query[1];
-              _context248.next = 3;
+              _context247.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage('/' + url);
             case 3:
             case 'end':
-              return _context248.stop();
+              return _context247.stop();
           }
         }
-      }, _callee248, this);
+      }, _callee247, this);
     }));
     function ready(_x65) {
-      return _ref250.apply(this, arguments);
+      return _ref249.apply(this, arguments);
     }
     return ready;
   }()
@@ -12509,15 +12485,43 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.noelshack\.com$/
   },
   ready: function () {
-    var _ref251 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee249() {
+    var _ref250 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee248() {
       var i;
+      return _regenerator2.default.wrap(function _callee248$(_context248) {
+        while (1) {
+          switch (_context248.prev = _context248.next) {
+            case 0:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#elt_to_aff');
+              _context248.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+            case 3:
+            case 'end':
+              return _context248.stop();
+          }
+        }
+      }, _callee248, this);
+    }));
+    function ready() {
+      return _ref250.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^overdream\.cz$/,
+    path: /^\/image\//
+  },
+  ready: function () {
+    var _ref251 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee249() {
+      var img;
       return _regenerator2.default.wrap(function _callee249$(_context249) {
         while (1) {
           switch (_context249.prev = _context249.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#elt_to_aff');
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#full_image');
               _context249.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
             case 3:
             case 'end':
               return _context249.stop();
@@ -12532,21 +12536,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^overdream\.cz$/,
-    path: /^\/image\//
-  },
+  rule: 'http://pic-money.ru/*.html',
   ready: function () {
     var _ref252 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee250() {
-      var img;
+      var f, sig, pic_id, referer;
       return _regenerator2.default.wrap(function _callee250$(_context250) {
         while (1) {
           switch (_context250.prev = _context250.next) {
             case 0:
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#full_image');
-              _context250.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
-            case 3:
+              f = document.forms[0];
+              sig = (0, _ADSBYPASSER_NAMESPACE__.$)('input[name="sig"]', f).value;
+              pic_id = (0, _ADSBYPASSER_NAMESPACE__.$)('input[name="pic_id"]', f).value;
+              referer = (0, _ADSBYPASSER_NAMESPACE__.$)('input[name="referer"]', f).value;
+              _context250.next = 6;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage('/pic.jpeg?pic_id=' + pic_id + '&sig=' + sig + '&referer=' + referer);
+            case 6:
             case 'end':
               return _context250.stop();
           }
@@ -12560,21 +12564,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://pic-money.ru/*.html',
+  rule: 'http://www.pic-upload.de/view-*.html',
   ready: function () {
     var _ref253 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee251() {
-      var f, sig, pic_id, referer;
+      var i;
       return _regenerator2.default.wrap(function _callee251$(_context251) {
         while (1) {
           switch (_context251.prev = _context251.next) {
             case 0:
-              f = document.forms[0];
-              sig = (0, _ADSBYPASSER_NAMESPACE__.$)('input[name="sig"]', f).value;
-              pic_id = (0, _ADSBYPASSER_NAMESPACE__.$)('input[name="pic_id"]', f).value;
-              referer = (0, _ADSBYPASSER_NAMESPACE__.$)('input[name="referer"]', f).value;
-              _context251.next = 6;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage('/pic.jpeg?pic_id=' + pic_id + '&sig=' + sig + '&referer=' + referer);
-            case 6:
+              _ADSBYPASSER_NAMESPACE__.$.remove('.advert');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('img.preview_picture_2b, img.original_picture_2b');
+              _context251.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+            case 4:
             case 'end':
               return _context251.stop();
           }
@@ -12588,19 +12590,34 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://www.pic-upload.de/view-*.html',
+  rule: {
+    host: /^pic(4|5)you\.ru$/
+  },
   ready: function () {
     var _ref254 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee252() {
-      var i;
+      var URLparams, next, i;
       return _regenerator2.default.wrap(function _callee252$(_context252) {
         while (1) {
           switch (_context252.prev = _context252.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('.advert');
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('img.preview_picture_2b, img.original_picture_2b');
-              _context252.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 4:
+              if (!(_ADSBYPASSER_NAMESPACE__.$.$('#d1 > img') != null)) {
+                _context252.next = 9;
+                break;
+              }
+              URLparams = location.href.split('/', 5);
+              next = URLparams.join('/');
+              next = next + '/1/';
+              _ADSBYPASSER_NAMESPACE__.$.setCookie('p4yclick', '1');
+              _context252.next = 7;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(next);
+            case 7:
+              _context252.next = 12;
+              break;
+            case 9:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#d1 img').src;
+              _context252.next = 12;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i);
+            case 12:
             case 'end':
               return _context252.stop();
           }
@@ -12615,33 +12632,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^pic(4|5)you\.ru$/
+    host: /^(www\.)?piccash\.net$/
   },
   ready: function () {
     var _ref255 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee253() {
-      var URLparams, next, i;
+      var i, m;
       return _regenerator2.default.wrap(function _callee253$(_context253) {
         while (1) {
           switch (_context253.prev = _context253.next) {
             case 0:
-              if (!(_ADSBYPASSER_NAMESPACE__.$.$('#d1 > img') != null)) {
-                _context253.next = 9;
-                break;
-              }
-              URLparams = location.href.split('/', 5);
-              next = URLparams.join('/');
-              next = next + '/1/';
-              _ADSBYPASSER_NAMESPACE__.$.setCookie('p4yclick', '1');
-              _context253.next = 7;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(next);
-            case 7:
-              _context253.next = 12;
-              break;
-            case 9:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#d1 img').src;
-              _context253.next = 12;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i);
-            case 12:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('.container > img');
+              m = i.onclick.toString().match(/mshow\('([^']+)'\);/);
+              _context253.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(m[1]);
+            case 4:
             case 'end':
               return _context253.stop();
           }
@@ -12656,20 +12660,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?piccash\.net$/
+    host: /^(picexposed|croea)\.com$/
   },
   ready: function () {
     var _ref256 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee254() {
-      var i, m;
+      var i;
       return _regenerator2.default.wrap(function _callee254$(_context254) {
         while (1) {
           switch (_context254.prev = _context254.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('.container > img');
-              m = i.onclick.toString().match(/mshow\('([^']+)'\);/);
-              _context254.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(m[1]);
-            case 4:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('img.pic');
+              _context254.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+            case 3:
             case 'end':
               return _context254.stop();
           }
@@ -12683,19 +12686,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^(picexposed|croea)\.com$/
-  },
+  rule: ['http://amateurfreak.org/share-*.html', 'http://amateurfreak.org/share.php?id=*', 'http://picfox.org/*', 'http://www.euro-pic.eu/share.php?id=*', 'http://xxx.freeimage.us/share.php?id=*', 'http://www.pixsor.com/share.php?id=*', 'http://www.pixsor.com/share-*.html', 'http://pixsor.com/XXX/share-*.html', 'http://holdthemoan.net/x/share-*.html', 'http://www.imgz.pw/share-*.html'],
   ready: function () {
     var _ref257 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee255() {
-      var i;
+      var o;
       return _regenerator2.default.wrap(function _callee255$(_context255) {
         while (1) {
           switch (_context255.prev = _context255.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('img.pic');
+              o = (0, _ADSBYPASSER_NAMESPACE__.$)('#iimg');
               _context255.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(o.src);
             case 3:
             case 'end':
               return _context255.stop();
@@ -12710,18 +12711,25 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: ['http://amateurfreak.org/share-*.html', 'http://amateurfreak.org/share.php?id=*', 'http://picfox.org/*', 'http://www.euro-pic.eu/share.php?id=*', 'http://xxx.freeimage.us/share.php?id=*', 'http://www.pixsor.com/share.php?id=*', 'http://www.pixsor.com/share-*.html', 'http://pixsor.com/XXX/share-*.html', 'http://holdthemoan.net/x/share-*.html', 'http://www.imgz.pw/share-*.html'],
+  rule: ['http://pics-money.ru/allpicfree/*', 'http://www.pics-money.ru/allimage/*']
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^pics-money\.ru$/,
+    path: /^\/v\.php$/
+  },
   ready: function () {
     var _ref258 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee256() {
-      var o;
+      var i;
       return _regenerator2.default.wrap(function _callee256$(_context256) {
         while (1) {
           switch (_context256.prev = _context256.next) {
             case 0:
-              o = (0, _ADSBYPASSER_NAMESPACE__.$)('#iimg');
-              _context256.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(o.src);
-            case 3:
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('center img:not([id])');
+              _context256.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+            case 4:
             case 'end':
               return _context256.stop();
           }
@@ -12735,12 +12743,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: ['http://pics-money.ru/allpicfree/*', 'http://www.pics-money.ru/allimage/*']
-});
-_ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^pics-money\.ru$/,
-    path: /^\/v\.php$/
+    host: [/^www\.pics-money\.ru$/, /^picker-click\.ru$/, /^p0xpicmoney\.ru$/]
   },
   ready: function () {
     var _ref259 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee257() {
@@ -12750,10 +12754,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
           switch (_context257.prev = _context257.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('center img:not([id])');
-              _context257.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 4:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#d1 img, #pay_thumb_img > img');
+              i = i.onclick.toString();
+              i = i.match(/mshow\('(.+)'\)/);
+              i = i[1];
+              _context257.next = 7;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i);
+            case 7:
             case 'end':
               return _context257.stop();
           }
@@ -12767,9 +12774,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: [/^www\.pics-money\.ru$/, /^picker-click\.ru$/, /^p0xpicmoney\.ru$/]
-  },
+  rule: 'http://picshare.geenza.com/pics/*',
   ready: function () {
     var _ref260 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee258() {
       var i;
@@ -12777,14 +12782,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context258.prev = _context258.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#d1 img, #pay_thumb_img > img');
-              i = i.onclick.toString();
-              i = i.match(/mshow\('(.+)'\)/);
-              i = i[1];
-              _context258.next = 7;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i);
-            case 7:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#picShare_image_container');
+              _context258.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+            case 3:
             case 'end':
               return _context258.stop();
           }
@@ -12798,17 +12799,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://picshare.geenza.com/pics/*',
+  rule: {
+    host: /^picstream\.tv$/,
+    path: /^\/.*\/.*\.html$/
+  },
   ready: function () {
     var _ref261 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee259() {
-      var i;
+      var img;
       return _regenerator2.default.wrap(function _callee259$(_context259) {
         while (1) {
           switch (_context259.prev = _context259.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#picShare_image_container');
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#view1 > div:nth-child(1) > img:nth-child(1)');
               _context259.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
             case 3:
             case 'end':
               return _context259.stop();
@@ -12824,20 +12828,23 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^picstream\.tv$/,
-    path: /^\/.*\/.*\.html$/
+    host: /^(www\.)?pimpandhost\.com$/,
+    path: /^\/image\//
   },
   ready: function () {
     var _ref262 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee260() {
-      var img;
+      var a, el, img;
       return _regenerator2.default.wrap(function _callee260$(_context260) {
         while (1) {
           switch (_context260.prev = _context260.next) {
             case 0:
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#view1 > div:nth-child(1) > img:nth-child(1)');
-              _context260.next = 3;
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#image_original');
+              el = document.createElement('div');
+              el.innerHTML = a.value;
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('img', el);
+              _context260.next = 6;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
-            case 3:
+            case 6:
             case 'end':
               return _context260.stop();
           }
@@ -12852,22 +12859,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?pimpandhost\.com$/,
-    path: /^\/image\//
+    host: /^(www\.)?pixhost\.to$/,
+    path: /^\/show\//
   },
   ready: function () {
     var _ref263 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee261() {
-      var a, el, img;
+      var o;
       return _regenerator2.default.wrap(function _callee261$(_context261) {
         while (1) {
           switch (_context261.prev = _context261.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#image_original');
-              el = document.createElement('div');
-              el.innerHTML = a.value;
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('img', el);
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe, #ad');
+              o = _ADSBYPASSER_NAMESPACE__.$.$('#all');
+              if (o) {
+                o.style.display = '';
+              }
+              o = (0, _ADSBYPASSER_NAMESPACE__.$)('#show_image, #image');
               _context261.next = 6;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(o.src);
             case 6:
             case 'end':
               return _context261.stop();
@@ -12883,8 +12892,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?pixhost\.to$/,
-    path: /^\/show\//
+    host: /^(www\.)?pixroute\.com$/
   },
   ready: function () {
     var _ref264 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee262() {
@@ -12893,15 +12901,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context262.prev = _context262.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe, #ad');
-              o = _ADSBYPASSER_NAMESPACE__.$.$('#all');
-              if (o) {
-                o.style.display = '';
-              }
-              o = (0, _ADSBYPASSER_NAMESPACE__.$)('#show_image, #image');
-              _context262.next = 6;
+              o = (0, _ADSBYPASSER_NAMESPACE__.$)('.fr4me > div:nth-child(20) > a:nth-child(1) > img:nth-child(1)');
+              _context262.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(o.src);
-            case 6:
+            case 3:
             case 'end':
               return _context262.stop();
           }
@@ -12916,18 +12919,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?pixroute\.com$/
+    host: [/^www\.pixsense\.net$/, /^www\.imagespicy\.site$/, /^www\.(imgsky|imgfile)\.net$/],
+    path: /^\/site\/v\/\d+$/
   },
   ready: function () {
     var _ref265 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee263() {
-      var o;
+      var a;
       return _regenerator2.default.wrap(function _callee263$(_context263) {
         while (1) {
           switch (_context263.prev = _context263.next) {
             case 0:
-              o = (0, _ADSBYPASSER_NAMESPACE__.$)('.fr4me > div:nth-child(20) > a:nth-child(1) > img:nth-child(1)');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#myUniqueImg').parentNode;
               _context263.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(o.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
             case 'end':
               return _context263.stop();
@@ -12943,19 +12947,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^www\.pixsense\.net$/, /^www\.imagespicy\.site$/, /^www\.(imgsky|imgfile)\.net$/],
-    path: /^\/site\/v\/\d+$/
+    host: /^pixxxels\.cc$/
   },
   ready: function () {
     var _ref266 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee264() {
-      var a;
+      var img;
       return _regenerator2.default.wrap(function _callee264$(_context264) {
         while (1) {
           switch (_context264.prev = _context264.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#myUniqueImg').parentNode;
+              img = _ADSBYPASSER_NAMESPACE__.$.$('#main-image');
               _context264.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.dataset.full);
             case 3:
             case 'end':
               return _context264.stop();
@@ -12971,18 +12974,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^pixxxels\.cc$/
+    host: [/^prntscr\.com$/, /^prnt\.sc$/],
+    path: /\.html$/
+  }
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: [/^prntscr\.com$/, /^prnt\.sc$/]
   },
   ready: function () {
     var _ref267 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee265() {
-      var img;
+      var i;
       return _regenerator2.default.wrap(function _callee265$(_context265) {
         while (1) {
           switch (_context265.prev = _context265.next) {
             case 0:
-              img = _ADSBYPASSER_NAMESPACE__.$.$('#main-image');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#screenshot-image');
               _context265.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.dataset.full);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case 'end':
               return _context265.stop();
@@ -12998,25 +13007,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^prntscr\.com$/, /^prnt\.sc$/],
-    path: /\.html$/
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: [/^prntscr\.com$/, /^prnt\.sc$/]
+    host: /^pronpic\.org$/
   },
   ready: function () {
     var _ref268 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee266() {
-      var i;
+      var urlBaseImg, baseUrl, img, url;
       return _regenerator2.default.wrap(function _callee266$(_context266) {
         while (1) {
           switch (_context266.prev = _context266.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#screenshot-image');
-              _context266.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 3:
+              urlBaseImg = (0, _ADSBYPASSER_NAMESPACE__.$)('table.new_table2:nth-child(1) img.link');
+              baseUrl = urlBaseImg.src.split('th_')[0];
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('table.new_table2:nth-child(2) img.link');
+              url = baseUrl + img.src.split('th_')[1];
+              _context266.next = 6;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(url);
+            case 6:
             case 'end':
               return _context266.stop();
           }
@@ -13031,56 +13037,26 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^pronpic\.org$/
+    host: /^qrrro\.com$/,
+    path: /^(\/images\/.+)\.html$/
   },
-  ready: function () {
-    var _ref269 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee267() {
-      var urlBaseImg, baseUrl, img, url;
+  start: function () {
+    var _ref269 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee267(m) {
       return _regenerator2.default.wrap(function _callee267$(_context267) {
         while (1) {
           switch (_context267.prev = _context267.next) {
             case 0:
-              urlBaseImg = (0, _ADSBYPASSER_NAMESPACE__.$)('table.new_table2:nth-child(1) img.link');
-              baseUrl = urlBaseImg.src.split('th_')[0];
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('table.new_table2:nth-child(2) img.link');
-              url = baseUrl + img.src.split('th_')[1];
-              _context267.next = 6;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(url);
-            case 6:
+              _context267.next = 2;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(m.path[1]);
+            case 2:
             case 'end':
               return _context267.stop();
           }
         }
       }, _callee267, this);
     }));
-    function ready() {
-      return _ref269.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^qrrro\.com$/,
-    path: /^(\/images\/.+)\.html$/
-  },
-  start: function () {
-    var _ref270 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee268(m) {
-      return _regenerator2.default.wrap(function _callee268$(_context268) {
-        while (1) {
-          switch (_context268.prev = _context268.next) {
-            case 0:
-              _context268.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(m.path[1]);
-            case 2:
-            case 'end':
-              return _context268.stop();
-          }
-        }
-      }, _callee268, this);
-    }));
     function start(_x66) {
-      return _ref270.apply(this, arguments);
+      return _ref269.apply(this, arguments);
     }
     return start;
   }()
@@ -13091,74 +13067,74 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/big\//
   },
   ready: function () {
-    var _ref271 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee269() {
+    var _ref270 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee268() {
       var i;
-      return _regenerator2.default.wrap(function _callee269$(_context269) {
+      return _regenerator2.default.wrap(function _callee268$(_context268) {
         while (1) {
-          switch (_context269.prev = _context269.next) {
+          switch (_context268.prev = _context268.next) {
             case 0:
               i = _ADSBYPASSER_NAMESPACE__.$.$('.base-page_center > div:nth-child(2) > img:nth-child(1)');
-              _context269.next = 3;
+              _context268.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case 'end':
-              return _context269.stop();
+              return _context268.stop();
           }
         }
-      }, _callee269, this);
+      }, _callee268, this);
     }));
     function ready() {
-      return _ref271.apply(this, arguments);
+      return _ref270.apply(this, arguments);
     }
     return ready;
   }()
 });
 (function () {
   var action = function () {
-    var _ref277 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee275(firstSelector, secondSelector) {
+    var _ref276 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee274(firstSelector, secondSelector) {
       var node, i;
-      return _regenerator2.default.wrap(function _callee275$(_context275) {
+      return _regenerator2.default.wrap(function _callee274$(_context274) {
         while (1) {
-          switch (_context275.prev = _context275.next) {
+          switch (_context274.prev = _context274.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('iframe, #adblock_detect, .popupOverlay');
               node = _ADSBYPASSER_NAMESPACE__.$.$(firstSelector);
               if (!node) {
-                _context275.next = 13;
+                _context274.next = 13;
                 break;
               }
-              _context275.next = 5;
+              _context274.next = 5;
               return _ADSBYPASSER_NAMESPACE__._.wait(500);
             case 5:
               node.removeAttribute('disabled');
-              _context275.next = 8;
+              _context274.next = 8;
               return _ADSBYPASSER_NAMESPACE__._.wait(500);
             case 8:
               node.focus();
               node.click();
               node.click();
               node.click();
-              return _context275.abrupt('return');
+              return _context274.abrupt('return');
             case 13:
               i = (0, _ADSBYPASSER_NAMESPACE__.$)(secondSelector);
-              _context275.next = 16;
+              _context274.next = 16;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 16:
             case 'end':
-              return _context275.stop();
+              return _context274.stop();
           }
         }
-      }, _callee275, this);
+      }, _callee274, this);
     }));
     return function action(_x67, _x68) {
-      return _ref277.apply(this, arguments);
+      return _ref276.apply(this, arguments);
     };
   }();
   var defaultAction = _ADSBYPASSER_NAMESPACE__._.partial(action, '#continuetoimage > form input', 'img[class^=centred]');
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: [{
       host: [
-      /^image(corn|decode)\.com$/,
+      /^image(corn|decode|ko)\.com$/,
       /^(hostur|greasy|dam)image\.com$/,
       /^img(icy|savvy|tzar|tornado|kicks|2share|hit|main|trial|reputa|fapper|part|balana)\.com$/, /^(i\.)?imgseeds?\.com$/,
       /^img-(planet|pay)\.com$/,
@@ -13194,34 +13170,34 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/img-.*\.html$/
     },
     ready: function () {
-      var _ref272 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee270() {
+      var _ref271 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee269() {
         var node;
-        return _regenerator2.default.wrap(function _callee270$(_context270) {
+        return _regenerator2.default.wrap(function _callee269$(_context269) {
           while (1) {
-            switch (_context270.prev = _context270.next) {
+            switch (_context269.prev = _context269.next) {
               case 0:
                 _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
                 node = _ADSBYPASSER_NAMESPACE__.$.$('#continuetoimage > form input');
                 if (!node) {
-                  _context270.next = 6;
+                  _context269.next = 6;
                   break;
                 }
                 node.click();
                 node.click();
-                return _context270.abrupt('return');
+                return _context269.abrupt('return');
               case 6:
                 _ADSBYPASSER_NAMESPACE__.$.resetCookies();
                 node = _ADSBYPASSER_NAMESPACE__.$.$('img[class^=centred]');
                 if (!node) {
-                  _context270.next = 12;
+                  _context269.next = 12;
                   break;
                 }
-                _context270.next = 11;
+                _context269.next = 11;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(node.src);
               case 11:
-                return _context270.abrupt('return');
+                return _context269.abrupt('return');
               case 12:
-                _context270.next = 14;
+                _context269.next = 14;
                 return _ADSBYPASSER_NAMESPACE__.$.post(window.location.href.toString(), {
                   cti: 1,
                   ref: '',
@@ -13234,13 +13210,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 window.location.reload();
               case 15:
               case 'end':
-                return _context270.stop();
+                return _context269.stop();
             }
           }
-        }, _callee270, this);
+        }, _callee269, this);
       }));
       function ready() {
-        return _ref272.apply(this, arguments);
+        return _ref271.apply(this, arguments);
       }
       return ready;
     }()
@@ -13254,24 +13230,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/img-.*\.html/
     }],
     ready: function () {
-      var _ref273 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee271() {
+      var _ref272 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee270() {
         var url;
-        return _regenerator2.default.wrap(function _callee271$(_context271) {
+        return _regenerator2.default.wrap(function _callee270$(_context270) {
           while (1) {
-            switch (_context271.prev = _context271.next) {
+            switch (_context270.prev = _context270.next) {
               case 0:
                 url = _ADSBYPASSER_NAMESPACE__.$.window.linkid;
-                _context271.next = 3;
+                _context270.next = 3;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(url);
               case 3:
               case 'end':
-                return _context271.stop();
+                return _context270.stop();
             }
           }
-        }, _callee271, this);
+        }, _callee270, this);
       }));
       function ready() {
-        return _ref273.apply(this, arguments);
+        return _ref272.apply(this, arguments);
       }
       return ready;
     }()
@@ -13289,24 +13265,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/imga-u\/(.+)\.jpeg\.html/
     },
     ready: function () {
-      var _ref274 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee272() {
+      var _ref273 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee271() {
         var path;
-        return _regenerator2.default.wrap(function _callee272$(_context272) {
+        return _regenerator2.default.wrap(function _callee271$(_context271) {
           while (1) {
-            switch (_context272.prev = _context272.next) {
+            switch (_context271.prev = _context271.next) {
               case 0:
                 path = window.location.href.replace('/imga-u', '/u').replace('.html', '');
-                _context272.next = 3;
+                _context271.next = 3;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
               case 3:
               case 'end':
-                return _context272.stop();
+                return _context271.stop();
             }
           }
-        }, _callee272, this);
+        }, _callee271, this);
       }));
       function ready() {
-        return _ref274.apply(this, arguments);
+        return _ref273.apply(this, arguments);
       }
       return ready;
     }()
@@ -13323,24 +13299,24 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/img.*\.html$/
     }],
     ready: function () {
-      var _ref275 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee273() {
+      var _ref274 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee272() {
         var i;
-        return _regenerator2.default.wrap(function _callee273$(_context273) {
+        return _regenerator2.default.wrap(function _callee272$(_context272) {
           while (1) {
-            switch (_context273.prev = _context273.next) {
+            switch (_context272.prev = _context272.next) {
               case 0:
                 i = (0, _ADSBYPASSER_NAMESPACE__.$)('img[alt]');
-                _context273.next = 3;
+                _context272.next = 3;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
               case 3:
               case 'end':
-                return _context273.stop();
+                return _context272.stop();
             }
           }
-        }, _callee273, this);
+        }, _callee272, this);
       }));
       function ready() {
-        return _ref275.apply(this, arguments);
+        return _ref274.apply(this, arguments);
       }
       return ready;
     }()
@@ -13358,25 +13334,25 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/img-.*\.html$/
     },
     ready: function () {
-      var _ref276 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee274() {
+      var _ref275 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee273() {
         var m;
-        return _regenerator2.default.wrap(function _callee274$(_context274) {
+        return _regenerator2.default.wrap(function _callee273$(_context273) {
           while (1) {
-            switch (_context274.prev = _context274.next) {
+            switch (_context273.prev = _context273.next) {
               case 0:
                 m = (0, _ADSBYPASSER_NAMESPACE__.$)('meta[property="og:image"]');
                 m = m.content.replace('small', 'big');
-                _context274.next = 4;
+                _context273.next = 4;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(m);
               case 4:
               case 'end':
-                return _context274.stop();
+                return _context273.stop();
             }
           }
-        }, _callee274, this);
+        }, _callee273, this);
       }));
       function ready() {
-        return _ref276.apply(this, arguments);
+        return _ref275.apply(this, arguments);
       }
       return ready;
     }()
@@ -13385,15 +13361,40 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: ['http://screenlist.ru/details.php?image_id=*', 'http://www.imagenetz.de/*/*.html'],
   ready: function () {
-    var _ref278 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee276() {
+    var _ref277 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee275() {
       var img;
+      return _regenerator2.default.wrap(function _callee275$(_context275) {
+        while (1) {
+          switch (_context275.prev = _context275.next) {
+            case 0:
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#picture');
+              _context275.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
+            case 3:
+            case 'end':
+              return _context275.stop();
+          }
+        }
+      }, _callee275, this);
+    }));
+    function ready() {
+      return _ref277.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: 'http://www.subirimagenes.com/*.html',
+  ready: function () {
+    var _ref278 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee276() {
+      var i;
       return _regenerator2.default.wrap(function _callee276$(_context276) {
         while (1) {
           switch (_context276.prev = _context276.next) {
             case 0:
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#picture');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#ImagenVisualizada');
               _context276.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case 'end':
               return _context276.stop();
@@ -13408,7 +13409,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://www.subirimagenes.com/*.html',
+  rule: 'http://tinypic.com/view.php?pic=*',
   ready: function () {
     var _ref279 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee277() {
       var i;
@@ -13416,7 +13417,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context277.prev = _context277.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#ImagenVisualizada');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#imgElement');
               _context277.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
@@ -13433,7 +13434,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://tinypic.com/view.php?pic=*',
+  rule: {
+    host: /^www\.turboimagehost\.com$/,
+    path: /^\/p\//
+  },
   ready: function () {
     var _ref280 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee278() {
       var i;
@@ -13441,7 +13445,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context278.prev = _context278.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#imgElement');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#imageid');
               _context278.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
@@ -13453,34 +13457,6 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }));
     function ready() {
       return _ref280.apply(this, arguments);
-    }
-    return ready;
-  }()
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^www\.turboimagehost\.com$/,
-    path: /^\/p\//
-  },
-  ready: function () {
-    var _ref281 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee279() {
-      var i;
-      return _regenerator2.default.wrap(function _callee279$(_context279) {
-        while (1) {
-          switch (_context279.prev = _context279.next) {
-            case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#imageid');
-              _context279.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 3:
-            case 'end':
-              return _context279.stop();
-          }
-        }
-      }, _callee279, this);
-    }));
-    function ready() {
-      return _ref281.apply(this, arguments);
     }
     return ready;
   }()
