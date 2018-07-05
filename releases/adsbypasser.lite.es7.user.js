@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.14.0
+// @version        6.15.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.14.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.15.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -942,7 +942,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^(www\.)?mirrorcreator\.com$/,
+    host: [
+      /^(www\.)?mirrorcreator\.com$/,
+      /^(www\.)?mirrored\.to$/,
+    ],
     path: /^\/downlink\//,
   },
   async ready () {
@@ -961,7 +964,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^(www\.)?mirrorcreator\.com$/,
+    host: [
+      /^(www\.)?mirrorcreator\.com$/,
+      /^(www\.)?mirrored\.to$/,
+    ],
     path: /^\/files\//,
   },
   async ready () {
@@ -1491,9 +1497,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   const ajaxPattern = /\$.post\('([^']*)'[^{]+(\{\s*opt:\s*'make_log'[^}]+\}\s*\}),/i;
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
-      host: [
-        /^bc\.vc$/,
-      ],
+      host: /^bc\.vc$/,
       path: /^.+(https?:\/\/.+)$/,
     },
     async start (m) {
@@ -1935,9 +1939,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: [
     {
-      host: [
-        /^cpmlink\.net$/,
-      ],
+      host: /^cpmlink\.net$/,
       path: /^\/go\/\w+$/,
     },
     {
@@ -2165,13 +2167,13 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 (function() {
   const hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|drstickyfingers|whackyvidz)\.com$/,
+    /^(([\w]{8}|www)\.)?link(babes|bucks)\.com$/,
+    /^(([\w]{8}|www)\.)?theseblogs\.com$/,
+    /^warning-this-linkcode-will-cease-working-soon\.www\.linkbucksdns\.com$/,
     /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|urlbeat|zatnawqy)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
-    /^(([\w]{8}|www)\.)?link(babes|bucks)\.com$/,
     /^(([\w]{8}|www)\.)?(miniurls|qqc|rqq|tinylinks|yyv)\.co$/,
-    /^(([\w]{8}|www)\.)?theseblogs\.com$/,
     /^(([\w]{8}|www)\.)?youfap\.me$/,
-    /^warning-this-linkcode-will-cease-working-soon\.www\.linkbucksdns\.com$/,
   ];
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
@@ -2359,16 +2361,14 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^dmus\.in$/,
         /^ulshare\.net$/,
         /^adurl\.id$/,
-        /^earn-guide\.com$/,
-        /^(cutwin|cut-earn)\.com$/,
-        /^(cutwi|cut-w|cutl)\.in$/,
+        /^(cutwin|earn-guide)\.com$/,
+        /^(cutwi|cut-w|cutl|dmus)\.in$/,
         /^(www\.)?jurl\.io$/,
         /^mitly\.us$/,
         /^tui\.click$/,
-        /^met\.bz$/
+        /^met\.bz$/,
       ],
     },
     async ready () {
@@ -2379,41 +2379,34 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^idsly\.com$/,
-        /^(adbilty|adpop)\.me$/,
+        /^(dz4link|gocitlink|3rabcut|short2win)\.com$/,
+        /^(tmearn|payshorturl|urltips|shrinkearn)\.com$/,
+        /^(earn-url|bit-url|cut-win|link-zero|cut-earn)\.com$/,
+        /^(vy\.)?adsvy\.com$/,
+        /^(linkexa|admew|shrtfly|kuylink|cut4links)\.com$/,
+        /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
+        /^(vn|vina|fox)url\.net$/,
+        /^(www\.)?linkdrop\.net$/,
+        /^(trlink|wolink|tocdo|megaurl)\.in$/,
+        /^(petty|tr)\.link$/,
+        /^idsly\.(com|bid)$/,
+        /^(adbilty|adpop|payskip|wicr)\.me$/,
+        /^wi\.cr$/,
         /^(oke|cuon)\.io$/,
-        /^linkrex\.net$/,
-        /^safelinku\.net$/,
         /^(3bst|coinlink|itiurl)\.co$/,
-        /^3rabcut\.com$/,
         /^(shink|shrten|gg-l)\.xyz$/,
         /^mlink\.club$/,
-        /^zlshorte\.net$/,
         /^(igram|gram)\.im$/,
-        /^(trlink|wolink|tocdo)\.in$/,
-        /^tr\.link$/,
-        /^dz4link\.com$/,
-        /^short2win\.com$/,
-        /^(vn|vina|fox)url\.net$/,
         /^clk\.press$/,
         /^short\.pe$/,
         /^urlcloud\.us$/,
-        /^(www\.)?linkdrop\.net$/,
         /^(123link|clik|tokenfly)\.pw$/,
-        /^(vy\.)?adsvy\.com$/,
-        /^cut4links\.com$/,
-        /^(tmearn|payshorturl|urltips|shrinkearn)\.com$/,
-        /^(earn-url|bit-url)\.com$/,
-        /^megaurl\.in$/,
-        /^(icutit|earnbig)\.ca$/,
+        /^(icutit|earnbig|cutearn)\.ca$/,
         /^koylinks\.win$/,
         /^lopte\.pro$/,
         /^(www\.)?pnd\.tl$/,
         /^(tny|tiny)\.ec$/,
-        /^(linkexa|admew|shrtfly|kuylink)\.com$/,
         /^tl\.tc$/,
-        /^petty\.link$/,
-        /^wi\.cr$/,
       ],
     },
     async ready () {
@@ -2433,45 +2426,29 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^(psl|twik)\.pw$/,
-        /^coshink\.co$/,
-        /^(curs|crus|4cut)\.io$/,
-        /^(cut-urls|link-zero)\.com$/,
-        /^adslink\.pw$/,
+        /^(cut-urls|linclik|premiumzen|shrt10|itiad|by6dk|mikymoons|man2pro|mykinggo)\.com$/,
+        /^short\.pastewma\.com$/,
+        /^linkfly\.gaosmedia\.com$/,
+        /^ads(horte|rt)\.com$/,
+        /^(www\.)?viralukk\.com$/,
+        /^(ot|load)url\.com$/,
+        /^(cut4|rao)link\.com$/,
+        /^www\.worldhack\.net$/,
+        /^(eklink|vivads)\.net$/,
+        /^(coshink|urle|adshort)\.co$/,
+        /^(weefy|adbull|zeiz|link4)\.me$/,
+        /^(adbilty|taive)\.in$/,
+        /^(psl|twik|adslink)\.pw$/,
+        /^(curs|crus|4cut|u2s|l2s)\.io$/,
         /^dzurl\.ml$/,
         /^petty\.link$/,
-        /^u2s\.io$/,
         /^shortad\.cf$/,
-        /^link4\.me$/,
-        /^urle\.co$/,
-        /^taive\.in$/,
-        /^www\.worldhack\.net$/,
         /^123link\.(io|co|press)$/,
         /^git\.tc$/,
         /^adfu\.us$/,
-        /^short\.pastewma\.com$/,
-        /^l2s\.io$/,
-        /^adbilty\.in$/,
-        /^linkfly\.gaosmedia\.com$/,
-        /^linclik\.com$/,
-        /^zeiz\.me$/,
-        /^adbull\.me$/,
-        /^adshort\.co$/,
-        /^(adshorte|adsrt)\.com$/,
-        /^(weefy|payskip)\.me$/,
-        /^premiumzen\.com$/,
-        /^cut4link\.com$/,
-        /^(cutearn|shortit)\.ca$/,
-        /^(www\.)?viralukk\.com$/,
-        /^shrt10\.com$/,
-        /^mikymoons\.com$/,
+        /^shortit\.ca$/,
         /^spamlink\.org$/,
         /^royurls\.bid$/,
-        /^(itiad|by6dk)\.com$/,
-        /^(ot|load)url\.com$/,
-        /^man2pro\.com$/,
-        /^raolink\.com$/,
-        /^eklink\.net$/,
       ],
     },
     async ready () {
@@ -2484,6 +2461,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       this._overlaySelector = [
         '[class$="Overlay"]',
         '#__random_class_name__',
+        '#headlineatas',
       ].join(', ');
       this._formSelector = [
         '#go-link',
@@ -2523,7 +2501,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       return true;
     }
     async getMiddleware () {
-      return getJQueryForm(this._formSelector);
+      return await getJQueryForm(this._formSelector);
     }
     withoutMiddleware () {
       _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].info('no form');
@@ -2539,14 +2517,27 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     prepare () {
       this.removeOverlay();
       const f = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('#captchaShortlink');
-      if (f) {
-        _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].info('recaptcha detected, stop');
+      if (!f) {
+        return true;
+      }
+      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].info('recaptcha detected, stop');
+      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].info('trying to listen submit button');
+      const b = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('#invisibleCaptchaShortlink');
+      if (!b) {
         return false;
       }
-      return true;
+      const o = new MutationObserver(() => {
+        if (!b.disabled) {
+          b.click();
+        }
+      });
+      o.observe(b, {
+        attributes: true,
+      });
+      return false;
     }
     async getMiddleware () {
-      return getJQueryForm(this._formSelector);
+      return await getJQueryForm(this._formSelector);
     }
     withoutMiddleware () {
       const f = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#link-view');
@@ -2572,8 +2563,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     }
     async getMiddleware () {
       return {
-        verify: getJQueryForm('#get-link'),
-        go: getJQueryForm(this._formSelector),
+        verify: await getJQueryForm('#get-link'),
+        go: await getJQueryForm(this._formSelector),
       };
     }
     async getURL (jFormObject) {
@@ -2624,8 +2615,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     });
     return args;
   }
-  function getJQueryForm (selector) {
-    const jQuery = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window.$;
+  async function getJQueryForm (selector) {
+    let jQuery = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window.$;
+    while (!jQuery) {
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(50);
+      jQuery = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window.$;
+    }
     const f = jQuery(selector);
     if (f.length > 0) {
       return f;
@@ -3035,9 +3030,9 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 (function () {
   const hostRules = [
-    /^sh\.st$/,
     /^(jnw0|cllkme|clkmein|corneey|ceesty)\.com$/,
     /^[dfg]estyy\.com$/,
+    /^sh\.st$/,
     /^([vw]iid|clkme)\.me$/,
   ];
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -3132,10 +3127,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 })();
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: [
-      /^short\.am$/,
-      /^srt\.am$/,
-    ],
+    host: /^(short|srt)\.am$/,
   },
   async ready () {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(5000);
@@ -3263,9 +3255,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: [
     {
-      host: [
-        /^(www\.)?sylnk\.net$/,
-      ],
+      host: /^(www\.)?sylnk\.net$/,
       query: /link=([^&]+)/,
     },
     {
@@ -3292,15 +3282,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     {
       host: [
         /\.blogspot\.com?/,
-        /^simaholina\.xyz$/,
+        /^(www\.)?designmyhomee\.com$/,
+        /^(www\.)?losstor\.com$/,
+        /^kurosafe\.menantisenja\.com$/,
+        /^(simaholina|autech)\.xyz$/,
         /^(www\.)?id-securelink\.xyz$/,
         /^(www\.)?tojros\.tk$/,
-        /^(www\.)?designmyhomee\.com$/,
         /^(www\.)?anjay\.info$/,
         /^(www\.)?kakkoiisafe\.us$/,
         /^(www\.)?kurosafe\.(website|online)$/,
-        /^(www\.)?losstor\.com$/,
-        /^kurosafe\.menantisenja\.com$/,
       ],
       query: [
         /^\?url=([a-zA-Z0-9/=]+)$/,
@@ -3312,6 +3302,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /^sehatlega\.com$/,
         /^businessforyouand\.me$/,
+        /^plantaheim\.web\.id$/,
       ],
       query: /^\?r=([a-zA-Z0-9/=]+)$/,
     },
@@ -3377,7 +3368,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     host: [
       /^(gameinfo|apasih)\.pw$/,
       /^(www\.)?lifesurance\.info$/,
-      /^intercelestial\.com$/,
+      /^(intercelestial|sweetlantern)\.com$/,
     ],
     query: /^\?id=([a-zA-Z0-9/=]+)$/,
   },
@@ -3390,12 +3381,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: [
     {
       host: [
-        /^(ani-share|autolinkach)\.com$/,
         /^motonews\.club$/,
+        /^(www\.)?bolaoke\.club$/,
+        /^(ani-share|autolinkach)\.com$/,
         /^sehatsegar\.net$/,
         /^(autofans|landscapenature)\.pw$/,
         /^(www\.)?lifesurance\.info$/,
-        /^(www\.)?bolaoke\.club$/,
       ],
       query: /get=([^&]+)/,
     },
@@ -3403,7 +3394,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /^(gameinfo|apasih)\.pw$/,
         /^(www\.)?lifesurance\.info$/,
-        /^intercelestial\.com$/,
+        /^(intercelestial|sweetlantern)\.com$/,
       ],
     },
   ],
@@ -3456,9 +3447,9 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
-      /^www\.njiir\.com$/,
       /^(www\.)?anjay\.info$/,
       /^(www\.)?tetew\.info$/,
+      /^www\.njiir\.com$/,
     ],
   },
   async ready () {
