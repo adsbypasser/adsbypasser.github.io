@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.15.0
+// @version        6.16.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.15.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.16.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.15.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.15.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.15.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.16.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.16.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.16.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -976,7 +976,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     path: /^\/files\//,
   },
   async ready () {
-    const b = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.downloadarea.downlinks form button');
+    const b = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.hostarea.downlinks form button');
     b.click();
   },
 });
@@ -1100,7 +1100,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^(www\.)?1(be|dl)\.biz$/,
+    host: /^(www\.)?(1be|1dl)\.biz$/,
     path: /^\/z\.php$/,
     query: /^\?(.+)/,
   },
@@ -2172,7 +2172,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 (function() {
   const hostRules = [
     /^(([\w]{8}|www)\.)?(allanalpass|drstickyfingers|whackyvidz)\.com$/,
-    /^(([\w]{8}|www)\.)?link(babes|bucks)\.com$/,
+    /^(([\w]{8}|www)\.)?(linkbabes|linkbucks)\.com$/,
     /^(([\w]{8}|www)\.)?theseblogs\.com$/,
     /^warning-this-linkcode-will-cease-working-soon\.www\.linkbucksdns\.com$/,
     /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|urlbeat|zatnawqy)\.net$/,
@@ -2390,19 +2390,19 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(vy\.)?adsvy\.com$/,
         /^(linkexa|admew|shrtfly|kuylink|cut4links)\.com$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
-        /^(vn|vina|fox)url\.net$/,
+        /^(vnurl|vinaurl|foxurl)\.net$/,
         /^(www\.)?linkdrop\.net$/,
         /^(trlink|wolink|tocdo|megaurl)\.in$/,
-        /^(petty|tr)\.link$/,
+        /^(petty|skips|tr)\.link$/,
         /^idsly\.(com|bid)$/,
         /^(adbilty|adpop|payskip|wicr)\.me$/,
         /^wi\.cr$/,
-        /^(oke|cuon)\.io$/,
-        /^(3bst|coinlink|itiurl)\.co$/,
+        /^(oke|cuon|linktor)\.io$/,
+        /^(3bst|coinlink|itiurl|coshink)\.co$/,
         /^(shink|shrten|gg-l)\.xyz$/,
         /^mlink\.club$/,
         /^(igram|gram)\.im$/,
-        /^clk\.press$/,
+        /^clk\.(press|sh)$/,
         /^short\.pe$/,
         /^urlcloud\.us$/,
         /^(123link|clik|tokenfly)\.pw$/,
@@ -2412,6 +2412,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(www\.)?pnd\.tl$/,
         /^(tny|tiny)\.ec$/,
         /^tl\.tc$/,
+        /^lyon\.kim$/,
       ],
     },
     async ready () {
@@ -2434,14 +2435,14 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(cut-urls|linclik|premiumzen|shrt10|itiad|by6dk|mikymoons|man2pro|mykinggo)\.com$/,
         /^short\.pastewma\.com$/,
         /^linkfly\.gaosmedia\.com$/,
-        /^ads(horte|rt)\.com$/,
+        /^(adshorte|adsrt)\.com$/,
         /^(www\.)?viralukk\.com$/,
-        /^(ot|load)url\.com$/,
-        /^(cut4|rao)link\.com$/,
+        /^(oturl|loadurl)\.com$/,
+        /^(cut4link|raolink)\.com$/,
         /^www\.worldhack\.net$/,
         /^(eklink|vivads)\.net$/,
-        /^(coshink|urle|adshort)\.co$/,
-        /^(weefy|adbull|zeiz|link4)\.me$/,
+        /^(urle|adshort)\.co$/,
+        /^(weefy|adbull|zeiz|link4|adcoin)\.me$/,
         /^(adbilty|taive)\.in$/,
         /^(psl|twik|adslink)\.pw$/,
         /^(curs|crus|4cut|u2s|l2s)\.io$/,
@@ -2454,6 +2455,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^shortit\.ca$/,
         /^spamlink\.org$/,
         /^royurls\.bid$/,
+        /^za\.gl$/,
       ],
     },
     async ready () {
@@ -3036,9 +3038,9 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 (function () {
   const hostRules = [
     /^(jnw0|cllkme|clkmein|corneey|ceesty)\.com$/,
-    /^[dfg]estyy\.com$/,
+    /^(destyy|festyy|gestyy)\.com$/,
     /^sh\.st$/,
-    /^([vw]iid|clkme)\.me$/,
+    /^(viid|wiid|clkme)\.me$/,
   ];
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
@@ -3383,6 +3385,18 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: [
+      /^linkach\.com$/,
+    ],
+    query: /^\?id=([a-zA-Z0-9/=]+)$/,
+  },
+  async ready () {
+    const g = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.humancheck form');
+    g.submit();
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: [
     {
       host: [
@@ -3399,7 +3413,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /^(gameinfo|apasih)\.pw$/,
         /^(www\.)?lifesurance\.info$/,
-        /^(intercelestial|sweetlantern)\.com$/,
+        /^(intercelestial|sweetlantern|linkach)\.com$/,
       ],
     },
   ],
@@ -3509,7 +3523,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /turkdown\.com$/,
+    host: /^turkdown\.com$/,
     path: /^\/link/,
     query: /^\?id=(.+)/,
   },
@@ -3882,7 +3896,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^img(dino|tiger|zap)\.com$/,
+    host: /^(imgdino|imgtiger|imgzap)\.com$/,
     path: /^\/viewer\.php$/,
     query: /^\?file=/,
   },
@@ -4105,8 +4119,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^(www\.)?image(carry|dunk|porter|switch)\.com$/,
-        /^(www\.)?pic(leet|turedip|tureturn)\.com$/,
+        /^(www\.)?(imagecarry|imagedunk|imageporter|imageswitch)\.com$/,
+        /^(www\.)?(picleet|picturedip|pictureturn)\.com$/,
         /^(www\.)?imgspice\.com$/,
         /^(www\.)?(piclambo|yankoimages)\.net$/,
       ],
@@ -4216,7 +4230,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   });
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
-      host: /^image(xport|shimage)\.com$/,
+      host: /^(imagexport|imageshimage)\.com$/,
     },
     ready: _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].partial(run, false),
   });
@@ -4279,7 +4293,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^www\.img(babes|flare)\.com$/,
+    host: /^www\.(imgbabes|imgflare)\.com$/,
   },
   async ready () {
     let i = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('input[onclick]');
@@ -4326,7 +4340,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^img(fantasy|nemo|curl)\.com$/,
+        /^(imgfantasy|imgnemo|imgcurl)\.com$/,
         /^imagedomino\.com$/,
         /^0img\.net$/,
         /^bunnyforum\.org$/,
@@ -4370,10 +4384,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^img(monkey|trex|ve|dew)\.com$/,
+        /^(imgmonkey|imgtrex|imgve|imgdew)\.com$/,
         /^(www\.)?imgsee\.me$/,
         /^imgclick\.net$/,
-        /^(uploadrr|imageeer|www\.uimgshare|pic-maniac|hulkimge)\.com$/,
+        /^(uploadrr|imageeer|pic-maniac|hulkimge)\.com$/,
+        /^www\.uimgshare\.com$/,
       ],
       path: PATH_RULE,
     },
@@ -4385,7 +4400,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
         /^imgview\.net$/,
-        /^img(maze|outlet)\.com$/,
+        /^(imgmaze|imgoutlet)\.com$/,
       ],
       path: PATH_RULE,
     },
@@ -4656,7 +4671,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^(miragepics|funextra\.hostzi)\.com$/,
+        /^miragepics\.com$/,
+        /^funextra\.hostzi\.com$/,
         /^bilder\.nixhelp\.de$/,
         /^imagecurl\.(com|org)$/,
       ],
@@ -4677,7 +4693,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   });
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
-      host: /^img(nip|central|cream)\.com$/,
+      host: /^(imgnip|imgcentral|imgcream)\.com$/,
       path: /^\/viewerr.*\.php$/,
       query: /file=([^&]+)/,
     },
@@ -4756,7 +4772,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^pic(4|5)you\.ru$/,
+    host: [
+      /^pic4you\.ru$/,
+      /^pic5you\.ru$/,
+    ],
   },
   async ready () {
     if (_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('#d1 > img') != null) {
@@ -4900,7 +4919,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     host: [
       /^www\.pixsense\.net$/,
       /^www\.imagespicy\.site$/,
-      /^www\.img(sky|file)\.net$/,
+      /^www\.(imgsky|imgfile)\.net$/,
     ],
     path: /^\/site\/v\/\d+$/,
   },
@@ -4976,23 +4995,24 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: [
       {
         host: [
-          /^image(corn|decode|ko)\.com$/,
-          /^(hostur|greasy|dam)image\.com$/,
-          /^img(icy|savvy|tzar|tornado|kicks|2share|hit|main|trial|reputa|fapper|part|balana)\.com$/,
+          /^(imagecorn|imagedecode|imageko)\.com$/,
+          /^(hosturimage|greasyimage|damimage)\.com$/,
+          /^(imgicy|imgsavvy|imgtzar|imgtornado|imgkicks|img2share|imghit|imgmain)\.com$/,
+          /^(imgtrial|imgreputa|imgfapper|imgpart|imgbalana|imgjazz)\.com$/,
           /^(i\.)?imgseeds?\.com$/,
-          /^img-(planet|pay)\.com$/,
+          /^(img-planet|img-pay)\.com$/,
           /^www\.imglemon\.com$/,
           /^xxxscreens\.com$/,
-          /^(wpc8|dimtus|tinizo|erimge|nimzshare)\.com$/,
+          /^(wpc8|dimtus|tinizo|erimge|nimzshare|hdmoza)\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
           /^(xxxwebdlxxx|teenshot)\.org$/,
-          /^image(on|team)\.org$/,
-          /^(voyeur|teen|mega)image\.org$/,
-          /^img(studio|spot)\.org$/,
-          /^img(serve|project|python|pix)\.net$/,
+          /^(imageon|imageteam)\.org$/,
+          /^(voyeurimage|teenimage|megaimage)\.org$/,
+          /^(imgstudio|imgspot)\.org$/,
+          /^(imgserve|imgproject|imgpython|imgpix)\.net$/,
           /^img-view\.net$/,
           /^(naughtygate|gallerycloud)\.net$/,
-          /^(fun|xx)img\.net$/,
+          /^(funimg|xximg)\.net$/,
           /^hotimages\.eu$/,
           /(^|\.)55888\.eu$/,
           /^picz\.site$/,
@@ -5073,7 +5093,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       },
       {
         host: [
-          /^img(kings|prime)\.com$/,
+          /^(imgkings|imgprime)\.com$/,
           /^imagerar\.com$/,
         ],
         path: /^\/img-.*\.html/,
@@ -5145,7 +5165,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
         /^(www\.)?imgdrive\.net$/,
-        /^(www\.)?img(taxi|wallet|adult)\.com$/,
+        /^(www\.)?(imgtaxi|imgwallet|imgadult)\.com$/,
       ],
       path: /^\/img-.*\.html$/,
     },
