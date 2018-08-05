@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.16.0
+// @version        6.17.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.16.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.17.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -1978,8 +1978,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^(www\.)?fiuxy\.co$/,
-    path: /^\/links?\/$/,
+    host: /^(www|links)\.fiuxy\.(co|bz)$/,
   },
   async ready () {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('a.btn.a').href);
@@ -2109,10 +2108,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^st\.kurogaze\.net$/,
-    query: /r=(.+)/,
-  },
+  rule: [
+    {
+      host: /^st\.kurogaze\.net$/,
+      query: /r=(.+)/,
+    },
+    {
+      host: /^s\.yukisubs\.com$/,
+      query: /link=(.+)/,
+    },
+  ],
   async start (m) {
     const r = atob(m.query[1]);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(r);
@@ -2386,7 +2391,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(linkexa|admew|shrtfly|kuylink|cut4links)\.com$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
         /^(vnurl|vinaurl|foxurl)\.net$/,
-        /^(www\.)?linkdrop\.net$/,
         /^(trlink|wolink|tocdo|megaurl)\.in$/,
         /^(petty|skips|tr)\.link$/,
         /^idsly\.(com|bid)$/,
@@ -2400,7 +2404,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^clk\.(press|sh)$/,
         /^short\.pe$/,
         /^urlcloud\.us$/,
-        /^(123link|clik|tokenfly)\.pw$/,
+        /^(123link|clik|tokenfly|getlink)\.pw$/,
         /^(icutit|earnbig|cutearn)\.ca$/,
         /^koylinks\.win$/,
         /^lopte\.pro$/,
@@ -2421,6 +2425,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
     async ready () {
       const handler = new OURLHandler();
+      await handler.call();
+    },
+  });
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+    rule: {
+      host: /^(www\.)?linkdrop\.net$/,
+    },
+    async ready () {
+      const handler = new LinkDropHandler();
       await handler.call();
     },
   });
@@ -2547,7 +2560,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     }
     async getURL (jForm) {
       while (true) {
-        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(2000);
+        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(1000);
         try {
           const url = await getURLFromJQueryForm(jForm);
           if (url) {
@@ -2572,6 +2585,14 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     async getURL (jFormObject) {
       await getURLFromJQueryForm(jFormObject.verify);
       return await getURLFromJQueryForm(jFormObject.go);
+    }
+  }
+  class LinkDropHandler extends RecaptchaHandler {
+    constructor () {
+      super();
+    }
+    async getMiddleware () {
+      return await getJQueryForm('#mylink');
     }
   }
   class StagedHandler extends AbstractHandler {
@@ -2864,6 +2885,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     const matches = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/<a href="http:\/\/(?:www\.)?mylink\.zone\/link\/redirect\/\?url=([^&]+)&/);
     const url = decodeURIComponent(matches[1]);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(url);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^onepiece-ex\.com\.br$/,
+  },
+  async ready () {
+    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('iframe');
+    const matches = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/<a href="([^&]+)(?=" )/);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(matches[1]);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -3289,6 +3320,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^kurosafe\.menantisenja\.com$/,
         /^(simaholina|autech)\.xyz$/,
         /^(www\.)?id-securelink\.xyz$/,
+        /^(www\.)?converthinks\.xyz$/,
         /^(www\.)?tojros\.tk$/,
         /^(www\.)?anjay\.info$/,
         /^(www\.)?kakkoiisafe\.us$/,
@@ -3305,6 +3337,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^sehatlega\.com$/,
         /^businessforyouand\.me$/,
         /^plantaheim\.web\.id$/,
+        /^davinsurance\.com$/,
       ],
       query: /^\?r=([a-zA-Z0-9/=]+)$/,
     },
@@ -3371,6 +3404,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       /^(gameinfo|apasih)\.pw$/,
       /^(www\.)?lifesurance\.info$/,
       /^(intercelestial|sweetlantern)\.com$/,
+      /^awcar\.icu$/,
+      /^getinfos\.net$/,
     ],
     query: /^\?id=([a-zA-Z0-9/=]+)$/,
   },
@@ -3409,6 +3444,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(gameinfo|apasih)\.pw$/,
         /^(www\.)?lifesurance\.info$/,
         /^(intercelestial|sweetlantern|linkach)\.com$/,
+        /^awcar\.icu$/,
+        /^getinfos\.net$/,
       ],
     },
   ],

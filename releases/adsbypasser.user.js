@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.16.0
+// @version        6.17.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.16.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.17.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.16.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.16.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.16.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.17.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.17.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.17.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -1983,8 +1983,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^(www\.)?fiuxy\.co$/,
-    path: /^\/links?\/$/,
+    host: /^(www|links)\.fiuxy\.(co|bz)$/,
   },
   async ready () {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('a.btn.a').href);
@@ -2114,10 +2113,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^st\.kurogaze\.net$/,
-    query: /r=(.+)/,
-  },
+  rule: [
+    {
+      host: /^st\.kurogaze\.net$/,
+      query: /r=(.+)/,
+    },
+    {
+      host: /^s\.yukisubs\.com$/,
+      query: /link=(.+)/,
+    },
+  ],
   async start (m) {
     const r = atob(m.query[1]);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(r);
@@ -2391,7 +2396,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(linkexa|admew|shrtfly|kuylink|cut4links)\.com$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
         /^(vnurl|vinaurl|foxurl)\.net$/,
-        /^(www\.)?linkdrop\.net$/,
         /^(trlink|wolink|tocdo|megaurl)\.in$/,
         /^(petty|skips|tr)\.link$/,
         /^idsly\.(com|bid)$/,
@@ -2405,7 +2409,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^clk\.(press|sh)$/,
         /^short\.pe$/,
         /^urlcloud\.us$/,
-        /^(123link|clik|tokenfly)\.pw$/,
+        /^(123link|clik|tokenfly|getlink)\.pw$/,
         /^(icutit|earnbig|cutearn)\.ca$/,
         /^koylinks\.win$/,
         /^lopte\.pro$/,
@@ -2426,6 +2430,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
     async ready () {
       const handler = new OURLHandler();
+      await handler.call();
+    },
+  });
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+    rule: {
+      host: /^(www\.)?linkdrop\.net$/,
+    },
+    async ready () {
+      const handler = new LinkDropHandler();
       await handler.call();
     },
   });
@@ -2552,7 +2565,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     }
     async getURL (jForm) {
       while (true) {
-        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(2000);
+        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(1000);
         try {
           const url = await getURLFromJQueryForm(jForm);
           if (url) {
@@ -2577,6 +2590,14 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     async getURL (jFormObject) {
       await getURLFromJQueryForm(jFormObject.verify);
       return await getURLFromJQueryForm(jFormObject.go);
+    }
+  }
+  class LinkDropHandler extends RecaptchaHandler {
+    constructor () {
+      super();
+    }
+    async getMiddleware () {
+      return await getJQueryForm('#mylink');
     }
   }
   class StagedHandler extends AbstractHandler {
@@ -2869,6 +2890,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     const matches = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/<a href="http:\/\/(?:www\.)?mylink\.zone\/link\/redirect\/\?url=([^&]+)&/);
     const url = decodeURIComponent(matches[1]);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(url);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^onepiece-ex\.com\.br$/,
+  },
+  async ready () {
+    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('iframe');
+    const matches = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/<a href="([^&]+)(?=" )/);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(matches[1]);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -3294,6 +3325,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^kurosafe\.menantisenja\.com$/,
         /^(simaholina|autech)\.xyz$/,
         /^(www\.)?id-securelink\.xyz$/,
+        /^(www\.)?converthinks\.xyz$/,
         /^(www\.)?tojros\.tk$/,
         /^(www\.)?anjay\.info$/,
         /^(www\.)?kakkoiisafe\.us$/,
@@ -3310,6 +3342,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^sehatlega\.com$/,
         /^businessforyouand\.me$/,
         /^plantaheim\.web\.id$/,
+        /^davinsurance\.com$/,
       ],
       query: /^\?r=([a-zA-Z0-9/=]+)$/,
     },
@@ -3376,6 +3409,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       /^(gameinfo|apasih)\.pw$/,
       /^(www\.)?lifesurance\.info$/,
       /^(intercelestial|sweetlantern)\.com$/,
+      /^awcar\.icu$/,
+      /^getinfos\.net$/,
     ],
     query: /^\?id=([a-zA-Z0-9/=]+)$/,
   },
@@ -3414,6 +3449,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(gameinfo|apasih)\.pw$/,
         /^(www\.)?lifesurance\.info$/,
         /^(intercelestial|sweetlantern|linkach)\.com$/,
+        /^awcar\.icu$/,
+        /^getinfos\.net$/,
       ],
     },
   ],
@@ -4384,7 +4421,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^(imgmonkey|imgtrex|imgve|imgdew)\.com$/,
+        /^(imgmonkey|imgtrex|imgve)\.com$/,
         /^(www\.)?imgsee\.me$/,
         /^imgclick\.net$/,
         /^(uploadrr|imageeer|pic-maniac|hulkimge)\.com$/,
@@ -4398,10 +4435,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   });
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
-      host: [
-        /^imgview\.net$/,
-        /^(imgmaze|imgoutlet)\.com$/,
-      ],
+      host: /^imgoutlet\.com$/,
       path: PATH_RULE,
     },
     async ready () {
@@ -4419,10 +4453,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   });
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
-      host: [
-        /^imgtown\.net$/,
-        /^imgrock\.info$/,
-      ],
+      host: /^imgrock\.info$/,
       path: PATH_RULE,
     },
     async ready () {
@@ -4475,20 +4506,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
   });
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-    rule: 'http://imgview.net/tpind.php',
-    async ready () {
-      const i = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('img.pic');
-      if (i) {
-        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src, {replace: true});
-        return;
-      }
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(500);
-      let d = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('div[id^="imageviewi"] input[type="submit"][style=""]');
-      d = d.parentNode;
-      d.submit();
-    },
-  });
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: /^http:\/\/imgdragon\.com\/(getfil\.php|dl)$/,
     async ready () {
       const i = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('img.pic');
@@ -4514,6 +4531,29 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       }
       const node = await getAmbiguousForm(
         'div[id] + div[id] > input:not([style])',
+        (node) => {
+          const d = node.parentElement;
+          node.click();
+          return d;
+        });
+      node.click();
+    },
+  });
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+    rule: {
+      host: /^img(view|town|maze|dew)\.pw$/,
+      path: PATH_RULE,
+    },
+    async ready () {
+      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('iframe');
+      const i = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('img.picview');
+      if (i) {
+        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src);
+        return;
+      }
+      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window._0x58ff35 = null;
+      const node = await getAmbiguousForm(
+        'script + div[id] > input:not([style])',
         (node) => {
           const d = node.parentElement;
           node.click();
@@ -5001,7 +5041,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
           /^(imgtrial|imgreputa|imgfapper|imgpart|imgbalana|imgjazz)\.com$/,
           /^(i\.)?imgseeds?\.com$/,
           /^(img-planet|img-pay)\.com$/,
-          /^www\.imglemon\.com$/,
+          /^(www\.)?(imglemon|imageblinks)\.com$/,
           /^xxxscreens\.com$/,
           /^(wpc8|dimtus|tinizo|erimge|nimzshare|hdmoza)\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
