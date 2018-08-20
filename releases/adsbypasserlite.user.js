@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.17.0
+// @version        6.18.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.17.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.18.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -949,17 +949,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     path: /^\/downlink\//,
   },
   async ready () {
-    let a = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('#redirectlink a');
-    if (a) {
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a.href);
-      return;
-    }
-    a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#redirectlink > div.redirecturl');
-    a = a.innerHTML;
-    if (!a.match(/^http/)) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].AdsBypasserError('not a valid URL');
-    }
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a);
+    const a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.col-sm.centered.highlight a');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -971,7 +962,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     path: /^\/files\//,
   },
   async ready () {
-    const b = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.hostarea.downlinks form button');
+    const b = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.col-sm.centered.highlight form button');
     b.click();
   },
 });
@@ -1052,6 +1043,18 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   async ready () {
     const c = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#confirm_form');
     c.submit();
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: [
+      /^ujv\.al$/,
+    ],
+    path: /^\/[a-zA-Z]+/,
+  },
+  async ready () {
+    const u = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.col-sm-6 a.redirect');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(u.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -1242,7 +1245,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         childList: true,
       });
     }).then((m) => {
-      return eval('(' + m[0] + ')');
+      return _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].evil(`(${m[0]})`);
     });
   }
   function tryLink (args) {
@@ -1443,7 +1446,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     let a = encoded.match(/^\s*;eval\((.+)\);\s*$/);
     a = a[1];
     const b = a.match(/^(.+)\('([^']+)','([^']+)','([^']+)','([^']+)'\)$/);
-    const c = eval('(' + b[1] + ')');
+    const c = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].evil(`(${b[1]})`);
     return c(b[2], b[3], b[4], b[5]);
   }
 })();
@@ -1601,7 +1604,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].AdsBypasserError('no script matches /eval(.*)/');
     }
     matches = matches[1];
-    script = eval(matches);
+    script = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].evil(matches);
     return script;
   }
   function searchScript (unzip) {
@@ -1627,7 +1630,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].AdsBypasserError('(in knock server) no script matches $.post');
     }
     const make_url = matches[1];
-    const make_opts = eval('(' + matches[2] + ')');
+    const make_opts = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].evil(`(${matches[2]})`);
     const i = setInterval(function () {
       _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].post(make_url, make_opts).then(function (text) {
         if (dirtyFix) {
@@ -1873,6 +1876,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   async ready () {
     const input = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('input[name="enter"]');
     input.click();
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^dawnstation\.com$/,
+  },
+  async ready () {
+    const a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#tidakakanselamanya > a');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -2154,6 +2166,28 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
+    host: /^link\.tl$/,
+    path: /\//,
+  },
+  async ready () {
+    let m = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/eval\((.+}\))\)/);
+    m = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].evil(`(${m[1]})`);
+    let l = m.match(/(?:\$\.ajax.+|href=')(http.+skip.+|http[^']+)',data/);
+    l = l[1];
+    if (!l.match(/skip/)) {
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(l);
+      return;
+    }
+    const token = m.match(/'X-CSRF-TOKEN':'([^']+)'},/);
+    let rl = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].post(l, '', {
+      'X-CSRF-TOKEN': token[1],
+    });
+    rl = JSON.parse(rl);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(rl.url);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
     host: /^link4ad\.com$/,
     path: /^\/(.+)$/,
   },
@@ -2175,7 +2209,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     /^(([\w]{8}|www)\.)?(linkbabes|linkbucks)\.com$/,
     /^(([\w]{8}|www)\.)?theseblogs\.com$/,
     /^warning-this-linkcode-will-cease-working-soon\.www\.linkbucksdns\.com$/,
-    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|urlbeat|zatnawqy)\.net$/,
+    /^(([\w]{8}|www)\.)?(filesonthe|poontown|seriousdeals|urlbeat)\.net$/,
+    /^(([\w]{8}|www)\.)?(zatnawqy|rhvgmritmziwcm)\.net$/,
     /^(([\w]{8}|www)\.)?freean\.us$/,
     /^(([\w]{8}|www)\.)?(miniurls|qqc|rqq|tinylinks|yyv)\.co$/,
     /^(([\w]{8}|www)\.)?youfap\.me$/,
@@ -2385,18 +2420,18 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
         /^(dz4link|gocitlink|3rabcut|short2win)\.com$/,
-        /^(tmearn|payshorturl|urltips|shrinkearn)\.com$/,
+        /^(tmearn|payshorturl|urltips|shrinkearn|itiad|cutsouf)\.com$/,
         /^(earn-url|bit-url|cut-win|link-zero|cut-earn)\.com$/,
         /^(vy\.)?adsvy\.com$/,
         /^(linkexa|admew|shrtfly|kuylink|cut4links)\.com$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
-        /^(vnurl|vinaurl|foxurl)\.net$/,
+        /^(vnurl|vinaurl|foxurl|short2win|cashat)\.net$/,
         /^(trlink|wolink|tocdo|megaurl)\.in$/,
         /^(petty|skips|tr)\.link$/,
         /^idsly\.(com|bid)$/,
-        /^(adbilty|adpop|payskip|wicr)\.me$/,
+        /^(adbilty|adpop|payskip|wicr|ujv)\.me$/,
         /^wi\.cr$/,
-        /^(oke|cuon|linktor)\.io$/,
+        /^(oke|cuon|linktor|flylink)\.io$/,
         /^(3bst|coinlink|itiurl|coshink)\.co$/,
         /^(shink|shrten|gg-l)\.xyz$/,
         /^mlink\.club$/,
@@ -2412,6 +2447,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(tny|tiny)\.ec$/,
         /^tl\.tc$/,
         /^lyon\.kim$/,
+        /^linkvip\.tk$/,
       ],
     },
     async ready () {
@@ -2440,11 +2476,13 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^(cut-urls|linclik|premiumzen|shrt10|itiad|by6dk|mikymoons|man2pro|mykinggo)\.com$/,
+        /^(cut-urls|linclik|premiumzen|shrt10|by6dk|mikymoons|man2pro)\.com$/,
+        /^(mykinggo|win4cut)\.com$/,
         /^short\.pastewma\.com$/,
         /^linkfly\.gaosmedia\.com$/,
         /^(adshorte|adsrt)\.com$/,
         /^(www\.)?viralukk\.com$/,
+        /^(www\.)?niagoshort\.com$/,
         /^(oturl|loadurl)\.com$/,
         /^(cut4link|raolink)\.com$/,
         /^www\.worldhack\.net$/,
@@ -2457,7 +2495,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^dzurl\.ml$/,
         /^petty\.link$/,
         /^shortad\.cf$/,
-        /^123link\.(io|co|press)$/,
+        /^123link\.(io|co|press|pro)$/,
         /^git\.tc$/,
         /^adfu\.us$/,
         /^shortit\.ca$/,
@@ -2741,7 +2779,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^linkshrink\.net$/,
+    host: /^(linkshrink|lnkshrnk)\.net$/,
     path: /^\/[a-zA-Z0-9]+$/,
   },
   async start () {
@@ -2755,7 +2793,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^linkshrink\.net$/,
+    host: /^(linkshrink|lnkshrnk)\.net$/,
     path: /=(.+)$/,
   },
   async start (m) {
@@ -3841,6 +3879,7 @@ __webpack_require__.r(__webpack_exports__);
  var util_platform__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3);
 const _ = {
   AdsBypasserError: util_core__WEBPACK_IMPORTED_MODULE_2__["AdsBypasserError"],
+  evil: util_misc__WEBPACK_IMPORTED_MODULE_7__["evil"],
   find: util_core__WEBPACK_IMPORTED_MODULE_2__["find"],
   forEach: util_core__WEBPACK_IMPORTED_MODULE_2__["forEach"],
   generateRandomIP: util_misc__WEBPACK_IMPORTED_MODULE_7__["generateRandomIP"],
@@ -4255,6 +4294,7 @@ __webpack_require__.r(__webpack_exports__);
  __webpack_require__.d(__webpack_exports__, "removeAllTimer", function() { return removeAllTimer; });
  __webpack_require__.d(__webpack_exports__, "nuke", function() { return nuke; });
  __webpack_require__.d(__webpack_exports__, "generateRandomIP", function() { return generateRandomIP; });
+ __webpack_require__.d(__webpack_exports__, "evil", function() { return evil; });
  var util_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
  var util_platform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
  var util_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
@@ -4283,6 +4323,22 @@ function generateRandomIP () {
   return [0, 0, 0, 0].map(() => {
     return Math.floor(Math.random() * 256);
   }).join('.');
+}
+function evil (script) {
+  return ((
+    GM,
+    GM_deleteValue,
+    GM_getResourceURL,
+    GM_getValue,
+    GM_openInTab,
+    GM_registerMenuCommand,
+    GM_setValue,
+    GM_xmlhttpRequest,
+    unsafeWindow,
+    window,
+  ) => {
+    return eval(script);
+  })();
 }
  })
  ]);
