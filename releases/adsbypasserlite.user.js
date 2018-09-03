@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.18.0
+// @version        6.19.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.18.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.19.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -910,6 +910,22 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   async ready () {
     const m = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/<a id="down" href="([^"]+)">/);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(m[1]);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^insurance-waifu\.cf$/,
+    query: /u=(.+)$/,
+  },
+  async ready () {
+    const f = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('form');
+    const args = {};
+    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].forEach(f, (v) => {
+      args[v.name] = v.value;
+    });
+    const response = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].post(f.getAttribute('action'), args);
+    const l = response.match(/window\.location\.href.'([^']+)';/);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(l[1]);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -2423,9 +2439,9 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(tmearn|payshorturl|urltips|shrinkearn|itiad|cutsouf)\.com$/,
         /^(earn-url|bit-url|cut-win|link-zero|cut-earn)\.com$/,
         /^(vy\.)?adsvy\.com$/,
-        /^(linkexa|admew|shrtfly|kuylink|cut4links)\.com$/,
+        /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme)\.com$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
-        /^(vnurl|vinaurl|foxurl|short2win|cashat)\.net$/,
+        /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly)\.net$/,
         /^(trlink|wolink|tocdo|megaurl)\.in$/,
         /^(petty|skips|tr)\.link$/,
         /^idsly\.(com|bid)$/,
@@ -2436,10 +2452,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(shink|shrten|gg-l)\.xyz$/,
         /^mlink\.club$/,
         /^(igram|gram)\.im$/,
-        /^clk\.(press|sh)$/,
+        /^(clk|cll)\.(press|sh)$/,
         /^short\.pe$/,
         /^urlcloud\.us$/,
-        /^(123link|clik|tokenfly|getlink)\.pw$/,
+        /^(123link|clik|tokenfly|getlink|psl)\.pw$/,
         /^(icutit|earnbig|cutearn)\.ca$/,
         /^koylinks\.win$/,
         /^lopte\.pro$/,
@@ -2477,7 +2493,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
         /^(cut-urls|linclik|premiumzen|shrt10|by6dk|mikymoons|man2pro)\.com$/,
-        /^(mykinggo|win4cut)\.com$/,
+        /^(mykinggo|win4cut|link4win)\.com$/,
         /^short\.pastewma\.com$/,
         /^linkfly\.gaosmedia\.com$/,
         /^(adshorte|adsrt)\.com$/,
@@ -2490,7 +2506,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(urle|adshort)\.co$/,
         /^(weefy|adbull|zeiz|link4|adcoin)\.me$/,
         /^(adbilty|taive)\.in$/,
-        /^(psl|twik|adslink)\.pw$/,
+        /^(twik|adslink)\.pw$/,
         /^(curs|crus|4cut|u2s|l2s)\.io$/,
         /^dzurl\.ml$/,
         /^petty\.link$/,
@@ -3363,6 +3379,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(www\.)?anjay\.info$/,
         /^(www\.)?kakkoiisafe\.us$/,
         /^(www\.)?kurosafe\.(website|online)$/,
+        /^(fmlawkers|indexmovie)\.club$/,
       ],
       query: [
         /^\?url=([a-zA-Z0-9/=]+)$/,
@@ -3407,6 +3424,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /^(naisho|filmku|henpoi)\.lompat\.in$/,
         /^edogawa\.lon\.pw$/,
+        /^telolet\.in$/,
       ],
       query: /go=([\w\\]+=*)/,
     },
@@ -3441,8 +3459,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     host: [
       /^(gameinfo|apasih)\.pw$/,
       /^(www\.)?lifesurance\.info$/,
-      /^(intercelestial|sweetlantern)\.com$/,
+      /^speedcar\.club$/,
+      /^(intercelestial|sweetlantern|davinsurance)\.com$/,
       /^awcar\.icu$/,
+      /^skyinsurance\.ml$/,
       /^getinfos\.net$/,
     ],
     query: /^\?id=([a-zA-Z0-9/=]+)$/,
@@ -3455,7 +3475,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
-      /^linkach\.com$/,
+      /^(linkach|autolinkach)\.com$/,
     ],
     query: /^\?id=([a-zA-Z0-9/=]+)$/,
   },
@@ -3481,8 +3501,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /^(gameinfo|apasih)\.pw$/,
         /^(www\.)?lifesurance\.info$/,
-        /^(intercelestial|sweetlantern|linkach)\.com$/,
+        /^speedcar\.club$/,
+        /^(intercelestial|sweetlantern|linkach|autolinkach|davinsurance)\.com$/,
         /^awcar\.icu$/,
+        /^skyinsurance\.ml$/,
         /^getinfos\.net$/,
       ],
     },
@@ -3510,6 +3532,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
+    host: /^hexafile\.net$/,
+    path: /^\/[a-zA-Z0-9]+/,
+  },
+  async ready () {
+    const h = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/window\.location="([^"]+)";/);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(h[1]);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
     host: [
       /^ww[23]\.picnictrans\.com$/,
       /^short\.awsubs\.(co|me)$/,
@@ -3518,19 +3550,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   async ready () {
     const a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('div.kiri > center > a');
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^susutinv2\.com$/,
-  },
-  async ready () {
-    const s = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/="([^"]+)",/);
-    if (!s) {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].warn('site changed');
-      return;
-    }
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(s[1]);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -3546,6 +3565,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     a = a.href.match(/r=(.*)$/);
     a = atob(a[1]);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^spacetica\.com$/,
+    path: /^\/\w+$/,
+  },
+  async ready () {
+    const l = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('p > b > a');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(l.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -3571,11 +3600,17 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^tinyarrows\.com$/,
-    path: /^\/preview\.php$/,
-    query: /^\?page=([^&]+)/,
-  },
+  rule: [
+    {
+      host: /^tinyarrows\.com$/,
+      path: /^\/preview\.php$/,
+      query: /^\?page=([^&]+)/,
+    },
+    {
+      host: /^www\.javlibrary\.com$/,
+      query: /url=(.+)$/,
+    },
+  ],
   async start (m) {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(decodeURIComponent(m.query[1]));
   },
