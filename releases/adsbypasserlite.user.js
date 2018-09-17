@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.19.0
+// @version        6.20.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.19.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.20.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -807,12 +807,11 @@ __webpack_require__.r(__webpack_exports__);
  var _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^akoam\.com$/,
-    path: /^\/download\//,
+    host: /^akoam\.net$/,
+    path: /^\/download\/([^/]+)\//,
   },
-  async start () {
-    const locationLink = location.hash;
-    let data = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].post(locationLink);
+  async start (m) {
+    let data = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].post(location.href, m.path[1]);
     try {
       data = JSON.parse(data);
     } catch (e) {
@@ -2435,13 +2434,14 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^(dz4link|gocitlink|3rabcut|short2win)\.com$/,
+        /^(dz4link|gocitlink|3rabcut|short2win|adsrt)\.com$/,
         /^(tmearn|payshorturl|urltips|shrinkearn|itiad|cutsouf)\.com$/,
         /^(earn-url|bit-url|cut-win|link-zero|cut-earn)\.com$/,
         /^(vy\.)?adsvy\.com$/,
         /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme)\.com$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
         /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly)\.net$/,
+        /^(link4win|linksad)\.net$/,
         /^(trlink|wolink|tocdo|megaurl)\.in$/,
         /^(petty|skips|tr)\.link$/,
         /^idsly\.(com|bid)$/,
@@ -2496,7 +2496,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(mykinggo|win4cut|link4win)\.com$/,
         /^short\.pastewma\.com$/,
         /^linkfly\.gaosmedia\.com$/,
-        /^(adshorte|adsrt)\.com$/,
+        /^adshorte\.com$/,
         /^(www\.)?viralukk\.com$/,
         /^(www\.)?niagoshort\.com$/,
         /^(oturl|loadurl)\.com$/,
@@ -3340,6 +3340,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^swzz\.xyz$/,
+    path: /^\/link\/\w+\/$/,
+  },
+  async ready () {
+    const g = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('a.btn-wrapper.link');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(g.href);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: [
     {
       host: /^(www\.)?sylnk\.net$/,
@@ -3372,6 +3382,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(www\.)?designmyhomee\.com$/,
         /^(www\.)?losstor\.com$/,
         /^kurosafe\.menantisenja\.com$/,
+        /^drive\.jepitkertas\.com$/,
         /^(simaholina|autech)\.xyz$/,
         /^(www\.)?id-securelink\.xyz$/,
         /^(www\.)?converthinks\.xyz$/,
@@ -3460,10 +3471,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       /^(gameinfo|apasih)\.pw$/,
       /^(www\.)?lifesurance\.info$/,
       /^speedcar\.club$/,
+      /^(www\.)?bolaoke\.club$/,
       /^(intercelestial|sweetlantern|davinsurance)\.com$/,
       /^awcar\.icu$/,
       /^skyinsurance\.ml$/,
-      /^getinfos\.net$/,
+      /^(getinfos|sehatsegar)\.net$/,
     ],
     query: /^\?id=([a-zA-Z0-9/=]+)$/,
   },
@@ -3502,10 +3514,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(gameinfo|apasih)\.pw$/,
         /^(www\.)?lifesurance\.info$/,
         /^speedcar\.club$/,
+        /^(www\.)?bolaoke\.club$/,
         /^(intercelestial|sweetlantern|linkach|autolinkach|davinsurance)\.com$/,
         /^awcar\.icu$/,
         /^skyinsurance\.ml$/,
-        /^getinfos\.net$/,
+        /^(getinfos|sehatsegar)\.net$/,
       ],
     },
   ],
@@ -3538,6 +3551,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   async ready () {
     const h = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/window\.location="([^"]+)";/);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(h[1]);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^drivefiles\.bid$/,
+  },
+  async ready () {
+    const d = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/window\.open\('([^']+)'\);/);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(d[1]);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
