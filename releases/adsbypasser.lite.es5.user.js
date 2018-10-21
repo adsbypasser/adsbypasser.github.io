@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.21.0
+// @version        6.22.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.21.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.22.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -4398,7 +4398,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^openload\.co$/, /^oload\.(stream|info|site|tv|win|download|cloud)$/],
+    host: [/^openload\.co$/, /^oload\.(stream|info|site|tv|win|download|cloud|cc)$/],
     path: /^\/f\/.*/
   },
   start: function () {
@@ -7340,9 +7340,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: [
-      /^(dz4link|gocitlink|3rabcut|short2win|adsrt)\.com$/, /^(tmearn|payshorturl|urltips|shrinkearn|itiad|cutsouf)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn)\.com$/, /^(vy\.)?adsvy\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme)\.com$/,
+      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal)\.com$/, /^(tmearn|payshorturl|urltips|shrinkearn|itiad|cutsouf)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn)\.com$/, /^(vy\.)?adsvy\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme)\.com$/, /^cutpaid\.com$/,
       /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/, /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly)\.net$/, /^(link4win|linksad|topurl)\.net$/,
-      /^(trlink|wolink|tocdo|megaurl)\.in$/, /^(petty|skips|tr)\.link$/, /^idsly\.(com|bid)$/, /^(adbilty|adpop|payskip|wicr|ujv)\.me$/, /^wi\.cr$/, /^(oke|cuon|linktor|flylink)\.io$/, /^(3bst|coinlink|itiurl|coshink)\.co$/, /^(shink|shrten|gg-l)\.xyz$/, /^mlink\.club$/, /^(igram|gram)\.im$/, /^(clk|cll)\.(press|sh)$/, /^short\.pe$/, /^urlcloud\.us$/, /^(123link|clik|tokenfly|getlink|psl)\.pw$/, /^(icutit|earnbig|cutearn)\.ca$/, /^koylinks\.win$/, /^lopte\.pro$/, /^(www\.)?pnd\.tl$/, /^(tny|tiny)\.ec$/, /^tl\.tc$/, /^lyon\.kim$/, /^linkvip\.tk$/]
+      /^(trlink|wolink|tocdo|megaurl)\.in$/, /^(petty|skips|tr)\.link$/, /^idsly\.(com|bid)$/, /^(adbilty|adpop|payskip|wicr|ujv|tpx)\.me$/, /^wi\.cr$/, /^(oke|cuon|linktor|flylink)\.io$/, /^(3bst|coinlink|itiurl|coshink)\.co$/, /^(shink|shrten|gg-l|vnurl)\.xyz$/, /^mlink\.club$/, /^(igram|gram)\.im$/, /^(clk|cll)\.(press|sh)$/, /^short\.pe$/, /^urlcloud\.us$/, /^(123link|clik|tokenfly|getlink|psl)\.pw$/, /^(icutit|earnbig|cutearn)\.ca$/, /^adzurl\.cf$/, /^koylinks\.win$/, /^lopte\.pro$/, /^(www\.)?pnd\.tl$/, /^(tny|tiny)\.ec$/, /^tl\.tc$/, /^lyon\.kim$/, /^linkvip\.tk$/]
     },
     ready: function () {
       var _ref94 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee92() {
@@ -9419,7 +9419,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: [
     /^\?url=([a-zA-Z0-9/=]+)$/, /^\?id=([a-zA-Z0-9/=]+)$/, /^\?site=([a-zA-Z0-9/=]+)$/]
   }, {
-    host: [/^sehatlega\.com$/, /^businessforyouand\.me$/, /^plantaheim\.web\.id$/, /^davinsurance\.com$/],
+    host: [/^sehatlega\.com$/, /^businessforyouand\.me$/, /^plantaheim\.web\.id$/, /^davinsurance\.com$/, /^naturalhealthy\.xyz$/],
     query: /^\?r=([a-zA-Z0-9/=]+)$/
   }, {
     host: /^www\.compartiendofull\.net$/,

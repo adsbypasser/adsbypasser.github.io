@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.21.0
+// @version        6.22.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.21.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.22.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.21.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.21.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.21.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.22.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.22.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.22.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -1019,7 +1019,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
       /^openload\.co$/,
-      /^oload\.(stream|info|site|tv|win|download|cloud)$/,
+      /^oload\.(stream|info|site|tv|win|download|cloud|cc)$/,
     ],
     path: /^\/f\/.*/,
   },
@@ -2439,22 +2439,23 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^(dz4link|gocitlink|3rabcut|short2win|adsrt)\.com$/,
+        /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal)\.com$/,
         /^(tmearn|payshorturl|urltips|shrinkearn|itiad|cutsouf)\.com$/,
         /^(earn-url|bit-url|cut-win|link-zero|cut-earn)\.com$/,
         /^(vy\.)?adsvy\.com$/,
         /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme)\.com$/,
+        /^cutpaid\.com$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
         /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly)\.net$/,
         /^(link4win|linksad|topurl)\.net$/,
         /^(trlink|wolink|tocdo|megaurl)\.in$/,
         /^(petty|skips|tr)\.link$/,
         /^idsly\.(com|bid)$/,
-        /^(adbilty|adpop|payskip|wicr|ujv)\.me$/,
+        /^(adbilty|adpop|payskip|wicr|ujv|tpx)\.me$/,
         /^wi\.cr$/,
         /^(oke|cuon|linktor|flylink)\.io$/,
         /^(3bst|coinlink|itiurl|coshink)\.co$/,
-        /^(shink|shrten|gg-l)\.xyz$/,
+        /^(shink|shrten|gg-l|vnurl)\.xyz$/,
         /^mlink\.club$/,
         /^(igram|gram)\.im$/,
         /^(clk|cll)\.(press|sh)$/,
@@ -2462,6 +2463,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^urlcloud\.us$/,
         /^(123link|clik|tokenfly|getlink|psl)\.pw$/,
         /^(icutit|earnbig|cutearn)\.ca$/,
+        /^adzurl\.cf$/,
         /^koylinks\.win$/,
         /^lopte\.pro$/,
         /^(www\.)?pnd\.tl$/,
@@ -3409,6 +3411,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^businessforyouand\.me$/,
         /^plantaheim\.web\.id$/,
         /^davinsurance\.com$/,
+        /^naturalhealthy\.xyz$/,
       ],
       query: /^\?r=([a-zA-Z0-9/=]+)$/,
     },
@@ -4581,9 +4584,13 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         return;
       }
       _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window._0x5b50b7 = null;
-      const node = await getAmbiguousForm('div[id] + div[id] > style', (node) => {
-        return node.parentElement;
-      });
+      let node = null;
+      while (!node) {
+        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(500);
+        node = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('button[name="next"]');
+      }
+      node.click();
+      node.click();
       node.click();
     },
   });
@@ -5233,6 +5240,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
           /^ipicture\.su$/,
           /^acidimg\.cc$/,
           /^s\.imghost\.top$/,
+          /^xxx\.sexex\.xyz$/,
         ],
         path: /^\/img-.*\.html/,
       },
@@ -5338,6 +5346,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
     async ready () {
       const path = window.location.href.replace('/ia-i', '/i').replace('.html', '');
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(path);
+    },
+  });
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+    rule: {
+      host: /^22pixx\.xyz$/,
+      path: /^\/x-i\/(.+)\.jpeg\.html/,
+    },
+    async ready () {
+      const path = window.location.href.replace('/x', '/y');
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(path);
     },
   });
