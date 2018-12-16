@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.25.0
+// @version        6.26.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.25.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.26.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -1014,7 +1014,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
       /^openload\.co$/,
-      /^oload\.(stream|info|site|tv|win|download|cloud|cc)$/,
+      /^oload\.(stream|info|site|tv|win|download|cloud|cc|fun)$/,
     ],
     path: /^\/f\/.*/,
   },
@@ -2448,15 +2448,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^idsly\.(com|bid)$/,
         /^(adbilty|adpop|payskip|wicr|ujv|tpx|adsrt)\.me$/,
         /^wi\.cr$/,
-        /^(oke|cuon|linktor|flylink)\.io$/,
+        /^(oke|cuon|cuio|linktor|flylink)\.io$/,
         /^(3bst|coinlink|itiurl|coshink)\.co$/,
         /^(shink|shrten|gg-l|vnurl)\.xyz$/,
         /^mlink\.club$/,
         /^(igram|gram)\.im$/,
-        /^(clk|cll)\.(press|sh|icu)$/,
+        /^(clk|cll)\.(press|ink|sh|icu)$/,
         /^short\.pe$/,
         /^urlcloud\.us$/,
-        /^(123link|clik|tokenfly|getlink|psl)\.pw$/,
+        /^(123link|clik|tokenfly|getlink|psl|pss)\.pw$/,
         /^(www\.)?lwt\.pw$/,
         /^(icutit|earnbig|cutearn)\.ca$/,
         /^adzurl\.cf$/,
@@ -3074,6 +3074,22 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^probusinesshub\.com$/,
+  },
+  async ready () {
+    let f = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('form[id$=-subscribe]');
+    if (f) {
+      f.action = f.action.replace('http:', 'https:');
+      f.submit();
+      return;
+    }
+    f = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/location\.href="([^"]+)"/);
+    f = f[1];
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(f);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: 'http://richlink.com/app/webscr?cmd=_click&key=*',
   async ready () {
     let f = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('frameset');
@@ -3425,7 +3441,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^ww[23]\.picnictrans\.com$/,
         /^(azhie|skinnycat)\.net$/,
         /^ww2\.awsubs\.co$/,
-        /^plantaheim\.web\.id$/,
+        /^plantaheim(\.web\.id|\.com)$/,
+        /^irisvera\.com$/,
       ],
       query: /^\?d=([a-zA-Z0-9/=]+)$/,
     },
@@ -3459,10 +3476,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /^sehatlega\.com$/,
         /^businessforyouand\.me$/,
-        /^plantaheim\.web\.id$/,
+        /^plantaheim(\.web\.id|\.com)$/,
         /^davinsurance\.com$/,
         /^naturalhealthy\.xyz$/,
         /^healthtod\.com$/,
+        /^irisvera\.com$/,
       ],
       query: /^\?r=([a-zA-Z0-9/=]+)$/,
     },
@@ -3487,6 +3505,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /(^|\.)safelinkconverter2?\.com$/,
         /^safelink(s?review(er)?)\.com?$/,
+        /^awsubsco\.ml$/,
       ],
       query: /id=([\w\\]+=*)/,
     },
