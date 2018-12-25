@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.26.0
+// @version        6.27.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.26.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.27.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -1119,6 +1119,17 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
   async start (m) {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(m.query[1]);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^1(be|dl)\.biz$/,
+    path: /^\/[jt]\.php$/,
+    query: /^\?s=/,
+  },
+  async ready () {
+    const a = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.j-link');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -2438,13 +2449,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(tmearn|payshorturl|urltips|shrinkearn|itiad|cutsouf)\.com$/,
         /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link)\.com$/,
         /^(vy\.)?adsvy\.com$/,
-        /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme)\.com$/,
-        /^cutpaid\.com$/,
+        /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls)\.com$/,
+        /^(cutpaid|smarteasystudy)\.com$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
         /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly)\.net$/,
         /^(link4win|linksad|topurl)\.net$/,
-        /^(trlink|wolink|tocdo|megaurl)\.in$/,
+        /^(123link|clik|tokenfly|getlink|psl|pss)\.pw$/,
+        /^(www\.)?lwt\.pw$/,     
+        /^(trlink|wolink|tocdo)\.in$/,
         /^(petty|skips|tr|zutrox)\.link$/,
+        /^megaurl\.(in|link)$/,
         /^idsly\.(com|bid)$/,
         /^(adbilty|adpop|payskip|wicr|ujv|tpx|adsrt)\.me$/,
         /^wi\.cr$/,
@@ -2456,10 +2470,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(clk|cll)\.(press|ink|sh|icu)$/,
         /^short\.pe$/,
         /^urlcloud\.us$/,
-        /^(123link|clik|tokenfly|getlink|psl|pss)\.pw$/,
-        /^(www\.)?lwt\.pw$/,
         /^(icutit|earnbig|cutearn)\.ca$/,
-        /^adzurl\.cf$/,
+        /^(adzurl|link2link)\.cf$/,
         /^koylinks\.win$/,
         /^lopte\.pro$/,
         /^(www\.)?pnd\.tl$/,
@@ -2469,6 +2481,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^lyon\.kim$/,
         /^linkvip\.tk$/,
         /^stfly\.press$/,
+        /^businessiss2\.info$/,
       ],
     },
     async ready () {
@@ -2508,14 +2521,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
         /^(cut-urls|linclik|premiumzen|shrt10|by6dk|mikymoons|man2pro)\.com$/,
-        /^(mykinggo|win4cut|link4win)\.com$/,
+        /^(mykinggo|win4cut|link4win|loadurl|cut4link|raolink|adshorte)\.com$/,
         /^short\.pastewma\.com$/,
         /^linkfly\.gaosmedia\.com$/,
-        /^adshorte\.com$/,
         /^(www\.)?viralukk\.com$/,
         /^(www\.)?niagoshort\.com$/,
-        /^(loadurl)\.com$/,
-        /^(cut4link|raolink)\.com$/,
         /^www\.worldhack\.net$/,
         /^(eklink|vivads)\.net$/,
         /^(urle|adshort)\.co$/,
@@ -2665,7 +2675,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       super();
     }
     async getMiddleware () {
-      return await getJQueryForm('#mylink');
+      return await getJQueryForm('#mylink1');
     }
   }
   class StagedHandler extends AbstractHandler {
@@ -3553,7 +3563,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       /^(intercelestial|sweetlantern|davinsurance)\.com$/,
       /^awcar\.icu$/,
       /^skyinsurance\.ml$/,
-      /^(getinfos|sehatsegar)\.net$/,
+      /^(getinfos|sehatsegar|lonelymoon)\.net$/,
+      /^stt\.awsubs\.co$/,
     ],
     query: /^\?id=([a-zA-Z0-9/=]+)$/,
   },
@@ -3596,7 +3607,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(intercelestial|sweetlantern|linkach|autolinkach|davinsurance)\.com$/,
         /^awcar\.icu$/,
         /^skyinsurance\.ml$/,
-        /^(getinfos|sehatsegar)\.net$/,
+        /^(getinfos|sehatsegar|lonelymoon)\.net$/,
+        /^stt\.awsubs\.co$/,
       ],
     },
   ],
