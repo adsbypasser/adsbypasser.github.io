@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.27.0
+// @version        6.28.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.27.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.28.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -6022,7 +6022,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: [/^(coeg|disingkat)\.in$/, /^www\.(telondasmu|siotong|siherp)\.com$/, /^www\.greget\.space$/],
-      path: /^\/\w+$/
+      path: /^\/.+$/
     },
     ready: function () {
       var _ref60 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee58(m) {
@@ -7369,10 +7369,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: [
-      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal)\.com$/, /^(tmearn|payshorturl|urltips|shrinkearn|itiad|cutsouf)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link)\.com$/, /^(vy\.)?adsvy\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls)\.com$/, /^(cutpaid|smarteasystudy)\.com$/,
-      /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/, /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly)\.net$/, /^(link4win|linksad|topurl)\.net$/,
+      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal)\.com$/, /^(tmearn|payshorturl|urltips|shrinkearn|itiad|cutsouf)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link)\.com$/, /^(vy\.)?adsvy\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls)\.com$/, /^(cutpaid|smarteasystudy|cyahealth|ershadat|z2i)\.com$/,
+      /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/, /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly)\.net$/, /^(link4win|linksad|topurl|xemlink)\.net$/,
       /^(123link|clik|tokenfly|getlink|psl|pss)\.pw$/, /^(www\.)?lwt\.pw$/,
-      /^(trlink|wolink|tocdo)\.in$/, /^(petty|skips|tr|zutrox)\.link$/, /^megaurl\.(in|link)$/, /^idsly\.(com|bid)$/, /^(adbilty|adpop|payskip|wicr|ujv|tpx|adsrt)\.me$/, /^wi\.cr$/, /^(oke|cuon|cuio|linktor|flylink)\.io$/, /^(3bst|coinlink|itiurl|coshink)\.co$/, /^(shink|shrten|gg-l|vnurl)\.xyz$/, /^mlink\.club$/, /^(igram|gram)\.im$/, /^(clk|cll)\.(press|ink|sh|icu)$/, /^short\.pe$/, /^urlcloud\.us$/, /^(icutit|earnbig|cutearn)\.ca$/, /^(adzurl|link2link)\.cf$/, /^koylinks\.win$/, /^lopte\.pro$/, /^(www\.)?pnd\.tl$/, /^(tny|tiny)\.ec$/, /^tl\.tc$/, /^e2s\.cc$/, /^lyon\.kim$/, /^linkvip\.tk$/, /^stfly\.press$/, /^businessiss2\.info$/]
+      /^(trlink|wolink|tocdo)\.in$/, /^(petty|skips|tr|zutrox)\.link$/, /^megaurl\.(in|link)$/, /^idsly\.(com|bid)$/, /^(adbilty|adpop|payskip|wicr|ujv|tpx|adsrt)\.me$/, /^wi\.cr$/, /^(oke|cuon|cuio|linktor|flylink)\.io$/, /^(3bst|coinlink|itiurl|coshink|link5s)\.co$/, /^(shink|shrten|gg-l|vnurl)\.xyz$/, /^mlink\.club$/, /^(igram|gram)\.im$/, /^(clk|cll)\.(press|ink|sh|icu)$/, /^short\.pe$/, /^urlcloud\.us$/, /^(icutit|earnbig|cutearn)\.ca$/, /^(adzurl|link2link)\.cf$/, /^(koylinks|buy-in-599rs)\.win$/, /^lopte\.pro$/, /^(www\.)?pnd\.tl$/, /^(tny|tiny)\.ec$/, /^tl\.tc$/, /^e2s\.cc$/, /^lyon\.kim$/, /^linkvip\.tk$/, /^stfly\.press$/, /^businessiss2\.info$/, /^eatings\.stream$/, /^8o\.ee$/]
     },
     ready: function () {
       var _ref95 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee93() {
@@ -7484,7 +7484,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: [
       /^(cut-urls|linclik|premiumzen|shrt10|by6dk|mikymoons|man2pro)\.com$/, /^(mykinggo|win4cut|link4win|loadurl|cut4link|raolink|adshorte)\.com$/, /^short\.pastewma\.com$/, /^linkfly\.gaosmedia\.com$/, /^(www\.)?viralukk\.com$/, /^(www\.)?niagoshort\.com$/,
       /^www\.worldhack\.net$/, /^(eklink|vivads)\.net$/,
-      /^(urle|adshort)\.co$/, /^(weefy|adbull|zeiz|link4|adcoin)\.me$/, /^(adbilty|taive)\.in$/, /^(twik|adslink)\.pw$/, /^(curs|crus|4cut|u2s|l2s)\.io$/, /^dzurl\.ml$/, /^petty\.link$/, /^shortad\.cf$/, /^123link\.(io|co|press|pro)$/, /^git\.tc$/, /^adfu\.us$/, /^shortit\.ca$/, /^spamlink\.org$/, /^royurls\.bid$/, /^za\.gl$/]
+      /^(urle|adshort)\.co$/, /^(weefy|adbull|zeiz|link4|adcoin)\.me$/, /^(adbilty|taive)\.in$/, /^(twik|adslink)\.pw$/, /^(curs|crus|4cut|u2s|l2s)\.io$/, /^dzurl\.ml$/, /^petty\.link$/, /^shortad\.cf$/, /^123link\.(io|co|press|pro)$/, /^git\.tc$/, /^(adfu|linku)\.us$/, /^shortit\.ca$/, /^(spamlink|idsly)\.org$/, /^royurls\.bid$/, /^za\.gl$/]
     },
     ready: function () {
       var _ref99 = (0, _asyncToGenerator3.default)( _regenerator2.default.mark(function _callee97() {
@@ -9624,7 +9624,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [
     /\.blogspot\.com?/, /^(www\.)?designmyhomee\.com$/, /^(www\.)?losstor\.com$/, /^kurosafe\.menantisenja\.com$/, /^drive\.jepitkertas\.com$/,
     /^(simaholina|autech)\.xyz$/, /^(www\.)?id-securelink\.xyz$/, /^(www\.)?converthinks\.xyz$/,
-    /^(www\.)?tojros\.tk$/, /^(www\.)?anjay\.info$/, /^(www\.)?kakkoiisafe\.us$/, /^(www\.)?kurosafe\.(website|online)$/, /^(fmlawkers|indexmovie)\.club$/],
+    /^(www\.)?tojros\.tk$/, /^(www\.)?anjay\.info$/, /^(www\.)?kakkoiisafe\.us$/, /^(www\.)?kurosafe\.(website|online)$/, /^(fmlawkers|indexmovie)\.club$/, /^micin\.online$/],
     query: [
     /^\?url=([a-zA-Z0-9/=]+)$/, /^\?id=([a-zA-Z0-9/=]+)$/, /^\?site=([a-zA-Z0-9/=]+)$/]
   }, {
@@ -9664,8 +9664,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: [{
     host: [
-    /(^|\.)safelinkconverter2?\.com$/,
-    /^safelink(s?review(er)?)\.com?$/, /^awsubsco\.ml$/],
+    /(^|\.)safelink(converter|reviewx?)\.com?$/, /^awsubsco\.ml$/],
     query: /id=([\w\\]+=*)/
   }, {
     host: [/^(naisho|filmku|henpoi)\.lompat\.in$/, /^edogawa\.lon\.pw$/, /^telolet\.in$/],
