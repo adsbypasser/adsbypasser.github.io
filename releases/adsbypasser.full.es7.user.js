@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.29.0
+// @version        6.30.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.29.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.30.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.29.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.29.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.29.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.30.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.30.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.30.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -1760,10 +1760,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
-    path: /\/o\/([a-zA-Z0-9]+)/,
-  },
+  rule: [
+    {
+      host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
+      path: /\/o\/([a-zA-Z0-9]+)/,
+    },
+    {
+      host: /^gsmzone\.site$/,
+      path: /\/go\/([a-zA-Z0-9]+)/,
+    },
+  ],
   async start (m) {
     const direct_link = window.atob(m.path[1]);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(direct_link);
@@ -2457,22 +2463,23 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls)\.com$/,
         /^(cutpaid|smarteasystudy|cyahealth|ershadat|z2i|srtfly)\.com$/,
         /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi)\.com$/,
-        /^(mykinggo|li-nkz|win4cut)\.com$/,
+        /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger)\.com$/,
+        /^linkorlink\.com$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
         /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly)\.net$/,
         /^(link4win|linksad|topurl|xemlink)\.net$/,
-        /^(123link|clik|tokenfly|getlink|psl|pss|shln|lpe)\.pw$/,
+        /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs)\.pw$/,
         /^(www\.)?lwt\.pw$/,
-        /^(trlink|wolink|tocdo|cuturl)\.in$/,
+        /^(trlink|wolink|tocdo|cuturl|counsellingresult2016|iitjeemainguide)\.in$/,
         /^(petty|skips|tr|zutrox)\.link$/,
         /^megaurl\.(in|link)$/,
-        /^idsly\.(com|bid|net)$/,
-        /^(adbilty|adpop|wicr|ujv|tpx|adsrt)\.me$/,
+        /^(1)idsly\.(com|bid|net)$/,
+        /^(adbilty|adpop|wicr|ujv|tpx|adsrt|2fly|lin65)\.me$/,
         /^wi\.cr$/,
         /^payskip\.(me|org)$/,
-        /^(oke|cuon|cuio|cuee|linktor|flylink)\.io$/,
-        /^(3bst|coinlink|itiurl|coshink|link5s)\.co$/,
-        /^(shink|shrten|gg-l|vnurl)\.xyz$/,
+        /^(oke|cuon|cuio|cuee|cuus|linktor|flylink)\.io$/,
+        /^(3bst|coinlink|itiurl|coshink|link5s|curs)\.co$/,
+        /^(shink|shrten|gg-l|vnurl|bloggingdekh)\.xyz$/,
         /^mlink\.club$/,
         /^(igram|gram)\.im$/,
         /^(clk|cll)\.(press|ink|sh|icu)$/,
@@ -2483,6 +2490,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(koylinks|buy-in-599rs)\.win$/,
         /^lopte\.pro$/,
         /^(www\.)?pnd\.tl$/,
+        /^(www\.)?shrink\.vip$/,
         /^(tny|tiny)\.ec$/,
         /^tl\.tc$/,
         /^e2s\.cc$/,
@@ -2493,6 +2501,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^eatings\.stream$/,
         /^8o\.ee$/,
         /^buyitonline\.store$/,
+        /^shortearn\.eu$/,
+        /^1921681254\.tech$/,
+        /^123link\.(pw|vip)$/,
+        /^lotechnocan\.org$/,
+        /^tinylink\.run$/,
+        /^btc\.ms$/,
       ],
     },
     async ready () {
@@ -3329,6 +3343,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
+    host: /^shortid\.co$/,
+    path: /^\/[a-zA-Z0-9]+/,
+  },
+  async ready () {
+    const s = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('a#makingdifferenttimer');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(s.href);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
     host: /^get\.shrink-service\.it$/,
     path: /^\/(.+)/,
   },
@@ -3425,6 +3449,26 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
+    host: /^sub2unlock\.com$/,
+    path: /^\/link\/get\//,
+  },
+  async ready () {
+    const su = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('a#link.unlock-step-link.getlink');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(su.href);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^sub2unlock\.com$/,
+    path: /^\/[a-zA-Z0-9]+/,
+  },
+  async ready () {
+    const su = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/'href', '([^']+)'/);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(su[1]);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
     host: /^(www\.)?supercheats\.com$/,
     path: /^\/interstitial\.html$/,
     query: /(?:\?|&)oldurl=([^&]+)(?:$|&)/,
@@ -3478,6 +3522,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(www\.)?losstor\.com$/,
         /^kurosafe\.menantisenja\.com$/,
         /^drive\.jepitkertas\.com$/,
+        /^lewat\.wibuindo\.com$/,
         /^(simaholina|autech)\.xyz$/,
         /^(www\.)?id-securelink\.xyz$/,
         /^(www\.)?converthinks\.xyz$/,
@@ -3488,6 +3533,9 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(www\.)?kurosafe\.(website|online)$/,
         /^(fmlawkers|indexmovie)\.club$/,
         /^micin\.online$/,
+        /^unduh\.in/,
+        /^(www\.)?drakorsafe\.tech$/,
+        /^(omgmusik|omglyrics)\.com$/,
       ],
       query: [
         /^\?url=([a-zA-Z0-9/=]+)$/,
@@ -3498,7 +3546,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     {
       host: [
         /^sehatlega\.com$/,
-        /^businessforyouand\.me$/,
+        /^(businessforyouand|lindung)\.me$/,
         /^plantaheim(\.web\.id|\.com)$/,
         /^davinsurance\.com$/,
         /^naturalhealthy\.xyz$/,
@@ -3574,11 +3622,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       /^(www\.)?lifesurance\.info$/,
       /^speedcar\.club$/,
       /^(www\.)?bolaoke\.club$/,
-      /^(intercelestial|sweetlantern|davinsurance)\.com$/,
+      /^(intercelestial|sweetlantern|davinsurance|technlab)\.com$/,
       /^awcar\.icu$/,
       /^skyinsurance\.ml$/,
       /^(getinfos|sehatsegar|lonelymoon)\.net$/,
       /^stt\.awsubs\.co$/,
+      /^wibuindo\.xyz$/,
     ],
     query: /^\?id=([a-zA-Z0-9/=]+)$/,
   },
@@ -3618,11 +3667,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(www\.)?lifesurance\.info$/,
         /^speedcar\.club$/,
         /^(www\.)?bolaoke\.club$/,
-        /^(intercelestial|sweetlantern|linkach|autolinkach|davinsurance)\.com$/,
+        /^(intercelestial|sweetlantern|linkach|autolinkach|davinsurance|technlab)\.com$/,
         /^awcar\.icu$/,
         /^skyinsurance\.ml$/,
         /^(getinfos|sehatsegar|lonelymoon)\.net$/,
         /^stt\.awsubs\.co$/,
+        /^wibuindo\.xyz$/,
       ],
     },
   ],
@@ -3634,6 +3684,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     }
     s = atob(m.query[1]);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(s);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^lewat\.in$/,
+  },
+  async ready () {
+    const l = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#lanjut > #goes > a');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(l.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -3695,7 +3754,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^spacetica\.com$/,
+    host: [
+      /^spacetica\.com$/,
+      /^skinnycat\.org$/,
+    ],
     path: /^\/\w+$/,
   },
   async ready () {
@@ -4227,6 +4289,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       referer: true,
     });
   },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^fopkodiak\.site$/,
+    path: /^\/image\//,
+  },
+  async ready () {
+    const img = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('head > link[rel=image_src]');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(img.href);
+  }
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: 'http://www.fotolink.su/v.php?id=*',
@@ -4769,6 +4841,20 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
   });
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+    rule: {
+      host: /^imgbaron\.com$/,
+      path: PATH_RULE,
+    },
+    async ready () {
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(500);
+      let img = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('img[style*="display"]');
+      if (img) {
+        img = img.src.split('=')[1];
+        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(img);
+      }
+    },
+  });
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: /^http:\/\/imgdragon\.com\/(getfil\.php|dl)$/,
     async ready () {
       const i = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('img.pic');
@@ -5009,13 +5095,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     path: /^\/[a-z|0-9]{4,10}$/,
   },
   async ready () {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(1000);
-    const b = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('body .main-content-box');
-    b.style.display = 'initial';
-    const c = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('body .container');
-    c.style.display = 'initial';
-    const img = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('body .big_img img');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(img.src);
+    const matches = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/document.getElementById("soDaBug").src = "([^"]+)";/);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(matches[1]);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -5675,6 +5756,28 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#imageid');
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src);
   },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^xxx\.fopkodiak\.site$/,
+    path: /^\/img-/,
+  },
+  async ready () {
+    if (document.referrer == document.location.href) {
+      let img = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('#container > a > img');
+      if (!img) {
+        img = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#container > img');
+      }
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(img.src);
+    } else {
+      const f = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('form');
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(f.action, { 
+        post: {
+          imgContinue: 'Continue to image ...',
+        }
+      });
+    }
+  }
 });
  }),
  (function(module, __webpack_exports__, __webpack_require__) {
