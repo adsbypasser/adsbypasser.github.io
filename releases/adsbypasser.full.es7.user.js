@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.30.0
+// @version        6.31.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.30.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.31.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.30.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.30.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.30.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.31.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.31.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.31.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -1019,7 +1019,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
       /^openload\.(co|pw)$/,
-      /^oload\.(stream|info|site|tv|win|download|cloud|cc|fun|club)$/,
+      /^oload\.(stream|info|site|tv|win|download|cloud|cc|fun|club|live)$/,
     ],
     path: /^\/f\/.*/,
   },
@@ -1495,6 +1495,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     host: [
       /^al\.ly$/,
       /^ally\.sh$/,
+      /^ally\.shortens\.co$/,
     ],
   },
   async ready () {
@@ -2446,6 +2447,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^mitly\.us$/,
         /^tui\.click$/,
         /^met\.bz$/,
+        /^lapak\.link$/,
       ],
     },
     async ready () {
@@ -2461,23 +2463,23 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link)\.com$/,
         /^(vy\.)?adsvy\.com$/,
         /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls)\.com$/,
-        /^(cutpaid|smarteasystudy|cyahealth|ershadat|z2i|srtfly)\.com$/,
+        /^(cutpaid|smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro)\.com$/,
         /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi)\.com$/,
         /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger)\.com$/,
-        /^linkorlink\.com$/,
+        /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|icutlink)\.com$/,
+        /^(earnmoneytalk)\.com$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
         /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly)\.net$/,
-        /^(link4win|linksad|topurl|xemlink)\.net$/,
+        /^(link4win|linksad|topurl|xemlink|cutadlink|crabcut)\.net$/,
         /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs)\.pw$/,
         /^(www\.)?lwt\.pw$/,
         /^(trlink|wolink|tocdo|cuturl|counsellingresult2016|iitjeemainguide)\.in$/,
-        /^(petty|skips|tr|zutrox)\.link$/,
+        /^(petty|skips|tr|zutrox|flaz)\.link$/,
         /^megaurl\.(in|link)$/,
-        /^(1)idsly\.(com|bid|net)$/,
         /^(adbilty|adpop|wicr|ujv|tpx|adsrt|2fly|lin65)\.me$/,
         /^wi\.cr$/,
         /^payskip\.(me|org)$/,
-        /^(oke|cuon|cuio|cuee|cuus|linktor|flylink)\.io$/,
+        /^(oke|cuon|cuio|cuee|cuus|cuto|linktor|flylink|uiz)\.io$/,
         /^(3bst|coinlink|itiurl|coshink|link5s|curs)\.co$/,
         /^(shink|shrten|gg-l|vnurl|bloggingdekh)\.xyz$/,
         /^mlink\.club$/,
@@ -2495,18 +2497,21 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^tl\.tc$/,
         /^e2s\.cc$/,
         /^lyon\.kim$/,
-        /^linkvip\.tk$/,
+        /^(linkvip|4short)\.tk$/,
         /^stfly\.press$/,
-        /^businessiss2\.info$/,
+        /^(businessiss2|techandreview)\.info$/,
         /^eatings\.stream$/,
         /^8o\.ee$/,
         /^buyitonline\.store$/,
         /^shortearn\.eu$/,
-        /^1921681254\.tech$/,
+        /^(1921681254|geki)\.tech$/,
         /^123link\.(pw|vip)$/,
         /^lotechnocan\.org$/,
         /^tinylink\.run$/,
         /^btc\.ms$/,
+        /^earn\.theplusit\.ro$/,
+        /^skip\.az$/,
+        /^dutchycorp\.space$/,
       ],
     },
     async ready () {
@@ -2563,11 +2568,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^shortad\.cf$/,
         /^123link\.(io|co|press|pro)$/,
         /^git\.tc$/,
-        /^(adfu|linku)\.us$/,
+        /^(adfu|linku|cutwin)\.us$/,
         /^shortit\.ca$/,
-        /^(spamlink|idsly)\.org$/,
+        /^spamlink\.org$/,
         /^royurls\.bid$/,
         /^za\.gl$/,
+        /^(1)?idsly\.(com|bid|net|org)$/,
       ],
     },
     async ready () {
@@ -2649,7 +2655,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       if (!b) {
         return false;
       }
-      const o = new MutationObserver(() => {
+      if (!b.disabled) {
+        b.click();
+      }
+            const o = new MutationObserver(() => {
         if (!b.disabled) {
           b.click();
         }
@@ -3527,6 +3536,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(www\.)?id-securelink\.xyz$/,
         /^(www\.)?converthinks\.xyz$/,
         /^(www\.)?marivelkece\.xyz$/,
+        /^(www\.)?yametesenpai\.xyz$/,
         /^(www\.)?tojros\.tk$/,
         /^(www\.)?anjay\.info$/,
         /^(www\.)?kakkoiisafe\.us$/,
@@ -3545,13 +3555,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
     {
       host: [
-        /^sehatlega\.com$/,
+        /^(sehatlega|davinsurance|healthtod|irisvera|akanosora)\.com$/,
         /^(businessforyouand|lindung)\.me$/,
         /^plantaheim(\.web\.id|\.com)$/,
-        /^davinsurance\.com$/,
         /^naturalhealthy\.xyz$/,
-        /^healthtod\.com$/,
-        /^irisvera\.com$/,
       ],
       query: /^\?r=([a-zA-Z0-9/=]+)$/,
     },
@@ -3563,6 +3570,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     {
       host: /^animeforce\.stream$/,
       query: /^\?l=([a-zA-Z0-9/=]+)$/,
+    },
+    {
+      host: /^(www\.)?dukun-cit\.com$/,
+      query: /^\?s=([a-zA-Z0-9/=]+)$/,
     },
   ],
   async start (m) {
@@ -3697,6 +3708,24 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
+    host: /^sardeath\.com$/,
+  },
+  async ready () {
+    const sd = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.download-link > a');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(sd.href);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^goou\.in$/,
+  },
+  async ready () {
+    const g = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#download_link > a');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(g.href);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
     host: /^kombatch\.loncat\.pw$/,
   },
   async ready () {
@@ -3723,6 +3752,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   async ready () {
     const d = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/window\.open\('([^']+)'\);/);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(d[1]);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^download-mirror\.ga$/,
+  },
+  async ready () {
+    const dm = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/a href='([^']+)'/);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(dm[1]);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -5095,7 +5133,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     path: /^\/[a-z|0-9]{4,10}$/,
   },
   async ready () {
-    const matches = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/document.getElementById("soDaBug").src = "([^"]+)";/);
+    const matches = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/document\.getElementById\("soDaBug"\)\.src = "([^"]+)";/);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(matches[1]);
   },
 });
