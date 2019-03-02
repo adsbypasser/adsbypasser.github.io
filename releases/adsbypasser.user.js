@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.31.0
+// @version        6.32.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.31.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.32.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.31.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.31.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.31.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.32.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.32.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.32.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -1019,7 +1019,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
       /^openload\.(co|pw)$/,
-      /^oload\.(stream|info|site|tv|win|download|cloud|cc|fun|club|live)$/,
+      /^oload\.(stream|info|site|tv|win|download|cloud|cc|fun|club|live|space)$/,
     ],
     path: /^\/f\/.*/,
   },
@@ -2607,7 +2607,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('iframe');
     }
     async call () {
-      const ok = this.prepare();
+      const ok = await this.prepare();
       if (!ok) {
         return;
       }
@@ -2643,7 +2643,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     constructor () {
       super();
     }
-    prepare () {
+    async prepare () {
       this.removeOverlay();
       const f = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('#captchaShortlink');
       if (!f) {
@@ -2655,9 +2655,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       if (!b) {
         return false;
       }
-      if (!b.disabled) {
-        b.click();
-      }
             const o = new MutationObserver(() => {
         if (!b.disabled) {
           b.click();
@@ -2666,6 +2663,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       o.observe(b, {
         attributes: true,
       });
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(1000);
+      const click = f.clientWidth === 0 || f.childNodes.length === 0;
+      if (click && !b.disabled) {
+        _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].info('clicking submit button, because recaptcha was empty');
+        b.click();
+      }
       return false;
     }
     async getMiddleware () {
@@ -3521,7 +3524,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       query: /^\?d=([a-zA-Z0-9/=]+)$/,
     },
     {
-      host: /^i\.gtaind\.com$/,
+      host: [
+        /^i\.gtaind\.com$/,
+        /^hikarinoakariost\.info$/,
+      ],
       query: /^\?([a-zA-Z0-9/=]+)$/,
     },
     {
@@ -3737,11 +3743,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^hexafile\.net$/,
+    host: /^(v1\.)?hexafile\.net$/,
     path: /^\/[a-zA-Z0-9]+/,
   },
   async ready () {
-    const h = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/window\.location="([^"]+)";/);
+    const h = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/="([^"]+)",e=0,f=a/);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(h[1]);
   },
 });
@@ -5115,7 +5121,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
       /^www\.imagespicy\.site$/,
-      /^www\.(imgsky|imgfile)\.net$/,
+      /^www\.(imgsky|imgfile|imgsee)\.net$/,
     ],
     path: /^\/site\/v\/\d+$/,
   },
@@ -5128,7 +5134,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
       /^www\.imagespicy\.site$/,
-      /^www\.(imgsky|imgfile)\.net$/,
+      /^www\.(imgsky|imgfile|imgsee)\.net$/,
     ],
     path: /^\/[a-z|0-9]{4,10}$/,
   },
@@ -5537,6 +5543,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
           /^acidimg\.cc$/,
           /^s\.imghost\.top$/,
           /^xxx\.sexex\.xyz$/,
+          /^imagespublic\.tk$/,
+          /^ecoimages\.xyz$/,
         ],
         path: /^\/img-.*\.html/,
       },
@@ -5655,7 +5663,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(path);
     },
   });
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: /^22pixx\.xyz$/,
       path: /^\/x-i\/(.+)\.jpeg\.html/,
@@ -5741,7 +5749,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(l.href);
     },
   });
-    async function action (firstSelector, secondSelector) {
+  async function action (firstSelector, secondSelector) {
     _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('iframe, #adblock_detect, .popupOverlay');
     let node = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$(firstSelector);
     if (node) {

@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.31.0
+// @version        6.32.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.31.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.32.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -1014,7 +1014,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
       /^openload\.(co|pw)$/,
-      /^oload\.(stream|info|site|tv|win|download|cloud|cc|fun|club|live)$/,
+      /^oload\.(stream|info|site|tv|win|download|cloud|cc|fun|club|live|space)$/,
     ],
     path: /^\/f\/.*/,
   },
@@ -2602,7 +2602,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('iframe');
     }
     async call () {
-      const ok = this.prepare();
+      const ok = await this.prepare();
       if (!ok) {
         return;
       }
@@ -2638,7 +2638,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     constructor () {
       super();
     }
-    prepare () {
+    async prepare () {
       this.removeOverlay();
       const f = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('#captchaShortlink');
       if (!f) {
@@ -2650,9 +2650,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       if (!b) {
         return false;
       }
-      if (!b.disabled) {
-        b.click();
-      }
             const o = new MutationObserver(() => {
         if (!b.disabled) {
           b.click();
@@ -2661,6 +2658,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       o.observe(b, {
         attributes: true,
       });
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(1000);
+      const click = f.clientWidth === 0 || f.childNodes.length === 0;
+      if (click && !b.disabled) {
+        _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].info('clicking submit button, because recaptcha was empty');
+        b.click();
+      }
       return false;
     }
     async getMiddleware () {
@@ -3516,7 +3519,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       query: /^\?d=([a-zA-Z0-9/=]+)$/,
     },
     {
-      host: /^i\.gtaind\.com$/,
+      host: [
+        /^i\.gtaind\.com$/,
+        /^hikarinoakariost\.info$/,
+      ],
       query: /^\?([a-zA-Z0-9/=]+)$/,
     },
     {
@@ -3732,11 +3738,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^hexafile\.net$/,
+    host: /^(v1\.)?hexafile\.net$/,
     path: /^\/[a-zA-Z0-9]+/,
   },
   async ready () {
-    const h = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/window\.location="([^"]+)";/);
+    const h = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/="([^"]+)",e=0,f=a/);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(h[1]);
   },
 });
