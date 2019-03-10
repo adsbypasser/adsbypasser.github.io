@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.32.0
+// @version        6.33.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.32.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.33.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.32.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.32.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.32.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.33.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.33.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.33.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -1035,7 +1035,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     const dlCtn = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#realdl');
     dlCtn.style.display = 'inline-block';
     const dlBtn = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('a', dlCtn);
-    const ePath = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#DtsBlkVFQx');
+    const ePath = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#lqEH1');
     dlBtn.href = '/stream/' + ePath.textContent;
     const videoCtn = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('.videocontainer');
     if (videoCtn) {
@@ -2458,48 +2458,49 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal)\.com$/,
-        /^(tmearn|payshorturl|urltips|shrinkearn|itiad|cutsouf)\.com$/,
+        /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani)\.com$/,
+        /^(tmearn|payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk)\.com$/,
         /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link)\.com$/,
+        /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural)\.com$/,
+        /^(shrinkbuck|clkpay)\.com$/,
         /^(vy\.)?adsvy\.com$/,
-        /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls)\.com$/,
-        /^(cutpaid|smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro)\.com$/,
-        /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi)\.com$/,
+        /^(www\.)?clkpays\.com$/,
+        /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7)\.com$/,
+        /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|shrt10)\.com$/,
+        /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2)\.com$/,
         /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger)\.com$/,
         /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|icutlink)\.com$/,
-        /^(earnmoneytalk)\.com$/,
+        /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners)\.com$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
         /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly)\.net$/,
         /^(link4win|linksad|topurl|xemlink|cutadlink|crabcut)\.net$/,
         /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs)\.pw$/,
         /^(www\.)?lwt\.pw$/,
-        /^(trlink|wolink|tocdo|cuturl|counsellingresult2016|iitjeemainguide)\.in$/,
-        /^(petty|skips|tr|zutrox|flaz)\.link$/,
+        /^(trlink|wolink|tocdo|cuturl|counsellingresult2016|iitjeemainguide|healthhindigyan)\.in$/,
+        /^(petty|skips|tr|flaz)\.link$/,
         /^megaurl\.(in|link)$/,
-        /^(adbilty|adpop|wicr|ujv|tpx|adsrt|2fly|lin65)\.me$/,
-        /^wi\.cr$/,
+        /^(adbilty|adpop|ujv|tpx|adsrt|2fly|lin65)\.me$/,
         /^payskip\.(me|org)$/,
-        /^(oke|cuon|cuio|cuee|cuus|cuto|linktor|flylink|uiz)\.io$/,
+        /^(oke|cuon|cuio|cuee|cuus|cuto|cu2|linktor|flylink|uiz)\.io$/,
         /^(3bst|coinlink|itiurl|coshink|link5s|curs)\.co$/,
-        /^(shink|shrten|gg-l|vnurl|bloggingdekh)\.xyz$/,
-        /^mlink\.club$/,
+        /^(shink|shrten|gg-l|vnurl|bloggingdekh|ln11|sh11|tradeguru)\.xyz$/,
+        /^(mlink|cl250)\.club$/,
         /^(igram|gram)\.im$/,
         /^(clk|cll)\.(press|ink|sh|icu)$/,
         /^short\.pe$/,
-        /^urlcloud\.us$/,
+        /^(urlcloud|imageoptimizer)\.us$/,
         /^(icutit|earnbig|cutearn)\.ca$/,
         /^(adzurl|link2link)\.cf$/,
         /^(koylinks|buy-in-599rs)\.win$/,
         /^lopte\.pro$/,
         /^(www\.)?pnd\.tl$/,
-        /^(www\.)?shrink\.vip$/,
         /^(tny|tiny)\.ec$/,
         /^tl\.tc$/,
         /^e2s\.cc$/,
         /^lyon\.kim$/,
         /^(linkvip|4short)\.tk$/,
         /^stfly\.press$/,
-        /^(businessiss2|techandreview)\.info$/,
+        /^(businessiss2|techandreview|yesmoviesapp)\.info$/,
         /^eatings\.stream$/,
         /^8o\.ee$/,
         /^buyitonline\.store$/,
@@ -2512,10 +2513,40 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^earn\.theplusit\.ro$/,
         /^skip\.az$/,
         /^dutchycorp\.space$/,
+        /^click2see\.desi$/,
+        /^shorted\.id$/,
       ],
     },
     async ready () {
       const handler = new RecaptchaHandler();
+      await handler.call();
+    },
+  });
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+    rule: {
+      host: [
+        /^wi\.cr$/,
+        /^wicr\.me$/,
+        /^linksoflife\.co$/,
+        /^linksof\.life$/,
+      ],
+    },
+    async ready () {
+      const handler = new InvisibleRecaptchaHandler();
+      await handler.call();
+    },
+  });
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+    rule: {
+      host: [
+        /^cutpaid\.com$/,
+        /^ctui\.in$/,
+        /^zutrox\.link$/,
+        /^(www\.)?shrink\.vip$/,
+      ],
+    },
+    async ready () {
+      const handler = new NonDisabledRecaptchaHandler();
       await handler.call();
     },
   });
@@ -2550,7 +2581,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^(cut-urls|linclik|premiumzen|shrt10|by6dk|mikymoons|man2pro)\.com$/,
+        /^(cut-urls|linclik|premiumzen|by6dk|mikymoons|man2pro)\.com$/,
         /^(link4win|loadurl|cut4link|raolink|adshorte)\.com$/,
         /^short\.pastewma\.com$/,
         /^linkfly\.gaosmedia\.com$/,
@@ -2588,6 +2619,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         '#__random_class_name__',
         '#headlineatas',
         '#myModal',
+        '.opacity_wrapper',
       ].join(', ');
       this._formSelector = [
         '#go-link',
@@ -2655,7 +2687,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       if (!b) {
         return false;
       }
-            const o = new MutationObserver(() => {
+      await this.submitListen(b, f);
+      return false;
+    }
+    async submitListen (b) {
+      const o = new MutationObserver(() => {
         if (!b.disabled) {
           b.click();
         }
@@ -2663,13 +2699,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       o.observe(b, {
         attributes: true,
       });
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(1000);
-      const click = f.clientWidth === 0 || f.childNodes.length === 0;
-      if (click && !b.disabled) {
-        _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].info('clicking submit button, because recaptcha was empty');
-        b.click();
-      }
-      return false;
     }
     async getMiddleware () {
       return await getJQueryForm(this._formSelector);
@@ -2688,6 +2717,33 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
           }
         } catch (e) {
           _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].warn(e);
+        }
+      }
+    }
+  }
+  class InvisibleRecaptchaHandler extends RecaptchaHandler {
+    constructor () {
+      super();
+    }
+    async submitListen (b, f) {
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(1000);
+      const click = f.clientWidth === 0 || f.childNodes.length === 0;
+      if (click && !b.disabled) {
+        _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].info('clicking submit button, because recaptcha was empty');
+        b.click();
+      }
+    }
+  }
+  class NonDisabledRecaptchaHandler extends RecaptchaHandler {
+    constructor () {
+      super();
+    }
+    async submitListen (b) {
+      while (true) {
+        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(500);
+        if (grecaptcha && grecaptcha.getResponse().length !== 0) {
+          b.click();
+          break;
         }
       }
     }
@@ -2752,7 +2808,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     }
   }
   class ShortlyHandler extends AbstractHandler {
-    constructor() {
+    constructor () {
       super();
     }
     prepare () {
@@ -3771,6 +3827,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
+    host: /^url\.hulblog\.com$/,
+    path: /^\/[a-zA-Z0-9]+/,
+  },
+  async ready () {
+    const h = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/"href='([^']+)'/);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(h[1]);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
     host: [
       /^ww[23]\.picnictrans\.com$/,
       /^short\.awsubs\.(co|me)$/,
@@ -4310,7 +4376,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^ewa\.ac$/,
+    host: [
+      /^ewa\.ac$/,
+      /^elil\.cc$/,
+    ],
     path: /^\/(.*)$/,
   },
   async ready (m) {
@@ -5265,7 +5334,13 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: 'http://pic-money.ru/*.html',
+  rule: {
+    host: [
+      /^pic-money\.ru$/,
+      /^shaggyimg\.pro$/,
+      /^imgazure\.com$/,
+    ],
+  },
   async ready () {
     const f = document.forms[0];
     const sig = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('input[name="sig"]', f).value;
@@ -5333,6 +5408,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     'http://pixsor.com/XXX/share-*.html',
     'http://holdthemoan.net/x/share-*.html',
     'http://www.imgz.pw/share-*.html',
+    'https://imguur.pictures/share-*.html'
   ],
   async ready () {
     const o = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#iimg');
@@ -5509,7 +5585,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: [
       {
         host: [
-          /^(imagecorn|imagedecode|imageko)\.com$/,
+          /^(imagecorn|imagedecode|imageko|imageshtorm)\.com$/,
           /^(hosturimage|greasyimage|damimage)\.com$/,
           /^(imgicy|imgsavvy|imgtzar|imgtornado|imgkicks|img2share|imghit|imgmain)\.com$/,
           /^(imgtrial|imgreputa|imgfapper|imgpart|imgbalana|imgjazz)\.com$/,
@@ -5546,7 +5622,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
           /^imagespublic\.tk$/,
           /^ecoimages\.xyz$/,
         ],
-        path: /^\/img-.*\.html/,
+        path: /\/img-.*\.html/,
       },
       {
         host: [
@@ -5805,7 +5881,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^xxx\.fopkodiak\.site$/,
+    host: [
+      /^xxx\.fopkodiak\.site$/,
+      /^blameless\.work$/,
+      /^xaoutchouc\.live$/,
+    ],
     path: /^\/img-/,
   },
   async ready () {
