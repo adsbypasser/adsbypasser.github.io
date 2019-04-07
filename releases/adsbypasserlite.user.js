@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        6.34.0
+// @version        6.35.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.34.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v6.35.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -1043,7 +1043,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     host: [
       /^openload\.(co|pw)$/,
       /^oload\.(stream|info|site|tv|win|download|cloud|cc|fun|club|live|space)$/,
-      /^oladblock\.services$/,
+      /^oladblock\.(services|xyz|me)$/,
     ],
     path: /^\/f\/.*/,
   },
@@ -1059,7 +1059,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     const dlCtn = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#realdl');
     dlCtn.style.display = 'inline-block';
     const dlBtn = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('a', dlCtn);
-    const ePath = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#lqEH1');
+    const ePath = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#DtsBlkVFQx');
     dlBtn.href = '/stream/' + ePath.textContent;
     const videoCtn = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('.videocontainer');
     if (videoCtn) {
@@ -1535,6 +1535,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       /^al\.ly$/,
       /^ally\.sh$/,
       /^ally\.shortens\.co$/,
+      /^dausel\.co$/,
     ],
   },
   async ready () {
@@ -2532,33 +2533,36 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
         /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani)\.com$/,
-        /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk)\.com$/,
-        /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link)\.com$/,
+        /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk|lnks4all|jejaklagu)\.com$/,
+        /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link|coolmitten)\.com$/,
         /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural)\.com$/,
-        /^(shrinkbuck|clkpay|linksht|haxrs|click2-url)\.com$/,
+        /^(shrinkbuck|clkpay|linksht|haxrs|click2-url|cooltxtgen|arba7co|shortlinko)\.com$/,
+        /^(partqb2i|khraba|adlpu|tabakhelo|amenitiees|cosmicmony)\.com$/,
         /^(vy\.)?adsvy\.com$/,
-        /^(www\.)?clkpays\.com$/,
+        /^(www\.)?(clkpays|lnkjob)\.com$/,
         /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7)\.com$/,
         /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|shrt10)\.com$/,
         /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2)\.com$/,
         /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger)\.com$/,
         /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|icutlink)\.com$/,
         /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners)\.com$/,
-        /^(safelinku|tinylinks|licklink|linkrex|zlshorte)\.net$/,
+        /^(safelinku|tinylinks|licklink|linkrex|zlshorte|vivads)\.net$/,
         /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly)\.net$/,
         /^(link4win|linksad|topurl|xemlink|cutadlink|crabcut)\.net$/,
-        /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs)\.pw$/,
+        /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs|miniurl)\.pw$/,
         /^(www\.)?lwt\.pw$/,
         /^(trlink|wolink|tocdo|cuturl|counsellingresult2016|iitjeemainguide|healthhindigyan)\.in$/,
+        /^(utimetableresult)\.in$/,
         /^(petty|skips|tr|flaz)\.link$/,
         /^megaurl\.(in|link)$/,
-        /^(adbilty|adpop|ujv|tpx|adsrt|2fly|lin65|short2win)\.me$/,
+        /^(adbilty|adpop|ujv|tpx|adsrt|2fly|lin65|short2win|suarankri)\.me$/,
         /^payskip\.(me|org)$/,
         /^(oke|cuon|cuio|cuee|cuus|cuto|cu2|linktor|flylink|uiz)\.io$/,
         /^(3bst|coinlink|itiurl|coshink|link5s|curs|makeurl)\.co$/,
         /^(shink|shrten|gg-l|vnurl|bloggingdekh|ln11|sh11|tradeguru|newskart|kidsors)\.xyz$/,
-        /^(mlink|cl250)\.club$/,
-        /^(igram|gram)\.im$/,
+        /^(techinhub|viralnow|shophipro|technocanvas|getfreshcloud)\.xyz$/,
+        /^(mlink|cl250|xpickle)\.club$/,
+        /^(igram|gram|pingit)\.im$/,
         /^(clk|cll)\.(press|ink|sh|icu)$/,
         /^short\.pe$/,
         /^(urlcloud|imageoptimizer)\.us$/,
@@ -2573,22 +2577,30 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^lyon\.kim$/,
         /^(linkvip|4short)\.tk$/,
         /^stfly\.press$/,
-        /^(businessiss2|techandreview|yesmoviesapp)\.info$/,
+        /^(businessiss2|techandreview|yesmoviesapp|kpscthulasilogin)\.info$/,
         /^eatings\.stream$/,
         /^8o\.ee$/,
         /^buyitonline\.store$/,
         /^shortearn\.eu$/,
         /^(1921681254|geki)\.tech$/,
         /^123link\.(pw|vip)$/,
+        /^123link\.carpartsviet97\.site$/,
         /^(lotechnocan|updatetribun)\.org$/,
         /^tinylink\.run$/,
         /^btc\.ms$/,
         /^earn\.theplusit\.ro$/,
         /^skip\.az$/,
-        /^dutchycorp\.space$/,
+        /^(dutchycorp|abouttech)\.space$/,
         /^click2see\.desi$/,
         /^shorted\.id$/,
         /^zi\.ht$/,
+        /^funnyquiz\.blog$/,
+        /^sciencelife\.ga$/,
+        /^thin\.at$/,
+        /^(click2url|ln435)\.online$/,
+        /^sk-ip\.ru$/,
+        /^slink\.bid$/,
+        /^za\.gl$/,
       ],
     },
     async ready () {
@@ -2617,6 +2629,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(ctui|cuti)\.in$/,
         /^zutrox\.link$/,
         /^(www\.)?shrink\.vip$/,
+        /^cutwin\.us$/,
       ],
     },
     async ready () {
@@ -2662,7 +2675,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(www\.)?viralukk\.com$/,
         /^(www\.)?niagoshort\.com$/,
         /^www\.worldhack\.net$/,
-        /^(eklink|vivads)\.net$/,
+        /^(eklink)\.net$/,
         /^(urle|adshort)\.co$/,
         /^(weefy|adbull|zeiz|link4|adcoin)\.me$/,
         /^(adbilty|taive)\.in$/,
@@ -2673,11 +2686,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^shortad\.cf$/,
         /^123link\.(io|co|press|pro)$/,
         /^git\.tc$/,
-        /^(adfu|linku|cutwin)\.us$/,
+        /^(adfu|linku)\.us$/,
         /^shortit\.ca$/,
         /^spamlink\.org$/,
         /^royurls\.bid$/,
-        /^za\.gl$/,
         /^(1)?idsly\.(com|bid|net|org)$/,
       ],
     },
@@ -3636,6 +3648,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     {
       host: [
         /^i\.gtaind\.com$/,
+        /^pebisnis-muda\.com$/,
         /^hikarinoakariost\.info$/,
       ],
       query: /^\?([a-zA-Z0-9/=]+)$/,
@@ -3766,7 +3779,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       /^stt\.awsubs\.co$/,
       /^wibuindo\.xyz$/,
     ],
-    query: /^\?(id|c)=([a-zA-Z0-9/=]+)$/,
+    query: /^\?(id|c|k)=([a-zA-Z0-9/=]+)$/,
   },
   async ready () {
     const f = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('form');
