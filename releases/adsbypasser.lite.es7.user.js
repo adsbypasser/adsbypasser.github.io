@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.3.0
+// @version        7.4.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.3.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.4.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -2711,10 +2711,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(vy\.)?adsvy\.com$/,
         /^(www\.)?(clkpays|lnkjob|efshort)\.com$/,
         /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/,
-        /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood)\.com$/,
-        /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp)\.com$/,
-        /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea)\.com$/,
-        /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink)\.com$/,
+        /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/,
+        /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/,
+        /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/,
+        /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/,
         /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle)\.com$/,
         /^shrt(8|10)\.com$/,
         /^link\.akuno\.net$/,
@@ -4425,7 +4425,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
-      /^sataniabatch\.blogspot\.com$/,
+      /^(sataniabatch|get-click2)\.blogspot\.com$/,
       /^(www\.)?vehicle-techno\.cf$/,
       /^(www\.)?tetewlink\.me$/,
     ],
