@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.5.0
+// @version        7.6.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.5.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.6.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -1223,7 +1223,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^1(be|dl)\.biz$/,
+    host: /^(1be|1dl)\.biz$/,
     path: /^\/[jt]\.php$/,
     query: /^\?s=/,
   },
@@ -2681,7 +2681,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^ulshare\.net$/,
+        /^(ulshare|urlike)\.net$/,
         /^adurl\.id$/,
         /^earn-guide\.com$/,
         /^(cutwi|cut-w|cutl|dmus)\.in$/,
@@ -2714,15 +2714,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(kooramubashir|healthfary|justlikeyojna|sarkarijobsresultss|zalipay|thefreech)\.com$/,
         /^(hindibeen|pastekan|e7kelyana|ea-isly|aristoderas|shortzon|trading-area|alseoo)\.com$/,
         /^(techtremendous|freespinwins|w-rajem|timetoka|foodpuff|linksop|bollywooddramanews)\.com$/,
-        /^(loopdiet)\.com$/,
-        /^(vy\.)?adsvy\.com$/,
-        /^(www\.)?(clkpays|lnkjob|efshort)\.com$/,
         /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/,
         /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/,
         /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/,
         /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/,
         /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/,
         /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/,
+        /^(loopdiet)\.com$/,
+        /^(vy\.)?adsvy\.com$/,
+        /^(www\.)?(clkpays|lnkjob|efshort)\.com$/,
         /^shrt(8|10)\.com$/,
         /^link\.akuno\.net$/,
         /^(safelinku|tinylinks|licklink|linkrex|zlshorte|vivads|clickar)\.net$/,
@@ -2738,8 +2738,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(shink|shrten|gg-l|vnurl|bloggingdekh|ln11|sh11|tradeguru|newskart|kidsors)\.xyz$/,
         /^(techinhub|viralnow|shophipro|technocanvas|getfreshcloud|profitstudy|ijobanana)\.xyz$/,
         /^(autocarsmagz|getpocket|yasinews|dunyanews|komiupdates|allapp|smwebs|news-tech)\.xyz$/,
-        /^(oke|cuon|cuio|cuee|cuus|cuto|linktor|flylink|uiz|uii)\.io$/,
-        /^cu(2|3|5)\.io$/,
+        /^(oke|cuon|cuio|cuee|cuus|cuto|linktor|flylink|uiz|uii|exe)\.io$/,
+        /^cu(2|3|5|6|7)\.io$/,
+        /^(el3id|allreports)\.site$/,
+        /^123link\.carpartsviet97\.site$/,
+        /^(click2url|ln435|merdekaid)\.online$/,
+        /^(www\.)?bloggerworld\.online$/,
         /^(petty|skips|tr|flaz)\.link$/,
         /^megaurl\.(in|link)$/,
         /^payskip\.(me|org)$/,
@@ -2767,7 +2771,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(shortearn|enrt)\.eu$/,
         /^(1921681254|geki)\.tech$/,
         /^123link\.(pw|vip)$/,
-        /^123link\.carpartsviet97\.site$/,
         /^(lotechnocan|updatetribun|templink|ez4link)\.org$/,
         /^tinylink\.run$/,
         /^btc\.ms$/,
@@ -2780,11 +2783,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(funnyquiz|mediakita)\.blog$/,
         /^(sciencelife|cpm4all)\.ga$/,
         /^thin\.at$/,
-        /^(www\.)?bloggerworld\.online$/,
-        /^(click2url|ln435|merdekaid)\.online$/,
         /^sk-ip\.ru$/,
         /^za\.gl$/,
-        /^(el3id|allreports)\.site$/,
         /^royalown\.review$/,
         /^bestscholaeshipdegree\.date$/,
         /^oko\.sh$/,
@@ -3961,7 +3961,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^ww[23]\.picnictrans\.com$/,
         /^(azhie|skinnycat)\.net$/,
         /^ww2\.awsubs\.co$/,
-        /^plantaheim(\.web\.id|\.com)$/,
+        /^plantaheim\.(web\.id|com)$/,
         /^irisvera\.com$/,
       ],
       query: /^\?d=([a-zA-Z0-9/=]+)$/,
@@ -3982,6 +3982,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^((kurosafe|kurosafety)\.)?menantisenja\.com$/,
         /^drive\.jepitkertas\.com$/,
         /^lewat\.wibuindo\.com$/,
+        /^(omgmusik|omglyrics|k2nblog)\.com$/,
         /^(simaholina|autech)\.xyz$/,
         /^(www\.)?id-securelink\.xyz$/,
         /^(www\.)?converthinks\.xyz$/,
@@ -3994,8 +3995,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(fmlawkers|indexmovie)\.club$/,
         /^micin\.online$/,
         /^unduh\.in/,
-        /^(www\.)?drakorsafe\.tech$/,
-        /^(omgmusik|omglyrics|k2nblog)\.com$/,
+        /^(www\.)?drakorsafe\.tech$/,        
         /^ad4msan\.win$/,
         /^nooyul\.co$/,
         /^pafpaf\.info$/,
@@ -4010,10 +4010,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /^(sehatlega|davinsurance|healthtod|irisvera|akanosora|subetenews)\.com$/,
         /^(www\.)?menantisenja\.com$/,
-        /^(businessforyouand|lindung|travelwithtricks)\.me$/,
-        /^plantaheim(\.web\.id|\.com)$/,
+        /^(businessforyouand|lindung|travelwithtricks|situsbaru)\.me$/,
+        /^plantaheim\.(web\.id|com)$/,
         /^(www\.)?starzone\.cc$/,
         /^(www\.)?kakkoiisafe\.us$/,
+        /^(www\.)?polrec\.site$/,
         /^yumechan\.club$/,
       ],
       query: /^\?r=([a-zA-Z0-9/=]+)$/,
