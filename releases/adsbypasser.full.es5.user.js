@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.6.0
+// @version        7.7.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.6.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.7.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.6.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.6.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.6.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.7.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.7.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.7.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -6206,7 +6206,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: [
-      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani|agradarpan)\.com$/, /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk|lnks4all|jejaklagu)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link|coolmitten|hosexx)\.com$/, /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural|akla4)\.com$/, /^(shrinkbuck|clkpay|linksht|haxrs|click2-url|cooltxtgen|arba7co|shortlinko)\.com$/, /^(partqb2i|khraba|adlpu|tabakhelo|amenitiees|cosmicmony|ilinkshortx|a-egy)\.com$/, /^(advance-wishingjs|govtsmartjob|bloggingraja|techkti|sxtsquad|adpaytm|pustkala)\.com$/, /^(thegyaanipoint|downloaddoom|linkfay|5brgedid|earthpiclover|adigp|tomient)\.com$/, /^(techmen-world|razerflixs|gamesindians|dislooks|elkhbrel7sry|onaah|ultraskora)\.com$/, /^(wrap-w0rld|ommantrameditation|mawdok|techfinda|clixg|boardgift|beast-birds)\.com$/, /^(talkittechy|newsinjules|kutpay|nikkarr|veblink|al3amall|6aba2day|oploverzhome)\.com$/, /^(kooramubashir|healthfary|justlikeyojna|sarkarijobsresultss|zalipay|thefreech)\.com$/, /^(hindibeen|pastekan|e7kelyana|ea-isly|aristoderas|shortzon|trading-area|alseoo)\.com$/, /^(techtremendous|freespinwins|w-rajem|timetoka|foodpuff|linksop|bollywooddramanews)\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/, /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/, /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/, /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/, /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/, /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/, /^(loopdiet)\.com$/, /^(vy\.)?adsvy\.com$/, /^(www\.)?(clkpays|lnkjob|efshort)\.com$/, /^shrt(8|10)\.com$/, 
+      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani|agradarpan)\.com$/, /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk|lnks4all|jejaklagu)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link|coolmitten|hosexx)\.com$/, /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural|akla4)\.com$/, /^(shrinkbuck|clkpay|linksht|haxrs|click2-url|cooltxtgen|arba7co|shortlinko)\.com$/, /^(partqb2i|khraba|adlpu|tabakhelo|amenitiees|cosmicmony|ilinkshortx|a-egy)\.com$/, /^(advance-wishingjs|govtsmartjob|bloggingraja|techkti|sxtsquad|adpaytm|pustkala)\.com$/, /^(thegyaanipoint|downloaddoom|linkfay|5brgedid|earthpiclover|adigp|tomient)\.com$/, /^(techmen-world|razerflixs|gamesindians|dislooks|elkhbrel7sry|onaah|ultraskora)\.com$/, /^(wrap-w0rld|ommantrameditation|mawdok|techfinda|clixg|boardgift|beast-birds)\.com$/, /^(talkittechy|newsinjules|kutpay|nikkarr|veblink|al3amall|6aba2day|oploverzhome)\.com$/, /^(kooramubashir|healthfary|justlikeyojna|sarkarijobsresultss|zalipay|thefreech)\.com$/, /^(hindibeen|pastekan|e7kelyana|ea-isly|aristoderas|shortzon|trading-area|alseoo)\.com$/, /^(techtremendous|freespinwins|w-rajem|timetoka|foodpuff|linksop|bollywooddramanews)\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/, /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/, /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/, /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/, /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/, /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/, /^(loopdiet|infotaxco)\.com$/, /^(vy\.)?adsvy\.com$/, /^(www\.)?(clkpays|lnkjob|efshort)\.com$/, /^shrt(8|10)\.com$/, 
       /^link\.akuno\.net$/, /^(safelinku|tinylinks|licklink|linkrex|zlshorte|vivads|clickar)\.net$/, /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly|shortye)\.net$/, /^(link4win|linksad|topurl|xemlink|cutadlink|crabcut|directedlink)\.net$/, 
       /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs|miniurl)\.pw$/, /^(www\.)?lwt\.pw$/, 
       /^(trlink|wolink|tocdo|cuturl|counsellingresult2016|iitjeemainguide|healthhindigyan)\.in$/, /^(utimetableresult|daily-sale|linkszone|viraltechnical)\.in$/, 
@@ -6215,7 +6215,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       /^(oke|cuon|cuio|cuee|cuus|cuto|linktor|flylink|uiz|uii|exe)\.io$/, /^cu(2|3|5|6|7)\.io$/, 
       /^(el3id|allreports)\.site$/, /^123link\.carpartsviet97\.site$/, 
       /^(click2url|ln435|merdekaid)\.online$/, /^(www\.)?bloggerworld\.online$/, 
-      /^(petty|skips|tr|flaz)\.link$/, /^megaurl\.(in|link)$/, /^payskip\.(me|org)$/, /^(3bst|coinlink|itiurl|coshink|link5s|curs|makeurl|mooddisorder|cutls)\.co$/, /^(mlink|cl250|xpickle|infosehatku)\.club$/, /^(igram|gram|pingit)\.im$/, /^(clk|cll)\.(press|ink|sh|icu)$/, /^short\.pe$/, /^(urlcloud|imageoptimizer)\.us$/, /^(icutit|earnbig|cutearn)\.ca$/, /^(adzurl|link2link)\.cf$/, /^(koylinks|buy-in-599rs)\.win$/, /^lopte\.pro$/, /^(www\.)?pnd\.tl$/, /^(tny|tiny)\.ec$/, /^tl\.tc$/, /^e2s\.cc$/, /^lyon\.kim$/, /^(linkvip|4short)\.tk$/, /^stfly\.press$/, /^(businessiss2|techandreview|yesmoviesapp|kpscthulasilogin)\.info$/, /^eatings\.stream$/, /^8o\.ee$/, /^buyitonline\.store$/, /^(shortearn|enrt)\.eu$/, /^(1921681254|geki)\.tech$/, /^123link\.(pw|vip)$/, /^(lotechnocan|updatetribun|templink|ez4link)\.org$/, /^tinylink\.run$/, /^btc\.ms$/, /^earn\.theplusit\.ro$/, /^skip\.az$/, /^(dutchycorp|abouttech)\.space$/, /^click2see\.desi$/, /^shorted\.id$/, /^zi\.ht$/, /^(funnyquiz|mediakita)\.blog$/, /^(sciencelife|cpm4all)\.ga$/, /^thin\.at$/, /^sk-ip\.ru$/, /^za\.gl$/, /^royalown\.review$/, /^bestscholaeshipdegree\.date$/, /^oko\.sh$/, /^splashnews\.ooo$/, /^ckk\.ai$/, /^fc\.lc$/, /^pa4l\.esy\.es$/, /^get\.ujv\.al$/]
+      /^(petty|skips|tr|flaz)\.link$/, /^megaurl\.(in|link)$/, /^payskip\.(me|org)$/, /^(3bst|coinlink|itiurl|coshink|link5s|curs|makeurl|mooddisorder|cutls)\.co$/, /^(mlink|cl250|xpickle|infosehatku)\.club$/, /^(igram|gram|pingit)\.im$/, /^(clk|cll)\.(press|ink|sh|icu)$/, /^short\.pe$/, /^(urlcloud|imageoptimizer)\.us$/, /^(icutit|earnbig|cutearn)\.ca$/, /^(adzurl|link2link)\.cf$/, /^(koylinks|buy-in-599rs)\.win$/, /^lopte\.pro$/, /^(www\.)?pnd\.tl$/, /^(tny|tiny)\.ec$/, /^tl\.tc$/, /^e2s\.cc$/, /^lyon\.kim$/, /^(linkvip|4short)\.tk$/, /^stfly\.press$/, /^(businessiss2|techandreview|yesmoviesapp|kpscthulasilogin)\.info$/, /^eatings\.stream$/, /^8o\.ee$/, /^buyitonline\.store$/, /^(shortearn|enrt)\.eu$/, /^(1921681254|geki|wegner)\.tech$/, /^123link\.(pw|vip)$/, /^(lotechnocan|updatetribun|templink|ez4link)\.org$/, /^tinylink\.run$/, /^btc\.ms$/, /^earn\.theplusit\.ro$/, /^skip\.az$/, /^(dutchycorp|abouttech)\.space$/, /^click2see\.desi$/, /^shorted\.id$/, /^zi\.ht$/, /^(funnyquiz|mediakita|kabarviral)\.blog$/, /^(sciencelife|cpm4all)\.ga$/, /^thin\.at$/, /^sk-ip\.ru$/, /^za\.gl$/, /^royalown\.review$/, /^bestscholaeshipdegree\.date$/, /^oko\.sh$/, /^splashnews\.ooo$/, /^ckk\.ai$/, /^fc\.lc$/, /^pa4l\.esy\.es$/, /^get\.ujv\.al$/, /^(tips\.)?atv\.pw$/]
     },
     ready: function () {
       var _ready88 = (0, _asyncToGenerator2["default"])(
@@ -9177,11 +9177,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [
     /\.blogspot\.com?/, /^(www\.)?designmyhomee\.com$/, /^(www\.)?losstor\.com$/, /^((kurosafe|kurosafety)\.)?menantisenja\.com$/, /^drive\.jepitkertas\.com$/, /^lewat\.wibuindo\.com$/, /^(omgmusik|omglyrics|k2nblog)\.com$/, 
     /^(simaholina|autech)\.xyz$/, /^(www\.)?id-securelink\.xyz$/, /^(www\.)?converthinks\.xyz$/, /^(www\.)?marivelkece\.xyz$/, /^(www\.)?yametesenpai\.xyz$/, 
-    /^(www\.)?tojros\.tk$/, /^(www\.)?anjay\.info$/, /^(www\.)?kakkoiisafe\.us$/, /^(www\.)?kurosafe\.(website|online)$/, /^(fmlawkers|indexmovie)\.club$/, /^micin\.online$/, /^unduh\.in/, /^(www\.)?drakorsafe\.tech$/, /^ad4msan\.win$/, /^nooyul\.co$/, /^pafpaf\.info$/],
+    /^(www\.)?tojros\.tk$/, /^(www\.)?anjay\.info$/, /^(www\.)?kakkoiisafe\.us$/, /^(www\.)?kurosafe\.(website|online)$/, /^(www\.)?drakorsafe\.tech$/, /^(fmlawkers|indexmovie)\.club$/, /^micin\.online$/, /^unduh\.in/, /^ad4msan\.win$/, /^nooyul\.co$/, /^pafpaf\.info$/, /^hightech\.web\.id$/],
     query: [
     /^\?url=([a-zA-Z0-9/=]+)$/, /^\?id=([a-zA-Z0-9/=]+)$/, /^\?site=([a-zA-Z0-9/=]+)$/]
   }, {
-    host: [/^(sehatlega|davinsurance|healthtod|irisvera|akanosora|subetenews)\.com$/, /^(www\.)?menantisenja\.com$/, /^(businessforyouand|lindung|travelwithtricks|situsbaru)\.me$/, /^plantaheim\.(web\.id|com)$/, /^(www\.)?starzone\.cc$/, /^(www\.)?kakkoiisafe\.us$/, /^(www\.)?polrec\.site$/, /^yumechan\.club$/],
+    host: [/^(sehatlega|davinsurance|healthtod|irisvera|akanosora|subetenews)\.com$/, /^(www\.)?menantisenja\.com$/, /^(businessforyouand|travelwithtricks|situsbaru)\.me$/, /^plantaheim\.(web\.id|com)$/, /^(www\.)?starzone\.cc$/, /^(www\.)?kakkoiisafe\.us$/, /^(www\.)?polrec\.site$/, /^yumechan\.club$/, /^ceklinku\.xyz$/, /^lindung\.(in|me)$/],
     query: /^\?r=([a-zA-Z0-9/=]+)$/
   }, {
     host: /^www\.compartiendofull\.net$/,
@@ -9206,6 +9206,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }, {
     host: /^infosia\.xyz$/,
     query: /^\?kesehatan=([a-zA-Z0-9/=%]+)$/
+  }, {
+    host: /^remiyu\.me$/,
+    query: /^\?reff=([a-zA-Z0-9/=]+)$/
   }],
   start: function () {
     var _start35 = (0, _asyncToGenerator2["default"])(
