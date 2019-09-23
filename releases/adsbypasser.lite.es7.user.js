@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.7.0
+// @version        7.8.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.7.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.8.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -1688,18 +1688,19 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
     async ready () {
       _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('iframe');
-      const token = findAJAXToken();
+      const token = await findAJAXToken();
       const time = fakeAJAXToken();
-      const url = `/fly/ajax.php?wds=${token.wds}&time=${time}`;
+      const url = `/fly/ln.php?wds=${token.wds}&time=${time}`;
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(5000);
       let rv = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].post(url, {
         xdf: {
-          afg: _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window.tZ,
-          bfg: _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window.cW,
-          cfg: _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window.cH,
+          afg: 300,
+          bfg: 640,
+          cfg: 480,
           jki: token.jki,
-          dfg: _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window.sW,
-          efg: _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window.sH,
+          dfg: 640,
+          efg: 480,
+          rt: token.rt,
         },
         ojk: token.ojk,
       });
@@ -1832,41 +1833,41 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(result);
     }
   }
-  function findAJAXToken () {
-    const rv = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts('/fly/ajax.php');
+  async function findAJAXToken () {
+    const rv = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts('xyz');
     if (!rv) {
       throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].AdsBypasserError('script changed');
     }
-    let wds = rv.match(/\?wds=([^&]+)/);
+    let wds = rv.match(/xyz\s*=\s*'([^']+)'/);
     if (!wds) {
       throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].AdsBypasserError('script changed');
     }
     wds = wds[1];
-    let jki = rv.match(/jki:\s*'([^']+)'/);
+    let jki = rv.match(/tkn\s*=\s*'([^']+)'/);
     if (!jki) {
       throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].AdsBypasserError('script changed');
     }
     jki = jki[1];
-    let ojk = rv.match(/ojk:\s*'([^']+)'/);
-    if (!ojk) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].AdsBypasserError('script changed');
+    const rt = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#recaptchaToken');
+    while (!rt.value) {
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].wait(500);
     }
-    ojk = ojk[1];
     return {
       wds: wds,
       jki: jki,
-      ojk: ojk,
+      ojk: 'jfhg',
+      rt: rt.value,
     };
   }
   function fakeAJAXToken () {
-    const skipAd = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('div.fly_head span#redirectin').parentElement;
+    const skipAd = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#getLink').parentElement;
     const margin = 6;
     const fakePageX = skipAd.offsetLeft + margin + 50 + (Math.random() * 10);
     const fakePageY = skipAd.offsetTop + margin + 15 + (Math.random() * 1);
     const po = fakePageX + ',' + fakePageY;
     const posX = jQueryOffset(skipAd).left + margin;
     const posY = jQueryOffset(skipAd).top + margin;
-    const pos = (fakePageX - posX) + ',' + (fakePageY - posY);
+    const pos = Math.abs(fakePageX - posX) + ',' + Math.abs(fakePageY - posY);
     const tsta_ = Math.floor((5 + Math.random()) * 1000);
     const time = po + ':' + pos + ':' + tsta_;
     return time;
@@ -2808,6 +2809,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^wicr\.me$/,
         /^linksoflife\.co$/,
         /^linksof\.life$/,
+        /^arabtvlink\.com$/,
       ],
     },
     async ready () {
@@ -4950,6 +4952,28 @@ class AjaxError extends util_core__WEBPACK_IMPORTED_MODULE_0__["AdsBypasserError
     return this._response;
   }
 }
+function * flattenObject (object) {
+  if (!object) {
+    return;
+  }
+  for (const [k, v] of Object.entries(object)) {
+    if (Array.isArray(v)) {
+      for (const v_ of v) {
+        yield [[k, ''], v_];
+      }
+    } else if (typeof v === 'object') {
+      for (const [k_, v_] of flattenObject(v)) {
+        yield [[k, ...k_], v_];
+      }
+    } else {
+      yield [[k], v];
+    }
+  }
+}
+function flattenKey (keyList) {
+  const [head, ...rest] = keyList;
+  return `${head}${rest.map(_ => `[${_}]`)}`;
+}
 function deepJoin (prefix, object) {
   const keys = Object.getOwnPropertyNames(object);
   const mapped = Object(util_core__WEBPACK_IMPORTED_MODULE_0__["map"])(keys, (k) => {
@@ -4984,6 +5008,23 @@ function toQuery (data) {
     return tmp.join('=');
   }).join('&');
 }
+function toForm (data) {
+  const type = typeof data;
+  if (data === null || (type !== 'string' && type !== 'object')) {
+    return '';
+  }
+  if (type === 'string') {
+    return data;
+  }
+  if (data instanceof String) {
+    return data.toString();
+  }
+  const form = new FormData();
+  for (const [k, v] of flattenObject(data)) {
+    form.append(flattenKey(k), v);
+  }
+  return form;
+}
 function ajax (method, url, data, headers) {
   Object(util_logger__WEBPACK_IMPORTED_MODULE_2__["debug"])('ajax', method, url, data, headers);
   const l = document.createElement('a');
@@ -5005,6 +5046,8 @@ function ajax (method, url, data, headers) {
   if (data) {
     if (headers['Content-Type'].indexOf('json') >= 0) {
       data = JSON.stringify(data);
+    } else if (headers['Content-Type'].indexOf('multipart') >= 0) {
+      data = toForm(data);
     } else {
       data = toQuery(data);
     }
