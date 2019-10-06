@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.8.0
+// @version        7.9.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.8.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.9.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -1098,7 +1098,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       /^openload\.(co|io|link|pw)$/,
       /^openloed\.(co)$/,
       /^oload\.(biz|cc|cloud|club|download|fun|info|life|live|network|press|services|site|space)$/,
-      /^oload\.(stream|tv|website|win)$/,
+      /^oload\.(stream|tv|website|win|monster)$/,
       /^oladblock\.(me|services|xyz)$/,
     ],
     path: /^\/f\/.*/,
@@ -2721,7 +2721,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/,
         /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/,
         /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/,
-        /^(loopdiet|infotaxco)\.com$/,
+        /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24)\.com$/,
         /^(vy\.)?adsvy\.com$/,
         /^(www\.)?(clkpays|lnkjob|efshort)\.com$/,
         /^shrt(8|10)\.com$/,
@@ -2739,7 +2739,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(shink|shrten|gg-l|vnurl|bloggingdekh|ln11|sh11|tradeguru|newskart|kidsors)\.xyz$/,
         /^(techinhub|viralnow|shophipro|technocanvas|getfreshcloud|profitstudy|ijobanana)\.xyz$/,
         /^(autocarsmagz|getpocket|yasinews|dunyanews|komiupdates|allapp|smwebs|news-tech)\.xyz$/,
-        /^(oke|cuon|cuio|cuee|cuus|cuto|linktor|flylink|uiz|uii|exe)\.io$/,
+        /^(oke|cuon|cuio|cuee|cuus|cuto|linktor|flylink|uiz|uii|exe|shrinkme)\.io$/,
         /^cu(2|3|5|6|7)\.io$/,
         /^(el3id|allreports)\.site$/,
         /^123link\.carpartsviet97\.site$/,
@@ -2772,7 +2772,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(shortearn|enrt)\.eu$/,
         /^(1921681254|geki|wegner)\.tech$/,
         /^123link\.(pw|vip)$/,
-        /^(lotechnocan|updatetribun|templink|ez4link)\.org$/,
+        /^(lotechnocan|updatetribun|templink|ez4link|shortearn)\.org$/,
         /^tinylink\.run$/,
         /^btc\.ms$/,
         /^earn\.theplusit\.ro$/,
@@ -3272,7 +3272,17 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
-    host: /^(direct-link|link-to)\.net$/,
+    host: /^link-to\.net$/,
+    query: /^\?r=([a-zA-Z0-9/=]+)$/,
+  },
+  async start (m) {
+    const url = atob(m.query[1]);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(url);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
+    host: /^direct-link\.net$/,
   },
   async ready () {
     const lv = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/window.location.href = \("([^"]+)"\);/);
@@ -4022,6 +4032,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^yumechan\.club$/,
         /^ceklinku\.xyz$/,
         /^lindung\.(in|me)$/,
+        /^(www\.)?bolaoke\.club$/,
       ],
       query: /^\?r=([a-zA-Z0-9/=]+)$/,
     },
