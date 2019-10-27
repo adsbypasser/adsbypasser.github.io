@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.9.0
+// @version        7.10.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.9.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.10.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.9.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.9.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.9.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.10.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.10.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.10.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -14457,7 +14457,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       /^(imgserve|imgproject|imgpython|imgpix|naughtygate|gallerycloud|xximg|img-view)\.net$/, 
       /^hotimages\.eu$/, /(^|\.)55888\.eu$/, 
       /^(picz|unporn)\.site$/, /^pic\.hotimg\.site$/, 
-      /^xxx\.(sexex|pornscreen)\.xyz$/, /^ecoimages\.xyz$/, 
+      /^dalezobux\.xyz$/, /^xxx\.(sexex|pornscreen)\.xyz$/, /^ecoimages\.xyz$/, 
       /^www\.hotimage\.uk$/, /^imgcloud\.co$/, /^pixup\.us$/, /^(pop-img|ads-img)\.info$/, /^(domaink|porno-pirat)\.ru$/, /^darpix\.ga$/, /^ipicture\.su$/, /^acidimg\.cc$/, /^s\.imghost\.top$/, /^imagespublic\.tk$/, /^underpic\.club$/, /^cubonaw\.ml$/],
       path: /\/img-.*\.html/
     }, {
@@ -14989,9 +14989,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }
     return child;
   }
-})(); 
+})();
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: ['http://screenlist.ru/details.php?image_id=*', 'http://www.imagenetz.de/*/*.html'],
+  rule: {
+    host: /^pic\.s-jav\.com$/
+  },
   ready: function () {
     var _ready281 = (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee374() {
@@ -15000,7 +15002,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context374.prev = _context374.next) {
             case 0:
-              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#picture');
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('.wp-post-image');
               _context374.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
             case 3:
@@ -15015,20 +15017,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }
     return ready;
   }()
-});
+}); 
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://www.subirimagenes.com/*.html',
+  rule: ['http://screenlist.ru/details.php?image_id=*', 'http://www.imagenetz.de/*/*.html'],
   ready: function () {
     var _ready282 = (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee375() {
-      var i;
+      var img;
       return _regenerator["default"].wrap(function _callee375$(_context375) {
         while (1) {
           switch (_context375.prev = _context375.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#ImagenVisualizada');
+              img = (0, _ADSBYPASSER_NAMESPACE__.$)('#picture');
               _context375.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
             case 3:
             case "end":
               return _context375.stop();
@@ -15043,7 +15045,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://tinypic.com/view.php?pic=*',
+  rule: 'http://www.subirimagenes.com/*.html',
   ready: function () {
     var _ready283 = (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee376() {
@@ -15052,7 +15054,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context376.prev = _context376.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#imgElement');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#ImagenVisualizada');
               _context376.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
@@ -15069,10 +15071,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }()
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^www\.turboimagehost\.com$/,
-    path: /^\/p\//
-  },
+  rule: 'http://tinypic.com/view.php?pic=*',
   ready: function () {
     var _ready284 = (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee377() {
@@ -15081,7 +15080,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context377.prev = _context377.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#uImage');
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#imgElement');
               _context377.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
@@ -15099,39 +15098,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^xxx\.fopkodiak\.site$/, /^blameless\.work$/, /^xaoutchouc\.live$/],
-    path: /^\/img-/
+    host: /^www\.turboimagehost\.com$/,
+    path: /^\/p\//
   },
   ready: function () {
     var _ready285 = (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee378() {
-      var img, f;
+      var i;
       return _regenerator["default"].wrap(function _callee378$(_context378) {
         while (1) {
           switch (_context378.prev = _context378.next) {
             case 0:
-              if (!(document.referrer == document.location.href)) {
-                _context378.next = 7;
-                break;
-              }
-              img = _ADSBYPASSER_NAMESPACE__.$.$('#container > a > img');
-              if (!img) {
-                img = (0, _ADSBYPASSER_NAMESPACE__.$)('#container > img');
-              }
-              _context378.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
-            case 5:
-              _context378.next = 10;
-              break;
-            case 7:
-              f = (0, _ADSBYPASSER_NAMESPACE__.$)('form');
-              _context378.next = 10;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(f.action, {
-                post: {
-                  imgContinue: 'Continue to image ...'
-                }
-              });
-            case 10:
+              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#uImage');
+              _context378.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
+            case 3:
             case "end":
               return _context378.stop();
           }
@@ -15140,6 +15121,53 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }));
     function ready() {
       return _ready285.apply(this, arguments);
+    }
+    return ready;
+  }()
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: [/^xxx\.fopkodiak\.site$/, /^blameless\.work$/, /^xaoutchouc\.live$/],
+    path: /^\/img-/
+  },
+  ready: function () {
+    var _ready286 = (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee379() {
+      var img, f;
+      return _regenerator["default"].wrap(function _callee379$(_context379) {
+        while (1) {
+          switch (_context379.prev = _context379.next) {
+            case 0:
+              if (!(document.referrer == document.location.href)) {
+                _context379.next = 7;
+                break;
+              }
+              img = _ADSBYPASSER_NAMESPACE__.$.$('#container > a > img');
+              if (!img) {
+                img = (0, _ADSBYPASSER_NAMESPACE__.$)('#container > img');
+              }
+              _context379.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
+            case 5:
+              _context379.next = 10;
+              break;
+            case 7:
+              f = (0, _ADSBYPASSER_NAMESPACE__.$)('form');
+              _context379.next = 10;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(f.action, {
+                post: {
+                  imgContinue: 'Continue to image ...'
+                }
+              });
+            case 10:
+            case "end":
+              return _context379.stop();
+          }
+        }
+      }, _callee379);
+    }));
+    function ready() {
+      return _ready286.apply(this, arguments);
     }
     return ready;
   }()
@@ -15834,7 +15862,7 @@ function checkScaling() {
     this.classList.add('adsbypasser-resizable');
     this.classList.add('adsbypasser-shrinked');
     this.addEventListener('click', toggleShrinking);
-  } else {
+  } else if (nw <= cw && nh <= ch && this.classList.contains('adsbypasser-resizable')) {
     this.removeEventListener('click', toggleShrinking);
     this.classList.remove('adsbypasser-shrinked');
     this.classList.remove('adsbypasser-resizable');
