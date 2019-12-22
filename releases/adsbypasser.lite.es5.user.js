@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.11.0
+// @version        7.12.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.11.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -1092,15 +1092,14 @@ function _possibleConstructorReturn(self, call) {
 module.exports = _possibleConstructorReturn;
  }),
  (function(module, exports) {
-function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
 function _typeof(obj) {
-  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     module.exports = _typeof = function _typeof(obj) {
-      return _typeof2(obj);
+      return typeof obj;
     };
   } else {
     module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
   return _typeof(obj);
@@ -6158,7 +6157,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: [
-      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani|agradarpan)\.com$/, /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk|lnks4all|jejaklagu)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link|coolmitten|hosexx)\.com$/, /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural|akla4)\.com$/, /^(shrinkbuck|clkpay|linksht|haxrs|click2-url|cooltxtgen|arba7co|shortlinko)\.com$/, /^(partqb2i|khraba|adlpu|tabakhelo|amenitiees|cosmicmony|ilinkshortx|a-egy)\.com$/, /^(advance-wishingjs|govtsmartjob|bloggingraja|techkti|sxtsquad|adpaytm|pustkala)\.com$/, /^(thegyaanipoint|downloaddoom|linkfay|5brgedid|earthpiclover|adigp|tomient)\.com$/, /^(techmen-world|razerflixs|gamesindians|dislooks|elkhbrel7sry|onaah|ultraskora)\.com$/, /^(wrap-w0rld|ommantrameditation|mawdok|techfinda|clixg|boardgift|beast-birds)\.com$/, /^(talkittechy|newsinjules|kutpay|nikkarr|veblink|al3amall|6aba2day|oploverzhome)\.com$/, /^(kooramubashir|healthfary|justlikeyojna|sarkarijobsresultss|zalipay|thefreech)\.com$/, /^(hindibeen|pastekan|e7kelyana|ea-isly|aristoderas|shortzon|trading-area|alseoo)\.com$/, /^(techtremendous|freespinwins|w-rajem|timetoka|foodpuff|linksop|bollywooddramanews)\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/, /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/, /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/, /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/, /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/, /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/, /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24)\.com$/, /^(vy\.)?adsvy\.com$/, /^(www\.)?(clkpays|lnkjob|efshort)\.com$/, /^shrt(8|10)\.com$/, 
+      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani|agradarpan)\.com$/, /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk|lnks4all|jejaklagu)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link|coolmitten|hosexx)\.com$/, /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural|akla4)\.com$/, /^(shrinkbuck|clkpay|linksht|haxrs|click2-url|cooltxtgen|arba7co|shortlinko)\.com$/, /^(partqb2i|khraba|adlpu|tabakhelo|amenitiees|cosmicmony|ilinkshortx|a-egy)\.com$/, /^(advance-wishingjs|govtsmartjob|bloggingraja|techkti|sxtsquad|adpaytm|pustkala)\.com$/, /^(thegyaanipoint|downloaddoom|linkfay|5brgedid|earthpiclover|adigp|tomient)\.com$/, /^(techmen-world|razerflixs|gamesindians|dislooks|elkhbrel7sry|onaah|ultraskora)\.com$/, /^(wrap-w0rld|ommantrameditation|mawdok|techfinda|clixg|boardgift|beast-birds)\.com$/, /^(talkittechy|newsinjules|kutpay|nikkarr|veblink|al3amall|6aba2day|oploverzhome)\.com$/, /^(kooramubashir|healthfary|justlikeyojna|sarkarijobsresultss|zalipay|thefreech)\.com$/, /^(hindibeen|pastekan|e7kelyana|ea-isly|aristoderas|shortzon|trading-area|alseoo)\.com$/, /^(techtremendous|freespinwins|w-rajem|timetoka|foodpuff|linksop|bollywooddramanews)\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/, /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/, /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/, /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/, /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/, /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/, /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24|safeku)\.com$/, /^(vy\.)?adsvy\.com$/, /^(www\.)?(clkpays|lnkjob|efshort)\.com$/, /^shrt(8|10)\.com$/, 
       /^link\.akuno\.net$/, /^(safelinku|tinylinks|licklink|linkrex|zlshorte|vivads|clickar)\.net$/, /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly|shortye)\.net$/, /^(link4win|linksad|topurl|xemlink|cutadlink|crabcut|directedlink)\.net$/, 
       /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs|miniurl)\.pw$/, /^(www\.)?lwt\.pw$/, 
       /^(trlink|wolink|tocdo|cuturl|counsellingresult2016|iitjeemainguide|healthhindigyan)\.in$/, /^(utimetableresult|daily-sale|linkszone|viraltechnical)\.in$/, 

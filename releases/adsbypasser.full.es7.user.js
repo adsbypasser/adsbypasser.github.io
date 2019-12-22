@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.11.0
+// @version        7.12.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.11.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.11.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.11.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.11.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -2677,7 +2677,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/,
         /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/,
         /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/,
-        /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24)\.com$/,
+        /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24|safeku)\.com$/,
         /^(vy\.)?adsvy\.com$/,
         /^(www\.)?(clkpays|lnkjob|efshort)\.com$/,
         /^shrt(8|10)\.com$/,
@@ -6170,8 +6170,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
           /^(imgicy|imgsavvy|imgtzar|imgtornado|imgkicks|img2share|imghit|imgmain)\.com$/,
           /^(imgtrial|imgreputa|imgfapper|imgpart|imgbalana|imgjazz|img-planet|img-pay)\.com$/,
           /^(hosturimage|greasyimage|damimage|xxxscreens|wpc8|dimtus|tinizo|erimge|nimzshare|hdmoza)\.com$/,
-          /^(www\.)?(imglemon|imageblinks)\.com$/,
-          /^(www\.)?(multiimg)\.com$/,
+          /^(www\.)?(imglemon|imageblinks|multiimg)\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
           /^(i\.)?imgseeds?\.com$/,
           /^(xxxwebdlxxx|teenshot|imageon|imageteam|voyeurimage|teenimage|megaimage)\.org$/,
@@ -6181,10 +6180,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
           /(^|\.)55888\.eu$/,
           /^(picz|unporn)\.site$/,
           /^pic\.hotimg\.site$/,
-          /^dalezobux\.xyz$/,
+          /^(dalezobux|ecoimages|uvonahaze)\.xyz$/,
           /^xxx\.(sexex|pornscreen)\.xyz$/,
-          /^ecoimages\.xyz$/,
-          /^uvonahaze\.xyz$/,
           /^www\.hotimage\.uk$/,
           /^imgcloud\.co$/,
           /^pixup\.us$/,
@@ -6346,6 +6343,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
     async start () {
       const path = window.location.href.replace('/x', '/y');
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(path);
+    },
+  });
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+    rule: {
+      host: /^trueimg\.xyz$/,
+      path: /^\/u-b\/(.+)\.jpeg\.html/,
+    },
+    async start () {
+      const path = window.location.href.replace('/u-', '/').replace('.html', '');
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(path);
     },
   });

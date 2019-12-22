@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.11.0
+// @version        7.12.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.11.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.11.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.11.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.11.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -1097,15 +1097,14 @@ function _possibleConstructorReturn(self, call) {
 module.exports = _possibleConstructorReturn;
  }),
  (function(module, exports) {
-function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
 function _typeof(obj) {
-  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     module.exports = _typeof = function _typeof(obj) {
-      return _typeof2(obj);
+      return typeof obj;
     };
   } else {
     module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
   return _typeof(obj);
@@ -6163,7 +6162,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: [
-      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani|agradarpan)\.com$/, /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk|lnks4all|jejaklagu)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link|coolmitten|hosexx)\.com$/, /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural|akla4)\.com$/, /^(shrinkbuck|clkpay|linksht|haxrs|click2-url|cooltxtgen|arba7co|shortlinko)\.com$/, /^(partqb2i|khraba|adlpu|tabakhelo|amenitiees|cosmicmony|ilinkshortx|a-egy)\.com$/, /^(advance-wishingjs|govtsmartjob|bloggingraja|techkti|sxtsquad|adpaytm|pustkala)\.com$/, /^(thegyaanipoint|downloaddoom|linkfay|5brgedid|earthpiclover|adigp|tomient)\.com$/, /^(techmen-world|razerflixs|gamesindians|dislooks|elkhbrel7sry|onaah|ultraskora)\.com$/, /^(wrap-w0rld|ommantrameditation|mawdok|techfinda|clixg|boardgift|beast-birds)\.com$/, /^(talkittechy|newsinjules|kutpay|nikkarr|veblink|al3amall|6aba2day|oploverzhome)\.com$/, /^(kooramubashir|healthfary|justlikeyojna|sarkarijobsresultss|zalipay|thefreech)\.com$/, /^(hindibeen|pastekan|e7kelyana|ea-isly|aristoderas|shortzon|trading-area|alseoo)\.com$/, /^(techtremendous|freespinwins|w-rajem|timetoka|foodpuff|linksop|bollywooddramanews)\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/, /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/, /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/, /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/, /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/, /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/, /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24)\.com$/, /^(vy\.)?adsvy\.com$/, /^(www\.)?(clkpays|lnkjob|efshort)\.com$/, /^shrt(8|10)\.com$/, 
+      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani|agradarpan)\.com$/, /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk|lnks4all|jejaklagu)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link|coolmitten|hosexx)\.com$/, /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural|akla4)\.com$/, /^(shrinkbuck|clkpay|linksht|haxrs|click2-url|cooltxtgen|arba7co|shortlinko)\.com$/, /^(partqb2i|khraba|adlpu|tabakhelo|amenitiees|cosmicmony|ilinkshortx|a-egy)\.com$/, /^(advance-wishingjs|govtsmartjob|bloggingraja|techkti|sxtsquad|adpaytm|pustkala)\.com$/, /^(thegyaanipoint|downloaddoom|linkfay|5brgedid|earthpiclover|adigp|tomient)\.com$/, /^(techmen-world|razerflixs|gamesindians|dislooks|elkhbrel7sry|onaah|ultraskora)\.com$/, /^(wrap-w0rld|ommantrameditation|mawdok|techfinda|clixg|boardgift|beast-birds)\.com$/, /^(talkittechy|newsinjules|kutpay|nikkarr|veblink|al3amall|6aba2day|oploverzhome)\.com$/, /^(kooramubashir|healthfary|justlikeyojna|sarkarijobsresultss|zalipay|thefreech)\.com$/, /^(hindibeen|pastekan|e7kelyana|ea-isly|aristoderas|shortzon|trading-area|alseoo)\.com$/, /^(techtremendous|freespinwins|w-rajem|timetoka|foodpuff|linksop|bollywooddramanews)\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/, /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/, /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/, /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/, /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/, /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/, /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24|safeku)\.com$/, /^(vy\.)?adsvy\.com$/, /^(www\.)?(clkpays|lnkjob|efshort)\.com$/, /^shrt(8|10)\.com$/, 
       /^link\.akuno\.net$/, /^(safelinku|tinylinks|licklink|linkrex|zlshorte|vivads|clickar)\.net$/, /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly|shortye)\.net$/, /^(link4win|linksad|topurl|xemlink|cutadlink|crabcut|directedlink)\.net$/, 
       /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs|miniurl)\.pw$/, /^(www\.)?lwt\.pw$/, 
       /^(trlink|wolink|tocdo|cuturl|counsellingresult2016|iitjeemainguide|healthhindigyan)\.in$/, /^(utimetableresult|daily-sale|linkszone|viraltechnical)\.in$/, 
@@ -14367,12 +14366,12 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: [{
       host: [
-      /^(imagecorn|imagedecode|imageko|imageshtorm|imageraven)\.com$/, /^(imgicy|imgsavvy|imgtzar|imgtornado|imgkicks|img2share|imghit|imgmain)\.com$/, /^(imgtrial|imgreputa|imgfapper|imgpart|imgbalana|imgjazz|img-planet|img-pay)\.com$/, /^(hosturimage|greasyimage|damimage|xxxscreens|wpc8|dimtus|tinizo|erimge|nimzshare|hdmoza)\.com$/, /^(www\.)?(imglemon|imageblinks)\.com$/, /^(www\.)?(multiimg)\.com$/, /^(i|xxx)\.hentaiyoutube\.com$/, /^(i\.)?imgseeds?\.com$/, 
+      /^(imagecorn|imagedecode|imageko|imageshtorm|imageraven)\.com$/, /^(imgicy|imgsavvy|imgtzar|imgtornado|imgkicks|img2share|imghit|imgmain)\.com$/, /^(imgtrial|imgreputa|imgfapper|imgpart|imgbalana|imgjazz|img-planet|img-pay)\.com$/, /^(hosturimage|greasyimage|damimage|xxxscreens|wpc8|dimtus|tinizo|erimge|nimzshare|hdmoza)\.com$/, /^(www\.)?(imglemon|imageblinks|multiimg)\.com$/, /^(i|xxx)\.hentaiyoutube\.com$/, /^(i\.)?imgseeds?\.com$/, 
       /^(xxxwebdlxxx|teenshot|imageon|imageteam|voyeurimage|teenimage|megaimage)\.org$/, /^(imgstudio|imgspot)\.org$/, 
       /^(imgserve|imgproject|imgpython|imgpix|naughtygate|gallerycloud|xximg|img-view)\.net$/, 
       /^hotimages\.eu$/, /(^|\.)55888\.eu$/, 
       /^(picz|unporn)\.site$/, /^pic\.hotimg\.site$/, 
-      /^dalezobux\.xyz$/, /^xxx\.(sexex|pornscreen)\.xyz$/, /^ecoimages\.xyz$/, /^uvonahaze\.xyz$/, 
+      /^(dalezobux|ecoimages|uvonahaze)\.xyz$/, /^xxx\.(sexex|pornscreen)\.xyz$/, 
       /^www\.hotimage\.uk$/, /^imgcloud\.co$/, /^pixup\.us$/, /^(pop-img|ads-img)\.info$/, /^(domaink|porno-pirat)\.ru$/, /^darpix\.ga$/, /^ipicture\.su$/, /^acidimg\.cc$/, /^s\.imghost\.top$/, /^imagespublic\.tk$/, /^underpic\.club$/, /^cubonaw\.ml$/],
       path: /\/img-.*\.html/
     }, {
@@ -14698,6 +14697,35 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }()
   });
   _ADSBYPASSER_NAMESPACE__._.register({
+    rule: {
+      host: /^trueimg\.xyz$/,
+      path: /^\/u-b\/(.+)\.jpeg\.html/
+    },
+    start: function () {
+      var _start60 = (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee366() {
+        var path;
+        return _regenerator["default"].wrap(function _callee366$(_context366) {
+          while (1) {
+            switch (_context366.prev = _context366.next) {
+              case 0:
+                path = window.location.href.replace('/u-', '/').replace('.html', '');
+                _context366.next = 3;
+                return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
+              case 3:
+              case "end":
+                return _context366.stop();
+            }
+          }
+        }, _callee366);
+      }));
+      function start() {
+        return _start60.apply(this, arguments);
+      }
+      return start;
+    }()
+  });
+  _ADSBYPASSER_NAMESPACE__._.register({
     rule: [{
       host: /^imagerar\.com$/,
       path: /^\/img2-/
@@ -14710,21 +14738,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }],
     ready: function () {
       var _ready276 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee366() {
+      _regenerator["default"].mark(function _callee367() {
         var i;
-        return _regenerator["default"].wrap(function _callee366$(_context366) {
+        return _regenerator["default"].wrap(function _callee367$(_context367) {
           while (1) {
-            switch (_context366.prev = _context366.next) {
+            switch (_context367.prev = _context367.next) {
               case 0:
                 i = (0, _ADSBYPASSER_NAMESPACE__.$)('img[alt]');
-                _context366.next = 3;
+                _context367.next = 3;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
               case 3:
               case "end":
-                return _context366.stop();
+                return _context367.stop();
             }
           }
-        }, _callee366);
+        }, _callee367);
       }));
       function ready() {
         return _ready276.apply(this, arguments);
@@ -14739,31 +14767,31 @@ _ADSBYPASSER_NAMESPACE__._.register({
     },
     ready: function () {
       var _ready277 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee367() {
+      _regenerator["default"].mark(function _callee368() {
         var a;
-        return _regenerator["default"].wrap(function _callee367$(_context367) {
+        return _regenerator["default"].wrap(function _callee368$(_context368) {
           while (1) {
-            switch (_context367.prev = _context367.next) {
+            switch (_context368.prev = _context368.next) {
               case 0:
                 a = _ADSBYPASSER_NAMESPACE__.$.$('#continuetoimage a');
                 if (!a) {
-                  _context367.next = 5;
+                  _context368.next = 5;
                   break;
                 }
-                _context367.next = 4;
+                _context368.next = 4;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
               case 4:
-                return _context367.abrupt("return");
+                return _context368.abrupt("return");
               case 5:
                 a = (0, _ADSBYPASSER_NAMESPACE__.$)('img[alt]');
-                _context367.next = 8;
+                _context368.next = 8;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(a.src);
               case 8:
               case "end":
-                return _context367.stop();
+                return _context368.stop();
             }
           }
-        }, _callee367);
+        }, _callee368);
       }));
       function ready() {
         return _ready277.apply(this, arguments);
@@ -14785,22 +14813,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
     },
     ready: function () {
       var _ready278 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee368() {
+      _regenerator["default"].mark(function _callee369() {
         var m;
-        return _regenerator["default"].wrap(function _callee368$(_context368) {
+        return _regenerator["default"].wrap(function _callee369$(_context369) {
           while (1) {
-            switch (_context368.prev = _context368.next) {
+            switch (_context369.prev = _context369.next) {
               case 0:
                 m = (0, _ADSBYPASSER_NAMESPACE__.$)('meta[property="og:image"]');
                 m = m.content.replace('small', 'big');
-                _context368.next = 4;
+                _context369.next = 4;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(m);
               case 4:
               case "end":
-                return _context368.stop();
+                return _context369.stop();
             }
           }
-        }, _callee368);
+        }, _callee369);
       }));
       function ready() {
         return _ready278.apply(this, arguments);
@@ -14814,25 +14842,25 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/.*\.jpg\.html/
     },
     start: function () {
-      var _start60 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee369() {
+      var _start61 = (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee370() {
         var path;
-        return _regenerator["default"].wrap(function _callee369$(_context369) {
+        return _regenerator["default"].wrap(function _callee370$(_context370) {
           while (1) {
-            switch (_context369.prev = _context369.next) {
+            switch (_context370.prev = _context370.next) {
               case 0:
                 path = window.location.href.replace('.html', '');
-                _context369.next = 3;
+                _context370.next = 3;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
               case 3:
               case "end":
-                return _context369.stop();
+                return _context370.stop();
             }
           }
-        }, _callee369);
+        }, _callee370);
       }));
       function start() {
-        return _start60.apply(this, arguments);
+        return _start61.apply(this, arguments);
       }
       return start;
     }()
@@ -14841,21 +14869,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
     rule: 'https://imgcloud.pw/image/*',
     ready: function () {
       var _ready279 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee370() {
+      _regenerator["default"].mark(function _callee371() {
         var l;
-        return _regenerator["default"].wrap(function _callee370$(_context370) {
+        return _regenerator["default"].wrap(function _callee371$(_context371) {
           while (1) {
-            switch (_context370.prev = _context370.next) {
+            switch (_context371.prev = _context371.next) {
               case 0:
                 l = (0, _ADSBYPASSER_NAMESPACE__.$)('link[rel="image_src"]');
-                _context370.next = 3;
+                _context371.next = 3;
                 return _ADSBYPASSER_NAMESPACE__.$.openImage(l.href);
               case 3:
               case "end":
-                return _context370.stop();
+                return _context371.stop();
             }
           }
-        }, _callee370);
+        }, _callee371);
       }));
       function ready() {
         return _ready279.apply(this, arguments);
@@ -14868,33 +14896,33 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }
   function _action() {
     _action = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee371(firstSelector, secondSelector) {
+    _regenerator["default"].mark(function _callee372(firstSelector, secondSelector) {
       var node;
-      return _regenerator["default"].wrap(function _callee371$(_context371) {
+      return _regenerator["default"].wrap(function _callee372$(_context372) {
         while (1) {
-          switch (_context371.prev = _context371.next) {
+          switch (_context372.prev = _context372.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('iframe, #adblock_detect, .popupOverlay');
               node = _ADSBYPASSER_NAMESPACE__.$.$(firstSelector);
               if (!node) {
-                _context371.next = 8;
+                _context372.next = 8;
                 break;
               }
               node = findFirstForm(node); 
               document.body.innerHTML = node.outerHTML;
               node = (0, _ADSBYPASSER_NAMESPACE__.$)('form input');
               node.click();
-              return _context371.abrupt("return");
+              return _context372.abrupt("return");
             case 8:
               node = (0, _ADSBYPASSER_NAMESPACE__.$)(secondSelector);
-              _context371.next = 11;
+              _context372.next = 11;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(node.src);
             case 11:
             case "end":
-              return _context371.stop();
+              return _context372.stop();
           }
         }
-      }, _callee371);
+      }, _callee372);
     }));
     return _action.apply(this, arguments);
   }
@@ -14911,21 +14939,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
   },
   ready: function () {
     var _ready280 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee372() {
+    _regenerator["default"].mark(function _callee373() {
       var img;
-      return _regenerator["default"].wrap(function _callee372$(_context372) {
+      return _regenerator["default"].wrap(function _callee373$(_context373) {
         while (1) {
-          switch (_context372.prev = _context372.next) {
+          switch (_context373.prev = _context373.next) {
             case 0:
               img = (0, _ADSBYPASSER_NAMESPACE__.$)('.wp-post-image');
-              _context372.next = 3;
+              _context373.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
             case 3:
             case "end":
-              return _context372.stop();
+              return _context373.stop();
           }
         }
-      }, _callee372);
+      }, _callee373);
     }));
     function ready() {
       return _ready280.apply(this, arguments);
@@ -14937,21 +14965,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
   rule: ['http://screenlist.ru/details.php?image_id=*', 'http://www.imagenetz.de/*/*.html'],
   ready: function () {
     var _ready281 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee373() {
+    _regenerator["default"].mark(function _callee374() {
       var img;
-      return _regenerator["default"].wrap(function _callee373$(_context373) {
+      return _regenerator["default"].wrap(function _callee374$(_context374) {
         while (1) {
-          switch (_context373.prev = _context373.next) {
+          switch (_context374.prev = _context374.next) {
             case 0:
               img = (0, _ADSBYPASSER_NAMESPACE__.$)('#picture');
-              _context373.next = 3;
+              _context374.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
             case 3:
             case "end":
-              return _context373.stop();
+              return _context374.stop();
           }
         }
-      }, _callee373);
+      }, _callee374);
     }));
     function ready() {
       return _ready281.apply(this, arguments);
@@ -14963,21 +14991,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.subirimagenes.com/*.html',
   ready: function () {
     var _ready282 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee374() {
+    _regenerator["default"].mark(function _callee375() {
       var i;
-      return _regenerator["default"].wrap(function _callee374$(_context374) {
+      return _regenerator["default"].wrap(function _callee375$(_context375) {
         while (1) {
-          switch (_context374.prev = _context374.next) {
+          switch (_context375.prev = _context375.next) {
             case 0:
               i = (0, _ADSBYPASSER_NAMESPACE__.$)('#ImagenVisualizada');
-              _context374.next = 3;
+              _context375.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case "end":
-              return _context374.stop();
+              return _context375.stop();
           }
         }
-      }, _callee374);
+      }, _callee375);
     }));
     function ready() {
       return _ready282.apply(this, arguments);
@@ -14989,21 +15017,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://tinypic.com/view.php?pic=*',
   ready: function () {
     var _ready283 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee375() {
+    _regenerator["default"].mark(function _callee376() {
       var i;
-      return _regenerator["default"].wrap(function _callee375$(_context375) {
+      return _regenerator["default"].wrap(function _callee376$(_context376) {
         while (1) {
-          switch (_context375.prev = _context375.next) {
+          switch (_context376.prev = _context376.next) {
             case 0:
               i = (0, _ADSBYPASSER_NAMESPACE__.$)('#imgElement');
-              _context375.next = 3;
+              _context376.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case "end":
-              return _context375.stop();
+              return _context376.stop();
           }
         }
-      }, _callee375);
+      }, _callee376);
     }));
     function ready() {
       return _ready283.apply(this, arguments);
@@ -15018,21 +15046,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
   },
   ready: function () {
     var _ready284 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee376() {
+    _regenerator["default"].mark(function _callee377() {
       var i;
-      return _regenerator["default"].wrap(function _callee376$(_context376) {
+      return _regenerator["default"].wrap(function _callee377$(_context377) {
         while (1) {
-          switch (_context376.prev = _context376.next) {
+          switch (_context377.prev = _context377.next) {
             case 0:
               i = (0, _ADSBYPASSER_NAMESPACE__.$)('#uImage');
-              _context376.next = 3;
+              _context377.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
             case 3:
             case "end":
-              return _context376.stop();
+              return _context377.stop();
           }
         }
-      }, _callee376);
+      }, _callee377);
     }));
     function ready() {
       return _ready284.apply(this, arguments);
@@ -15047,28 +15075,28 @@ _ADSBYPASSER_NAMESPACE__._.register({
   },
   ready: function () {
     var _ready285 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee377() {
+    _regenerator["default"].mark(function _callee378() {
       var img, f;
-      return _regenerator["default"].wrap(function _callee377$(_context377) {
+      return _regenerator["default"].wrap(function _callee378$(_context378) {
         while (1) {
-          switch (_context377.prev = _context377.next) {
+          switch (_context378.prev = _context378.next) {
             case 0:
               if (!(document.referrer == document.location.href)) {
-                _context377.next = 7;
+                _context378.next = 7;
                 break;
               }
               img = _ADSBYPASSER_NAMESPACE__.$.$('#container > a > img');
               if (!img) {
                 img = (0, _ADSBYPASSER_NAMESPACE__.$)('#container > img');
               }
-              _context377.next = 5;
+              _context378.next = 5;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(img.src);
             case 5:
-              _context377.next = 10;
+              _context378.next = 10;
               break;
             case 7:
               f = (0, _ADSBYPASSER_NAMESPACE__.$)('form');
-              _context377.next = 10;
+              _context378.next = 10;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(f.action, {
                 post: {
                   imgContinue: 'Continue to image ...'
@@ -15076,10 +15104,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
               });
             case 10:
             case "end":
-              return _context377.stop();
+              return _context378.stop();
           }
         }
-      }, _callee377);
+      }, _callee378);
     }));
     function ready() {
       return _ready285.apply(this, arguments);

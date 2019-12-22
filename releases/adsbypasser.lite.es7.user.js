@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.11.0
+// @version        7.12.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.11.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -2672,7 +2672,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/,
         /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/,
         /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/,
-        /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24)\.com$/,
+        /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24|safeku)\.com$/,
         /^(vy\.)?adsvy\.com$/,
         /^(www\.)?(clkpays|lnkjob|efshort)\.com$/,
         /^shrt(8|10)\.com$/,
