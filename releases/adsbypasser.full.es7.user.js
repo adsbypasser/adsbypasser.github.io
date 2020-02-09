@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.12.0
+// @version        7.12.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.1/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.1/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.1/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.1/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -2677,7 +2677,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/,
         /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/,
         /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/,
-        /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24|safeku)\.com$/,
+        /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24)\.com$/,
         /^(vy\.)?adsvy\.com$/,
         /^(www\.)?(clkpays|lnkjob|efshort)\.com$/,
         /^shrt(8|10)\.com$/,
@@ -2765,7 +2765,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^wicr\.me$/,
         /^linksoflife\.co$/,
         /^linksof\.life$/,
-        /^arabtvlink\.com$/,
+        /^(arabtvlink|safeku)\.com$/,
       ],
     },
     async ready () {
@@ -2962,6 +2962,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       const click = f.clientWidth === 0 || f.childNodes.length === 0;
       if (click && !b.disabled) {
         _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].info('clicking submit button, because recaptcha was empty');
+        b.setAttribute('onclick', '');
         b.click();
       }
     }
