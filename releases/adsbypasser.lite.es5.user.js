@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.12.1
+// @version        7.13.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.12.1/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.13.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -1093,6 +1093,7 @@ module.exports = _possibleConstructorReturn;
  }),
  (function(module, exports) {
 function _typeof(obj) {
+  "@babel/helpers - typeof";
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     module.exports = _typeof = function _typeof(obj) {
       return typeof obj;
@@ -1827,8 +1828,8 @@ function _loadConfig() {
                 host: /^adsbypasser\.github\.io$/,
                 path: /^\/configure\.html$/
               },
-              ready: function () {
-                var _ready = (0, _asyncToGenerator2["default"])(
+              ready: function ready() {
+                return (0, _asyncToGenerator2["default"])(
                 _regenerator["default"].mark(function _callee9() {
                   return _regenerator["default"].wrap(function _callee9$(_context9) {
                     while (1) {
@@ -1947,12 +1948,8 @@ function _loadConfig() {
                       }
                     }
                   }, _callee9);
-                }));
-                function ready() {
-                  return _ready.apply(this, arguments);
-                }
-                return ready;
-              }()
+                }))();
+              }
             });
           case 5:
           case "end":
@@ -2110,9 +2107,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^akoam\.net$/,
     path: /^\/download\/([^/]+)\//
   },
-  start: function () {
-    var _start = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee() {
       var data;
       return _regenerator["default"].wrap(function _callee$(_context) {
         while (1) {
@@ -2140,20 +2137,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee, null, [[3, 7]]);
-    }));
-    function start(_x) {
-      return _start.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?coolrom\.com$/,
     path: /^\/dlpop\.php$/
   },
-  ready: function () {
-    var _ready = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee2() {
       var matches;
       return _regenerator["default"].wrap(function _callee2$(_context2) {
@@ -2169,12 +2162,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee2);
-    }));
-    function ready() {
-      return _ready.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
@@ -2182,8 +2171,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: /^(www\.)?dl-protect\.com$/,
       path: /\/[A-Z0-9]+/
     },
-    ready: function () {
-      var _ready2 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee3() {
         var f, iIn, _ref, _ref2, p, l;
         return _regenerator["default"].wrap(function _callee3$(_context3) {
@@ -2254,12 +2243,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee3);
-      }));
-      function ready() {
-        return _ready2.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   }); 
   function canFastRedirect() {
     return !_ADSBYPASSER_NAMESPACE__.$.$('form[name=ccerure]').onsubmit && !_ADSBYPASSER_NAMESPACE__.$.$('form[name=ccerure] input[name=pwd]');
@@ -2286,8 +2271,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^elsfile\.org$/
   },
-  ready: function () {
-    var _ready3 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee4() {
       var down, countdown, o, script;
       return _regenerator["default"].wrap(function _callee4$(_context4) {
@@ -2323,12 +2308,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee4);
-    }));
-    function ready() {
-      return _ready3.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
@@ -2336,8 +2317,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/$/,
     query: /^\?\w{2}=\w+$/
   },
-  ready: function () {
-    var _ready4 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee5() {
       var downloadPage;
       return _regenerator["default"].wrap(function _callee5$(_context5) {
@@ -2353,20 +2334,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee5);
-    }));
-    function ready() {
-      return _ready4.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.fileproject\.com\.br$/,
     path: /^\/files\/+/
   },
-  ready: function () {
-    var _ready5 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee6() {
       var m;
       return _regenerator["default"].wrap(function _callee6$(_context6) {
@@ -2382,19 +2359,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee6);
-    }));
-    function ready() {
-      return _ready5.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(www\.)?indishare\.(org|me)$/, /^bdupload\.(info|asia)$/, /^upgrand\.site$/, /^3zfile\.net$/, /^uploadrar\.com$/]
   },
-  ready: function () {
-    var _ready6 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee7() {
       var btn;
       return _regenerator["default"].wrap(function _callee7$(_context7) {
@@ -2410,20 +2383,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee7);
-    }));
-    function ready() {
-      return _ready6.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^insurance-waifu\.cf$/,
     query: /u=(.+)$/
   },
-  ready: function () {
-    var _ready7 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee8() {
       var f, args, response, l;
       return _regenerator["default"].wrap(function _callee8$(_context8) {
@@ -2448,20 +2417,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee8);
-    }));
-    function ready() {
-      return _ready7.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?jheberg\.net$/,
     path: /^\/captcha\//
   },
-  ready: function () {
-    var _ready8 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee9() {
       return _regenerator["default"].wrap(function _callee9$(_context9) {
         while (1) {
@@ -2474,22 +2439,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee9);
-    }));
-    function ready() {
-      return _ready8.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?jheberg\.net$/,
     path: /^\/redirect\//
   },
-  ready: function () {
-    var _ready9 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    'use strict'; 
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee10() {
-      'use strict'; 
       var matches, slug, hoster, response, respJSON;
       return _regenerator["default"].wrap(function _callee10$(_context10) {
         while (1) {
@@ -2515,20 +2476,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee10);
-    }));
-    function ready() {
-      return _ready9.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^mirrorace\.com$/,
     path: /^\/m\//
   },
-  ready: function () {
-    var _ready10 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee11() {
       var ma;
       return _regenerator["default"].wrap(function _callee11$(_context11) {
@@ -2544,20 +2501,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee11);
-    }));
-    function ready() {
-      return _ready10.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(www\.)?mirrorcreator\.com$/, /^(www\.)?mirrored\.to$/],
     path: /^\/downlink\//
   },
-  ready: function () {
-    var _ready11 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee12() {
       var a;
       return _regenerator["default"].wrap(function _callee12$(_context12) {
@@ -2573,20 +2526,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee12);
-    }));
-    function ready() {
-      return _ready11.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(www\.)?mirrorcreator\.com$/, /^(www\.)?mirrored\.to$/],
     path: /^\/files\//
   },
-  ready: function () {
-    var _ready12 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee13() {
       var res, o;
       return _regenerator["default"].wrap(function _callee13$(_context13) {
@@ -2614,19 +2563,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee13);
-    }));
-    function ready() {
-      return _ready12.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^multifilemirror\.com$/
   },
-  ready: function () {
-    var _ready13 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee14() {
       var m;
       return _regenerator["default"].wrap(function _callee14$(_context14) {
@@ -2641,20 +2586,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee14);
-    }));
-    function ready() {
-      return _ready13.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.multiupfile\.com$/,
     path: /^\/f\//
   },
-  ready: function () {
-    var _ready14 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee15() {
       var f;
       return _regenerator["default"].wrap(function _callee15$(_context15) {
@@ -2669,21 +2610,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee15);
-    }));
-    function ready() {
-      return _ready14.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^mylinkgen\.com$/,
     path: /^\/p\/(.+)$/
   },
-  start: function () {
-    var _start2 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee16(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee16() {
       return _regenerator["default"].wrap(function _callee16$(_context16) {
         while (1) {
           switch (_context16.prev = _context16.next) {
@@ -2696,20 +2633,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee16);
-    }));
-    function start(_x2) {
-      return _start2.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^mylinkgen\.com$/,
     path: /^\/g\//
   },
-  ready: function () {
-    var _ready15 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee17() {
       var a;
       return _regenerator["default"].wrap(function _callee17$(_context17) {
@@ -2725,20 +2658,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee17);
-    }));
-    function ready() {
-      return _ready15.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?putlocker\.com$/,
     path: /^\/file\/[0-9A-F]+$/
   },
-  ready: function () {
-    var _ready16 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee18() {
       var c;
       return _regenerator["default"].wrap(function _callee18$(_context18) {
@@ -2753,20 +2682,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee18);
-    }));
-    function ready() {
-      return _ready16.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^uploadhaven\.com$/,
     path: /^\/download\//
   },
-  ready: function () {
-    var _ready17 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee19() {
       var f;
       return _regenerator["default"].wrap(function _callee19$(_context19) {
@@ -2784,19 +2709,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee19);
-    }));
-    function ready() {
-      return _ready17.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?upmirror\.info$/
   },
-  ready: function () {
-    var _ready18 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee20() {
       return _regenerator["default"].wrap(function _callee20$(_context20) {
         while (1) {
@@ -2815,19 +2736,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee20);
-    }));
-    function ready() {
-      return _ready18.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?vidto\.me$/
   },
-  ready: function () {
-    var _ready19 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee21() {
       var f;
       return _regenerator["default"].wrap(function _callee21$(_context21) {
@@ -2845,19 +2762,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee21);
-    }));
-    function ready() {
-      return _ready19.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^zupload\.me$/
   },
-  ready: function () {
-    var _ready20 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee22() {
       var z;
       return _regenerator["default"].wrap(function _callee22$(_context22) {
@@ -2873,19 +2786,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee22);
-    }));
-    function ready() {
-      return _ready20.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^01\.nl$/
   },
-  ready: function () {
-    var _ready21 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee23() {
       var f;
       return _regenerator["default"].wrap(function _callee23$(_context23) {
@@ -2901,19 +2810,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee23);
-    }));
-    function ready() {
-      return _ready21.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^10co\.(biz|xyz|co|me)$/
   },
-  ready: function () {
-    var _ready22 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee24() {
       var d;
       return _regenerator["default"].wrap(function _callee24$(_context24) {
@@ -2929,12 +2834,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee24);
-    }));
-    function ready() {
-      return _ready22.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
@@ -2942,9 +2843,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/z\.php$/,
     query: /^\?(.+)/
   },
-  start: function () {
-    var _start3 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee25(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee25() {
       return _regenerator["default"].wrap(function _callee25$(_context25) {
         while (1) {
           switch (_context25.prev = _context25.next) {
@@ -2957,12 +2858,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee25);
-    }));
-    function start(_x3) {
-      return _start3.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
@@ -2970,8 +2867,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[jt]\.php$/,
     query: /^\?s=/
   },
-  ready: function () {
-    var _ready23 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee26() {
       var a;
       return _regenerator["default"].wrap(function _callee26$(_context26) {
@@ -2987,20 +2884,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee26);
-    }));
-    function ready() {
-      return _ready23.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^1ink\.(cc|info)$/,
     path: /^\/\w+$/
   },
-  ready: function () {
-    var _ready24 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee27() {
       var url, urlCheck;
       return _regenerator["default"].wrap(function _callee27$(_context27) {
@@ -3020,20 +2913,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee27);
-    }));
-    function ready() {
-      return _ready24.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?1tiny\.net$/,
     path: /\/\w+/
   },
-  ready: function () {
-    var _ready25 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee28() {
       var directUrl;
       return _regenerator["default"].wrap(function _callee28$(_context28) {
@@ -3055,20 +2944,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee28);
-    }));
-    function ready() {
-      return _ready25.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^1v\.to$/,
     path: /^\/t\/[a-zA-Z0-9/=]+/
   },
-  start: function () {
-    var _start4 = (0, _asyncToGenerator2["default"])(
+  start: function start() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee29() {
       var path;
       return _regenerator["default"].wrap(function _callee29$(_context29) {
@@ -3084,19 +2969,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee29);
-    }));
-    function start() {
-      return _start4.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?4fun\.tw$/
   },
-  ready: function () {
-    var _ready26 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee30() {
       var i;
       return _regenerator["default"].wrap(function _callee30$(_context30) {
@@ -3112,20 +2993,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee30);
-    }));
-    function ready() {
-      return _ready26.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^ad2links\.com$/,
     path: /^\/\w-.+$/
   },
-  ready: function () {
-    var _ready27 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee31() {
       return _regenerator["default"].wrap(function _callee31$(_context31) {
         while (1) {
@@ -3144,19 +3021,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee31);
-    }));
-    function ready() {
-      return _ready27.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^ad4\.fr$/
   },
-  ready: function () {
-    var _ready28 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee32() {
       var s;
       return _regenerator["default"].wrap(function _callee32$(_context32) {
@@ -3180,12 +3053,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee32);
-    }));
-    function ready() {
-      return _ready28.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
@@ -3193,9 +3062,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: /^ad7\.biz$/,
       path: /^\/\d+\/(.*)$/
     },
-    start: function () {
-      var _start5 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee33(m) {
+    start: function start(m) {
+      return (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee33() {
         var redirectLink;
         return _regenerator["default"].wrap(function _callee33$(_context33) {
           while (1) {
@@ -3214,20 +3083,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee33);
-      }));
-      function start(_x4) {
-        return _start5.apply(this, arguments);
-      }
-      return start;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: /^ad7\.biz$/,
       path: /^\/\w+$/
     },
-    ready: function () {
-      var _ready29 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee34() {
         var script, url;
         return _regenerator["default"].wrap(function _callee34$(_context34) {
@@ -3246,12 +3111,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee34);
-      }));
-      function ready() {
-        return _ready29.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
 })();
 (function () {
@@ -3260,8 +3121,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: [/^(www\.)?adb\.ug$/, /^(www\.)?lynk\.my$/, /^(www\.)?adyou\.(co|me)$/],
       path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/
     },
-    ready: function () {
-      var _ready30 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee35() {
         var m, args;
         return _regenerator["default"].wrap(function _callee35$(_context35) {
@@ -3290,12 +3151,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee35);
-      }));
-      function ready() {
-        return _ready30.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   function getArguments() {
     var PATTERN = /\{\s*_args[^}]+\}[^}]+\}/;
@@ -3344,9 +3201,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: /^adf\.ly$/,
       path: /^\/redirecting\/(.+)$/
     },
-    start: function () {
-      var _start6 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee36(m) {
+    start: function start(m) {
+      return (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee36() {
         var url;
         return _regenerator["default"].wrap(function _callee36$(_context36) {
           while (1) {
@@ -3361,21 +3218,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee36);
-      }));
-      function start(_x5) {
-        return _start6.apply(this, arguments);
-      }
-      return start;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       path: /\/locked$/,
       query: /url=([^&]+)/
     },
-    start: function () {
-      var _start7 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee37(m) {
+    start: function start(m) {
+      return (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee37() {
         var url;
         return _regenerator["default"].wrap(function _callee37$(_context37) {
           while (1) {
@@ -3402,21 +3255,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee37);
-      }));
-      function start(_x6) {
-        return _start7.apply(this, arguments);
-      }
-      return start;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       path: /pushredirect/,
       query: /.*dest=([^&]+)/
     },
-    start: function () {
-      var _start8 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee38(m) {
+    start: function start(m) {
+      return (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee38() {
         var url;
         return _regenerator["default"].wrap(function _callee38$(_context38) {
           while (1) {
@@ -3435,20 +3284,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee38);
-      }));
-      function start(_x7) {
-        return _start8.apply(this, arguments);
-      }
-      return start;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       query: /lp=adfly_allow&.*href=([^&]+)/
     },
-    start: function () {
-      var _start9 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee39(m) {
+    start: function start(m) {
+      return (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee39() {
         var url;
         return _regenerator["default"].wrap(function _callee39$(_context39) {
           while (1) {
@@ -3467,12 +3312,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee39);
-      }));
-      function start(_x8) {
-        return _start9.apply(this, arguments);
-      }
-      return start;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: function rule() {
@@ -3483,8 +3324,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
         return null;
       }
     },
-    start: function () {
-      var _start10 = (0, _asyncToGenerator2["default"])(
+    start: function start() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee40() {
         return _regenerator["default"].wrap(function _callee40$(_context40) {
           while (1) {
@@ -3498,14 +3339,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee40);
-      }));
-      function start() {
-        return _start10.apply(this, arguments);
-      }
-      return start;
-    }(),
-    ready: function () {
-      var _ready31 = (0, _asyncToGenerator2["default"])(
+      }))();
+    },
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee41() {
         var close, rv;
         return _regenerator["default"].wrap(function _callee41$(_context41) {
@@ -3538,12 +3375,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee41);
-      }));
-      function ready() {
-        return _ready31.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   function generateRandomSessionCookie(length) {
     var rv = [];
@@ -3590,8 +3423,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
 })();
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://adfoc.us/*',
-  ready: function () {
-    var _ready32 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee42() {
       var promise, url;
       return _regenerator["default"].wrap(function _callee42$(_context42) {
@@ -3625,19 +3458,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee42);
-    }));
-    function ready() {
-      return _ready32.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?adlot\.us$/
   },
-  ready: function () {
-    var _ready33 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee43() {
       var script, p, opt, tmp;
       return _regenerator["default"].wrap(function _callee43$(_context43) {
@@ -3664,19 +3493,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee43);
-    }));
-    function ready() {
-      return _ready33.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^admy\.link$/
   },
-  ready: function () {
-    var _ready34 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee44() {
       var f;
       return _regenerator["default"].wrap(function _callee44$(_context44) {
@@ -3691,20 +3516,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee44);
-    }));
-    function ready() {
-      return _ready34.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?ah-informatique\.com$/,
     path: /^\/ZipUrl/
   },
-  ready: function () {
-    var _ready35 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee45() {
       var a;
       return _regenerator["default"].wrap(function _callee45$(_context45) {
@@ -3720,20 +3541,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee45);
-    }));
-    function ready() {
-      return _ready35.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: /^ah\.pe$/
     },
-    ready: function () {
-      var _ready36 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee46() {
         var script, path;
         return _regenerator["default"].wrap(function _callee46$(_context46) {
@@ -3767,12 +3584,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee46);
-      }));
-      function ready() {
-        return _ready36.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   function decodeScript(encoded) {
     var a = encoded.match(/^\s*;eval\((.+)\);\s*$/);
@@ -3786,8 +3599,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^aka\.gr$/
   },
-  ready: function () {
-    var _ready37 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee47() {
       var l;
       return _regenerator["default"].wrap(function _callee47$(_context47) {
@@ -3803,19 +3616,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee47);
-    }));
-    function ready() {
-      return _ready37.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^al\.ly$/, /^ally\.sh$/, /^ally\.shortens\.co$/, /^(dausel|onle)\.co$/]
   },
-  ready: function () {
-    var _ready38 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee48() {
       var i;
       return _regenerator["default"].wrap(function _callee48$(_context48) {
@@ -3847,19 +3656,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee48);
-    }));
-    function ready() {
-      return _ready38.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(www\.)?allkeyshop\.com$/, /^cshort\.org$/]
   },
-  ready: function () {
-    var _ready39 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee49() {
       var matches;
       return _regenerator["default"].wrap(function _callee49$(_context49) {
@@ -3877,19 +3682,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee49);
-    }));
-    function ready() {
-      return _ready39.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^apkmodif\.com$/
   },
-  ready: function () {
-    var _ready40 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee50() {
       var a;
       return _regenerator["default"].wrap(function _callee50$(_context50) {
@@ -3905,12 +3706,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee50);
-    }));
-    function ready() {
-      return _ready40.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 (function () {
   var ajaxPattern = /\$.post\('([^']*)'[^{]+(\{\s*opt:\s*'make_log'[^}]+\}\s*\}),/i; 
@@ -3919,9 +3716,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: /^bc\.vc$/,
       path: /^.+(https?:\/\/.+)$/
     },
-    start: function () {
-      var _start11 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee51(m) {
+    start: function start(m) {
+      return (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee51() {
         return _regenerator["default"].wrap(function _callee51$(_context51) {
           while (1) {
             switch (_context51.prev = _context51.next) {
@@ -3934,20 +3731,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee51);
-      }));
-      function start(_x9) {
-        return _start11.apply(this, arguments);
-      }
-      return start;
-    }()
+      }))();
+    }
   }); 
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: /^bc\.vc$/,
       path: /^\/.+/
     },
-    ready: function () {
-      var _ready41 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee52() {
         var token, time, url, rv;
         return _regenerator["default"].wrap(function _callee52$(_context52) {
@@ -3994,12 +3787,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee52);
-      }));
-      function ready() {
-        return _ready41.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
@@ -4013,8 +3802,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: /^ysear\.ch$/,
       path: /^\/.+/
     },
-    ready: function () {
-      var _ready42 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee53() {
         var a, f;
         return _regenerator["default"].wrap(function _callee53$(_context53) {
@@ -4041,20 +3830,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee53);
-      }));
-      function ready() {
-        return _ready42.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: /^ad5\.eu$/,
       path: /^\/[^.]+$/
     },
-    ready: function () {
-      var _ready43 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee54() {
         var s, m, tz, d;
         return _regenerator["default"].wrap(function _callee54$(_context54) {
@@ -4085,20 +3870,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee54);
-      }));
-      function ready() {
-        return _ready43.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: /^tr5\.in$/,
       path: /^\/.+/
     },
-    ready: function () {
-      var _ready44 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee55() {
         return _regenerator["default"].wrap(function _callee55$(_context55) {
           while (1) {
@@ -4112,12 +3893,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee55);
-      }));
-      function ready() {
-        return _ready44.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   function decompress(script, unzip) {
     if (!unzip) {
@@ -4168,7 +3945,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       });
     }, 1000);
   }
-  function run(_x10) {
+  function run(_x) {
     return _run.apply(this, arguments);
   }
   function _run() {
@@ -4295,9 +4072,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?biglistofwebsites\.com$/,
     path: /^\/go\/(\w+\.\w+)$/
   },
-  start: function () {
-    var _start12 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee58(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee58() {
       return _regenerator["default"].wrap(function _callee58$(_context58) {
         while (1) {
           switch (_context58.prev = _context58.next) {
@@ -4310,17 +4087,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee58);
-    }));
-    function start(_x11) {
-      return _start12.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.bild.me/bild.php?file=*',
-  ready: function () {
-    var _ready45 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee59() {
       var i;
       return _regenerator["default"].wrap(function _callee59$(_context59) {
@@ -4336,17 +4109,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee59);
-    }));
-    function ready() {
-      return _ready45.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://bildr.no/view/*',
-  ready: function () {
-    var _ready46 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee60() {
       var i;
       return _regenerator["default"].wrap(function _callee60$(_context60) {
@@ -4362,12 +4131,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee60);
-    }));
-    function ready() {
-      return _ready46.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 }); 
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: [{
@@ -4377,9 +4142,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^gsmzone\.site$/,
     path: /\/go\/([a-zA-Z0-9]+)/
   }],
-  start: function () {
-    var _start13 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee61(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee61() {
       var direct_link;
       return _regenerator["default"].wrap(function _callee61$(_context61) {
         while (1) {
@@ -4394,19 +4159,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee61);
-    }));
-    function start(_x12) {
-      return _start13.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^blog\.langw\.web\.id$/
   },
-  ready: function () {
-    var _ready47 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee62() {
       var url;
       return _regenerator["default"].wrap(function _callee62$(_context62) {
@@ -4427,20 +4188,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee62);
-    }));
-    function ready() {
-      return _ready47.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^bluemediafiles\.com$/,
     path: /^\/creatinglinks/
   },
-  ready: function () {
-    var _ready48 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee63() {
       var b;
       return _regenerator["default"].wrap(function _callee63$(_context63) {
@@ -4456,19 +4213,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee63);
-    }));
-    function ready() {
-      return _ready48.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^catcut\.net$/
   },
-  ready: function () {
-    var _ready49 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee64() {
       var a;
       return _regenerator["default"].wrap(function _callee64$(_context64) {
@@ -4488,19 +4241,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee64);
-    }));
-    function ready() {
-      return _ready49.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?cli\.gs$/
   },
-  ready: function () {
-    var _ready50 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee65() {
       var a;
       return _regenerator["default"].wrap(function _callee65$(_context65) {
@@ -4516,19 +4265,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee65);
-    }));
-    function ready() {
-      return _ready50.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^clk\.im$/
   },
-  ready: function () {
-    var _ready51 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee66() {
       var matches;
       return _regenerator["default"].wrap(function _callee66$(_context66) {
@@ -4545,19 +4290,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee66);
-    }));
-    function ready() {
-      return _ready51.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^cocoleech\.com$/
   },
-  ready: function () {
-    var _ready52 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee67() {
       var a;
       return _regenerator["default"].wrap(function _callee67$(_context67) {
@@ -4573,12 +4314,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee67);
-    }));
-    function ready() {
-      return _ready52.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
@@ -4586,9 +4323,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: [/^(coeg|disingkat)\.in$/, /^www\.(telondasmu|siotong|siherp)\.com$/, /^www\.greget\.space$/],
       path: /^\/.+$/
     },
-    ready: function () {
-      var _ready53 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee68(m) {
+    ready: function ready(m) {
+      return (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee68() {
         var mapper, b64;
         return _regenerator["default"].wrap(function _callee68$(_context68) {
           while (1) {
@@ -4604,20 +4341,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee68);
-      }));
-      function ready(_x13) {
-        return _ready53.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: /^sipkur\.net$/,
       path: [/^\/\w+$/, /^\/menujulink\//]
     },
-    ready: function () {
-      var _ready54 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee69() {
         var d;
         return _regenerator["default"].wrap(function _callee69$(_context69) {
@@ -4635,12 +4368,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee69);
-      }));
-      function ready() {
-        return _ready54.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   function hostMapper(host) {
     switch (host) {
@@ -4668,9 +4397,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(?:(\w+)\.)?coinurl\.com$/, /^(?:(\w+)\.)?cur\.lv$/],
     path: /^\/([-\w]+)$/
   },
-  ready: function () {
-    var _ready55 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee70(m) {
+  ready: function ready(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee70() {
       var host, param, mainFrameContent, docMainFrame, rExtractLink;
       return _regenerator["default"].wrap(function _callee70$(_context70) {
         while (1) {
@@ -4716,19 +4445,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee70, null, [[7, 11]]);
-    }));
-    function ready(_x14) {
-      return _ready55.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^comyonet\.com$/
   },
-  ready: function () {
-    var _ready56 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee71() {
       var input;
       return _regenerator["default"].wrap(function _callee71$(_context71) {
@@ -4743,19 +4468,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee71);
-    }));
-    function ready() {
-      return _ready56.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^crockolinks\.com$/
   },
-  ready: function () {
-    var _ready57 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee72() {
       var c;
       return _regenerator["default"].wrap(function _callee72$(_context72) {
@@ -4770,19 +4491,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee72);
-    }));
-    function ready() {
-      return _ready57.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^dawnstation\.com$/
   },
-  ready: function () {
-    var _ready58 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee73() {
       var a;
       return _regenerator["default"].wrap(function _callee73$(_context73) {
@@ -4798,19 +4515,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee73);
-    }));
-    function ready() {
-      return _ready58.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^durl\.me$/
   },
-  ready: function () {
-    var _ready59 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee74() {
       var a;
       return _regenerator["default"].wrap(function _callee74$(_context74) {
@@ -4826,19 +4539,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee74);
-    }));
-    function ready() {
-      return _ready59.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^easyurl\.net$/, /^(atu|clickthru|redirects|readthis)\.ca$/, /^goshrink\.com$/]
   },
-  ready: function () {
-    var _ready60 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee75() {
       var f;
       return _regenerator["default"].wrap(function _callee75$(_context75) {
@@ -4854,20 +4563,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee75);
-    }));
-    function ready() {
-      return _ready60.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(www\.)?shink\.me$/, /^(shon|likn)\.xyz$/, /^fas\.li$/, /^(www\.)?croco\.(me|site)$/, /^cpmlink\.net$/],
     path: /^\/[\w-]+$/
   },
-  ready: function () {
-    var _ready61 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee76() {
       var f;
       return _regenerator["default"].wrap(function _callee76$(_context76) {
@@ -4910,12 +4615,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee76);
-    }));
-    function ready() {
-      return _ready61.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: [{
@@ -4925,8 +4626,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?croco\.(me|site)$/,
     path: /^\/ok\/\w+$/
   }],
-  ready: function () {
-    var _ready62 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee77() {
       var a, i;
       return _regenerator["default"].wrap(function _callee77$(_context77) {
@@ -4944,20 +4645,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee77);
-    }));
-    function ready() {
-      return _ready62.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^fas\.li$/, /^(www\.)?shink\.me$/],
     path: /^\/go\/\w+$/
   },
-  ready: function () {
-    var _ready63 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee78() {
       var f;
       return _regenerator["default"].wrap(function _callee78$(_context78) {
@@ -4972,19 +4669,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee78);
-    }));
-    function ready() {
-      return _ready63.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^filemedia\.net$/
   },
-  ready: function () {
-    var _ready64 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee79() {
       var script;
       return _regenerator["default"].wrap(function _callee79$(_context79) {
@@ -5004,19 +4697,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee79);
-    }));
-    function ready() {
-      return _ready64.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?filoops\.info$/
   },
-  ready: function () {
-    var _ready65 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee80() {
       var a;
       return _regenerator["default"].wrap(function _callee80$(_context80) {
@@ -5032,19 +4721,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee80);
-    }));
-    function ready() {
-      return _ready65.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www|links)\.fiuxy\.(co|bz)$/
   },
-  ready: function () {
-    var _ready66 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee81() {
       return _regenerator["default"].wrap(function _callee81$(_context81) {
         while (1) {
@@ -5058,20 +4743,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee81);
-    }));
-    function ready() {
-      return _ready66.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^gamemod\.pro$/,
     path: /^\/download-file\//
   },
-  ready: function () {
-    var _ready67 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee82() {
       var gp;
       return _regenerator["default"].wrap(function _callee82$(_context82) {
@@ -5087,19 +4768,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee82);
-    }));
-    function ready() {
-      return _ready67.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^gkurl\.us$/
   },
-  ready: function () {
-    var _ready68 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee83() {
       var iframe;
       return _regenerator["default"].wrap(function _callee83$(_context83) {
@@ -5115,21 +4792,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee83);
-    }));
-    function ready() {
-      return _ready68.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^goto\.loncat\.in$/,
     query: /open=(.+)/
   },
-  start: function () {
-    var _start14 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee84(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee84() {
       var url;
       return _regenerator["default"].wrap(function _callee84$(_context84) {
         while (1) {
@@ -5144,19 +4817,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee84);
-    }));
-    function start(_x15) {
-      return _start14.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^gsurl\.(me|in)$/, /^(gsul|getsl|glinks)\.me$/, /^gsur\.in$/, /^g5u\.pw$/, /^gurl\.ly$/]
   },
-  ready: function () {
-    var _ready69 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee85() {
       var a;
       return _regenerator["default"].wrap(function _callee85$(_context85) {
@@ -5173,20 +4842,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee85);
-    }));
-    function ready() {
-      return _ready69.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^gunting\.web\.id$/,
     path: /^\/\w+$/
   },
-  ready: function () {
-    var _ready70 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee86() {
       var l;
       return _regenerator["default"].wrap(function _callee86$(_context86) {
@@ -5202,20 +4867,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee86);
-    }));
-    function ready() {
-      return _ready70.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^healthykk\.com$/,
     path: /^\/wordpress\//
   },
-  ready: function () {
-    var _ready71 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee87() {
       var h;
       return _regenerator["default"].wrap(function _callee87$(_context87) {
@@ -5230,20 +4891,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee87);
-    }));
-    function ready() {
-      return _ready71.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^hen-tay\.net$/,
     path: /^\/go\//
   },
-  ready: function () {
-    var _ready72 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee88() {
       var h;
       return _regenerator["default"].wrap(function _callee88$(_context88) {
@@ -5259,19 +4916,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee88);
-    }));
-    function ready() {
-      return _ready72.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^hotshorturl\.com$/
   },
-  ready: function () {
-    var _ready73 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee89() {
       var frame;
       return _regenerator["default"].wrap(function _callee89$(_context89) {
@@ -5287,19 +4940,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee89);
-    }));
-    function ready() {
-      return _ready73.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^iiv\.pl$/
   },
-  ready: function () {
-    var _ready74 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee90() {
       var d, rv;
       return _regenerator["default"].wrap(function _callee90$(_context90) {
@@ -5328,20 +4977,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee90);
-    }));
-    function ready() {
-      return _ready74.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^itw\.me$/,
     path: /^\/r\//
   },
-  ready: function () {
-    var _ready75 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee91() {
       var f;
       return _regenerator["default"].wrap(function _callee91$(_context91) {
@@ -5356,19 +5001,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee91);
-    }));
-    function ready() {
-      return _ready75.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^ity\.im$/
   },
-  ready: function () {
-    var _ready76 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee92() {
       var f, _$find3, _$find4, data;
       return _regenerator["default"].wrap(function _callee92$(_context92) {
@@ -5423,19 +5064,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee92);
-    }));
-    function ready() {
-      return _ready76.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?kingofshrink\.com$/
   },
-  ready: function () {
-    var _ready77 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee93() {
       var l;
       return _regenerator["default"].wrap(function _callee93$(_context93) {
@@ -5451,12 +5088,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee93);
-    }));
-    function ready() {
-      return _ready77.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: [{
@@ -5466,9 +5099,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^s\.yukisubs\.com$/,
     query: /link=(.+)/
   }],
-  start: function () {
-    var _start15 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee94(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee94() {
       var r;
       return _regenerator["default"].wrap(function _callee94$(_context94) {
         while (1) {
@@ -5483,19 +5116,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee94);
-    }));
-    function start(_x16) {
-      return _start15.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^st\.kurogaze\.net$/
   },
-  ready: function () {
-    var _ready78 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee95() {
       var a;
       return _regenerator["default"].wrap(function _callee95$(_context95) {
@@ -5511,20 +5140,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee95);
-    }));
-    function ready() {
-      return _ready78.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^dl\.layarkaca21\.vip$/,
     path: /^\/iframe\//
   },
-  ready: function () {
-    var _ready79 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee96() {
       var lv;
       return _regenerator["default"].wrap(function _callee96$(_context96) {
@@ -5540,21 +5165,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee96);
-    }));
-    function ready() {
-      return _ready79.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^dl\.layarkaca21\.vip$/,
     path: /^\/(.+)\//
   },
-  start: function () {
-    var _start16 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee97(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee97() {
       return _regenerator["default"].wrap(function _callee97$(_context97) {
         while (1) {
           switch (_context97.prev = _context97.next) {
@@ -5567,21 +5188,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee97);
-    }));
-    function start(_x17) {
-      return _start16.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^leechall\.download$/,
     path: /^\/file\/([a-zA-Z0-9/=]+)/
   },
-  start: function () {
-    var _start17 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee98(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee98() {
       return _regenerator["default"].wrap(function _callee98$(_context98) {
         while (1) {
           switch (_context98.prev = _context98.next) {
@@ -5594,17 +5211,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee98);
-    }));
-    function start(_x18) {
-      return _start17.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.lienscash.com/l/*',
-  ready: function () {
-    var _ready80 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee99() {
       var a;
       return _regenerator["default"].wrap(function _callee99$(_context99) {
@@ -5620,20 +5233,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee99);
-    }));
-    function ready() {
-      return _ready80.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?link\.im$/,
     path: /^\/\w+$/
   },
-  start: function () {
-    var _start18 = (0, _asyncToGenerator2["default"])(
+  start: function start() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee100() {
       var text, m;
       return _regenerator["default"].wrap(function _callee100$(_context100) {
@@ -5655,20 +5264,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee100);
-    }));
-    function start() {
-      return _start18.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^link\.tl$/,
     path: /\//
   },
-  ready: function () {
-    var _ready81 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee101() {
       var m, l, token, rl;
       return _regenerator["default"].wrap(function _callee101$(_context101) {
@@ -5704,21 +5309,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee101);
-    }));
-    function ready() {
-      return _ready81.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^link4ad\.com$/,
     path: /^\/(.+)$/
   },
-  ready: function () {
-    var _ready82 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee102(m) {
+  ready: function ready(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee102() {
       var d, url;
       return _regenerator["default"].wrap(function _callee102$(_context102) {
         while (1) {
@@ -5743,12 +5344,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee102);
-    }));
-    function ready(_x19) {
-      return _ready82.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 (function () {
   var hostRules = [
@@ -5760,9 +5357,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: hostRules,
       path: /^\/\w+\/url\/(.+)$/
     },
-    ready: function () {
-      var _ready83 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee103(m) {
+    ready: function ready(m) {
+      return (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee103() {
         var url, match;
         return _regenerator["default"].wrap(function _callee103$(_context103) {
           while (1) {
@@ -5784,19 +5381,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee103);
-      }));
-      function ready(_x20) {
-        return _ready83.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: hostRules
     },
-    start: function () {
-      var _start19 = (0, _asyncToGenerator2["default"])(
+    start: function start() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee104() {
         return _regenerator["default"].wrap(function _callee104$(_context104) {
           while (1) {
@@ -5809,14 +5402,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee104);
-      }));
-      function start() {
-        return _start19.apply(this, arguments);
-      }
-      return start;
-    }(),
-    ready: function () {
-      var _ready84 = (0, _asyncToGenerator2["default"])(
+      }))();
+    },
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee105() {
         var path, token, url;
         return _regenerator["default"].wrap(function _callee105$(_context105) {
@@ -5850,20 +5439,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee105);
-      }));
-      function ready() {
-        return _ready84.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   }); 
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       query: /^(.*)[?&]_lbGate=\d+$/
     },
-    start: function () {
-      var _start20 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee106(m) {
+    start: function start(m) {
+      return (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee106() {
         return _regenerator["default"].wrap(function _callee106$(_context106) {
           while (1) {
             switch (_context106.prev = _context106.next) {
@@ -5877,12 +5462,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee106);
-      }));
-      function start(_x21) {
-        return _start20.apply(this, arguments);
-      }
-      return start;
-    }()
+      }))();
+    }
   });
   function findToken(context) {
     var script = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts('    var f = window[\'init\' + \'Lb\' + \'js\' + \'\']', context);
@@ -5912,7 +5493,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       adurl: adurl
     };
   }
-  function sendRequest(_x22) {
+  function sendRequest(_x2) {
     return _sendRequest.apply(this, arguments);
   }
   function _sendRequest() {
@@ -6063,9 +5644,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/$/,
     query: /^\?(.+)$/
   },
-  ready: function () {
-    var _ready85 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee109(m) {
+  ready: function ready(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee109() {
       var lnk, b;
       return _regenerator["default"].wrap(function _callee109$(_context109) {
         while (1) {
@@ -6118,20 +5699,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee109);
-    }));
-    function ready(_x23) {
-      return _ready85.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^(ulshare|urlike)\.net$/, /^adurl\.id$/, /^earn-guide\.com$/, /^(cutwi|cut-w|cutl|dmus)\.in$/, /^(www\.)?jurl\.io$/, /^mitly\.us$/, /^tui\.click$/, /^met\.bz$/, /^lapak\.link$/]
+      host: [/^met\.bz$/, /^tui\.click$/, /^earn-guide\.com$/, /^adurl\.id$/, /^(cutwi|cut-w|cutl|dmus)\.in$/, /^(www\.)?jurl\.io$/, /^lapak\.link$/, /^(ulshare|urlike)\.net$/]
     },
-    ready: function () {
-      var _ready86 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee110() {
         var handler;
         return _regenerator["default"].wrap(function _callee110$(_context110) {
@@ -6147,29 +5724,26 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee110);
-      }));
-      function ready() {
-        return _ready86.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: [
-      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani|agradarpan)\.com$/, /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk|lnks4all|jejaklagu)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link|coolmitten|hosexx)\.com$/, /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural|akla4)\.com$/, /^(shrinkbuck|clkpay|linksht|haxrs|click2-url|cooltxtgen|arba7co|shortlinko)\.com$/, /^(partqb2i|khraba|adlpu|tabakhelo|amenitiees|cosmicmony|ilinkshortx|a-egy)\.com$/, /^(advance-wishingjs|govtsmartjob|bloggingraja|techkti|sxtsquad|adpaytm|pustkala)\.com$/, /^(thegyaanipoint|downloaddoom|linkfay|5brgedid|earthpiclover|adigp|tomient)\.com$/, /^(techmen-world|razerflixs|gamesindians|dislooks|elkhbrel7sry|onaah|ultraskora)\.com$/, /^(wrap-w0rld|ommantrameditation|mawdok|techfinda|clixg|boardgift|beast-birds)\.com$/, /^(talkittechy|newsinjules|kutpay|nikkarr|veblink|al3amall|6aba2day|oploverzhome)\.com$/, /^(kooramubashir|healthfary|justlikeyojna|sarkarijobsresultss|zalipay|thefreech)\.com$/, /^(hindibeen|pastekan|e7kelyana|ea-isly|aristoderas|shortzon|trading-area|alseoo)\.com$/, /^(techtremendous|freespinwins|w-rajem|timetoka|foodpuff|linksop|bollywooddramanews)\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/, /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/, /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/, /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/, /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/, /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/, /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24)\.com$/, /^(vy\.)?adsvy\.com$/, /^(www\.)?(clkpays|lnkjob|efshort)\.com$/, /^shrt(8|10)\.com$/, 
-      /^link\.akuno\.net$/, /^(safelinku|tinylinks|licklink|linkrex|zlshorte|vivads|clickar)\.net$/, /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly|shortye)\.net$/, /^(link4win|linksad|topurl|xemlink|cutadlink|crabcut|directedlink)\.net$/, 
-      /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs|miniurl)\.pw$/, /^(www\.)?lwt\.pw$/, 
+      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani|agradarpan|birdurls)\.com$/, /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk|lnks4all|jejaklagu|urlshortx)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link|coolmitten|hosexx)\.com$/, /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural|akla4|techsapparel)\.com$/, /^(shrinkbuck|clkpay|linksht|haxrs|click2-url|cooltxtgen|arba7co|shortlinko|ez4linkss)\.com$/, /^(partqb2i|khraba|adlpu|tabakhelo|amenitiees|cosmicmony|ilinkshortx|a-egy|adsafelink)\.com$/, /^(advance-wishingjs|govtsmartjob|bloggingraja|techkti|sxtsquad|adpaytm|pustkala)\.com$/, /^(thegyaanipoint|downloaddoom|linkfay|5brgedid|earthpiclover|adigp|tomient|dz4invest)\.com$/, /^(techmen-world|razerflixs|gamesindians|dislooks|elkhbrel7sry|onaah|ultraskora)\.com$/, /^(wrap-w0rld|ommantrameditation|mawdok|techfinda|clixg|boardgift|beast-birds)\.com$/, /^(talkittechy|newsinjules|kutpay|nikkarr|veblink|al3amall|6aba2day|oploverzhome)\.com$/, /^(kooramubashir|healthfary|justlikeyojna|sarkarijobsresultss|zalipay|thefreech)\.com$/, /^(hindibeen|pastekan|e7kelyana|ea-isly|aristoderas|shortzon|trading-area|alseoo)\.com$/, /^(techtremendous|freespinwins|w-rajem|timetoka|foodpuff|linksop|bollywooddramanews)\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/, /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/, /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/, /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/, /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/, /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/, /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24|adflyurl|kekolink|rifurl|ac-mo)\.com$/, /^(vy\.)?adsvy\.com$/, /^(www\.)?(clkpays|lnkjob|efshort)\.com$/, /^shrt(8|10)\.com$/, 
       /^(trlink|wolink|tocdo|cuturl|counsellingresult2016|iitjeemainguide|healthhindigyan)\.in$/, /^(utimetableresult|daily-sale|linkszone|viraltechnical)\.in$/, 
-      /^(adbilty|adpop|ujv|tpx|adsrt|2fly|lin65|short2win|suarankri|infotrendy)\.me$/, /^(advancedautorepairtips|takeitfor|jelajahinternet|virtualdata|muhammadyoga|s2w)\.me$/, /^(cepmuzikindir)\.me$/, 
-      /^(shink|shrten|gg-l|vnurl|bloggingdekh|ln11|sh11|tradeguru|newskart|kidsors)\.xyz$/, /^(techinhub|viralnow|shophipro|technocanvas|getfreshcloud|profitstudy|ijobanana)\.xyz$/, /^(autocarsmagz|getpocket|yasinews|dunyanews|komiupdates|allapp|smwebs|news-tech)\.xyz$/, 
       /^(oke|cuon|cuio|cuee|cuus|cuto|linktor|flylink|uiz|uii|exe|shrinkme)\.io$/, /^cu(2|3|5|6|7)\.io$/, 
-      /^(el3id|allreports)\.site$/, /^123link\.carpartsviet97\.site$/, 
+      /^(adbilty|adpop|ujv|tpx|adsrt|2fly|lin65|short2win|suarankri|infotrendy)\.me$/, /^(advancedautorepairtips|takeitfor|jelajahinternet|virtualdata|muhammadyoga|s2w)\.me$/, /^(cepmuzikindir)\.me$/, 
+      /^link\.akuno\.net$/, /^(safelinku|tinylinks|licklink|linkrex|zlshorte|vivads|clickar|bigb0ss)\.net$/, /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly|shortye|ventax)\.net$/, /^(link4win|linksad|topurl|xemlink|cutadlink|crabcut|directedlink)\.net$/, 
       /^(click2url|ln435|merdekaid)\.online$/, /^(www\.)?bloggerworld\.online$/, 
-      /^(petty|skips|tr|flaz)\.link$/, /^megaurl\.(in|link)$/, /^payskip\.(me|org)$/, /^(3bst|coinlink|itiurl|coshink|link5s|curs|makeurl|mooddisorder|cutls)\.co$/, /^(mlink|cl250|xpickle|infosehatku)\.club$/, /^(igram|gram|pingit)\.im$/, /^(clk|cll)\.(press|ink|sh|icu)$/, /^short\.pe$/, /^(urlcloud|imageoptimizer)\.us$/, /^(icutit|earnbig|cutearn)\.ca$/, /^(adzurl|link2link)\.cf$/, /^(koylinks|buy-in-599rs)\.win$/, /^lopte\.pro$/, /^(www\.)?pnd\.tl$/, /^(tny|tiny)\.ec$/, /^tl\.tc$/, /^e2s\.cc$/, /^lyon\.kim$/, /^(linkvip|4short)\.tk$/, /^stfly\.press$/, /^(businessiss2|techandreview|yesmoviesapp|kpscthulasilogin)\.info$/, /^eatings\.stream$/, /^8o\.ee$/, /^buyitonline\.store$/, /^(shortearn|enrt)\.eu$/, /^(1921681254|geki|wegner)\.tech$/, /^123link\.(pw|vip)$/, /^(lotechnocan|updatetribun|templink|ez4link|shortearn)\.org$/, /^tinylink\.run$/, /^btc\.ms$/, /^earn\.theplusit\.ro$/, /^skip\.az$/, /^(dutchycorp|abouttech)\.space$/, /^click2see\.desi$/, /^shorted\.id$/, /^zi\.ht$/, /^(funnyquiz|mediakita|kabarviral)\.blog$/, /^(sciencelife|cpm4all)\.ga$/, /^thin\.at$/, /^sk-ip\.ru$/, /^za\.gl$/, /^royalown\.review$/, /^bestscholaeshipdegree\.date$/, /^oko\.sh$/, /^splashnews\.ooo$/, /^ckk\.ai$/, /^fc\.lc$/, /^pa4l\.esy\.es$/, /^get\.ujv\.al$/, /^(tips\.)?atv\.pw$/]
+      /^(lotechnocan|updatetribun|templink|ez4link|shortearn|adbull|oneurls|adsrt|freebcc)\.org$/, /^voxc\.org$/, 
+      /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs|miniurl)\.pw$/, /^(www\.)?lwt\.pw$/, 
+      /^(el3id|allreports|clickskaro)\.site$/, /^123link\.carpartsviet97\.site$/, 
+      /^(shink|shrten|gg-l|vnurl|bloggingdekh|ln11|sh11|tradeguru|newskart|kidsors|xz2)\.xyz$/, /^(techinhub|viralnow|shophipro|technocanvas|getfreshcloud|profitstudy|ijobanana)\.xyz$/, /^(autocarsmagz|getpocket|yasinews|dunyanews|komiupdates|allapp|smwebs|news-tech)\.xyz$/, /^cutdl\.xyz$/, 
+      /^(ckk|iir|tii)\.ai$/, /^thin\.at$/, /^(tips\.)?atv\.pw$/, /^skip\.az$/, /^(funnyquiz|mediakita|kabarviral)\.blog$/, /^(icutit|earnbig|cutearn)\.ca$/, /^e2s\.cc$/, /^(adzurl|link2link)\.cf$/, /^(mlink|cl250|xpickle|infosehatku)\.club$/, /^(3bst|coinlink|itiurl|coshink|link5s|curs|makeurl|mooddisorder|cutls)\.co$/, /^bestscholaeshipdegree\.date$/, /^click2see\.desi$/, /^(tny|tiny)\.ec$/, /^8o\.ee$/, /^pa4l\.esy\.es$/, /^(shortearn|enrt)\.eu$/, /^(sciencelife|cpm4all)\.ga$/, /^za\.gl$/, /^zi\.ht$/, /^shorted\.id$/, /^(igram|gram|pingit)\.im$/, /^megaurl\.(in|link)$/, /^(businessiss2|techandreview|yesmoviesapp|kpscthulasilogin)\.info$/, /^stfly\.(io|press)$/, /^lyon\.kim$/, /^fc\.lc$/, /^(petty|skips|tr|flaz)\.link$/, /^payskip\.(me|org)$/, /^btc\.ms$/, /^splashnews\.ooo$/, /^express-cut\.ovh$/, /^short\.pe$/, /^(clk|cll)\.(press|ink|sh|icu)$/, /^(lopte|megalink)\.pro$/, /^123link\.(pw|vip)$/, /^royalown\.review$/, /^earn\.theplusit\.ro$/, /^sk-ip\.(ru|tech)$/, /^tinylink\.run$/, /^(oko|aii)\.sh$/, /^(dutchycorp|abouttech)\.space$/, /^buyitonline\.store$/, /^eatings\.stream$/, /^tl\.tc$/, /^(1921681254|geki|wegner|gpshort)\.tech$/, /^(linkvip|4short)\.tk$/, /^(www\.)?pnd\.tl$/, /^get\.ujv\.al$/, /^(urlcloud|imageoptimizer)\.us$/, /^(koylinks|buy-in-599rs)\.win$/]
     },
-    ready: function () {
-      var _ready87 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee111() {
         var handler;
         return _regenerator["default"].wrap(function _callee111$(_context111) {
@@ -6185,19 +5759,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee111);
-      }));
-      function ready() {
-        return _ready87.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^wi\.cr$/, /^wicr\.me$/, /^linksoflife\.co$/, /^linksof\.life$/, /^(arabtvlink|safeku)\.com$/]
+      host: [/^(arabtvlink|safeku|dz4link)\.com$/, /^linksoflife\.co$/, /^wi\.cr$/, /^(bitcoinly|cashurl)\.in$/, /^linksof\.life$/, /^wicr\.me$/, /^shrtit\.tech$/, /^fireshorts\.tk$/, /^mitly\.us$/]
     },
-    ready: function () {
-      var _ready88 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee112() {
         var handler;
         return _regenerator["default"].wrap(function _callee112$(_context112) {
@@ -6213,19 +5783,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee112);
-      }));
-      function ready() {
-        return _ready88.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
-      host: [/^(cutpaid|tmearn|icutlink)\.com$/, /^(ctui|cuti)\.in$/, /^zutrox\.link$/, /^(www\.)?shrink\.vip$/, /^cutwin\.(us|com)$/, /^123short\.biz$/, /^(techcraze|healthinsider)\.online$/]
+      host: [/^123short\.biz$/, /^(cutpaid|tmearn|icutlink)\.com$/, /^(ctui|cuti)\.in$/, /^zutrox\.link$/, /^(techcraze|healthinsider)\.online$/, /^cutwin\.(us|com)$/, /^(www\.)?shrink\.vip$/]
     },
-    ready: function () {
-      var _ready89 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee113() {
         var handler;
         return _regenerator["default"].wrap(function _callee113$(_context113) {
@@ -6241,19 +5807,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee113);
-      }));
-      function ready() {
-        return _ready89.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: /^(www\.)?ourl\.io$/
     },
-    ready: function () {
-      var _ready90 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee114() {
         var handler;
         return _regenerator["default"].wrap(function _callee114$(_context114) {
@@ -6269,19 +5831,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee114);
-      }));
-      function ready() {
-        return _ready90.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: /^(www\.)?linkdrop\.net$/
     },
-    ready: function () {
-      var _ready91 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee115() {
         var handler;
         return _regenerator["default"].wrap(function _callee115$(_context115) {
@@ -6297,20 +5855,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee115);
-      }));
-      function ready() {
-        return _ready91.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: /^www\.shortly\.xyz$/,
       path: /^\/link$/
     },
-    ready: function () {
-      var _ready92 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee116() {
         var handler;
         return _regenerator["default"].wrap(function _callee116$(_context116) {
@@ -6326,22 +5880,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee116);
-      }));
-      function ready() {
-        return _ready92.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: [
       /^(cut-urls|linclik|premiumzen|by6dk|mikymoons|man2pro)\.com$/, /^(link4win|loadurl|cut4link|raolink|adshorte)\.com$/, /^short\.pastewma\.com$/, /^linkfly\.gaosmedia\.com$/, /^(www\.)?viralukk\.com$/, /^(www\.)?niagoshort\.com$/, 
       /^www\.worldhack\.net$/, /^(eklink)\.net$/, 
-      /^(urle|adshort)\.co$/, /^(weefy|adbull|zeiz|link4|adcoin)\.me$/, /^(adbilty|taive)\.in$/, /^(twik|adslink)\.pw$/, /^(curs|crus|4cut|u2s|l2s)\.io$/, /^dzurl\.ml$/, /^petty\.link$/, /^shortad\.cf$/, /^123link\.(io|co|press|pro)$/, /^git\.tc$/, /^(adfu|linku)\.us$/, /^shortit\.ca$/, /^spamlink\.org$/, /^royurls\.bid$/, /^(1)?idsly\.(com|bid|net|org)$/]
+      /^royurls\.bid$/, /^shortit\.ca$/, /^(urle|adshort)\.co$/, /^(1)?idsly\.(com|bid|net|org)$/, /^shortad\.cf$/, /^(adbilty|taive)\.in$/, /^(curs|crus|4cut|u2s|l2s)\.io$/, /^123link\.(io|co|press|pro)$/, /^petty\.link$/, /^(weefy|adbull|zeiz|link4|adcoin)\.me$/, /^dzurl\.ml$/, /^spamlink\.org$/, /^(twik|adslink)\.pw$/, /^git\.tc$/, /^(adfu|linku)\.us$/]
     },
-    ready: function () {
-      var _ready93 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee117() {
         var handler;
         return _regenerator["default"].wrap(function _callee117$(_context117) {
@@ -6357,12 +5907,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee117);
-      }));
-      function ready() {
-        return _ready93.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   var AbstractHandler =
   function () {
@@ -6501,7 +6047,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }, _callee120);
         }));
-        function getURL(_x24) {
+        function getURL(_x3) {
           return _getURL.apply(this, arguments);
         }
         return getURL;
@@ -6584,7 +6130,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }, _callee122);
         }));
-        function submitListen(_x25) {
+        function submitListen(_x4) {
           return _submitListen.apply(this, arguments);
         }
         return submitListen;
@@ -6661,7 +6207,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }, _callee124, null, [[3, 11]]);
         }));
-        function getURL(_x26) {
+        function getURL(_x5) {
           return _getURL2.apply(this, arguments);
         }
         return getURL;
@@ -6702,7 +6248,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }, _callee125);
         }));
-        function submitListen(_x27, _x28) {
+        function submitListen(_x6, _x7) {
           return _submitListen2.apply(this, arguments);
         }
         return submitListen;
@@ -6746,7 +6292,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }, _callee126);
         }));
-        function submitListen(_x29) {
+        function submitListen(_x8) {
           return _submitListen3.apply(this, arguments);
         }
         return submitListen;
@@ -6817,7 +6363,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }, _callee128);
         }));
-        function getURL(_x30) {
+        function getURL(_x9) {
           return _getURL3.apply(this, arguments);
         }
         return getURL;
@@ -6949,7 +6495,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }, _callee131);
         }));
-        function getURL(_x31) {
+        function getURL(_x10) {
           return _getURL4.apply(this, arguments);
         }
         return getURL;
@@ -7028,7 +6574,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }, _callee133);
         }));
-        function getURL(_x32) {
+        function getURL(_x11) {
           return _getURL5.apply(this, arguments);
         }
         return getURL;
@@ -7043,7 +6589,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     });
     return args;
   }
-  function getJQueryForm(_x33) {
+  function getJQueryForm(_x12) {
     return _getJQueryForm.apply(this, arguments);
   }
   function _getJQueryForm() {
@@ -7114,8 +6660,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^linkduit\.net$/
   },
-  ready: function () {
-    var _ready94 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee135() {
       var l, check;
       return _regenerator["default"].wrap(function _callee135$(_context135) {
@@ -7141,19 +6687,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee135);
-    }));
-    function ready() {
-      return _ready94.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?linkplugapp\.com$/
   },
-  ready: function () {
-    var _ready95 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee136() {
       var a;
       return _regenerator["default"].wrap(function _callee136$(_context136) {
@@ -7169,21 +6711,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee136);
-    }));
-    function ready() {
-      return _ready95.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^linksas\.us$/,
     path: /^(\/\w+)$/
   },
-  ready: function () {
-    var _ready96 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee137(m) {
+  ready: function ready(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee137() {
       var recaptcha, url, ipinfo, payload, token, data;
       return _regenerator["default"].wrap(function _callee137$(_context137) {
         while (1) {
@@ -7231,20 +6769,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee137);
-    }));
-    function ready(_x34) {
-      return _ready96.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^linksas\.us$/,
     path: /^\/go\//
   },
-  ready: function () {
-    var _ready97 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee138() {
       var a, url, pattern, lastURL, matched;
       return _regenerator["default"].wrap(function _callee138$(_context138) {
@@ -7282,20 +6816,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee138);
-    }));
-    function ready() {
-      return _ready97.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(linkshrink|lnkshrnk)\.net$/,
     path: /^\/[a-zA-Z0-9]+$/
   },
-  start: function () {
-    var _start21 = (0, _asyncToGenerator2["default"])(
+  start: function start() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee139() {
       return _regenerator["default"].wrap(function _callee139$(_context139) {
         while (1) {
@@ -7308,14 +6838,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee139);
-    }));
-    function start() {
-      return _start21.apply(this, arguments);
-    }
-    return start;
-  }(),
-  ready: function () {
-    var _ready98 = (0, _asyncToGenerator2["default"])(
+    }))();
+  },
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee140() {
       var l;
       return _regenerator["default"].wrap(function _callee140$(_context140) {
@@ -7332,21 +6858,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee140);
-    }));
-    function ready() {
-      return _ready98.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(linkshrink|lnkshrnk)\.net$/,
     path: /=(.+)$/
   },
-  start: function () {
-    var _start22 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee141(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee141() {
       return _regenerator["default"].wrap(function _callee141$(_context141) {
         while (1) {
           switch (_context141.prev = _context141.next) {
@@ -7359,19 +6881,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee141);
-    }));
-    function start(_x35) {
-      return _start22.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^dwindly\.io$/
   },
-  ready: function () {
-    var _ready99 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee142() {
       var l;
       return _regenerator["default"].wrap(function _callee142$(_context142) {
@@ -7398,20 +6916,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee142);
-    }));
-    function ready() {
-      return _ready99.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^linksupto\.com$/, /^uplinkto\.me$/],
     path: /^\/view\//
   },
-  ready: function () {
-    var _ready100 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee143() {
       var l;
       return _regenerator["default"].wrap(function _callee143$(_context143) {
@@ -7426,21 +6940,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee143);
-    }));
-    function ready() {
-      return _ready100.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 }); 
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^link-to\.net$/, /^linkvertise\.com$/],
     query: /^\?r=([a-zA-Z0-9/=]+)$/
   },
-  start: function () {
-    var _start23 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee144(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee144() {
       var url;
       return _regenerator["default"].wrap(function _callee144$(_context144) {
         while (1) {
@@ -7455,19 +6965,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee144);
-    }));
-    function start(_x36) {
-      return _start23.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^direct-link\.net$/
   },
-  ready: function () {
-    var _ready101 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee145() {
       var lv;
       return _regenerator["default"].wrap(function _callee145$(_context145) {
@@ -7483,20 +6989,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee145);
-    }));
-    function ready() {
-      return _ready101.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(rd?)lnk\.co$/,
     path: /^\/[^.]+$/
   },
-  ready: function () {
-    var _ready102 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee146() {
       var f, o;
       return _regenerator["default"].wrap(function _callee146$(_context146) {
@@ -7544,21 +7046,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee146);
-    }));
-    function ready() {
-      return _ready102.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.lolinez\.com$/,
     query: /\?(.+)/
   },
-  start: function () {
-    var _start24 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee147(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee147() {
       return _regenerator["default"].wrap(function _callee147$(_context147) {
         while (1) {
           switch (_context147.prev = _context147.next) {
@@ -7571,21 +7069,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee147);
-    }));
-    function start(_x37) {
-      return _start24.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.mije\.net$/,
     path: /^\/\w+\/(.+)$/
   },
-  start: function () {
-    var _start25 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee148(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee148() {
       var url;
       return _regenerator["default"].wrap(function _callee148$(_context148) {
         while (1) {
@@ -7600,19 +7094,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee148);
-    }));
-    function start(_x38) {
-      return _start25.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^minidroid\.net$/, /^linkpoi\.in$/]
   },
-  ready: function () {
-    var _ready103 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee149() {
       var a;
       return _regenerator["default"].wrap(function _callee149$(_context149) {
@@ -7628,19 +7118,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee149);
-    }));
-    function ready() {
-      return _ready103.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^mirrorfilehost\.com$/
   },
-  ready: function () {
-    var _ready104 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee150() {
       var frame, form, input;
       return _regenerator["default"].wrap(function _callee150$(_context150) {
@@ -7666,20 +7152,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee150);
-    }));
-    function ready() {
-      return _ready104.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^moesubs\.com$/,
     path: /^\/url\//
   },
-  ready: function () {
-    var _ready105 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee151() {
       var a, i;
       return _regenerator["default"].wrap(function _callee151$(_context151) {
@@ -7698,17 +7180,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee151);
-    }));
-    function ready() {
-      return _ready105.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://my-link.pro/*',
-  ready: function () {
-    var _ready106 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee152() {
       var i;
       return _regenerator["default"].wrap(function _callee152$(_context152) {
@@ -7728,20 +7206,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee152);
-    }));
-    function ready() {
-      return _ready106.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?mylink\.zone$/,
     path: /^\/[^/]+$/
   },
-  ready: function () {
-    var _ready107 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee153() {
       var matches, url;
       return _regenerator["default"].wrap(function _callee153$(_context153) {
@@ -7759,19 +7233,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee153);
-    }));
-    function ready() {
-      return _ready107.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^onepiece-ex\.com\.br$/
   },
-  ready: function () {
-    var _ready108 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee154() {
       var matches;
       return _regenerator["default"].wrap(function _callee154$(_context154) {
@@ -7788,19 +7258,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee154);
-    }));
-    function ready() {
-      return _ready108.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^www\.namiyt\.com$/, /^realsht\.mobi$/]
   },
-  ready: function () {
-    var _ready109 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee155() {
       var n;
       return _regenerator["default"].wrap(function _callee155$(_context155) {
@@ -7815,21 +7281,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee155);
-    }));
-    function ready() {
-      return _ready109.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^nmac\.to$/,
     path: /^\/download\/(.+)/
   },
-  start: function () {
-    var _start26 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee156(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee156() {
       var url;
       return _regenerator["default"].wrap(function _callee156$(_context156) {
         while (1) {
@@ -7844,19 +7306,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee156);
-    }));
-    function start(_x39) {
-      return _start26.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^nsfw\.in$/
   },
-  ready: function () {
-    var _ready110 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee157() {
       var a;
       return _regenerator["default"].wrap(function _callee157$(_context157) {
@@ -7872,19 +7330,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee157);
-    }));
-    function ready() {
-      return _ready110.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^nutshellurl\.com$/
   },
-  ready: function () {
-    var _ready111 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee158() {
       var iframe;
       return _regenerator["default"].wrap(function _callee158$(_context158) {
@@ -7900,19 +7354,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee158);
-    }));
-    function ready() {
-      return _ready111.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.oni\.vn$/
   },
-  ready: function () {
-    var _ready112 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee159() {
       var data, url;
       return _regenerator["default"].wrap(function _callee159$(_context159) {
@@ -7940,20 +7390,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee159);
-    }));
-    function ready() {
-      return _ready112.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(www\.)?ouo\.(io|press)$/, /^(sloomp|novaenreta)\.space$/],
     path: /^\/go\/\w+$/
   },
-  ready: function () {
-    var _ready113 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee160() {
       return _regenerator["default"].wrap(function _callee160$(_context160) {
         while (1) {
@@ -7966,19 +7412,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee160);
-    }));
-    function ready() {
-      return _ready113.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^p\.pw$/
   },
-  ready: function () {
-    var _ready114 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee161() {
       var m;
       return _regenerator["default"].wrap(function _callee161$(_context161) {
@@ -7996,19 +7438,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee161);
-    }));
-    function ready() {
-      return _ready114.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^pdi2\.net$/
   },
-  ready: function () {
-    var _ready115 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee162() {
       var s;
       return _regenerator["default"].wrap(function _callee162$(_context162) {
@@ -8025,19 +7463,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee162);
-    }));
-    function ready() {
-      return _ready115.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(probusinesshub|tecnogb)\.com$/, /^(trackywe|starvate)\.in$/, /^viralcollect\.info$/, /^(technodia|ourtechnoew|mutharammss|thanda|thinana)\.xyz$/, /^entretendonaweb\.ga$/]
   },
-  ready: function () {
-    var _ready116 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee163() {
       var f;
       return _regenerator["default"].wrap(function _callee163$(_context163) {
@@ -8063,20 +7497,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee163);
-    }));
-    function ready() {
-      return _ready116.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^pucuk\.xyz$/,
     path: /^\/\w+/
   },
-  ready: function () {
-    var _ready117 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee164() {
       var px;
       return _regenerator["default"].wrap(function _callee164$(_context164) {
@@ -8092,17 +7522,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee164);
-    }));
-    function ready() {
-      return _ready117.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://richlink.com/app/webscr?cmd=_click&key=*',
-  ready: function () {
-    var _ready118 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee165() {
       var f;
       return _regenerator["default"].wrap(function _callee165$(_context165) {
@@ -8126,19 +7552,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee165);
-    }));
-    function ready() {
-      return _ready118.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^preview\.rlu\.ru$/
   },
-  ready: function () {
-    var _ready119 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee166() {
       var a;
       return _regenerator["default"].wrap(function _callee166$(_context166) {
@@ -8154,19 +7576,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee166);
-    }));
-    function ready() {
-      return _ready119.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.ron\.vn$/
   },
-  ready: function () {
-    var _ready120 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee167() {
       var script, data, url;
       return _regenerator["default"].wrap(function _callee167$(_context167) {
@@ -8190,20 +7608,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee167);
-    }));
-    function ready() {
-      return _ready120.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?sa\.ae$/,
     path: /^\/\w+\/$/
   },
-  ready: function () {
-    var _ready121 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee168() {
       var m;
       return _regenerator["default"].wrap(function _callee168$(_context168) {
@@ -8219,20 +7633,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee168);
-    }));
-    function ready() {
-      return _ready121.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?safeurl\.eu$/,
     path: /\/\w+/
   },
-  ready: function () {
-    var _ready122 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee169() {
       var directUrl;
       return _regenerator["default"].wrap(function _callee169$(_context169) {
@@ -8255,12 +7665,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee169);
-    }));
-    function ready() {
-      return _ready122.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
@@ -8268,9 +7674,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/interstitial\.html$/,
     query: /return_url=([^&]+)/
   },
-  start: function () {
-    var _start27 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee170(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee170() {
       return _regenerator["default"].wrap(function _callee170$(_context170) {
         while (1) {
           switch (_context170.prev = _context170.next) {
@@ -8283,12 +7689,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee170);
-    }));
-    function start(_x40) {
-      return _start27.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
@@ -8296,8 +7698,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/ahli\.php/,
     query: /^\?url=(.*)/
   },
-  ready: function () {
-    var _ready123 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee171() {
       var sem;
       return _regenerator["default"].wrap(function _callee171$(_context171) {
@@ -8313,19 +7715,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee171);
-    }));
-    function ready() {
-      return _ready123.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(www\.)?apploadz\.ru$/, /^(www\.)?seomafia\.net$/]
   },
-  ready: function () {
-    var _ready124 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee172() {
       var a;
       return _regenerator["default"].wrap(function _callee172$(_context172) {
@@ -8342,12 +7740,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee172);
-    }));
-    function ready() {
-      return _ready124.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 (function () {
   var hostRules = [
@@ -8358,8 +7752,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: hostRules,
       path: /^\/freeze\/.+/
     },
-    ready: function () {
-      var _ready125 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee173() {
         var promise, url;
         return _regenerator["default"].wrap(function _callee173$(_context173) {
@@ -8392,20 +7786,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee173);
-      }));
-      function ready() {
-        return _ready125.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: hostRules,
       path: /https?:\/\//
     },
-    start: function () {
-      var _start28 = (0, _asyncToGenerator2["default"])(
+    start: function start() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee174() {
         var url;
         return _regenerator["default"].wrap(function _callee174$(_context174) {
@@ -8423,20 +7813,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee174);
-      }));
-      function start() {
-        return _start28.apply(this, arguments);
-      }
-      return start;
-    }()
+      }))();
+    }
   });
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: hostRules,
       path: /^\/[\d\w]+/
     },
-    start: function () {
-      var _start29 = (0, _asyncToGenerator2["default"])(
+    start: function start() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee175() {
         return _regenerator["default"].wrap(function _callee175$(_context175) {
           while (1) {
@@ -8449,14 +7835,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee175);
-      }));
-      function start() {
-        return _start29.apply(this, arguments);
-      }
-      return start;
-    }(),
-    ready: function () {
-      var _ready126 = (0, _asyncToGenerator2["default"])(
+      }))();
+    },
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee176() {
         var m, o;
         return _regenerator["default"].wrap(function _callee176$(_context176) {
@@ -8491,12 +7873,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee176);
-      }));
-      function ready() {
-        return _ready126.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   function afterGotSessionId(sessionId) {
     var X_NewRelic_ID = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/xpid:"([^"]+)"/);
@@ -8526,8 +7904,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(short|srt)\.am$/
   },
-  ready: function () {
-    var _ready127 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee177() {
       return _regenerator["default"].wrap(function _callee177$(_context177) {
         while (1) {
@@ -8548,20 +7926,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee177);
-    }));
-    function ready() {
-      return _ready127.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?shorti\.ga$/,
     path: [/^\/\w+$/, /^\/url_redirector\.html$/]
   },
-  ready: function () {
-    var _ready128 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee178() {
       var f, _$find5, _$find6, v;
       return _regenerator["default"].wrap(function _callee178$(_context178) {
@@ -8583,20 +7957,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee178);
-    }));
-    function ready() {
-      return _ready128.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^shortid\.co$/,
     path: /^\/[a-zA-Z0-9]+/
   },
-  ready: function () {
-    var _ready129 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee179() {
       var s;
       return _regenerator["default"].wrap(function _callee179$(_context179) {
@@ -8612,21 +7982,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee179);
-    }));
-    function ready() {
-      return _ready129.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^get\.shrink-service\.it$/,
     path: /^\/(.+)/
   },
-  start: function () {
-    var _start30 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee180(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee180() {
       return _regenerator["default"].wrap(function _callee180$(_context180) {
         while (1) {
           switch (_context180.prev = _context180.next) {
@@ -8639,20 +8005,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee180);
-    }));
-    function start(_x41) {
-      return _start30.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.shrink-service\.it$/,
     path: /^\/shrinked\//
   },
-  ready: function () {
-    var _ready130 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee181() {
       var i;
       return _regenerator["default"].wrap(function _callee181$(_context181) {
@@ -8668,20 +8030,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee181);
-    }));
-    function ready() {
-      return _ready130.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.shrink-service\.it$/,
     path: /^\/[se]\//
   },
-  ready: function () {
-    var _ready131 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee182() {
       var i;
       return _regenerator["default"].wrap(function _callee182$(_context182) {
@@ -8697,21 +8055,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee182);
-    }));
-    function ready() {
-      return _ready131.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^sht\.io$/,
     path: /^\/\d+\/(.+)$/
   },
-  start: function () {
-    var _start31 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee183(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee183() {
       var url;
       return _regenerator["default"].wrap(function _callee183$(_context183) {
         while (1) {
@@ -8727,20 +8081,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee183);
-    }));
-    function start(_x42) {
-      return _start31.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^shtlink\.co$/,
     path: /^\/short-url\//
   },
-  ready: function () {
-    var _ready132 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee184() {
       var meta, url;
       return _regenerator["default"].wrap(function _callee184$(_context184) {
@@ -8757,20 +8107,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee184);
-    }));
-    function ready() {
-      return _ready132.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^shtme\.co$/,
     path: /^\/\w+/
   },
-  ready: function () {
-    var _ready133 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee185() {
       var s;
       return _regenerator["default"].wrap(function _callee185$(_context185) {
@@ -8785,21 +8131,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee185);
-    }));
-    function ready() {
-      return _ready133.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?similarsites\.com$/,
     path: /^\/goto\/([^?]+)/
   },
-  start: function () {
-    var _start32 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee186(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee186() {
       var l;
       return _regenerator["default"].wrap(function _callee186$(_context186) {
         while (1) {
@@ -8817,20 +8159,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee186);
-    }));
-    function start(_x43) {
-      return _start32.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^slink\.bid$/,
     path: /^\/short\//
   },
-  ready: function () {
-    var _ready134 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee187() {
       var a;
       return _regenerator["default"].wrap(function _callee187$(_context187) {
@@ -8846,20 +8184,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee187);
-    }));
-    function ready() {
-      return _ready134.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.spaste\.com$/,
     path: /^\/go\/\w+$/
   },
-  ready: function () {
-    var _ready135 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee188() {
       var id, url;
       return _regenerator["default"].wrap(function _callee188$(_context188) {
@@ -8884,20 +8218,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee188);
-    }));
-    function ready() {
-      return _ready135.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.spaste\.com$/,
     path: /^\/(s|site)\/\w+$/
   },
-  ready: function () {
-    var _ready136 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee189() {
       var captcha, i, word;
       return _regenerator["default"].wrap(function _callee189$(_context189) {
@@ -8932,20 +8262,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee189);
-    }));
-    function ready() {
-      return _ready136.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^sub2unlock\.com$/,
     path: /^\/link\/get\//
   },
-  ready: function () {
-    var _ready137 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee190() {
       var su;
       return _regenerator["default"].wrap(function _callee190$(_context190) {
@@ -8961,20 +8287,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee190);
-    }));
-    function ready() {
-      return _ready137.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^sub2unlock\.com$/,
     path: /^\/[a-zA-Z0-9]+/
   },
-  ready: function () {
-    var _ready138 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee191() {
       var su;
       return _regenerator["default"].wrap(function _callee191$(_context191) {
@@ -8990,12 +8312,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee191);
-    }));
-    function ready() {
-      return _ready138.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
@@ -9003,9 +8321,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/interstitial\.html$/,
     query: /(?:\?|&)oldurl=([^&]+)(?:$|&)/
   },
-  start: function () {
-    var _start33 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee192(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee192() {
       return _regenerator["default"].wrap(function _callee192$(_context192) {
         while (1) {
           switch (_context192.prev = _context192.next) {
@@ -9018,20 +8336,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee192);
-    }));
-    function start(_x44) {
-      return _start33.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^surfsees\.com$/,
     query: /^\?go=([a-zA-Z0-9]+)$/
   },
-  start: function () {
-    var _start34 = (0, _asyncToGenerator2["default"])(
+  start: function start() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee193() {
       var path;
       return _regenerator["default"].wrap(function _callee193$(_context193) {
@@ -9047,20 +8361,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee193);
-    }));
-    function start() {
-      return _start34.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^surfsees\.com$/,
     query: /^\?link=([a-zA-Z0-9]+)(clickarurl)?$/
   },
-  ready: function () {
-    var _ready139 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee194() {
       var s;
       return _regenerator["default"].wrap(function _callee194$(_context194) {
@@ -9075,19 +8385,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee194);
-    }));
-    function ready() {
-      return _ready139.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^surfsees\.com$/
   },
-  ready: function () {
-    var _ready140 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee195() {
       var surl;
       return _regenerator["default"].wrap(function _callee195$(_context195) {
@@ -9103,20 +8409,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee195);
-    }));
-    function ready() {
-      return _ready140.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^swzz\.xyz$/,
     path: /^\/link\/\w+\/$/
   },
-  ready: function () {
-    var _ready141 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee196() {
       var g;
       return _regenerator["default"].wrap(function _callee196$(_context196) {
@@ -9132,12 +8434,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee196);
-    }));
-    function ready() {
-      return _ready141.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 }); 
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: [{
@@ -9191,9 +8489,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^remiyu\.me$/,
     query: /^\?reff=([a-zA-Z0-9/=]+)$/
   }],
-  start: function () {
-    var _start35 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee197(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee197() {
       var rawLink;
       return _regenerator["default"].wrap(function _callee197$(_context197) {
         while (1) {
@@ -9208,12 +8506,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee197);
-    }));
-    function start(_x45) {
-      return _start35.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: [{
@@ -9224,9 +8518,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(naisho|filmku|henpoi)\.lompat\.in$/, /^edogawa\.lon\.pw$/, /^telolet\.in$/],
     query: /go=([\w\\]+=*)/
   }],
-  start: function () {
-    var _start36 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee198(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee198() {
       var l, table;
       return _regenerator["default"].wrap(function _callee198$(_context198) {
         while (1) {
@@ -9251,21 +8545,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee198);
-    }));
-    function start(_x46) {
-      return _start36.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?safelinkreview\.com$/,
     path: /^\/\w+\/cost\/([\w.]+)\/?$/
   },
-  start: function () {
-    var _start37 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee199(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee199() {
       var l;
       return _regenerator["default"].wrap(function _callee199$(_context199) {
         while (1) {
@@ -9280,20 +8570,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee199);
-    }));
-    function start(_x47) {
-      return _start37.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(gameinfo|apasih|autoride)\.pw$/, /^(www\.)?lifesurance\.info$/, /^speedcar\.club$/, /^(www\.)?bolaoke\.club$/, /^(intercelestial|sweetlantern|davinsurance|technlab)\.com$/, /^awcar\.icu$/, /^skyinsurance\.ml$/, /^(getinfos|sehatsegar|lonelymoon)\.net$/, /^stt\.awsubs\.co$/, /^(wibuindo|naturalhealthy)\.xyz$/, /^waifusafe\.ooo$/],
     query: /^\?(id|c|k)=([a-zA-Z0-9/=]+)$/
   },
-  ready: function () {
-    var _ready142 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee200() {
       var f;
       return _regenerator["default"].wrap(function _callee200$(_context200) {
@@ -9308,20 +8594,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee200);
-    }));
-    function ready() {
-      return _ready142.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(linkach|autolinkach)\.com$/],
     query: /^\?id=([a-zA-Z0-9/=]+)$/
   },
-  ready: function () {
-    var _ready143 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee201() {
       var g;
       return _regenerator["default"].wrap(function _callee201$(_context201) {
@@ -9336,12 +8618,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee201);
-    }));
-    function ready() {
-      return _ready143.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: [{
@@ -9352,9 +8630,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }, {
     host: [/^(gameinfo)\.pw$/, /^(www\.)?lifesurance\.info$/, /^speedcar\.club$/, /^(www\.)?bolaoke\.club$/, /^(autolinkach|davinsurance)\.com$/, /^awcar\.icu$/, /^skyinsurance\.ml$/, /^(getinfos)\.net$/, /^stt\.awsubs\.co$/, /^wibuindo\.xyz$/]
   }],
-  ready: function () {
-    var _ready144 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee202(m) {
+  ready: function ready(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee202() {
       var s;
       return _regenerator["default"].wrap(function _callee202$(_context202) {
         while (1) {
@@ -9379,19 +8657,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee202);
-    }));
-    function ready(_x48) {
-      return _ready144.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^waifusafe\.ooo$/, /^naturalhealthy\.xyz$/]
   },
-  ready: function () {
-    var _ready145 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee203() {
       var ln, tl;
       return _regenerator["default"].wrap(function _callee203$(_context203) {
@@ -9414,19 +8688,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee203);
-    }));
-    function ready() {
-      return _ready145.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(sehatsegar|lonelymoon)\.net$/, /^(intercelestial|sweetlantern)\.com$/]
   },
-  ready: function () {
-    var _ready146 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee204() {
       var ln, tl;
       return _regenerator["default"].wrap(function _callee204$(_context204) {
@@ -9449,19 +8719,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee204);
-    }));
-    function ready() {
-      return _ready146.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(linkach|technlab)\.com$/, /^(apasih|autoride)\.pw$/]
   },
-  ready: function () {
-    var _ready147 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee205() {
       var ln, tl;
       return _regenerator["default"].wrap(function _callee205$(_context205) {
@@ -9484,19 +8750,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee205);
-    }));
-    function ready() {
-      return _ready147.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^lewat\.in$/
   },
-  ready: function () {
-    var _ready148 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee206() {
       var l;
       return _regenerator["default"].wrap(function _callee206$(_context206) {
@@ -9512,19 +8774,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee206);
-    }));
-    function ready() {
-      return _ready148.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^sardeath\.com$/
   },
-  ready: function () {
-    var _ready149 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee207() {
       var sd;
       return _regenerator["default"].wrap(function _callee207$(_context207) {
@@ -9540,19 +8798,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee207);
-    }));
-    function ready() {
-      return _ready149.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^goou\.in$/
   },
-  ready: function () {
-    var _ready150 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee208() {
       var g;
       return _regenerator["default"].wrap(function _callee208$(_context208) {
@@ -9568,12 +8822,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee208);
-    }));
-    function ready() {
-      return _ready150.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: [{
@@ -9583,8 +8833,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^163\.172\.83\.145$/,
     path: /^\/deb\/api\//
   }],
-  ready: function () {
-    var _ready151 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee209() {
       var t;
       return _regenerator["default"].wrap(function _callee209$(_context209) {
@@ -9600,12 +8850,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee209);
-    }));
-    function ready() {
-      return _ready151.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
@@ -9613,8 +8859,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/file\.php/,
     query: /^\?id=(.+)/
   },
-  ready: function () {
-    var _ready152 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee210() {
       var d;
       return _regenerator["default"].wrap(function _callee210$(_context210) {
@@ -9630,19 +8876,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee210);
-    }));
-    function ready() {
-      return _ready152.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^kombatch\.loncat\.pw$/
   },
-  ready: function () {
-    var _ready153 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee211() {
       var s;
       return _regenerator["default"].wrap(function _callee211$(_context211) {
@@ -9660,20 +8902,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee211);
-    }));
-    function ready() {
-      return _ready153.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^skiplink\.io$/,
     path: /^\/get\/link\//
   },
-  ready: function () {
-    var _ready154 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee212() {
       var s;
       return _regenerator["default"].wrap(function _callee212$(_context212) {
@@ -9689,20 +8927,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee212);
-    }));
-    function ready() {
-      return _ready154.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(v1\.)?hexafile\.net$/, /^skiplink\.io$/],
     path: /^\/[a-zA-Z0-9]+/
   },
-  ready: function () {
-    var _ready155 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee213() {
       var h;
       return _regenerator["default"].wrap(function _callee213$(_context213) {
@@ -9718,19 +8952,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee213);
-    }));
-    function ready() {
-      return _ready155.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^drivefiles\.bid$/
   },
-  ready: function () {
-    var _ready156 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee214() {
       var d;
       return _regenerator["default"].wrap(function _callee214$(_context214) {
@@ -9746,19 +8976,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee214);
-    }));
-    function ready() {
-      return _ready156.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^android-1\.com$/
   },
-  ready: function () {
-    var _ready157 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee215() {
       var a;
       return _regenerator["default"].wrap(function _callee215$(_context215) {
@@ -9774,19 +9000,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee215);
-    }));
-    function ready() {
-      return _ready157.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^boost\.ink$/
   },
-  start: function () {
-    var _start38 = (0, _asyncToGenerator2["default"])(
+  start: function start() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee216() {
       var b;
       return _regenerator["default"].wrap(function _callee216$(_context216) {
@@ -9811,19 +9033,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee216);
-    }));
-    function start() {
-      return _start38.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^download-mirror\.ga$/
   },
-  ready: function () {
-    var _ready158 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee217() {
       var dm;
       return _regenerator["default"].wrap(function _callee217$(_context217) {
@@ -9839,20 +9057,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee217);
-    }));
-    function ready() {
-      return _ready158.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^url\.hulblog\.com$/,
     path: /^\/[a-zA-Z0-9]+/
   },
-  ready: function () {
-    var _ready159 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee218() {
       var h;
       return _regenerator["default"].wrap(function _callee218$(_context218) {
@@ -9868,19 +9082,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee218);
-    }));
-    function ready() {
-      return _ready159.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^ww[23]\.picnictrans\.com$/, /^short\.awsubs\.(co|me)$/]
   },
-  ready: function () {
-    var _ready160 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee219() {
       var a;
       return _regenerator["default"].wrap(function _callee219$(_context219) {
@@ -9896,12 +9106,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee219);
-    }));
-    function ready() {
-      return _ready160.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
@@ -9909,8 +9115,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     /^(www\.)?anjay\.info$/, /^(www\.)?tetew\.info$/, 
     /^www\.njiir\.com$/]
   },
-  ready: function () {
-    var _ready161 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee220() {
       var a;
       return _regenerator["default"].wrap(function _callee220$(_context220) {
@@ -9928,20 +9134,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee220);
-    }));
-    function ready() {
-      return _ready161.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^spacetica\.com$/, /^skinnycat\.org$/],
     path: /^\/\w+$/
   },
-  ready: function () {
-    var _ready162 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee221() {
       var l;
       return _regenerator["default"].wrap(function _callee221$(_context221) {
@@ -9957,20 +9159,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee221);
-    }));
-    function ready() {
-      return _ready162.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^daunshorte\.teknologilink\.com$/,
     path: /^\/linkshortelink\/safelink\.php$/
   },
-  ready: function () {
-    var _ready163 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee222() {
       var l;
       return _regenerator["default"].wrap(function _callee222$(_context222) {
@@ -9988,20 +9186,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee222);
-    }));
-    function ready() {
-      return _ready163.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^teknosafe\.teknologilink\.com$/,
     path: /^\/linkteknolink\/safelinkscript\.php$/
   },
-  ready: function () {
-    var _ready164 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee223() {
       var l;
       return _regenerator["default"].wrap(function _callee223$(_context223) {
@@ -10019,19 +9213,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee223);
-    }));
-    function ready() {
-      return _ready164.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^zap\.in$/
   },
-  ready: function () {
-    var _ready165 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee224() {
       var z;
       return _regenerator["default"].wrap(function _callee224$(_context224) {
@@ -10046,19 +9236,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee224);
-    }));
-    function ready() {
-      return _ready165.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^(sataniabatch|get-click2)\.blogspot\.com$/, /^(www\.)?vehicle-techno\.cf$/, /^(www\.)?tetewlink\.me$/]
   },
-  ready: function () {
-    var _ready166 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee225() {
       var clbt;
       return _regenerator["default"].wrap(function _callee225$(_context225) {
@@ -10077,20 +9263,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee225);
-    }));
-    function ready() {
-      return _ready166.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^idnation\.net$/,
     query: /^\?page=/
   },
-  ready: function () {
-    var _ready167 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee226() {
       var l;
       return _regenerator["default"].wrap(function _callee226$(_context226) {
@@ -10106,20 +9288,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee226);
-    }));
-    function ready() {
-      return _ready167.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^techfunda\.net$/,
     path: [/^\/link\//, /^\/safe\//]
   },
-  ready: function () {
-    var _ready168 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee227() {
       var a;
       return _regenerator["default"].wrap(function _callee227$(_context227) {
@@ -10135,19 +9313,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee227);
-    }));
-    function ready() {
-      return _ready168.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^thinfi\.com$/
   },
-  ready: function () {
-    var _ready169 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee228() {
       var a;
       return _regenerator["default"].wrap(function _callee228$(_context228) {
@@ -10163,19 +9337,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee228);
-    }));
-    function ready() {
-      return _ready169.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^hello\.tribuntekno\.com$/
   },
-  ready: function () {
-    var _ready170 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee229() {
       var a;
       return _regenerator["default"].wrap(function _callee229$(_context229) {
@@ -10191,12 +9361,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee229);
-    }));
-    function ready() {
-      return _ready170.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: [{
@@ -10207,9 +9373,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.javlibrary\.com$/,
     query: /url=(.+)$/
   }],
-  start: function () {
-    var _start39 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee230(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee230() {
       return _regenerator["default"].wrap(function _callee230$(_context230) {
         while (1) {
           switch (_context230.prev = _context230.next) {
@@ -10222,12 +9388,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee230);
-    }));
-    function start(_x49) {
-      return _start39.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
@@ -10235,9 +9397,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /\/l\/(l\.php)?$/,
     query: /\?ads=([a-zA-Z0-9=]+)$/
   },
-  start: function () {
-    var _start40 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee231(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee231() {
       var l;
       return _regenerator["default"].wrap(function _callee231$(_context231) {
         while (1) {
@@ -10252,12 +9414,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee231);
-    }));
-    function start(_x50) {
-      return _start40.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
@@ -10265,9 +9423,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/link/,
     query: /^\?id=(.+)/
   },
-  ready: function () {
-    var _ready171 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee232(m) {
+  ready: function ready(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee232() {
       var html, res;
       return _regenerator["default"].wrap(function _callee232$(_context232) {
         while (1) {
@@ -10287,20 +9445,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee232);
-    }));
-    function ready(_x51) {
-      return _ready171.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^u\.to$/,
     path: /^\/[\w-]+/
   },
-  ready: function () {
-    var _ready172 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee233() {
       var u;
       return _regenerator["default"].wrap(function _callee233$(_context233) {
@@ -10316,19 +9470,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee233);
-    }));
-    function ready() {
-      return _ready172.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^unfake\.it$/
   },
-  ready: function () {
-    var _ready173 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee234() {
       var frame, i;
       return _regenerator["default"].wrap(function _callee234$(_context234) {
@@ -10345,20 +9495,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee234);
-    }));
-    function ready() {
-      return _ready173.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/^ur\.ly$/, /^urly\.mobi$/],
     path: /^\/x(.+)/
   },
-  ready: function () {
-    var _ready174 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee235() {
       var path;
       return _regenerator["default"].wrap(function _callee235$(_context235) {
@@ -10374,19 +9520,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee235);
-    }));
-    function ready() {
-      return _ready174.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^url\.fm$/
   },
-  ready: function () {
-    var _ready175 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee236() {
       var a;
       return _regenerator["default"].wrap(function _callee236$(_context236) {
@@ -10402,19 +9544,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee236);
-    }));
-    function ready() {
-      return _ready175.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^url\.ie$/
   },
-  ready: function () {
-    var _ready176 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee237() {
       var a;
       return _regenerator["default"].wrap(function _callee237$(_context237) {
@@ -10430,19 +9568,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee237);
-    }));
-    function ready() {
-      return _ready176.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: [/(^|\.)urlcash\.(com|net|org)$/, /^(bat5|detonating|celebclk|eightteen|smilinglinks|peekatmygirlfriend|pornyhost|clb1|urlgalleries)\.com$/, /^looble\.net$/, /^xxxs\.org$/]
   },
-  ready: function () {
-    var _ready177 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee238() {
       var matches;
       return _regenerator["default"].wrap(function _callee238$(_context238) {
@@ -10473,19 +9607,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee238);
-    }));
-    function ready() {
-      return _ready177.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^urlinn\.com$/
   },
-  ready: function () {
-    var _ready178 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee239() {
       var m;
       return _regenerator["default"].wrap(function _callee239$(_context239) {
@@ -10505,19 +9635,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee239);
-    }));
-    function ready() {
-      return _ready178.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^urlms\.com$/
   },
-  ready: function () {
-    var _ready179 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee240() {
       var iframe;
       return _regenerator["default"].wrap(function _callee240$(_context240) {
@@ -10533,19 +9659,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee240);
-    }));
-    function ready() {
-      return _ready179.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?urlv2\.com$/
   },
-  ready: function () {
-    var _ready180 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee241() {
       var path, m, l;
       return _regenerator["default"].wrap(function _callee241$(_context241) {
@@ -10575,20 +9697,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee241);
-    }));
-    function ready() {
-      return _ready180.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?uskip\.me$/,
     path: /^\/go\/\w+$/
   },
-  ready: function () {
-    var _ready181 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee242() {
       var a;
       return _regenerator["default"].wrap(function _callee242$(_context242) {
@@ -10604,19 +9722,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee242);
-    }));
-    function ready() {
-      return _ready181.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^ux9\.de$/
   },
-  ready: function () {
-    var _ready182 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee243() {
       var meta, url;
       return _regenerator["default"].wrap(function _callee243$(_context243) {
@@ -10633,19 +9747,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee243);
-    }));
-    function ready() {
-      return _ready182.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^vavi\.co$/
   },
-  ready: function () {
-    var _ready183 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee244() {
       var l;
       return _regenerator["default"].wrap(function _callee244$(_context244) {
@@ -10661,20 +9771,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee244);
-    }));
-    function ready() {
-      return _ready183.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^vcrypt\.net$/,
     path: /^\/fastshield\//
   },
-  ready: function () {
-    var _ready184 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee245() {
       var v;
       return _regenerator["default"].wrap(function _callee245$(_context245) {
@@ -10689,21 +9795,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee245);
-    }));
-    function ready() {
-      return _ready184.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.viidii\.info$/,
     query: /url=([^&]+)/
   },
-  start: function () {
-    var _start41 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee246(m) {
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])(
+    _regenerator["default"].mark(function _callee246() {
       var url;
       return _regenerator["default"].wrap(function _callee246$(_context246) {
         while (1) {
@@ -10718,19 +9820,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee246);
-    }));
-    function start(_x52) {
-      return _start41.apply(this, arguments);
-    }
-    return start;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^www\.viidii\.info$/
   },
-  ready: function () {
-    var _ready185 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee247() {
       var o;
       return _regenerator["default"].wrap(function _callee247$(_context247) {
@@ -10746,19 +9844,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee247);
-    }));
-    function ready() {
-      return _ready185.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?vir\.al$/
   },
-  ready: function () {
-    var _ready186 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee248() {
       var m;
       return _regenerator["default"].wrap(function _callee248$(_context248) {
@@ -10780,19 +9874,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee248);
-    }));
-    function ready() {
-      return _ready186.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^(www\.)?vzturl\.com$/
   },
-  ready: function () {
-    var _ready187 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee249() {
       var frame;
       return _regenerator["default"].wrap(function _callee249$(_context249) {
@@ -10808,20 +9898,16 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee249);
-    }));
-    function ready() {
-      return _ready187.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^st\.wardhanime\.net$/,
     path: /^\/i\/\d+$/
   },
-  ready: function () {
-    var _ready188 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee250() {
       var a;
       return _regenerator["default"].wrap(function _callee250$(_context250) {
@@ -10837,19 +9923,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee250);
-    }));
-    function ready() {
-      return _ready188.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 }); 
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^wikiall\.org$/
   },
-  ready: function () {
-    var _ready189 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee251() {
       var div, o;
       return _regenerator["default"].wrap(function _callee251$(_context251) {
@@ -10872,19 +9954,15 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee251);
-    }));
-    function ready() {
-      return _ready189.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^won\.pe$/
   },
-  ready: function () {
-    var _ready190 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee252() {
       var captcha, p;
       return _regenerator["default"].wrap(function _callee252$(_context252) {
@@ -10916,17 +9994,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee252);
-    }));
-    function ready() {
-      return _ready190.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://yep.it/preview.php?p=*',
-  ready: function () {
-    var _ready191 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee253() {
       var link;
       return _regenerator["default"].wrap(function _callee253$(_context253) {
@@ -10942,18 +10016,14 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee253);
-    }));
-    function ready() {
-      return _ready191.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: 'http://www.yooclick.com/l/*',
-    ready: function () {
-      var _ready192 = (0, _asyncToGenerator2["default"])(
+    ready: function ready() {
+      return (0, _asyncToGenerator2["default"])(
       _regenerator["default"].mark(function _callee254() {
         var uniq, path, url;
         return _regenerator["default"].wrap(function _callee254$(_context254) {
@@ -10978,14 +10048,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee254);
-      }));
-      function ready() {
-        return _ready192.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
-  function getURL(_x53) {
+  function getURL(_x13) {
     return _getURL6.apply(this, arguments);
   }
   function _getURL6() {
@@ -11032,9 +10098,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /\/([a-zA-Z0-9]+)/,
       hash: /(?:#([a-zA-Z0-9]+))?/
     },
-    ready: function () {
-      var _ready193 = (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee256(m) {
+    ready: function ready(m) {
+      return (0, _asyncToGenerator2["default"])(
+      _regenerator["default"].mark(function _callee256() {
         var sjcl, paste_id, paste_salt, API_URL, pasteInfo, raw_paste, elm, frame;
         return _regenerator["default"].wrap(function _callee256$(_context256) {
           while (1) {
@@ -11090,12 +10156,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
             }
           }
         }, _callee256);
-      }));
-      function ready(_x54) {
-        return _ready193.apply(this, arguments);
-      }
-      return ready;
-    }()
+      }))();
+    }
   });
   var sUrl = '(\\b(https?|ftp|file)://[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])';
   function isLink(text) {
@@ -11114,8 +10176,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?pasted\.co$/,
     path: /^\/\w+$/
   },
-  ready: function () {
-    var _ready194 = (0, _asyncToGenerator2["default"])(
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])(
     _regenerator["default"].mark(function _callee257() {
       return _regenerator["default"].wrap(function _callee257$(_context257) {
         while (1) {
@@ -11128,12 +10190,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
           }
         }
       }, _callee257);
-    }));
-    function ready() {
-      return _ready194.apply(this, arguments);
-    }
-    return ready;
-  }()
+    }))();
+  }
 });
  }),
  (function(module, exports, __webpack_require__) {
