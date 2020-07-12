@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.14.0
+// @version        7.15.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.14.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.15.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.14.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.14.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.14.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.15.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.15.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.15.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -89,11 +89,11 @@ var _interopRequireDefault = __webpack_require__(1);
 var _regenerator = _interopRequireDefault(__webpack_require__(2));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(4));
 var _core = __webpack_require__(5);
-var _dispatcher = __webpack_require__(25);
-var _platform = __webpack_require__(26);
-var _config = __webpack_require__(27);
-var _logger = __webpack_require__(28);
-__webpack_require__(29);
+var _dispatcher = __webpack_require__(28);
+var _platform = __webpack_require__(29);
+var _config = __webpack_require__(30);
+var _logger = __webpack_require__(31);
+__webpack_require__(32);
 var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
 function disableWindowOpen() {
   _platform.usw.open = function () {
@@ -141,8 +141,7 @@ function beforeDOMReady(_x) {
   return _beforeDOMReady.apply(this, arguments);
 }
 function _beforeDOMReady() {
-  _beforeDOMReady = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee(handler) {
+  _beforeDOMReady = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee(handler) {
     var config;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -170,8 +169,7 @@ function afterDOMReady(_x2) {
   return _afterDOMReady.apply(this, arguments);
 }
 function _afterDOMReady() {
-  _afterDOMReady = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee2(handler) {
+  _afterDOMReady = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee2(handler) {
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -204,8 +202,7 @@ function main() {
   return _main.apply(this, arguments);
 }
 function _main() {
-  _main = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee3() {
+  _main = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee3() {
     var handler;
     return _regenerator["default"].wrap(function _callee3$(_context3) {
       while (1) {
@@ -341,7 +338,7 @@ var runtime = (function (exports) {
   exports.awrap = function(arg) {
     return { __await: arg };
   };
-  function AsyncIterator(generator) {
+  function AsyncIterator(generator, PromiseImpl) {
     function invoke(method, arg, resolve, reject) {
       var record = tryCatch(generator[method], generator, arg);
       if (record.type === "throw") {
@@ -352,13 +349,13 @@ var runtime = (function (exports) {
         if (value &&
             typeof value === "object" &&
             hasOwn.call(value, "__await")) {
-          return Promise.resolve(value.__await).then(function(value) {
+          return PromiseImpl.resolve(value.__await).then(function(value) {
             invoke("next", value, resolve, reject);
           }, function(err) {
             invoke("throw", err, resolve, reject);
           });
         }
-        return Promise.resolve(value).then(function(unwrapped) {
+        return PromiseImpl.resolve(value).then(function(unwrapped) {
           result.value = unwrapped;
           resolve(result);
         }, function(error) {
@@ -369,7 +366,7 @@ var runtime = (function (exports) {
     var previousPromise;
     function enqueue(method, arg) {
       function callInvokeWithMethodAndArg() {
-        return new Promise(function(resolve, reject) {
+        return new PromiseImpl(function(resolve, reject) {
           invoke(method, arg, resolve, reject);
         });
       }
@@ -386,9 +383,11 @@ var runtime = (function (exports) {
     return this;
   };
   exports.AsyncIterator = AsyncIterator;
-  exports.async = function(innerFn, outerFn, self, tryLocsList) {
+  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    if (PromiseImpl === void 0) PromiseImpl = Promise;
     var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList)
+      wrap(innerFn, outerFn, self, tryLocsList),
+      PromiseImpl
     );
     return exports.isGeneratorFunction(outerFn)
       ? iter 
@@ -791,21 +790,25 @@ exports.wait = wait;
 exports.none = exports.AdsBypasserError = void 0;
 var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(6));
 var _regenerator = _interopRequireDefault(__webpack_require__(2));
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(10));
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(14));
-var _createClass2 = _interopRequireDefault(__webpack_require__(15));
-var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(16));
-var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(19));
-var _inherits2 = _interopRequireDefault(__webpack_require__(20));
-var _wrapNativeSuper2 = _interopRequireDefault(__webpack_require__(22));
-var _marked =
-_regenerator["default"].mark(enumerate);
-var AdsBypasserError =
-function (_Error) {
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(16));
+var _createClass2 = _interopRequireDefault(__webpack_require__(17));
+var _inherits2 = _interopRequireDefault(__webpack_require__(18));
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(20));
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(23));
+var _wrapNativeSuper2 = _interopRequireDefault(__webpack_require__(24));
+var _marked = _regenerator["default"].mark(enumerate);
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+var AdsBypasserError = function (_Error) {
   (0, _inherits2["default"])(AdsBypasserError, _Error);
+  var _super = _createSuper(AdsBypasserError);
   function AdsBypasserError(message) {
     (0, _classCallCheck2["default"])(this, AdsBypasserError);
-    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(AdsBypasserError).call(this, message));
+    return _super.call(this, message);
   }
   (0, _createClass2["default"])(AdsBypasserError, [{
     key: "name",
@@ -814,7 +817,7 @@ function (_Error) {
     }
   }]);
   return AdsBypasserError;
-}((0, _wrapNativeSuper2["default"])(Error));
+}( (0, _wrapNativeSuper2["default"])(Error));
 exports.AdsBypasserError = AdsBypasserError;
 function forEach(collection, fn) {
   if (isArrayLike(collection)) {
@@ -843,11 +846,10 @@ function map(collection, fn) {
   return mapped;
 }
 function find(collection, fn) {
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
+  var _iterator = _createForOfIteratorHelper(enumerate(collection)),
+      _step;
   try {
-    for (var _iterator = enumerate(collection)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var _step$value = (0, _slicedToArray2["default"])(_step.value, 2),
           k = _step$value[0],
           v = _step$value[1];
@@ -857,23 +859,14 @@ function find(collection, fn) {
       }
     }
   } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
+    _iterator.e(err);
   } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-        _iterator["return"]();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
+    _iterator.f();
   }
   return [none, none, none];
 }
 function enumerate(collection) {
-  var keys, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, k;
+  var keys, _iterator2, _step2, k;
   return _regenerator["default"].wrap(function enumerate$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
@@ -887,54 +880,37 @@ function enumerate(collection) {
           return _context.abrupt("return");
         case 3:
           keys = Object.getOwnPropertyNames(collection);
-          _iteratorNormalCompletion2 = true;
-          _didIteratorError2 = false;
-          _iteratorError2 = undefined;
-          _context.prev = 7;
-          _iterator2 = keys[Symbol.iterator]();
-        case 9:
-          if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
-            _context.next = 16;
+          _iterator2 = _createForOfIteratorHelper(keys);
+          _context.prev = 5;
+          _iterator2.s();
+        case 7:
+          if ((_step2 = _iterator2.n()).done) {
+            _context.next = 13;
             break;
           }
           k = _step2.value;
-          _context.next = 13;
+          _context.next = 11;
           return [k, collection[k]];
+        case 11:
+          _context.next = 7;
+          break;
         case 13:
-          _iteratorNormalCompletion2 = true;
-          _context.next = 9;
+          _context.next = 18;
           break;
-        case 16:
-          _context.next = 22;
-          break;
+        case 15:
+          _context.prev = 15;
+          _context.t1 = _context["catch"](5);
+          _iterator2.e(_context.t1);
         case 18:
           _context.prev = 18;
-          _context.t1 = _context["catch"](7);
-          _didIteratorError2 = true;
-          _iteratorError2 = _context.t1;
-        case 22:
-          _context.prev = 22;
-          _context.prev = 23;
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        case 25:
-          _context.prev = 25;
-          if (!_didIteratorError2) {
-            _context.next = 28;
-            break;
-          }
-          throw _iteratorError2;
-        case 28:
-          return _context.finish(25);
-        case 29:
-          return _context.finish(22);
-        case 30:
+          _iterator2.f();
+          return _context.finish(18);
+        case 21:
         case "end":
           return _context.stop();
       }
     }
-  }, _marked, null, [[7, 18, 22, 30], [23,, 25, 29]]);
+  }, _marked, null, [[5, 15, 18, 21]]);
 }
 function isArrayLike(collection) {
   return Array.isArray(collection) || isNodeList(collection);
@@ -981,42 +957,62 @@ function tryEvery(msInterval, fn) {
  }),
  (function(module, exports, __webpack_require__) {
 var arrayWithoutHoles = __webpack_require__(7);
-var iterableToArray = __webpack_require__(8);
-var nonIterableSpread = __webpack_require__(9);
+var iterableToArray = __webpack_require__(9);
+var unsupportedIterableToArray = __webpack_require__(10);
+var nonIterableSpread = __webpack_require__(11);
 function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
 }
 module.exports = _toConsumableArray;
  }),
- (function(module, exports) {
+ (function(module, exports, __webpack_require__) {
+var arrayLikeToArray = __webpack_require__(8);
 function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-    return arr2;
-  }
+  if (Array.isArray(arr)) return arrayLikeToArray(arr);
 }
 module.exports = _arrayWithoutHoles;
  }),
  (function(module, exports) {
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+  return arr2;
+}
+module.exports = _arrayLikeToArray;
+ }),
+ (function(module, exports) {
 function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
 }
 module.exports = _iterableToArray;
  }),
+ (function(module, exports, __webpack_require__) {
+var arrayLikeToArray = __webpack_require__(8);
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+}
+module.exports = _unsupportedIterableToArray;
+ }),
  (function(module, exports) {
 function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 module.exports = _nonIterableSpread;
  }),
  (function(module, exports, __webpack_require__) {
-var arrayWithHoles = __webpack_require__(11);
-var iterableToArrayLimit = __webpack_require__(12);
-var nonIterableRest = __webpack_require__(13);
+var arrayWithHoles = __webpack_require__(13);
+var iterableToArrayLimit = __webpack_require__(14);
+var unsupportedIterableToArray = __webpack_require__(10);
+var nonIterableRest = __webpack_require__(15);
 function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
 }
 module.exports = _slicedToArray;
  }),
@@ -1028,9 +1024,7 @@ module.exports = _arrayWithHoles;
  }),
  (function(module, exports) {
 function _iterableToArrayLimit(arr, i) {
-  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
-    return;
-  }
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -1056,7 +1050,7 @@ module.exports = _iterableToArrayLimit;
  }),
  (function(module, exports) {
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 module.exports = _nonIterableRest;
  }),
@@ -1086,8 +1080,35 @@ function _createClass(Constructor, protoProps, staticProps) {
 module.exports = _createClass;
  }),
  (function(module, exports, __webpack_require__) {
-var _typeof = __webpack_require__(17);
-var assertThisInitialized = __webpack_require__(18);
+var setPrototypeOf = __webpack_require__(19);
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+module.exports = _inherits;
+ }),
+ (function(module, exports) {
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+  return _setPrototypeOf(o, p);
+}
+module.exports = _setPrototypeOf;
+ }),
+ (function(module, exports, __webpack_require__) {
+var _typeof = __webpack_require__(21);
+var assertThisInitialized = __webpack_require__(22);
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
     return call;
@@ -1131,37 +1152,10 @@ function _getPrototypeOf(o) {
 module.exports = _getPrototypeOf;
  }),
  (function(module, exports, __webpack_require__) {
-var setPrototypeOf = __webpack_require__(21);
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) setPrototypeOf(subClass, superClass);
-}
-module.exports = _inherits;
- }),
- (function(module, exports) {
-function _setPrototypeOf(o, p) {
-  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-  return _setPrototypeOf(o, p);
-}
-module.exports = _setPrototypeOf;
- }),
- (function(module, exports, __webpack_require__) {
-var getPrototypeOf = __webpack_require__(19);
-var setPrototypeOf = __webpack_require__(21);
-var isNativeFunction = __webpack_require__(23);
-var construct = __webpack_require__(24);
+var getPrototypeOf = __webpack_require__(23);
+var setPrototypeOf = __webpack_require__(19);
+var isNativeFunction = __webpack_require__(25);
+var construct = __webpack_require__(26);
 function _wrapNativeSuper(Class) {
   var _cache = typeof Map === "function" ? new Map() : undefined;
   module.exports = _wrapNativeSuper = function _wrapNativeSuper(Class) {
@@ -1197,18 +1191,8 @@ function _isNativeFunction(fn) {
 module.exports = _isNativeFunction;
  }),
  (function(module, exports, __webpack_require__) {
-var setPrototypeOf = __webpack_require__(21);
-function isNativeReflectConstruct() {
-  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-  if (Reflect.construct.sham) return false;
-  if (typeof Proxy === "function") return true;
-  try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
+var setPrototypeOf = __webpack_require__(19);
+var isNativeReflectConstruct = __webpack_require__(27);
 function _construct(Parent, args, Class) {
   if (isNativeReflectConstruct()) {
     module.exports = _construct = Reflect.construct;
@@ -1226,6 +1210,20 @@ function _construct(Parent, args, Class) {
 }
 module.exports = _construct;
  }),
+ (function(module, exports) {
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+  try {
+    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+module.exports = _isNativeReflectConstruct;
+ }),
  (function(module, exports, __webpack_require__) {
 "use strict";
 var _interopRequireDefault = __webpack_require__(1);
@@ -1234,7 +1232,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.register = register;
 exports.findHandler = findHandler;
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(10));
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
 var _core = __webpack_require__(5);
 var patterns = [];
 function register(pattern) {
@@ -1376,7 +1374,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.GMAPI = exports.usw = exports.rawUSW = void 0;
-var _typeof2 = _interopRequireDefault(__webpack_require__(17));
+var _typeof2 = _interopRequireDefault(__webpack_require__(21));
 var _core = __webpack_require__(5);
 var rawUSW = getUnsafeWindow();
 exports.rawUSW = rawUSW;
@@ -1546,12 +1544,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.dumpConfig = dumpConfig;
 exports.loadConfig = loadConfig;
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(10));
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
 var _regenerator = _interopRequireDefault(__webpack_require__(2));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(4));
 var _core = __webpack_require__(5);
-var _dispatcher = __webpack_require__(25);
-var _platform = __webpack_require__(26);
+var _dispatcher = __webpack_require__(28);
+var _platform = __webpack_require__(29);
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 var MANIFEST = [{
   key: 'version',
   default_: 0,
@@ -1587,9 +1588,7 @@ var MANIFEST = [{
   },
   normalize: toNumber
 }];
-var PATCHES = [
-(0, _asyncToGenerator2["default"])(
-_regenerator["default"].mark(function _callee() {
+var PATCHES = [(0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee() {
   var alignCenter, changeBackground, scaleImage, redirectImage, ac;
   return _regenerator["default"].wrap(function _callee$(_context) {
     while (1) {
@@ -1645,9 +1644,7 @@ _regenerator["default"].mark(function _callee() {
       }
     }
   }, _callee);
-})),
-(0, _asyncToGenerator2["default"])(
-_regenerator["default"].mark(function _callee2() {
+})), (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee2() {
   var externalServerSupport;
   return _regenerator["default"].wrap(function _callee2$(_context2) {
     while (1) {
@@ -1669,9 +1666,7 @@ _regenerator["default"].mark(function _callee2() {
       }
     }
   }, _callee2);
-})),
-(0, _asyncToGenerator2["default"])(
-_regenerator["default"].mark(function _callee3() {
+})), (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee3() {
   var logLevel;
   return _regenerator["default"].wrap(function _callee3$(_context3) {
     while (1) {
@@ -1693,9 +1688,7 @@ _regenerator["default"].mark(function _callee3() {
       }
     }
   }, _callee3);
-})),
-(0, _asyncToGenerator2["default"])(
-_regenerator["default"].mark(function _callee4() {
+})), (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee4() {
   return _regenerator["default"].wrap(function _callee4$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
@@ -1722,17 +1715,14 @@ function senityCheck() {
   return _senityCheck.apply(this, arguments);
 }
 function _senityCheck() {
-  _senityCheck = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee6() {
+  _senityCheck = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee6() {
     var verifyResults, ok;
     return _regenerator["default"].wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
-            verifyResults = MANIFEST.map(
-            function () {
-              var _ref5 = (0, _asyncToGenerator2["default"])(
-              _regenerator["default"].mark(function _callee5(descriptor) {
+            verifyResults = MANIFEST.map( function () {
+              var _ref5 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee5(descriptor) {
                 var rv;
                 return _regenerator["default"].wrap(function _callee5$(_context5) {
                   while (1) {
@@ -1780,8 +1770,7 @@ function migrate() {
   return _migrate.apply(this, arguments);
 }
 function _migrate() {
-  _migrate = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee7() {
+  _migrate = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee7() {
     var currentVersion;
     return _regenerator["default"].wrap(function _callee7$(_context7) {
       while (1) {
@@ -1816,8 +1805,7 @@ function loadConfig() {
   return _loadConfig.apply(this, arguments);
 }
 function _loadConfig() {
-  _loadConfig = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee10() {
+  _loadConfig = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee10() {
     return _regenerator["default"].wrap(function _callee10$(_context10) {
       while (1) {
         switch (_context10.prev = _context10.next) {
@@ -1834,8 +1822,7 @@ function _loadConfig() {
                 path: /^\/configure\.html$/
               },
               ready: function ready() {
-                return (0, _asyncToGenerator2["default"])(
-                _regenerator["default"].mark(function _callee9() {
+                return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee9() {
                   return _regenerator["default"].wrap(function _callee9$(_context9) {
                     while (1) {
                       switch (_context9.prev = _context9.next) {
@@ -1843,10 +1830,8 @@ function _loadConfig() {
                           _context9.next = 2;
                           return waitForPage();
                         case 2:
-                          _platform.usw.commit =
-                          function () {
-                            var _ref6 = (0, _asyncToGenerator2["default"])(
-                            _regenerator["default"].mark(function _callee8(data) {
+                          _platform.usw.commit = function () {
+                            var _ref6 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee8(data) {
                               var _i, _Object$entries, _Object$entries$_i, k, v;
                               return _regenerator["default"].wrap(function _callee8$(_context8) {
                                 while (1) {
@@ -1979,17 +1964,14 @@ function dumpConfig() {
   return _dumpConfig.apply(this, arguments);
 }
 function _dumpConfig() {
-  _dumpConfig = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee12() {
-    var rv, o, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _step$value, k, v;
+  _dumpConfig = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee12() {
+    var rv, o, _iterator, _step, _step$value, k, v;
     return _regenerator["default"].wrap(function _callee12$(_context12) {
       while (1) {
         switch (_context12.prev = _context12.next) {
           case 0:
-            rv = MANIFEST.map(
-            function () {
-              var _ref7 = (0, _asyncToGenerator2["default"])(
-              _regenerator["default"].mark(function _callee11(descriptor) {
+            rv = MANIFEST.map( function () {
+              var _ref7 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee11(descriptor) {
                 return _regenerator["default"].wrap(function _callee11$(_context11) {
                   while (1) {
                     switch (_context11.prev = _context11.next) {
@@ -2016,46 +1998,24 @@ function _dumpConfig() {
           case 3:
             rv = _context12.sent;
             o = {};
-            _iteratorNormalCompletion = true;
-            _didIteratorError = false;
-            _iteratorError = undefined;
-            _context12.prev = 8;
-            for (_iterator = rv[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              _step$value = (0, _slicedToArray2["default"])(_step.value, 2), k = _step$value[0], v = _step$value[1];
-              o[k] = v;
+            _iterator = _createForOfIteratorHelper(rv);
+            try {
+              for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                _step$value = (0, _slicedToArray2["default"])(_step.value, 2), k = _step$value[0], v = _step$value[1];
+                o[k] = v;
+              }
+            } catch (err) {
+              _iterator.e(err);
+            } finally {
+              _iterator.f();
             }
-            _context12.next = 16;
-            break;
-          case 12:
-            _context12.prev = 12;
-            _context12.t0 = _context12["catch"](8);
-            _didIteratorError = true;
-            _iteratorError = _context12.t0;
-          case 16:
-            _context12.prev = 16;
-            _context12.prev = 17;
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          case 19:
-            _context12.prev = 19;
-            if (!_didIteratorError) {
-              _context12.next = 22;
-              break;
-            }
-            throw _iteratorError;
-          case 22:
-            return _context12.finish(19);
-          case 23:
-            return _context12.finish(16);
-          case 24:
             return _context12.abrupt("return", o);
-          case 25:
+          case 8:
           case "end":
             return _context12.stop();
         }
       }
-    }, _callee12, null, [[8, 12, 16, 24], [17,, 19, 23]]);
+    }, _callee12);
   }));
   return _dumpConfig.apply(this, arguments);
 }
@@ -2098,23 +2058,27 @@ function warn() {
  (function(module, exports, __webpack_require__) {
 "use strict";
 var _interopRequireDefault = __webpack_require__(1);
-var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(16));
-var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(19));
-var _inherits2 = _interopRequireDefault(__webpack_require__(20));
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(14));
-var _createClass2 = _interopRequireDefault(__webpack_require__(15));
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(10));
+var _inherits2 = _interopRequireDefault(__webpack_require__(18));
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(20));
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(23));
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(16));
+var _createClass2 = _interopRequireDefault(__webpack_require__(17));
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
 var _regenerator = _interopRequireDefault(__webpack_require__(2));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(4));
-var _ADSBYPASSER_NAMESPACE__ = __webpack_require__(30);
+var _ADSBYPASSER_NAMESPACE__ = __webpack_require__(33);
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^akoam\.net$/,
     path: /^\/download\/([^/]+)\//
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee() {
       var data;
       return _regenerator["default"].wrap(function _callee$(_context) {
         while (1) {
@@ -2151,8 +2115,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/dlpop\.php$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee2() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee2() {
       var matches;
       return _regenerator["default"].wrap(function _callee2$(_context2) {
         while (1) {
@@ -2177,9 +2140,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /\/[A-Z0-9]+/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee3() {
-        var f, iIn, _ref, _ref2, p, l;
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee3() {
+        var f, iIn, _yield$waitDOM, _yield$waitDOM2, p, l;
         return _regenerator["default"].wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -2221,9 +2183,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   return _ADSBYPASSER_NAMESPACE__._.wait(600);
                 });
               case 13:
-                _ref = _context3.sent;
-                _ref2 = (0, _slicedToArray2["default"])(_ref, 3);
-                p = _ref2[2];
+                _yield$waitDOM = _context3.sent;
+                _yield$waitDOM2 = (0, _slicedToArray2["default"])(_yield$waitDOM, 3);
+                p = _yield$waitDOM2[2];
                 if (!p) {
                   _context3.next = 20;
                   break;
@@ -2277,8 +2239,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^elsfile\.org$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee4() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee4() {
       var down, countdown, o, script;
       return _regenerator["default"].wrap(function _callee4$(_context4) {
         while (1) {
@@ -2323,8 +2284,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?\w{2}=\w+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee5() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee5() {
       var downloadPage;
       return _regenerator["default"].wrap(function _callee5$(_context5) {
         while (1) {
@@ -2348,8 +2308,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/files\/+/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee6() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee6() {
       var m;
       return _regenerator["default"].wrap(function _callee6$(_context6) {
         while (1) {
@@ -2372,8 +2331,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(www\.)?indishare\.(org|me)$/, /^bdupload\.(info|asia)$/, /^upgrand\.site$/, /^3zfile\.net$/, /^uploadrar\.com$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee7() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee7() {
       var btn;
       return _regenerator["default"].wrap(function _callee7$(_context7) {
         while (1) {
@@ -2397,8 +2355,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /u=(.+)$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee8() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee8() {
       var f, args, response, l;
       return _regenerator["default"].wrap(function _callee8$(_context8) {
         while (1) {
@@ -2431,8 +2388,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/captcha\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee9() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee9() {
       return _regenerator["default"].wrap(function _callee9$(_context9) {
         while (1) {
           switch (_context9.prev = _context9.next) {
@@ -2454,8 +2410,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   },
   ready: function ready() {
     'use strict'; 
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee10() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee10() {
       var matches, slug, hoster, response, respJSON;
       return _regenerator["default"].wrap(function _callee10$(_context10) {
         while (1) {
@@ -2490,14 +2445,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/m\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee11() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee11() {
       var ma;
       return _regenerator["default"].wrap(function _callee11$(_context11) {
         while (1) {
           switch (_context11.prev = _context11.next) {
             case 0:
-              ma = (0, _ADSBYPASSER_NAMESPACE__.$)('a.uk-button.uk-button-large.uk-button-primary');
+              ma = (0, _ADSBYPASSER_NAMESPACE__.$)('a.uk-button:nth-child(2)');
               _context11.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(ma.href);
             case 3:
@@ -2515,8 +2469,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/downlink\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee12() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee12() {
       var a;
       return _regenerator["default"].wrap(function _callee12$(_context12) {
         while (1) {
@@ -2540,29 +2493,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/files\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee13() {
-      var res, o;
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee13() {
       return _regenerator["default"].wrap(function _callee13$(_context13) {
         while (1) {
           switch (_context13.prev = _context13.next) {
             case 0:
-              (0, _ADSBYPASSER_NAMESPACE__.$)('#dl_form').style.display = 'none';
-              res = (0, _ADSBYPASSER_NAMESPACE__.$)('#result');
-              res.style.display = 'block';
-              o = new MutationObserver(function () {
-                if (res.style.display !== 'block') {
-                  res.style.display = 'block'; 
-                }
-              });
-              o.observe(res, {
-                attributes: true
-              });
-              _context13.next = 7;
-              return _ADSBYPASSER_NAMESPACE__._.wait(1000);
-            case 7:
-              _ADSBYPASSER_NAMESPACE__.$.window.start();
-            case 8:
+              (0, _ADSBYPASSER_NAMESPACE__.$)('#dl_form').submit();
+            case 1:
             case "end":
               return _context13.stop();
           }
@@ -2576,8 +2513,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^multifilemirror\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee14() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee14() {
       var m;
       return _regenerator["default"].wrap(function _callee14$(_context14) {
         while (1) {
@@ -2600,8 +2536,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/f\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee15() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee15() {
       var f;
       return _regenerator["default"].wrap(function _callee15$(_context15) {
         while (1) {
@@ -2624,8 +2559,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/p\/(.+)$/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee16() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee16() {
       return _regenerator["default"].wrap(function _callee16$(_context16) {
         while (1) {
           switch (_context16.prev = _context16.next) {
@@ -2647,8 +2581,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/g\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee17() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee17() {
       var a;
       return _regenerator["default"].wrap(function _callee17$(_context17) {
         while (1) {
@@ -2672,8 +2605,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/file\/[0-9A-F]+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee18() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee18() {
       var c;
       return _regenerator["default"].wrap(function _callee18$(_context18) {
         while (1) {
@@ -2696,8 +2628,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/download\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee19() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee19() {
       var f;
       return _regenerator["default"].wrap(function _callee19$(_context19) {
         while (1) {
@@ -2722,8 +2653,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?upmirror\.info$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee20() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee20() {
       return _regenerator["default"].wrap(function _callee20$(_context20) {
         while (1) {
           switch (_context20.prev = _context20.next) {
@@ -2749,8 +2679,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?vidto\.me$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee21() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee21() {
       var f;
       return _regenerator["default"].wrap(function _callee21$(_context21) {
         while (1) {
@@ -2775,8 +2704,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^zupload\.me$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee22() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee22() {
       var z;
       return _regenerator["default"].wrap(function _callee22$(_context22) {
         while (1) {
@@ -2799,8 +2727,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^01\.nl$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee23() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee23() {
       var f;
       return _regenerator["default"].wrap(function _callee23$(_context23) {
         while (1) {
@@ -2823,8 +2750,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^10co\.(biz|xyz|co|me)$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee24() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee24() {
       var d;
       return _regenerator["default"].wrap(function _callee24$(_context24) {
         while (1) {
@@ -2849,8 +2775,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?(.+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee25() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee25() {
       return _regenerator["default"].wrap(function _callee25$(_context25) {
         while (1) {
           switch (_context25.prev = _context25.next) {
@@ -2873,8 +2798,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?s=/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee26() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee26() {
       var a;
       return _regenerator["default"].wrap(function _callee26$(_context26) {
         while (1) {
@@ -2898,8 +2822,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee27() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee27() {
       var url, urlCheck;
       return _regenerator["default"].wrap(function _callee27$(_context27) {
         while (1) {
@@ -2927,8 +2850,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /\/\w+/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee28() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee28() {
       var directUrl;
       return _regenerator["default"].wrap(function _callee28$(_context28) {
         while (1) {
@@ -2958,8 +2880,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/t\/[a-zA-Z0-9/=]+/
   },
   start: function start() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee29() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee29() {
       var path;
       return _regenerator["default"].wrap(function _callee29$(_context29) {
         while (1) {
@@ -2982,8 +2903,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?4fun\.tw$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee30() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee30() {
       var i;
       return _regenerator["default"].wrap(function _callee30$(_context30) {
         while (1) {
@@ -3007,8 +2927,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w-.+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee31() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee31() {
       return _regenerator["default"].wrap(function _callee31$(_context31) {
         while (1) {
           switch (_context31.prev = _context31.next) {
@@ -3034,8 +2953,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^ad4\.fr$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee32() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee32() {
       var s;
       return _regenerator["default"].wrap(function _callee32$(_context32) {
         while (1) {
@@ -3068,8 +2986,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/\d+\/(.*)$/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee33() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee33() {
         var redirectLink;
         return _regenerator["default"].wrap(function _callee33$(_context33) {
           while (1) {
@@ -3097,8 +3014,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/\w+$/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee34() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee34() {
         var script, url;
         return _regenerator["default"].wrap(function _callee34$(_context34) {
           while (1) {
@@ -3127,8 +3043,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee35() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee35() {
         var m, args;
         return _regenerator["default"].wrap(function _callee35$(_context35) {
           while (1) {
@@ -3207,8 +3122,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/redirecting\/(.+)$/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee36() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee36() {
         var url;
         return _regenerator["default"].wrap(function _callee36$(_context36) {
           while (1) {
@@ -3232,8 +3146,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /url=([^&]+)/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee37() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee37() {
         var url;
         return _regenerator["default"].wrap(function _callee37$(_context37) {
           while (1) {
@@ -3269,8 +3182,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /.*dest=([^&]+)/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee38() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee38() {
         var url;
         return _regenerator["default"].wrap(function _callee38$(_context38) {
           while (1) {
@@ -3297,8 +3209,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /lp=adfly_allow&.*href=([^&]+)/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee39() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee39() {
         var url;
         return _regenerator["default"].wrap(function _callee39$(_context39) {
           while (1) {
@@ -3330,8 +3241,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       }
     },
     start: function start() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee40() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee40() {
         return _regenerator["default"].wrap(function _callee40$(_context40) {
           while (1) {
             switch (_context40.prev = _context40.next) {
@@ -3347,8 +3257,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       }))();
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee41() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee41() {
         var close, rv;
         return _regenerator["default"].wrap(function _callee41$(_context41) {
           while (1) {
@@ -3429,8 +3338,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://adfoc.us/*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee42() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee42() {
       var promise, url;
       return _regenerator["default"].wrap(function _callee42$(_context42) {
         while (1) {
@@ -3471,8 +3379,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?adlot\.us$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee43() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee43() {
       var script, p, opt, tmp;
       return _regenerator["default"].wrap(function _callee43$(_context43) {
         while (1) {
@@ -3506,8 +3413,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^admy\.link$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee44() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee44() {
       var f;
       return _regenerator["default"].wrap(function _callee44$(_context44) {
         while (1) {
@@ -3530,8 +3436,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/ZipUrl/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee45() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee45() {
       var a;
       return _regenerator["default"].wrap(function _callee45$(_context45) {
         while (1) {
@@ -3555,8 +3460,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: /^ah\.pe$/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee46() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee46() {
         var script, path;
         return _regenerator["default"].wrap(function _callee46$(_context46) {
           while (1) {
@@ -3605,8 +3509,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^aka\.gr$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee47() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee47() {
       var l;
       return _regenerator["default"].wrap(function _callee47$(_context47) {
         while (1) {
@@ -3629,8 +3532,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^al\.ly$/, /^ally\.sh$/, /^ally\.shortens\.co$/, /^(dausel|onle)\.co$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee48() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee48() {
       var i;
       return _regenerator["default"].wrap(function _callee48$(_context48) {
         while (1) {
@@ -3669,8 +3571,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(www\.)?allkeyshop\.com$/, /^cshort\.org$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee49() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee49() {
       var matches;
       return _regenerator["default"].wrap(function _callee49$(_context49) {
         while (1) {
@@ -3695,8 +3596,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^apkmodif\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee50() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee50() {
       var a;
       return _regenerator["default"].wrap(function _callee50$(_context50) {
         while (1) {
@@ -3722,8 +3622,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^.+(https?:\/\/.+)$/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee51() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee51() {
         return _regenerator["default"].wrap(function _callee51$(_context51) {
           while (1) {
             switch (_context51.prev = _context51.next) {
@@ -3745,8 +3644,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/.+/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee52() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee52() {
         var token, time, url, rv;
         return _regenerator["default"].wrap(function _callee52$(_context52) {
           while (1) {
@@ -3808,8 +3706,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/.+/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee53() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee53() {
         var a, f;
         return _regenerator["default"].wrap(function _callee53$(_context53) {
           while (1) {
@@ -3844,8 +3741,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/[^.]+$/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee54() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee54() {
         var s, m, tz, d;
         return _regenerator["default"].wrap(function _callee54$(_context54) {
           while (1) {
@@ -3884,8 +3780,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/.+/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee55() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee55() {
         return _regenerator["default"].wrap(function _callee55$(_context55) {
           while (1) {
             switch (_context55.prev = _context55.next) {
@@ -3954,8 +3849,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _run.apply(this, arguments);
   }
   function _run() {
-    _run = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee56(dirtyFix) {
+    _run = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee56(dirtyFix) {
       var result;
       return _regenerator["default"].wrap(function _callee56$(_context56) {
         while (1) {
@@ -3994,8 +3888,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _findAJAXToken.apply(this, arguments);
   }
   function _findAJAXToken() {
-    _findAJAXToken = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee57() {
+    _findAJAXToken = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee57() {
       var rv, wds, jki, rt;
       return _regenerator["default"].wrap(function _callee57$(_context57) {
         while (1) {
@@ -4078,8 +3971,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\/(\w+\.\w+)$/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee58() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee58() {
       return _regenerator["default"].wrap(function _callee58$(_context58) {
         while (1) {
           switch (_context58.prev = _context58.next) {
@@ -4098,8 +3990,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.bild.me/bild.php?file=*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee59() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee59() {
       var i;
       return _regenerator["default"].wrap(function _callee59$(_context59) {
         while (1) {
@@ -4120,8 +4011,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://bildr.no/view/*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee60() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee60() {
       var i;
       return _regenerator["default"].wrap(function _callee60$(_context60) {
         while (1) {
@@ -4148,8 +4038,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /\/go\/([a-zA-Z0-9]+)/
   }],
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee61() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee61() {
       var direct_link;
       return _regenerator["default"].wrap(function _callee61$(_context61) {
         while (1) {
@@ -4172,8 +4061,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^blog\.langw\.web\.id$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee62() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee62() {
       var url;
       return _regenerator["default"].wrap(function _callee62$(_context62) {
         while (1) {
@@ -4202,8 +4090,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/creatinglinks/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee63() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee63() {
       var b;
       return _regenerator["default"].wrap(function _callee63$(_context63) {
         while (1) {
@@ -4226,8 +4113,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^catcut\.net$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee64() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee64() {
       var a;
       return _regenerator["default"].wrap(function _callee64$(_context64) {
         while (1) {
@@ -4254,8 +4140,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?cli\.gs$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee65() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee65() {
       var a;
       return _regenerator["default"].wrap(function _callee65$(_context65) {
         while (1) {
@@ -4278,8 +4163,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^clk\.im$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee66() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee66() {
       var matches;
       return _regenerator["default"].wrap(function _callee66$(_context66) {
         while (1) {
@@ -4303,8 +4187,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^cocoleech\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee67() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee67() {
       var a;
       return _regenerator["default"].wrap(function _callee67$(_context67) {
         while (1) {
@@ -4329,8 +4212,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/.+$/
     },
     ready: function ready(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee68() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee68() {
         var mapper, b64;
         return _regenerator["default"].wrap(function _callee68$(_context68) {
           while (1) {
@@ -4355,8 +4237,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: [/^\/\w+$/, /^\/menujulink\//]
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee69() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee69() {
         var d;
         return _regenerator["default"].wrap(function _callee69$(_context69) {
           while (1) {
@@ -4403,8 +4284,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/([-\w]+)$/
   },
   ready: function ready(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee70() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee70() {
       var host, param, mainFrameContent, docMainFrame, rExtractLink;
       return _regenerator["default"].wrap(function _callee70$(_context70) {
         while (1) {
@@ -4458,8 +4338,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^comyonet\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee71() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee71() {
       var input;
       return _regenerator["default"].wrap(function _callee71$(_context71) {
         while (1) {
@@ -4481,8 +4360,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^crockolinks\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee72() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee72() {
       var c;
       return _regenerator["default"].wrap(function _callee72$(_context72) {
         while (1) {
@@ -4504,8 +4382,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^dawnstation\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee73() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee73() {
       var a;
       return _regenerator["default"].wrap(function _callee73$(_context73) {
         while (1) {
@@ -4528,8 +4405,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^durl\.me$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee74() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee74() {
       var a;
       return _regenerator["default"].wrap(function _callee74$(_context74) {
         while (1) {
@@ -4552,8 +4428,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^easyurl\.net$/, /^(atu|clickthru|redirects|readthis)\.ca$/, /^goshrink\.com$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee75() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee75() {
       var f;
       return _regenerator["default"].wrap(function _callee75$(_context75) {
         while (1) {
@@ -4577,8 +4452,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[\w-]+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee76() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee76() {
       var f;
       return _regenerator["default"].wrap(function _callee76$(_context76) {
         while (1) {
@@ -4632,8 +4506,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/ok\/\w+$/
   }],
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee77() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee77() {
       var a, i;
       return _regenerator["default"].wrap(function _callee77$(_context77) {
         while (1) {
@@ -4659,8 +4532,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\/\w+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee78() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee78() {
       var f;
       return _regenerator["default"].wrap(function _callee78$(_context78) {
         while (1) {
@@ -4682,8 +4554,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^filemedia\.net$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee79() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee79() {
       var script;
       return _regenerator["default"].wrap(function _callee79$(_context79) {
         while (1) {
@@ -4710,8 +4581,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?filoops\.info$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee80() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee80() {
       var a;
       return _regenerator["default"].wrap(function _callee80$(_context80) {
         while (1) {
@@ -4734,8 +4604,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www|links)\.fiuxy\.(co|bz)$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee81() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee81() {
       return _regenerator["default"].wrap(function _callee81$(_context81) {
         while (1) {
           switch (_context81.prev = _context81.next) {
@@ -4757,8 +4626,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/download-file\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee82() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee82() {
       var gp;
       return _regenerator["default"].wrap(function _callee82$(_context82) {
         while (1) {
@@ -4781,8 +4649,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^gkurl\.us$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee83() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee83() {
       var iframe;
       return _regenerator["default"].wrap(function _callee83$(_context83) {
         while (1) {
@@ -4806,8 +4673,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /open=(.+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee84() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee84() {
       var url;
       return _regenerator["default"].wrap(function _callee84$(_context84) {
         while (1) {
@@ -4830,8 +4696,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^gsurl\.(me|in)$/, /^(gsul|getsl|glinks)\.me$/, /^gsur\.in$/, /^g5u\.pw$/, /^gurl\.ly$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee85() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee85() {
       var a;
       return _regenerator["default"].wrap(function _callee85$(_context85) {
         while (1) {
@@ -4856,8 +4721,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee86() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee86() {
       var l;
       return _regenerator["default"].wrap(function _callee86$(_context86) {
         while (1) {
@@ -4881,8 +4745,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/wordpress\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee87() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee87() {
       var h;
       return _regenerator["default"].wrap(function _callee87$(_context87) {
         while (1) {
@@ -4905,8 +4768,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee88() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee88() {
       var h;
       return _regenerator["default"].wrap(function _callee88$(_context88) {
         while (1) {
@@ -4929,8 +4791,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^hotshorturl\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee89() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee89() {
       var frame;
       return _regenerator["default"].wrap(function _callee89$(_context89) {
         while (1) {
@@ -4953,8 +4814,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^iiv\.pl$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee90() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee90() {
       var d, rv;
       return _regenerator["default"].wrap(function _callee90$(_context90) {
         while (1) {
@@ -4991,8 +4851,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/r\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee91() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee91() {
       var f;
       return _regenerator["default"].wrap(function _callee91$(_context91) {
         while (1) {
@@ -5014,8 +4873,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^ity\.im$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee92() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee92() {
       var f, _$find3, _$find4, data;
       return _regenerator["default"].wrap(function _callee92$(_context92) {
         while (1) {
@@ -5077,8 +4935,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?kingofshrink\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee93() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee93() {
       var l;
       return _regenerator["default"].wrap(function _callee93$(_context93) {
         while (1) {
@@ -5105,8 +4962,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /link=(.+)/
   }],
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee94() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee94() {
       var r;
       return _regenerator["default"].wrap(function _callee94$(_context94) {
         while (1) {
@@ -5129,8 +4985,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^st\.kurogaze\.net$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee95() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee95() {
       var a;
       return _regenerator["default"].wrap(function _callee95$(_context95) {
         while (1) {
@@ -5154,8 +5009,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/iframe\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee96() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee96() {
       var lv;
       return _regenerator["default"].wrap(function _callee96$(_context96) {
         while (1) {
@@ -5179,8 +5033,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/(.+)\//
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee97() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee97() {
       return _regenerator["default"].wrap(function _callee97$(_context97) {
         while (1) {
           switch (_context97.prev = _context97.next) {
@@ -5202,8 +5055,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/file\/([a-zA-Z0-9/=]+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee98() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee98() {
       return _regenerator["default"].wrap(function _callee98$(_context98) {
         while (1) {
           switch (_context98.prev = _context98.next) {
@@ -5222,8 +5074,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.lienscash.com/l/*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee99() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee99() {
       var a;
       return _regenerator["default"].wrap(function _callee99$(_context99) {
         while (1) {
@@ -5247,8 +5098,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   start: function start() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee100() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee100() {
       var text, m;
       return _regenerator["default"].wrap(function _callee100$(_context100) {
         while (1) {
@@ -5278,8 +5128,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee101() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee101() {
       var m, l, token, rl;
       return _regenerator["default"].wrap(function _callee101$(_context101) {
         while (1) {
@@ -5323,8 +5172,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/(.+)$/
   },
   ready: function ready(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee102() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee102() {
       var d, url;
       return _regenerator["default"].wrap(function _callee102$(_context102) {
         while (1) {
@@ -5363,8 +5211,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/\w+\/url\/(.+)$/
     },
     ready: function ready(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee103() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee103() {
         var url, match;
         return _regenerator["default"].wrap(function _callee103$(_context103) {
           while (1) {
@@ -5394,8 +5241,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: hostRules
     },
     start: function start() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee104() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee104() {
         return _regenerator["default"].wrap(function _callee104$(_context104) {
           while (1) {
             switch (_context104.prev = _context104.next) {
@@ -5410,8 +5256,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       }))();
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee105() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee105() {
         var path, token, url;
         return _regenerator["default"].wrap(function _callee105$(_context105) {
           while (1) {
@@ -5452,8 +5297,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /^(.*)[?&]_lbGate=\d+$/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee106() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee106() {
         return _regenerator["default"].wrap(function _callee106$(_context106) {
           while (1) {
             switch (_context106.prev = _context106.next) {
@@ -5502,8 +5346,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _sendRequest.apply(this, arguments);
   }
   function _sendRequest() {
-    _sendRequest = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee107(token) {
+    _sendRequest = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee107(token) {
       var text, data;
       return _regenerator["default"].wrap(function _callee107$(_context107) {
         while (1) {
@@ -5561,8 +5404,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _retry.apply(this, arguments);
   }
   function _retry() {
-    _retry = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee108() {
+    _retry = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee108() {
       var text, d, t;
       return _regenerator["default"].wrap(function _callee108$(_context108) {
         while (1) {
@@ -5650,8 +5492,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?(.+)$/
   },
   ready: function ready(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee109() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee109() {
       var lnk, b;
       return _regenerator["default"].wrap(function _callee109$(_context109) {
         while (1) {
@@ -5713,8 +5554,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: [/^met\.bz$/, /^tui\.click$/, /^earn-guide\.com$/, /^adurl\.id$/, /^(cutwi|cut-w|cutl|dmus)\.in$/, /^(www\.)?jurl\.io$/, /^lapak\.link$/, /^(ulshare|urlike)\.net$/]
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee110() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee110() {
         var handler;
         return _regenerator["default"].wrap(function _callee110$(_context110) {
           while (1) {
@@ -5745,11 +5585,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
       /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs|miniurl)\.pw$/, /^(www\.)?lwt\.pw$/, 
       /^(el3id|allreports|clickskaro)\.site$/, /^123link\.carpartsviet97\.site$/, 
       /^(shink|shrten|gg-l|vnurl|bloggingdekh|ln11|sh11|tradeguru|newskart|kidsors|xz2)\.xyz$/, /^(techinhub|viralnow|shophipro|technocanvas|getfreshcloud|profitstudy|ijobanana)\.xyz$/, /^(autocarsmagz|getpocket|yasinews|dunyanews|komiupdates|allapp|smwebs|news-tech)\.xyz$/, /^cutdl\.xyz$/, 
-      /^(ckk|iir|tii)\.ai$/, /^thin\.at$/, /^(tips\.)?atv\.pw$/, /^skip\.az$/, /^(funnyquiz|mediakita|kabarviral)\.blog$/, /^(icutit|earnbig|cutearn)\.ca$/, /^e2s\.cc$/, /^(adzurl|link2link)\.cf$/, /^(mlink|cl250|xpickle|infosehatku)\.club$/, /^(3bst|coinlink|itiurl|coshink|link5s|curs|makeurl|mooddisorder|cutls)\.co$/, /^bestscholaeshipdegree\.date$/, /^click2see\.desi$/, /^(tny|tiny)\.ec$/, /^8o\.ee$/, /^pa4l\.esy\.es$/, /^(shortearn|enrt)\.eu$/, /^(sciencelife|cpm4all)\.ga$/, /^za\.gl$/, /^zi\.ht$/, /^shorted\.id$/, /^(igram|gram|pingit)\.im$/, /^megaurl\.(in|link)$/, /^(businessiss2|techandreview|yesmoviesapp|kpscthulasilogin)\.info$/, /^stfly\.(io|press)$/, /^lyon\.kim$/, /^fc\.lc$/, /^(petty|skips|tr|flaz)\.link$/, /^payskip\.(me|org)$/, /^btc\.ms$/, /^splashnews\.ooo$/, /^express-cut\.ovh$/, /^short\.pe$/, /^(clk|cll)\.(press|ink|sh|icu)$/, /^(lopte|megalink)\.pro$/, /^123link\.(pw|vip)$/, /^royalown\.review$/, /^earn\.theplusit\.ro$/, /^sk-ip\.(ru|tech)$/, /^tinylink\.run$/, /^(oko|aii)\.sh$/, /^(dutchycorp|abouttech)\.space$/, /^buyitonline\.store$/, /^eatings\.stream$/, /^tl\.tc$/, /^(1921681254|geki|wegner|gpshort)\.tech$/, /^(linkvip|4short)\.tk$/, /^(www\.)?pnd\.tl$/, /^get\.ujv\.al$/, /^(urlcloud|imageoptimizer)\.us$/, /^(koylinks|buy-in-599rs)\.win$/]
+      /^(ckk|iir|tii)\.ai$/, /^thin\.at$/, /^(tips\.)?atv\.pw$/, /^skip\.az$/, /^(funnyquiz|mediakita|kabarviral)\.blog$/, /^(icutit|earnbig|cutearn)\.ca$/, /^e2s\.cc$/, /^(adzurl|link2link)\.cf$/, /^(mlink|cl250|xpickle|infosehatku)\.club$/, /^(3bst|coinlink|itiurl|coshink|link5s|curs|makeurl|mooddisorder|cutls)\.co$/, /^bestscholaeshipdegree\.date$/, /^click2see\.desi$/, /^(tny|tiny)\.ec$/, /^8o\.ee$/, /^pa4l\.esy\.es$/, /^(shortearn|enrt)\.eu$/, /^(sciencelife|cpm4all)\.ga$/, /^za\.gl$/, /^zi\.ht$/, /^shorted\.id$/, /^(igram|gram|pingit)\.im$/, /^megaurl\.(in|link)$/, /^(businessiss2|techandreview|yesmoviesapp|kpscthulasilogin)\.info$/, /^stfly\.(io|press)$/, /^lyon\.kim$/, /^fc\.lc$/, /^(petty|skips|tr|flaz)\.link$/, /^payskip\.(me|org)$/, /^btc\.ms$/, /^splashnews\.ooo$/, /^express-cut\.ovh$/, /^short\.pe$/, /^(clk|cll)\.(press|ink|sh|icu)$/, /^(lopte|megalink)\.pro$/, /^123link\.(pw|vip)$/, /^royalown\.review$/, /^earn\.theplusit\.ro$/, /^sk-ip\.(ru|tech)$/, /^tinylink\.run$/, /^(oko|aii|shorten)\.sh$/, /^(dutchycorp|abouttech)\.space$/, /^buyitonline\.store$/, /^eatings\.stream$/, /^tl\.tc$/, /^(1921681254|geki|wegner|gpshort)\.tech$/, /^(linkvip|4short)\.tk$/, /^(www\.)?pnd\.tl$/, /^get\.ujv\.al$/, /^(urlcloud|imageoptimizer)\.us$/, /^(koylinks|buy-in-599rs)\.win$/]
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee111() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee111() {
         var handler;
         return _regenerator["default"].wrap(function _callee111$(_context111) {
           while (1) {
@@ -5772,8 +5611,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: [/^(arabtvlink|safeku|dz4link)\.com$/, /^linksoflife\.co$/, /^wi\.cr$/, /^(bitcoinly|cashurl)\.in$/, /^linksof\.life$/, /^wicr\.me$/, /^shrtit\.tech$/, /^fireshorts\.tk$/, /^mitly\.us$/]
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee112() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee112() {
         var handler;
         return _regenerator["default"].wrap(function _callee112$(_context112) {
           while (1) {
@@ -5796,8 +5634,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: [/^123short\.biz$/, /^(cutpaid|tmearn|icutlink)\.com$/, /^(ctui|cuti)\.in$/, /^zutrox\.link$/, /^(techcraze|healthinsider)\.online$/, /^cutwin\.(us|com)$/, /^(www\.)?shrink\.vip$/]
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee113() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee113() {
         var handler;
         return _regenerator["default"].wrap(function _callee113$(_context113) {
           while (1) {
@@ -5820,8 +5657,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: /^(www\.)?ourl\.io$/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee114() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee114() {
         var handler;
         return _regenerator["default"].wrap(function _callee114$(_context114) {
           while (1) {
@@ -5844,8 +5680,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       host: /^(www\.)?linkdrop\.net$/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee115() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee115() {
         var handler;
         return _regenerator["default"].wrap(function _callee115$(_context115) {
           while (1) {
@@ -5869,8 +5704,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/link$/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee116() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee116() {
         var handler;
         return _regenerator["default"].wrap(function _callee116$(_context116) {
           while (1) {
@@ -5896,8 +5730,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       /^royurls\.bid$/, /^shortit\.ca$/, /^(urle|adshort)\.co$/, /^(1)?idsly\.(com|bid|net|org)$/, /^shortad\.cf$/, /^(adbilty|taive)\.in$/, /^(curs|crus|4cut|u2s|l2s)\.io$/, /^123link\.(io|co|press|pro)$/, /^petty\.link$/, /^(weefy|adbull|zeiz|link4|adcoin)\.me$/, /^dzurl\.ml$/, /^spamlink\.org$/, /^(twik|adslink)\.pw$/, /^git\.tc$/, /^(adfu|linku)\.us$/]
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee117() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee117() {
         var handler;
         return _regenerator["default"].wrap(function _callee117$(_context117) {
           while (1) {
@@ -5915,8 +5748,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       }))();
     }
   });
-  var AbstractHandler =
-  function () {
+  var AbstractHandler = function () {
     function AbstractHandler() {
       (0, _classCallCheck2["default"])(this, AbstractHandler);
       this._overlaySelector = ['[class$="Overlay"]', '#__random_class_name__', '#headlineatas', '#myModal', '.opacity_wrapper', '#overlay'].join(', '); 
@@ -5939,8 +5771,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "call",
       value: function () {
-        var _call = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee118() {
+        var _call = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee118() {
           var ok, mw, url;
           return _regenerator["default"].wrap(function _callee118$(_context118) {
             while (1) {
@@ -5988,12 +5819,12 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }]);
     return AbstractHandler;
   }();
-  var NoRecaptchaHandler =
-  function (_AbstractHandler) {
+  var NoRecaptchaHandler = function (_AbstractHandler) {
     (0, _inherits2["default"])(NoRecaptchaHandler, _AbstractHandler);
+    var _super = _createSuper(NoRecaptchaHandler);
     function NoRecaptchaHandler() {
       (0, _classCallCheck2["default"])(this, NoRecaptchaHandler);
-      return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(NoRecaptchaHandler).apply(this, arguments));
+      return _super.apply(this, arguments);
     }
     (0, _createClass2["default"])(NoRecaptchaHandler, [{
       key: "prepare",
@@ -6005,8 +5836,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "getMiddleware",
       value: function () {
-        var _getMiddleware = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee119() {
+        var _getMiddleware = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee119() {
           return _regenerator["default"].wrap(function _callee119$(_context119) {
             while (1) {
               switch (_context119.prev = _context119.next) {
@@ -6035,8 +5865,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "getURL",
       value: function () {
-        var _getURL = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee120(jForm) {
+        var _getURL = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee120(jForm) {
           return _regenerator["default"].wrap(function _callee120$(_context120) {
             while (1) {
               switch (_context120.prev = _context120.next) {
@@ -6060,18 +5889,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }]);
     return NoRecaptchaHandler;
   }(AbstractHandler);
-  var RecaptchaHandler =
-  function (_AbstractHandler2) {
+  var RecaptchaHandler = function (_AbstractHandler2) {
     (0, _inherits2["default"])(RecaptchaHandler, _AbstractHandler2);
+    var _super2 = _createSuper(RecaptchaHandler);
     function RecaptchaHandler() {
       (0, _classCallCheck2["default"])(this, RecaptchaHandler);
-      return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(RecaptchaHandler).apply(this, arguments));
+      return _super2.apply(this, arguments);
     }
     (0, _createClass2["default"])(RecaptchaHandler, [{
       key: "prepare",
       value: function () {
-        var _prepare = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee121() {
+        var _prepare = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee121() {
           var f, b;
           return _regenerator["default"].wrap(function _callee121$(_context121) {
             while (1) {
@@ -6113,8 +5941,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "submitListen",
       value: function () {
-        var _submitListen = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee122(b) {
+        var _submitListen = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee122(b) {
           var o;
           return _regenerator["default"].wrap(function _callee122$(_context122) {
             while (1) {
@@ -6143,8 +5970,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "getMiddleware",
       value: function () {
-        var _getMiddleware2 = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee123() {
+        var _getMiddleware2 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee123() {
           return _regenerator["default"].wrap(function _callee123$(_context123) {
             while (1) {
               switch (_context123.prev = _context123.next) {
@@ -6174,8 +6000,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "getURL",
       value: function () {
-        var _getURL2 = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee124(jForm) {
+        var _getURL2 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee124(jForm) {
           var url;
           return _regenerator["default"].wrap(function _callee124$(_context124) {
             while (1) {
@@ -6220,18 +6045,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }]);
     return RecaptchaHandler;
   }(AbstractHandler);
-  var InvisibleRecaptchaHandler =
-  function (_RecaptchaHandler) {
+  var InvisibleRecaptchaHandler = function (_RecaptchaHandler) {
     (0, _inherits2["default"])(InvisibleRecaptchaHandler, _RecaptchaHandler);
+    var _super3 = _createSuper(InvisibleRecaptchaHandler);
     function InvisibleRecaptchaHandler() {
       (0, _classCallCheck2["default"])(this, InvisibleRecaptchaHandler);
-      return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(InvisibleRecaptchaHandler).apply(this, arguments));
+      return _super3.apply(this, arguments);
     }
     (0, _createClass2["default"])(InvisibleRecaptchaHandler, [{
       key: "submitListen",
       value: function () {
-        var _submitListen2 = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee125(b, f) {
+        var _submitListen2 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee125(b, f) {
           var click;
           return _regenerator["default"].wrap(function _callee125$(_context125) {
             while (1) {
@@ -6261,18 +6085,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }]);
     return InvisibleRecaptchaHandler;
   }(RecaptchaHandler);
-  var NonDisabledRecaptchaHandler =
-  function (_RecaptchaHandler2) {
+  var NonDisabledRecaptchaHandler = function (_RecaptchaHandler2) {
     (0, _inherits2["default"])(NonDisabledRecaptchaHandler, _RecaptchaHandler2);
+    var _super4 = _createSuper(NonDisabledRecaptchaHandler);
     function NonDisabledRecaptchaHandler() {
       (0, _classCallCheck2["default"])(this, NonDisabledRecaptchaHandler);
-      return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(NonDisabledRecaptchaHandler).apply(this, arguments));
+      return _super4.apply(this, arguments);
     }
     (0, _createClass2["default"])(NonDisabledRecaptchaHandler, [{
       key: "submitListen",
       value: function () {
-        var _submitListen3 = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee126(b) {
+        var _submitListen3 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee126(b) {
           return _regenerator["default"].wrap(function _callee126$(_context126) {
             while (1) {
               switch (_context126.prev = _context126.next) {
@@ -6305,18 +6128,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }]);
     return NonDisabledRecaptchaHandler;
   }(RecaptchaHandler);
-  var OURLHandler =
-  function (_RecaptchaHandler3) {
+  var OURLHandler = function (_RecaptchaHandler3) {
     (0, _inherits2["default"])(OURLHandler, _RecaptchaHandler3);
+    var _super5 = _createSuper(OURLHandler);
     function OURLHandler() {
       (0, _classCallCheck2["default"])(this, OURLHandler);
-      return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(OURLHandler).apply(this, arguments));
+      return _super5.apply(this, arguments);
     }
     (0, _createClass2["default"])(OURLHandler, [{
       key: "getMiddleware",
       value: function () {
-        var _getMiddleware3 = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee127() {
+        var _getMiddleware3 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee127() {
           return _regenerator["default"].wrap(function _callee127$(_context127) {
             while (1) {
               switch (_context127.prev = _context127.next) {
@@ -6348,8 +6170,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "getURL",
       value: function () {
-        var _getURL3 = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee128(jFormObject) {
+        var _getURL3 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee128(jFormObject) {
           return _regenerator["default"].wrap(function _callee128$(_context128) {
             while (1) {
               switch (_context128.prev = _context128.next) {
@@ -6376,18 +6197,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }]);
     return OURLHandler;
   }(RecaptchaHandler);
-  var LinkDropHandler =
-  function (_RecaptchaHandler4) {
+  var LinkDropHandler = function (_RecaptchaHandler4) {
     (0, _inherits2["default"])(LinkDropHandler, _RecaptchaHandler4);
+    var _super6 = _createSuper(LinkDropHandler);
     function LinkDropHandler() {
       (0, _classCallCheck2["default"])(this, LinkDropHandler);
-      return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(LinkDropHandler).apply(this, arguments));
+      return _super6.apply(this, arguments);
     }
     (0, _createClass2["default"])(LinkDropHandler, [{
       key: "getMiddleware",
       value: function () {
-        var _getMiddleware4 = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee129() {
+        var _getMiddleware4 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee129() {
           return _regenerator["default"].wrap(function _callee129$(_context129) {
             while (1) {
               switch (_context129.prev = _context129.next) {
@@ -6411,12 +6231,12 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }]);
     return LinkDropHandler;
   }(RecaptchaHandler);
-  var StagedHandler =
-  function (_AbstractHandler3) {
+  var StagedHandler = function (_AbstractHandler3) {
     (0, _inherits2["default"])(StagedHandler, _AbstractHandler3);
+    var _super7 = _createSuper(StagedHandler);
     function StagedHandler() {
       (0, _classCallCheck2["default"])(this, StagedHandler);
-      return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(StagedHandler).apply(this, arguments));
+      return _super7.apply(this, arguments);
     }
     (0, _createClass2["default"])(StagedHandler, [{
       key: "prepare",
@@ -6428,8 +6248,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "getMiddleware",
       value: function () {
-        var _getMiddleware5 = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee130() {
+        var _getMiddleware5 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee130() {
           var f, args, url, page;
           return _regenerator["default"].wrap(function _callee130$(_context130) {
             while (1) {
@@ -6470,8 +6289,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "getURL",
       value: function () {
-        var _getURL4 = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee131(page) {
+        var _getURL4 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee131(page) {
           var f, args, url, data;
           return _regenerator["default"].wrap(function _callee131$(_context131) {
             while (1) {
@@ -6508,12 +6326,12 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }]);
     return StagedHandler;
   }(AbstractHandler);
-  var ShortlyHandler =
-  function (_AbstractHandler4) {
+  var ShortlyHandler = function (_AbstractHandler4) {
     (0, _inherits2["default"])(ShortlyHandler, _AbstractHandler4);
+    var _super8 = _createSuper(ShortlyHandler);
     function ShortlyHandler() {
       (0, _classCallCheck2["default"])(this, ShortlyHandler);
-      return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(ShortlyHandler).apply(this, arguments));
+      return _super8.apply(this, arguments);
     }
     (0, _createClass2["default"])(ShortlyHandler, [{
       key: "prepare",
@@ -6523,8 +6341,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "getMiddleware",
       value: function () {
-        var _getMiddleware6 = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee132() {
+        var _getMiddleware6 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee132() {
           var a;
           return _regenerator["default"].wrap(function _callee132$(_context132) {
             while (1) {
@@ -6553,8 +6370,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "getURL",
       value: function () {
-        var _getURL5 = (0, _asyncToGenerator2["default"])(
-        _regenerator["default"].mark(function _callee133(id) {
+        var _getURL5 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee133(id) {
           return _regenerator["default"].wrap(function _callee133$(_context133) {
             while (1) {
               switch (_context133.prev = _context133.next) {
@@ -6598,8 +6414,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _getJQueryForm.apply(this, arguments);
   }
   function _getJQueryForm() {
-    _getJQueryForm = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee134(selector) {
+    _getJQueryForm = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee134(selector) {
       var jQuery, f;
       return _regenerator["default"].wrap(function _callee134$(_context134) {
         while (1) {
@@ -6666,8 +6481,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^linkduit\.net$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee135() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee135() {
       var l, check;
       return _regenerator["default"].wrap(function _callee135$(_context135) {
         while (1) {
@@ -6700,8 +6514,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?linkplugapp\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee136() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee136() {
       var a;
       return _regenerator["default"].wrap(function _callee136$(_context136) {
         while (1) {
@@ -6725,8 +6538,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^(\/\w+)$/
   },
   ready: function ready(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee137() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee137() {
       var recaptcha, url, ipinfo, payload, token, data;
       return _regenerator["default"].wrap(function _callee137$(_context137) {
         while (1) {
@@ -6783,8 +6595,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee138() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee138() {
       var a, url, pattern, lastURL, matched;
       return _regenerator["default"].wrap(function _callee138$(_context138) {
         while (1) {
@@ -6830,8 +6641,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[a-zA-Z0-9]+$/
   },
   start: function start() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee139() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee139() {
       return _regenerator["default"].wrap(function _callee139$(_context139) {
         while (1) {
           switch (_context139.prev = _context139.next) {
@@ -6846,8 +6656,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }))();
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee140() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee140() {
       var l;
       return _regenerator["default"].wrap(function _callee140$(_context140) {
         while (1) {
@@ -6872,8 +6681,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /=(.+)$/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee141() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee141() {
       return _regenerator["default"].wrap(function _callee141$(_context141) {
         while (1) {
           switch (_context141.prev = _context141.next) {
@@ -6894,8 +6702,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^dwindly\.io$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee142() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee142() {
       var l;
       return _regenerator["default"].wrap(function _callee142$(_context142) {
         while (1) {
@@ -6930,8 +6737,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/view\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee143() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee143() {
       var l;
       return _regenerator["default"].wrap(function _callee143$(_context143) {
         while (1) {
@@ -6954,8 +6760,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?r=([a-zA-Z0-9/=]+)$/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee144() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee144() {
       var url;
       return _regenerator["default"].wrap(function _callee144$(_context144) {
         while (1) {
@@ -6978,8 +6783,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^direct-link\.net$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee145() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee145() {
       var lv;
       return _regenerator["default"].wrap(function _callee145$(_context145) {
         while (1) {
@@ -7003,8 +6807,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[^.]+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee146() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee146() {
       var f, o;
       return _regenerator["default"].wrap(function _callee146$(_context146) {
         while (1) {
@@ -7060,8 +6863,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /\?(.+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee147() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee147() {
       return _regenerator["default"].wrap(function _callee147$(_context147) {
         while (1) {
           switch (_context147.prev = _context147.next) {
@@ -7083,8 +6885,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+\/(.+)$/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee148() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee148() {
       var url;
       return _regenerator["default"].wrap(function _callee148$(_context148) {
         while (1) {
@@ -7107,8 +6908,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^minidroid\.net$/, /^linkpoi\.in$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee149() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee149() {
       var a;
       return _regenerator["default"].wrap(function _callee149$(_context149) {
         while (1) {
@@ -7131,8 +6931,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^mirrorfilehost\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee150() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee150() {
       var frame, form, input;
       return _regenerator["default"].wrap(function _callee150$(_context150) {
         while (1) {
@@ -7166,8 +6965,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/url\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee151() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee151() {
       var a, i;
       return _regenerator["default"].wrap(function _callee151$(_context151) {
         while (1) {
@@ -7191,8 +6989,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://my-link.pro/*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee152() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee152() {
       var i;
       return _regenerator["default"].wrap(function _callee152$(_context152) {
         while (1) {
@@ -7220,8 +7017,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[^/]+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee153() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee153() {
       var matches, url;
       return _regenerator["default"].wrap(function _callee153$(_context153) {
         while (1) {
@@ -7246,8 +7042,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^onepiece-ex\.com\.br$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee154() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee154() {
       var matches;
       return _regenerator["default"].wrap(function _callee154$(_context154) {
         while (1) {
@@ -7271,8 +7066,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^www\.namiyt\.com$/, /^realsht\.mobi$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee155() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee155() {
       var n;
       return _regenerator["default"].wrap(function _callee155$(_context155) {
         while (1) {
@@ -7295,8 +7089,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/download\/(.+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee156() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee156() {
       var url;
       return _regenerator["default"].wrap(function _callee156$(_context156) {
         while (1) {
@@ -7319,8 +7112,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^nsfw\.in$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee157() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee157() {
       var a;
       return _regenerator["default"].wrap(function _callee157$(_context157) {
         while (1) {
@@ -7343,8 +7135,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^nutshellurl\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee158() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee158() {
       var iframe;
       return _regenerator["default"].wrap(function _callee158$(_context158) {
         while (1) {
@@ -7367,8 +7158,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.oni\.vn$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee159() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee159() {
       var data, url;
       return _regenerator["default"].wrap(function _callee159$(_context159) {
         while (1) {
@@ -7404,8 +7194,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\/\w+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee160() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee160() {
       return _regenerator["default"].wrap(function _callee160$(_context160) {
         while (1) {
           switch (_context160.prev = _context160.next) {
@@ -7425,8 +7214,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^p\.pw$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee161() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee161() {
       var m;
       return _regenerator["default"].wrap(function _callee161$(_context161) {
         while (1) {
@@ -7451,8 +7239,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^pdi2\.net$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee162() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee162() {
       var s;
       return _regenerator["default"].wrap(function _callee162$(_context162) {
         while (1) {
@@ -7476,8 +7263,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(probusinesshub|tecnogb)\.com$/, /^(trackywe|starvate)\.in$/, /^viralcollect\.info$/, /^(technodia|ourtechnoew|mutharammss|thanda|thinana)\.xyz$/, /^entretendonaweb\.ga$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee163() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee163() {
       var f;
       return _regenerator["default"].wrap(function _callee163$(_context163) {
         while (1) {
@@ -7511,8 +7297,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee164() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee164() {
       var px;
       return _regenerator["default"].wrap(function _callee164$(_context164) {
         while (1) {
@@ -7533,8 +7318,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://richlink.com/app/webscr?cmd=_click&key=*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee165() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee165() {
       var f;
       return _regenerator["default"].wrap(function _callee165$(_context165) {
         while (1) {
@@ -7565,8 +7349,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^preview\.rlu\.ru$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee166() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee166() {
       var a;
       return _regenerator["default"].wrap(function _callee166$(_context166) {
         while (1) {
@@ -7589,8 +7372,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.ron\.vn$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee167() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee167() {
       var script, data, url;
       return _regenerator["default"].wrap(function _callee167$(_context167) {
         while (1) {
@@ -7622,8 +7404,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+\/$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee168() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee168() {
       var m;
       return _regenerator["default"].wrap(function _callee168$(_context168) {
         while (1) {
@@ -7647,8 +7428,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /\/\w+/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee169() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee169() {
       var directUrl;
       return _regenerator["default"].wrap(function _callee169$(_context169) {
         while (1) {
@@ -7680,8 +7460,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /return_url=([^&]+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee170() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee170() {
       return _regenerator["default"].wrap(function _callee170$(_context170) {
         while (1) {
           switch (_context170.prev = _context170.next) {
@@ -7704,8 +7483,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?url=(.*)/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee171() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee171() {
       var sem;
       return _regenerator["default"].wrap(function _callee171$(_context171) {
         while (1) {
@@ -7728,8 +7506,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(www\.)?apploadz\.ru$/, /^(www\.)?seomafia\.net$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee172() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee172() {
       var a;
       return _regenerator["default"].wrap(function _callee172$(_context172) {
         while (1) {
@@ -7758,8 +7535,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/freeze\/.+/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee173() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee173() {
         var promise, url;
         return _regenerator["default"].wrap(function _callee173$(_context173) {
           while (1) {
@@ -7800,8 +7576,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /https?:\/\//
     },
     start: function start() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee174() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee174() {
         var url;
         return _regenerator["default"].wrap(function _callee174$(_context174) {
           while (1) {
@@ -7827,8 +7602,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/[\d\w]+/
     },
     start: function start() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee175() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee175() {
         return _regenerator["default"].wrap(function _callee175$(_context175) {
           while (1) {
             switch (_context175.prev = _context175.next) {
@@ -7843,8 +7617,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       }))();
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee176() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee176() {
         var m, o;
         return _regenerator["default"].wrap(function _callee176$(_context176) {
           while (1) {
@@ -7910,8 +7683,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(short|srt)\.am$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee177() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee177() {
       return _regenerator["default"].wrap(function _callee177$(_context177) {
         while (1) {
           switch (_context177.prev = _context177.next) {
@@ -7940,8 +7712,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: [/^\/\w+$/, /^\/url_redirector\.html$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee178() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee178() {
       var f, _$find5, _$find6, v;
       return _regenerator["default"].wrap(function _callee178$(_context178) {
         while (1) {
@@ -7971,8 +7742,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[a-zA-Z0-9]+/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee179() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee179() {
       var s;
       return _regenerator["default"].wrap(function _callee179$(_context179) {
         while (1) {
@@ -7996,8 +7766,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/(.+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee180() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee180() {
       return _regenerator["default"].wrap(function _callee180$(_context180) {
         while (1) {
           switch (_context180.prev = _context180.next) {
@@ -8019,8 +7788,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/shrinked\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee181() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee181() {
       var i;
       return _regenerator["default"].wrap(function _callee181$(_context181) {
         while (1) {
@@ -8044,8 +7812,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[se]\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee182() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee182() {
       var i;
       return _regenerator["default"].wrap(function _callee182$(_context182) {
         while (1) {
@@ -8069,8 +7836,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\d+\/(.+)$/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee183() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee183() {
       var url;
       return _regenerator["default"].wrap(function _callee183$(_context183) {
         while (1) {
@@ -8095,8 +7861,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/short-url\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee184() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee184() {
       var meta, url;
       return _regenerator["default"].wrap(function _callee184$(_context184) {
         while (1) {
@@ -8121,8 +7886,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee185() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee185() {
       var s;
       return _regenerator["default"].wrap(function _callee185$(_context185) {
         while (1) {
@@ -8145,8 +7909,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/goto\/([^?]+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee186() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee186() {
       var l;
       return _regenerator["default"].wrap(function _callee186$(_context186) {
         while (1) {
@@ -8173,8 +7936,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/short\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee187() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee187() {
       var a;
       return _regenerator["default"].wrap(function _callee187$(_context187) {
         while (1) {
@@ -8198,8 +7960,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\/\w+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee188() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee188() {
       var id, url;
       return _regenerator["default"].wrap(function _callee188$(_context188) {
         while (1) {
@@ -8232,8 +7993,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/(s|site)\/\w+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee189() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee189() {
       var captcha, i, word;
       return _regenerator["default"].wrap(function _callee189$(_context189) {
         while (1) {
@@ -8276,8 +8036,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/link\/get\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee190() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee190() {
       var su;
       return _regenerator["default"].wrap(function _callee190$(_context190) {
         while (1) {
@@ -8301,8 +8060,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[a-zA-Z0-9]+/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee191() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee191() {
       var su;
       return _regenerator["default"].wrap(function _callee191$(_context191) {
         while (1) {
@@ -8327,8 +8085,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /(?:\?|&)oldurl=([^&]+)(?:$|&)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee192() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee192() {
       return _regenerator["default"].wrap(function _callee192$(_context192) {
         while (1) {
           switch (_context192.prev = _context192.next) {
@@ -8350,8 +8107,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?go=([a-zA-Z0-9]+)$/
   },
   start: function start() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee193() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee193() {
       var path;
       return _regenerator["default"].wrap(function _callee193$(_context193) {
         while (1) {
@@ -8375,8 +8131,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?link=([a-zA-Z0-9]+)(clickarurl)?$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee194() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee194() {
       var s;
       return _regenerator["default"].wrap(function _callee194$(_context194) {
         while (1) {
@@ -8398,8 +8153,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^surfsees\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee195() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee195() {
       var surl;
       return _regenerator["default"].wrap(function _callee195$(_context195) {
         while (1) {
@@ -8423,8 +8177,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/link\/\w+\/$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee196() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee196() {
       var g;
       return _regenerator["default"].wrap(function _callee196$(_context196) {
         while (1) {
@@ -8495,8 +8248,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?reff=([a-zA-Z0-9/=]+)$/
   }],
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee197() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee197() {
       var rawLink;
       return _regenerator["default"].wrap(function _callee197$(_context197) {
         while (1) {
@@ -8524,8 +8276,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /go=([\w\\]+=*)/
   }],
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee198() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee198() {
       var l, table;
       return _regenerator["default"].wrap(function _callee198$(_context198) {
         while (1) {
@@ -8559,8 +8310,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+\/cost\/([\w.]+)\/?$/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee199() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee199() {
       var l;
       return _regenerator["default"].wrap(function _callee199$(_context199) {
         while (1) {
@@ -8584,8 +8334,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?(id|c|k)=([a-zA-Z0-9/=]+)$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee200() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee200() {
       var f;
       return _regenerator["default"].wrap(function _callee200$(_context200) {
         while (1) {
@@ -8608,8 +8357,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?id=([a-zA-Z0-9/=]+)$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee201() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee201() {
       var g;
       return _regenerator["default"].wrap(function _callee201$(_context201) {
         while (1) {
@@ -8636,8 +8384,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(gameinfo)\.pw$/, /^(www\.)?lifesurance\.info$/, /^speedcar\.club$/, /^(www\.)?bolaoke\.club$/, /^(autolinkach|davinsurance)\.com$/, /^awcar\.icu$/, /^skyinsurance\.ml$/, /^(getinfos)\.net$/, /^stt\.awsubs\.co$/, /^wibuindo\.xyz$/]
   }],
   ready: function ready(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee202() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee202() {
       var s;
       return _regenerator["default"].wrap(function _callee202$(_context202) {
         while (1) {
@@ -8670,8 +8417,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^waifusafe\.ooo$/, /^naturalhealthy\.xyz$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee203() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee203() {
       var ln, tl;
       return _regenerator["default"].wrap(function _callee203$(_context203) {
         while (1) {
@@ -8701,8 +8447,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(sehatsegar|lonelymoon)\.net$/, /^(intercelestial|sweetlantern)\.com$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee204() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee204() {
       var ln, tl;
       return _regenerator["default"].wrap(function _callee204$(_context204) {
         while (1) {
@@ -8732,8 +8477,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(linkach|technlab)\.com$/, /^(apasih|autoride)\.pw$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee205() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee205() {
       var ln, tl;
       return _regenerator["default"].wrap(function _callee205$(_context205) {
         while (1) {
@@ -8763,8 +8507,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^lewat\.in$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee206() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee206() {
       var l;
       return _regenerator["default"].wrap(function _callee206$(_context206) {
         while (1) {
@@ -8787,8 +8530,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^sardeath\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee207() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee207() {
       var sd;
       return _regenerator["default"].wrap(function _callee207$(_context207) {
         while (1) {
@@ -8811,8 +8553,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^goou\.in$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee208() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee208() {
       var g;
       return _regenerator["default"].wrap(function _callee208$(_context208) {
         while (1) {
@@ -8839,8 +8580,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/deb\/api\//
   }],
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee209() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee209() {
       var t;
       return _regenerator["default"].wrap(function _callee209$(_context209) {
         while (1) {
@@ -8865,8 +8605,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?id=(.+)/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee210() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee210() {
       var d;
       return _regenerator["default"].wrap(function _callee210$(_context210) {
         while (1) {
@@ -8889,8 +8628,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^kombatch\.loncat\.pw$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee211() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee211() {
       var s;
       return _regenerator["default"].wrap(function _callee211$(_context211) {
         while (1) {
@@ -8916,8 +8654,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/get\/link\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee212() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee212() {
       var s;
       return _regenerator["default"].wrap(function _callee212$(_context212) {
         while (1) {
@@ -8941,8 +8678,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[a-zA-Z0-9]+/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee213() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee213() {
       var h;
       return _regenerator["default"].wrap(function _callee213$(_context213) {
         while (1) {
@@ -8965,8 +8701,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^drivefiles\.bid$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee214() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee214() {
       var d;
       return _regenerator["default"].wrap(function _callee214$(_context214) {
         while (1) {
@@ -8989,8 +8724,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^android-1\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee215() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee215() {
       var a;
       return _regenerator["default"].wrap(function _callee215$(_context215) {
         while (1) {
@@ -9013,8 +8747,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^boost\.ink$/
   },
   start: function start() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee216() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee216() {
       var b;
       return _regenerator["default"].wrap(function _callee216$(_context216) {
         while (1) {
@@ -9046,8 +8779,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^download-mirror\.ga$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee217() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee217() {
       var dm;
       return _regenerator["default"].wrap(function _callee217$(_context217) {
         while (1) {
@@ -9071,8 +8803,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[a-zA-Z0-9]+/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee218() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee218() {
       var h;
       return _regenerator["default"].wrap(function _callee218$(_context218) {
         while (1) {
@@ -9095,8 +8826,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^ww[23]\.picnictrans\.com$/, /^short\.awsubs\.(co|me)$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee219() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee219() {
       var a;
       return _regenerator["default"].wrap(function _callee219$(_context219) {
         while (1) {
@@ -9121,8 +8851,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     /^www\.njiir\.com$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee220() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee220() {
       var a;
       return _regenerator["default"].wrap(function _callee220$(_context220) {
         while (1) {
@@ -9148,8 +8877,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee221() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee221() {
       var l;
       return _regenerator["default"].wrap(function _callee221$(_context221) {
         while (1) {
@@ -9173,8 +8901,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/linkshortelink\/safelink\.php$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee222() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee222() {
       var l;
       return _regenerator["default"].wrap(function _callee222$(_context222) {
         while (1) {
@@ -9200,8 +8927,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/linkteknolink\/safelinkscript\.php$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee223() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee223() {
       var l;
       return _regenerator["default"].wrap(function _callee223$(_context223) {
         while (1) {
@@ -9226,8 +8952,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^zap\.in$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee224() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee224() {
       var z;
       return _regenerator["default"].wrap(function _callee224$(_context224) {
         while (1) {
@@ -9249,8 +8974,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(sataniabatch|get-click2)\.blogspot\.com$/, /^(www\.)?vehicle-techno\.cf$/, /^(www\.)?tetewlink\.me$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee225() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee225() {
       var clbt;
       return _regenerator["default"].wrap(function _callee225$(_context225) {
         while (1) {
@@ -9277,8 +9001,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?page=/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee226() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee226() {
       var l;
       return _regenerator["default"].wrap(function _callee226$(_context226) {
         while (1) {
@@ -9302,8 +9025,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: [/^\/link\//, /^\/safe\//]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee227() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee227() {
       var a;
       return _regenerator["default"].wrap(function _callee227$(_context227) {
         while (1) {
@@ -9326,8 +9048,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^thinfi\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee228() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee228() {
       var a;
       return _regenerator["default"].wrap(function _callee228$(_context228) {
         while (1) {
@@ -9350,8 +9071,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^hello\.tribuntekno\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee229() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee229() {
       var a;
       return _regenerator["default"].wrap(function _callee229$(_context229) {
         while (1) {
@@ -9379,8 +9099,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /url=(.+)$/
   }],
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee230() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee230() {
       return _regenerator["default"].wrap(function _callee230$(_context230) {
         while (1) {
           switch (_context230.prev = _context230.next) {
@@ -9403,8 +9122,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /\?ads=([a-zA-Z0-9=]+)$/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee231() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee231() {
       var l;
       return _regenerator["default"].wrap(function _callee231$(_context231) {
         while (1) {
@@ -9429,8 +9147,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?id=(.+)/
   },
   ready: function ready(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee232() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee232() {
       var html, res;
       return _regenerator["default"].wrap(function _callee232$(_context232) {
         while (1) {
@@ -9459,8 +9176,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[\w-]+/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee233() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee233() {
       var u;
       return _regenerator["default"].wrap(function _callee233$(_context233) {
         while (1) {
@@ -9483,8 +9199,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^unfake\.it$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee234() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee234() {
       var frame, i;
       return _regenerator["default"].wrap(function _callee234$(_context234) {
         while (1) {
@@ -9509,8 +9224,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/x(.+)/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee235() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee235() {
       var path;
       return _regenerator["default"].wrap(function _callee235$(_context235) {
         while (1) {
@@ -9533,8 +9247,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^url\.fm$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee236() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee236() {
       var a;
       return _regenerator["default"].wrap(function _callee236$(_context236) {
         while (1) {
@@ -9557,8 +9270,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^url\.ie$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee237() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee237() {
       var a;
       return _regenerator["default"].wrap(function _callee237$(_context237) {
         while (1) {
@@ -9581,8 +9293,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/(^|\.)urlcash\.(com|net|org)$/, /^(bat5|detonating|celebclk|eightteen|smilinglinks|peekatmygirlfriend|pornyhost|clb1|urlgalleries)\.com$/, /^looble\.net$/, /^xxxs\.org$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee238() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee238() {
       var matches;
       return _regenerator["default"].wrap(function _callee238$(_context238) {
         while (1) {
@@ -9620,8 +9331,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^urlinn\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee239() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee239() {
       var m;
       return _regenerator["default"].wrap(function _callee239$(_context239) {
         while (1) {
@@ -9648,8 +9358,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^urlms\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee240() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee240() {
       var iframe;
       return _regenerator["default"].wrap(function _callee240$(_context240) {
         while (1) {
@@ -9672,8 +9381,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?urlv2\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee241() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee241() {
       var path, m, l;
       return _regenerator["default"].wrap(function _callee241$(_context241) {
         while (1) {
@@ -9711,8 +9419,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/go\/\w+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee242() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee242() {
       var a;
       return _regenerator["default"].wrap(function _callee242$(_context242) {
         while (1) {
@@ -9735,8 +9442,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^ux9\.de$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee243() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee243() {
       var meta, url;
       return _regenerator["default"].wrap(function _callee243$(_context243) {
         while (1) {
@@ -9760,8 +9466,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^vavi\.co$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee244() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee244() {
       var l;
       return _regenerator["default"].wrap(function _callee244$(_context244) {
         while (1) {
@@ -9785,8 +9490,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/fastshield\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee245() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee245() {
       var v;
       return _regenerator["default"].wrap(function _callee245$(_context245) {
         while (1) {
@@ -9809,8 +9513,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /url=([^&]+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee246() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee246() {
       var url;
       return _regenerator["default"].wrap(function _callee246$(_context246) {
         while (1) {
@@ -9833,8 +9536,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.viidii\.info$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee247() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee247() {
       var o;
       return _regenerator["default"].wrap(function _callee247$(_context247) {
         while (1) {
@@ -9857,8 +9559,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?vir\.al$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee248() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee248() {
       var m;
       return _regenerator["default"].wrap(function _callee248$(_context248) {
         while (1) {
@@ -9887,8 +9588,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?vzturl\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee249() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee249() {
       var frame;
       return _regenerator["default"].wrap(function _callee249$(_context249) {
         while (1) {
@@ -9912,8 +9612,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/i\/\d+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee250() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee250() {
       var a;
       return _regenerator["default"].wrap(function _callee250$(_context250) {
         while (1) {
@@ -9936,8 +9635,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^wikiall\.org$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee251() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee251() {
       var div, o;
       return _regenerator["default"].wrap(function _callee251$(_context251) {
         while (1) {
@@ -9967,8 +9665,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^won\.pe$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee252() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee252() {
       var captcha, p;
       return _regenerator["default"].wrap(function _callee252$(_context252) {
         while (1) {
@@ -10005,8 +9702,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://yep.it/preview.php?p=*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee253() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee253() {
       var link;
       return _regenerator["default"].wrap(function _callee253$(_context253) {
         while (1) {
@@ -10028,8 +9724,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: 'http://www.yooclick.com/l/*',
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee254() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee254() {
         var uniq, path, url;
         return _regenerator["default"].wrap(function _callee254$(_context254) {
           while (1) {
@@ -10060,8 +9755,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _getURL6.apply(this, arguments);
   }
   function _getURL6() {
-    _getURL6 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee255(url) {
+    _getURL6 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee255(url) {
       var text, goodURL;
       return _regenerator["default"].wrap(function _callee255$(_context255) {
         while (1) {
@@ -10104,8 +9798,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       hash: /(?:#([a-zA-Z0-9]+))?/
     },
     ready: function ready(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee256() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee256() {
         var sjcl, paste_id, paste_salt, API_URL, pasteInfo, raw_paste, elm, frame;
         return _regenerator["default"].wrap(function _callee256$(_context256) {
           while (1) {
@@ -10182,8 +9875,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee257() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee257() {
       return _regenerator["default"].wrap(function _callee257$(_context257) {
         while (1) {
           switch (_context257.prev = _context257.next) {
@@ -10203,8 +9895,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.2i\.(sk|cz)$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee258() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee258() {
       var img;
       return _regenerator["default"].wrap(function _callee258$(_context258) {
         while (1) {
@@ -10225,8 +9916,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: ['http://*.abload.de/image.php?img=*', 'http://www.imageup.ru/*/*/*.html'],
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee259() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee259() {
       var i;
       return _regenerator["default"].wrap(function _callee259$(_context259) {
         while (1) {
@@ -10250,8 +9940,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?v=/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee260() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee260() {
       var i;
       return _regenerator["default"].wrap(function _callee260$(_context260) {
         while (1) {
@@ -10275,8 +9964,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?v=/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee261() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee261() {
       var i;
       return _regenerator["default"].wrap(function _callee261$(_context261) {
         while (1) {
@@ -10299,8 +9987,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^bayimg\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee262() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee262() {
       var i;
       return _regenerator["default"].wrap(function _callee262$(_context262) {
         while (1) {
@@ -10324,8 +10011,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /\/view\/.*/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee263() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee263() {
       var img;
       return _regenerator["default"].wrap(function _callee263$(_context263) {
         while (1) {
@@ -10348,8 +10034,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.bilder-upload.eu/show.php?file=*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee264() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee264() {
       var i;
       return _regenerator["default"].wrap(function _callee264$(_context264) {
         while (1) {
@@ -10370,8 +10055,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.casimages.com/img.php?*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee265() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee265() {
       var img;
       return _regenerator["default"].wrap(function _callee265$(_context265) {
         while (1) {
@@ -10392,8 +10076,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://cubeupload.com/im/*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee266() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee266() {
       var img;
       return _regenerator["default"].wrap(function _callee266$(_context266) {
         while (1) {
@@ -10416,8 +10099,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^depic\.me$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee267() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee267() {
       var i;
       return _regenerator["default"].wrap(function _callee267$(_context267) {
         while (1) {
@@ -10442,8 +10124,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?file=/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee268() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee268() {
       var o;
       return _regenerator["default"].wrap(function _callee268$(_context268) {
         while (1) {
@@ -10464,8 +10145,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://*.directupload.net/file/*.htm',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee269() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee269() {
       var i;
       return _regenerator["default"].wrap(function _callee269$(_context269) {
         while (1) {
@@ -10489,8 +10169,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/(.*)$/
   },
   ready: function ready(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee270() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee270() {
       var url;
       return _regenerator["default"].wrap(function _callee270$(_context270) {
         while (1) {
@@ -10523,8 +10202,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/view\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee271() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee271() {
       var i;
       return _regenerator["default"].wrap(function _callee271$(_context271) {
         while (1) {
@@ -10550,8 +10228,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/image\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee272() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee272() {
       var img;
       return _regenerator["default"].wrap(function _callee272$(_context272) {
         while (1) {
@@ -10572,8 +10249,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.fotolink.su/v.php?id=*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee273() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee273() {
       var i;
       return _regenerator["default"].wrap(function _callee273$(_context273) {
         while (1) {
@@ -10594,8 +10270,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.fotosik.pl/pokaz_obrazek/pelny/*.html',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee274() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee274() {
       var i;
       return _regenerator["default"].wrap(function _callee274$(_context274) {
         while (1) {
@@ -10620,8 +10295,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?filename=([^&]+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee275() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee275() {
       return _regenerator["default"].wrap(function _callee275$(_context275) {
         while (1) {
           switch (_context275.prev = _context275.next) {
@@ -10643,8 +10317,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/xxx\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee276() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee276() {
       var img;
       return _regenerator["default"].wrap(function _callee276$(_context276) {
         while (1) {
@@ -10668,8 +10341,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?v=([^&]+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee277() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee277() {
       return _regenerator["default"].wrap(function _callee277$(_context277) {
         while (1) {
           switch (_context277.prev = _context277.next) {
@@ -10691,8 +10363,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?v=([^&]+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee278() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee278() {
       return _regenerator["default"].wrap(function _callee278$(_context278) {
         while (1) {
           switch (_context278.prev = _context278.next) {
@@ -10711,8 +10382,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: ['http://funkyimg.com/viewer.php?img=*', 'http://funkyimg.com/view/*'],
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee279() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee279() {
       var i;
       return _regenerator["default"].wrap(function _callee279$(_context279) {
         while (1) {
@@ -10744,8 +10414,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/xxx\/(.+)/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee280() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee280() {
         return _regenerator["default"].wrap(function _callee280$(_context280) {
           while (1) {
             switch (_context280.prev = _context280.next) {
@@ -10767,8 +10436,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /^\?v=(.+)/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee281() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee281() {
         return _regenerator["default"].wrap(function _callee281$(_context281) {
           while (1) {
             switch (_context281.prev = _context281.next) {
@@ -10788,8 +10456,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.hostingpics.net/viewer.php?id=*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee282() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee282() {
       var i;
       return _regenerator["default"].wrap(function _callee282$(_context282) {
         while (1) {
@@ -10810,8 +10477,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: ['http://ifotos.pl/zobacz/*', 'https://postimg.cc/*'],
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee283() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee283() {
       var m;
       return _regenerator["default"].wrap(function _callee283$(_context283) {
         while (1) {
@@ -10834,8 +10500,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^ima\.so$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee284() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee284() {
       var a;
       return _regenerator["default"].wrap(function _callee284$(_context284) {
         while (1) {
@@ -10859,8 +10524,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /\?p[mt]=(.+)/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee285() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee285() {
       return _regenerator["default"].wrap(function _callee285$(_context285) {
         while (1) {
           switch (_context285.prev = _context285.next) {
@@ -10882,8 +10546,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\d+\/\d+/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee286() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee286() {
       var i;
       return _regenerator["default"].wrap(function _callee286$(_context286) {
         while (1) {
@@ -10917,8 +10580,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.imagebam.com/image/*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee287() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee287() {
       var o;
       return _regenerator["default"].wrap(function _callee287$(_context287) {
         while (1) {
@@ -10951,8 +10613,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.imagehousing.com/image/*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee288() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee288() {
       var i;
       return _regenerator["default"].wrap(function _callee288$(_context288) {
         while (1) {
@@ -10973,8 +10634,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://imageno.com/*.html',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee289() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee289() {
       var i;
       return _regenerator["default"].wrap(function _callee289$(_context289) {
         while (1) {
@@ -11010,8 +10670,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _run2.apply(this, arguments);
   }
   function _run2() {
-    _run2 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee290() {
+    _run2 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee290() {
       var o;
       return _regenerator["default"].wrap(function _callee290$(_context290) {
         while (1) {
@@ -11038,8 +10697,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/photo\/.+\/(.+)\/([^/]+)/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee291() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee291() {
         return _regenerator["default"].wrap(function _callee291$(_context291) {
           while (1) {
             switch (_context291.prev = _context291.next) {
@@ -11061,8 +10719,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/f\/.+\/[^/]+/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee292() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee292() {
         var i;
         return _regenerator["default"].wrap(function _callee292$(_context292) {
           while (1) {
@@ -11084,8 +10741,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://imageshost.ru/photo/*/id*.html',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee293() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee293() {
       var a;
       return _regenerator["default"].wrap(function _callee293$(_context293) {
         while (1) {
@@ -11135,8 +10791,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _run3.apply(this, arguments);
   }
   function _run3() {
-    _run3 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee294() {
+    _run3 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee294() {
       var i;
       return _regenerator["default"].wrap(function _callee294$(_context294) {
         while (1) {
@@ -11160,8 +10815,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _run4.apply(this, arguments);
   }
   function _run4() {
-    _run4 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee295() {
+    _run4 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee295() {
       var i;
       return _regenerator["default"].wrap(function _callee295$(_context295) {
         while (1) {
@@ -11202,8 +10856,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _run5.apply(this, arguments);
   }
   function _run5() {
-    _run5 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee296(rp) {
+    _run5 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee296(rp) {
       var i;
       return _regenerator["default"].wrap(function _callee296$(_context296) {
         while (1) {
@@ -11230,8 +10883,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://imageupper.com/i/?*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee297() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee297() {
       var i;
       return _regenerator["default"].wrap(function _callee297$(_context297) {
         while (1) {
@@ -11252,8 +10904,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: ['http://*.imagevenue.com/img.php?*', 'http://hotchyx.com/d/adult-image-hosting-view-08.php?id=*'],
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee298() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee298() {
       var i;
       return _regenerator["default"].wrap(function _callee298$(_context298) {
         while (1) {
@@ -11276,8 +10927,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^imagezilla\.net$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee299() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee299() {
       var i;
       return _regenerator["default"].wrap(function _callee299$(_context299) {
         while (1) {
@@ -11300,8 +10950,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://img.3ezy.net/*.htm',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee300() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee300() {
       var l;
       return _regenerator["default"].wrap(function _callee300$(_context300) {
         while (1) {
@@ -11322,8 +10971,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://img1.imagilive.com/*/*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee301() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee301() {
       var a, i;
       return _regenerator["default"].wrap(function _callee301$(_context301) {
         while (1) {
@@ -11356,8 +11004,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.(imgbabes|imgflare)\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee302() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee302() {
       var i;
       return _regenerator["default"].wrap(function _callee302$(_context302) {
         while (1) {
@@ -11390,8 +11037,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?view_id=/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee303() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee303() {
       var i;
       return _regenerator["default"].wrap(function _callee303$(_context303) {
         while (1) {
@@ -11414,8 +11060,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^imgbar\.net$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee304() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee304() {
       var i;
       return _regenerator["default"].wrap(function _callee304$(_context304) {
         while (1) {
@@ -11439,8 +11084,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/[\d\w]+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee305() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee305() {
       var i;
       return _regenerator["default"].wrap(function _callee305$(_context305) {
         while (1) {
@@ -11478,8 +11122,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _helper.apply(this, arguments);
   }
   function _helper() {
-    _helper = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee306(doReplace) {
+    _helper = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee306(doReplace) {
       var i;
       return _regenerator["default"].wrap(function _callee306$(_context306) {
         while (1) {
@@ -11515,8 +11158,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/image\/.+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee307() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee307() {
       var i;
       return _regenerator["default"].wrap(function _callee307$(_context307) {
         while (1) {
@@ -11540,8 +11182,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/image\/[\d\w]+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee308() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee308() {
       var d;
       return _regenerator["default"].wrap(function _callee308$(_context308) {
         while (1) {
@@ -11568,8 +11209,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: PATH_RULE
     },
     ready: function ready(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee309() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee309() {
         return _regenerator["default"].wrap(function _callee309$(_context309) {
           while (1) {
             switch (_context309.prev = _context309.next) {
@@ -11591,8 +11231,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: PATH_RULE
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee310() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee310() {
         var i, d, node;
         return _regenerator["default"].wrap(function _callee310$(_context310) {
           while (1) {
@@ -11631,8 +11270,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: PATH_RULE
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee311() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee311() {
         var i, node;
         return _regenerator["default"].wrap(function _callee311$(_context311) {
           while (1) {
@@ -11673,8 +11311,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: PATH_RULE
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee312() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee312() {
         var i, node;
         return _regenerator["default"].wrap(function _callee312$(_context312) {
           while (1) {
@@ -11723,8 +11360,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: PATH_RULE
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee313() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee313() {
         var i, f;
         return _regenerator["default"].wrap(function _callee313$(_context313) {
           while (1) {
@@ -11754,8 +11390,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: /^http:\/\/imgdragon\.com\/(getfil\.php|dl)$/,
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee314() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee314() {
         var i, f;
         return _regenerator["default"].wrap(function _callee314$(_context314) {
           while (1) {
@@ -11791,8 +11426,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: PATH_RULE
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee315() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee315() {
         var i, node;
         return _regenerator["default"].wrap(function _callee315$(_context315) {
           while (1) {
@@ -11832,8 +11466,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: PATH_RULE
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee316() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee316() {
         var i, node;
         return _regenerator["default"].wrap(function _callee316$(_context316) {
           while (1) {
@@ -11875,8 +11508,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/img-(\d+)\.html$/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee317() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee317() {
         return _regenerator["default"].wrap(function _callee317$(_context317) {
           while (1) {
             switch (_context317.prev = _context317.next) {
@@ -11898,8 +11530,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/imgview-\d+\.html$/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee318() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee318() {
         var i;
         return _regenerator["default"].wrap(function _callee318$(_context318) {
           while (1) {
@@ -11946,8 +11577,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _getAmbiguousForm.apply(this, arguments);
   } 
   function _getAmbiguousForm() {
-    _getAmbiguousForm = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee319(selector, shellNormalizer) {
+    _getAmbiguousForm = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee319(selector, shellNormalizer) {
       var d, style, visibleClasses, button;
       return _regenerator["default"].wrap(function _callee319$(_context319) {
         while (1) {
@@ -12008,11 +11638,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }
   function filterDuplicated(classes) {
     var table = new Map();
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+    var _iterator = _createForOfIteratorHelper(classes),
+        _step;
     try {
-      for (var _iterator = classes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var c = _step.value;
         if (table.has(c)) {
           table.set(c, false);
@@ -12021,18 +11650,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
         }
       }
     } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
+      _iterator.e(err);
     } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-          _iterator["return"]();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
+      _iterator.f();
     }
     return Array.from(table.entries()).filter(function (unique) {
       return unique;
@@ -12041,11 +11661,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
     });
   }
   function findVisibleForm(classes) {
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
+    var _iterator2 = _createForOfIteratorHelper(classes),
+        _step2;
     try {
-      for (var _iterator2 = classes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
         var class_ = _step2.value;
         var form = _ADSBYPASSER_NAMESPACE__.$.$("form.".concat(class_));
         if (!form) {
@@ -12059,18 +11678,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
         return button;
       }
     } catch (err) {
-      _didIteratorError2 = true;
-      _iteratorError2 = err;
+      _iterator2.e(err);
     } finally {
-      try {
-        if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-          _iterator2["return"]();
-        }
-      } finally {
-        if (_didIteratorError2) {
-          throw _iteratorError2;
-        }
-      }
+      _iterator2.f();
     }
     return null;
   }
@@ -12081,8 +11691,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _helper2.apply(this, arguments);
   }
   function _helper2() {
-    _helper2 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee320(id, getNext) {
+    _helper2 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee320(id, getNext) {
       var recaptcha, i, next;
       return _regenerator["default"].wrap(function _callee320$(_context320) {
         while (1) {
@@ -12131,8 +11740,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _go.apply(this, arguments);
   }
   function _go() {
-    _go = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee321(id, pre, next) {
+    _go = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee321(id, pre, next) {
       return _regenerator["default"].wrap(function _callee321$(_context321) {
         while (1) {
           switch (_context321.prev = _context321.next) {
@@ -12164,8 +11772,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?id=.*/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee322() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee322() {
       var img;
       return _regenerator["default"].wrap(function _callee322$(_context322) {
         while (1) {
@@ -12189,8 +11796,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/view-image\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee323() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee323() {
       var a;
       return _regenerator["default"].wrap(function _callee323$(_context323) {
         while (1) {
@@ -12214,8 +11820,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/site\/v\/\d+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee324() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee324() {
       var a;
       return _regenerator["default"].wrap(function _callee324$(_context324) {
         while (1) {
@@ -12241,8 +11846,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^(www\.)?imgair\.net$/, /^www\.cloudgallery\.net$/]
   }],
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee325() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee325() {
       var matches;
       return _regenerator["default"].wrap(function _callee325$(_context325) {
         while (1) {
@@ -12263,8 +11867,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://ipic.su/?page=img&pic=*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee326() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee326() {
       var i;
       return _regenerator["default"].wrap(function _callee326$(_context326) {
         while (1) {
@@ -12288,8 +11891,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/image\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee327() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee327() {
       var i;
       return _regenerator["default"].wrap(function _callee327$(_context327) {
         while (1) {
@@ -12313,8 +11915,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^(\/[^/]+\/[^/]+\.jpg)$/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee328() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee328() {
       return _regenerator["default"].wrap(function _callee328$(_context328) {
         while (1) {
           switch (_context328.prev = _context328.next) {
@@ -12336,8 +11937,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?photo=\d+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee329() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee329() {
       var i;
       return _regenerator["default"].wrap(function _callee329$(_context329) {
         while (1) {
@@ -12371,8 +11971,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /file=([^&]+)/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee330() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee330() {
         return _regenerator["default"].wrap(function _callee330$(_context330) {
           while (1) {
             switch (_context330.prev = _context330.next) {
@@ -12399,8 +11998,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: ['http://www.overpic.net/viewer.php?file=*'],
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee331() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee331() {
         var i;
         return _regenerator["default"].wrap(function _callee331$(_context331) {
           while (1) {
@@ -12425,8 +12023,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       query: /file=([^&]+)/
     },
     start: function start(m) {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee332() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee332() {
         return _regenerator["default"].wrap(function _callee332$(_context332) {
           while (1) {
             switch (_context332.prev = _context332.next) {
@@ -12446,8 +12043,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _helper3.apply(this, arguments);
   }
   function _helper3() {
-    _helper3 = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee333(m) {
+    _helper3 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee333(m) {
       return _regenerator["default"].wrap(function _callee333$(_context333) {
         while (1) {
           switch (_context333.prev = _context333.next) {
@@ -12471,8 +12067,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?entry=(.+)$/
   },
   ready: function ready(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee334() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee334() {
       var url;
       return _regenerator["default"].wrap(function _callee334$(_context334) {
         while (1) {
@@ -12495,8 +12090,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^www\.noelshack\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee335() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee335() {
       var i;
       return _regenerator["default"].wrap(function _callee335$(_context335) {
         while (1) {
@@ -12520,8 +12114,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/image\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee336() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee336() {
       var img;
       return _regenerator["default"].wrap(function _callee336$(_context336) {
         while (1) {
@@ -12544,8 +12137,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^imgazure\.com$/, /^shaggyimg\.pro$/, /^pic-money\.ru$/, /^dailyimages\.xyz$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee337() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee337() {
       var f, sig, pic_id, referer;
       return _regenerator["default"].wrap(function _callee337$(_context337) {
         while (1) {
@@ -12569,8 +12161,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.pic-upload.de/view-*.html',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee338() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee338() {
       var i;
       return _regenerator["default"].wrap(function _callee338$(_context338) {
         while (1) {
@@ -12594,8 +12185,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^pic4you\.ru$/, /^pic5you\.ru$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee339() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee339() {
       var URLparams, next, i;
       return _regenerator["default"].wrap(function _callee339$(_context339) {
         while (1) {
@@ -12632,8 +12222,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?piccash\.net$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee340() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee340() {
       var i, m;
       return _regenerator["default"].wrap(function _callee340$(_context340) {
         while (1) {
@@ -12657,8 +12246,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(picexposed|croea)\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee341() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee341() {
       var i;
       return _regenerator["default"].wrap(function _callee341$(_context341) {
         while (1) {
@@ -12679,8 +12267,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: ['http://amateurfreak.org/share-*.html', 'http://amateurfreak.org/share.php?id=*', 'http://picfox.org/*', 'http://www.euro-pic.eu/share.php?id=*', 'http://xxx.freeimage.us/share.php?id=*', 'http://www.pixsor.com/share.php?id=*', 'http://www.pixsor.com/share-*.html', 'http://pixsor.com/XXX/share-*.html', 'http://holdthemoan.net/x/share-*.html', 'http://www.imgz.pw/share-*.html', 'https://imguur.pictures/share-*.html'],
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee342() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee342() {
       var o;
       return _regenerator["default"].wrap(function _callee342$(_context342) {
         while (1) {
@@ -12704,8 +12291,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\d+\/\d+\/$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee343() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee343() {
       var i;
       return _regenerator["default"].wrap(function _callee343$(_context343) {
         while (1) {
@@ -12735,8 +12321,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/v\.php$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee344() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee344() {
       var i;
       return _regenerator["default"].wrap(function _callee344$(_context344) {
         while (1) {
@@ -12760,8 +12345,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^www\.pics-money\.ru$/, /^(picker-click|p0xpicmoney)\.ru$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee345() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee345() {
       var i;
       return _regenerator["default"].wrap(function _callee345$(_context345) {
         while (1) {
@@ -12786,8 +12370,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://picshare.geenza.com/pics/*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee346() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee346() {
       var i;
       return _regenerator["default"].wrap(function _callee346$(_context346) {
         while (1) {
@@ -12811,8 +12394,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/.*\/.*\.html$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee347() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee347() {
       var img;
       return _regenerator["default"].wrap(function _callee347$(_context347) {
         while (1) {
@@ -12837,8 +12419,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?size=original/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee348() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee348() {
       var img;
       return _regenerator["default"].wrap(function _callee348$(_context348) {
         while (1) {
@@ -12862,8 +12443,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/image\/\d+/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee349() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee349() {
       return _regenerator["default"].wrap(function _callee349$(_context349) {
         while (1) {
           switch (_context349.prev = _context349.next) {
@@ -12885,8 +12465,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/show\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee350() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee350() {
       var o;
       return _regenerator["default"].wrap(function _callee350$(_context350) {
         while (1) {
@@ -12914,8 +12493,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?pixroute\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee351() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee351() {
       var o;
       return _regenerator["default"].wrap(function _callee351$(_context351) {
         while (1) {
@@ -12938,8 +12516,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^pixxxels\.cc$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee352() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee352() {
       var img;
       return _regenerator["default"].wrap(function _callee352$(_context352) {
         while (1) {
@@ -12968,8 +12545,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^prntscr\.com$/, /^prnt\.sc$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee353() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee353() {
       var i;
       return _regenerator["default"].wrap(function _callee353$(_context353) {
         while (1) {
@@ -12992,8 +12568,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^pronpic\.org$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee354() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee354() {
       var urlBaseImg, baseUrl, img, url;
       return _regenerator["default"].wrap(function _callee354$(_context354) {
         while (1) {
@@ -13020,8 +12595,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^(\/images\/.+)\.html$/
   },
   start: function start(m) {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee355() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee355() {
       return _regenerator["default"].wrap(function _callee355$(_context355) {
         while (1) {
           switch (_context355.prev = _context355.next) {
@@ -13043,8 +12617,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/big\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee356() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee356() {
       var i;
       return _regenerator["default"].wrap(function _callee356$(_context356) {
         while (1) {
@@ -13103,8 +12676,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/img-.*\.html$/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee357() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee357() {
         var node;
         return _regenerator["default"].wrap(function _callee357$(_context357) {
           while (1) {
@@ -13160,8 +12732,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/img-.*\.html/
     }],
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee358() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee358() {
         var url;
         return _regenerator["default"].wrap(function _callee358$(_context358) {
           while (1) {
@@ -13192,8 +12763,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/imga-u\/(.+)\.jpeg\.html/
     },
     start: function start() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee359() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee359() {
         var path;
         return _regenerator["default"].wrap(function _callee359$(_context359) {
           while (1) {
@@ -13217,8 +12787,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /\/pic\//
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee360() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee360() {
         var p;
         return _regenerator["default"].wrap(function _callee360$(_context360) {
           while (1) {
@@ -13242,8 +12811,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /\/img-.*\.html/
     },
     start: function start() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee361() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee361() {
         var path;
         return _regenerator["default"].wrap(function _callee361$(_context361) {
           while (1) {
@@ -13267,8 +12835,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /\/img3-.*\.html/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee362() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee362() {
         var i;
         return _regenerator["default"].wrap(function _callee362$(_context362) {
           while (1) {
@@ -13292,8 +12859,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/ia-[io]\/(.+)\.jpeg\.html/
     },
     start: function start() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee363() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee363() {
         var path;
         return _regenerator["default"].wrap(function _callee363$(_context363) {
           while (1) {
@@ -13317,8 +12883,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/x-o\/(.+)\.jpeg\.html/
     },
     start: function start() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee364() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee364() {
         var path;
         return _regenerator["default"].wrap(function _callee364$(_context364) {
           while (1) {
@@ -13342,8 +12907,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/x-i\/(.+)\.jpeg\.html/
     },
     start: function start() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee365() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee365() {
         var path;
         return _regenerator["default"].wrap(function _callee365$(_context365) {
           while (1) {
@@ -13367,8 +12931,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/u-b\/(.+)\.jpeg\.html/
     },
     start: function start() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee366() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee366() {
         var path;
         return _regenerator["default"].wrap(function _callee366$(_context366) {
           while (1) {
@@ -13398,8 +12961,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/view\/full\/.*/
     }],
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee367() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee367() {
         var i;
         return _regenerator["default"].wrap(function _callee367$(_context367) {
           while (1) {
@@ -13423,8 +12985,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/img.*\.html$/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee368() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee368() {
         var a;
         return _regenerator["default"].wrap(function _callee368$(_context368) {
           while (1) {
@@ -13465,8 +13026,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/img-.*\.html$/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee369() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee369() {
         var m;
         return _regenerator["default"].wrap(function _callee369$(_context369) {
           while (1) {
@@ -13491,8 +13051,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/.*\.jpg\.html/
     },
     start: function start() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee370() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee370() {
         var path;
         return _regenerator["default"].wrap(function _callee370$(_context370) {
           while (1) {
@@ -13513,8 +13072,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: 'https://imgcloud.pw/image/*',
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])(
-      _regenerator["default"].mark(function _callee371() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee371() {
         var l;
         return _regenerator["default"].wrap(function _callee371$(_context371) {
           while (1) {
@@ -13536,8 +13094,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _action.apply(this, arguments);
   }
   function _action() {
-    _action = (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee372(firstSelector, secondSelector) {
+    _action = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee372(firstSelector, secondSelector) {
       var node;
       return _regenerator["default"].wrap(function _callee372$(_context372) {
         while (1) {
@@ -13579,8 +13136,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^pic\.s-jav\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee373() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee373() {
       var img;
       return _regenerator["default"].wrap(function _callee373$(_context373) {
         while (1) {
@@ -13601,8 +13157,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: ['http://screenlist.ru/details.php?image_id=*', 'http://www.imagenetz.de/*/*.html'],
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee374() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee374() {
       var img;
       return _regenerator["default"].wrap(function _callee374$(_context374) {
         while (1) {
@@ -13623,8 +13178,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://www.subirimagenes.com/*.html',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee375() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee375() {
       var i;
       return _regenerator["default"].wrap(function _callee375$(_context375) {
         while (1) {
@@ -13645,8 +13199,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: 'http://tinypic.com/view.php?pic=*',
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee376() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee376() {
       var i;
       return _regenerator["default"].wrap(function _callee376$(_context376) {
         while (1) {
@@ -13670,8 +13223,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/p\//
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee377() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee377() {
       var i;
       return _regenerator["default"].wrap(function _callee377$(_context377) {
         while (1) {
@@ -13695,8 +13247,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/img-/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])(
-    _regenerator["default"].mark(function _callee378() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee378() {
       var img, f;
       return _regenerator["default"].wrap(function _callee378$(_context378) {
         while (1) {
@@ -13740,16 +13291,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.$ = $;
 exports._ = void 0;
-var _ajax = __webpack_require__(31);
-var _cookie = __webpack_require__(33);
+var _ajax = __webpack_require__(34);
+var _cookie = __webpack_require__(36);
 var _core = __webpack_require__(5);
-var _dispatcher = __webpack_require__(25);
-var _dom = __webpack_require__(34);
-var _image = __webpack_require__(35);
-var _link = __webpack_require__(36);
-var _logger = __webpack_require__(28);
-var _misc = __webpack_require__(37);
-var _platform = __webpack_require__(26);
+var _dispatcher = __webpack_require__(28);
+var _dom = __webpack_require__(37);
+var _image = __webpack_require__(38);
+var _link = __webpack_require__(39);
+var _logger = __webpack_require__(31);
+var _misc = __webpack_require__(40);
+var _platform = __webpack_require__(29);
 var _ = {
   AdsBypasserError: _core.AdsBypasserError,
   evil: _misc.evil,
@@ -13793,28 +13344,32 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.get = get;
 exports.post = post;
-var _toArray2 = _interopRequireDefault(__webpack_require__(32));
+var _toArray2 = _interopRequireDefault(__webpack_require__(35));
 var _regenerator = _interopRequireDefault(__webpack_require__(2));
 var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(6));
-var _typeof2 = _interopRequireDefault(__webpack_require__(17));
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(10));
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(14));
-var _createClass2 = _interopRequireDefault(__webpack_require__(15));
-var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(16));
-var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(19));
-var _inherits2 = _interopRequireDefault(__webpack_require__(20));
+var _typeof2 = _interopRequireDefault(__webpack_require__(21));
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(16));
+var _createClass2 = _interopRequireDefault(__webpack_require__(17));
+var _inherits2 = _interopRequireDefault(__webpack_require__(18));
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(20));
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(23));
 var _core = __webpack_require__(5);
-var _platform = __webpack_require__(26);
-var _logger = __webpack_require__(28);
-var _marked =
-_regenerator["default"].mark(flattenObject);
-var AjaxError =
-function (_AdsBypasserError) {
+var _platform = __webpack_require__(29);
+var _logger = __webpack_require__(31);
+var _marked = _regenerator["default"].mark(flattenObject);
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+var AjaxError = function (_AdsBypasserError) {
   (0, _inherits2["default"])(AjaxError, _AdsBypasserError);
+  var _super = _createSuper(AjaxError);
   function AjaxError(method, url, data, headers, status, response) {
     var _this;
     (0, _classCallCheck2["default"])(this, AjaxError);
-    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(AjaxError).call(this, "".concat(method, " ").concat(url, " got ").concat(status)));
+    _this = _super.call(this, "".concat(method, " ").concat(url, " got ").concat(status));
     _this._method = method;
     _this._url = url;
     _this._data = data;
@@ -13862,7 +13417,7 @@ function (_AdsBypasserError) {
   return AjaxError;
 }(_core.AdsBypasserError);
 function flattenObject(object) {
-  var _i, _Object$entries, _Object$entries$_i, k, v, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, v_, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, _step2$value, k_, _v_;
+  var _i, _Object$entries, _Object$entries$_i, k, v, _iterator, _step, v_, _iterator2, _step2, _step2$value, k_, _v_;
   return _regenerator["default"].wrap(function flattenObject$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
@@ -13876,122 +13431,88 @@ function flattenObject(object) {
           _i = 0, _Object$entries = Object.entries(object);
         case 3:
           if (!(_i < _Object$entries.length)) {
-            _context.next = 68;
+            _context.next = 50;
             break;
           }
           _Object$entries$_i = (0, _slicedToArray2["default"])(_Object$entries[_i], 2), k = _Object$entries$_i[0], v = _Object$entries$_i[1];
           if (!Array.isArray(v)) {
-            _context.next = 34;
+            _context.next = 25;
             break;
           }
-          _iteratorNormalCompletion = true;
-          _didIteratorError = false;
-          _iteratorError = undefined;
-          _context.prev = 9;
-          _iterator = v[Symbol.iterator]();
-        case 11:
-          if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-            _context.next = 18;
+          _iterator = _createForOfIteratorHelper(v);
+          _context.prev = 7;
+          _iterator.s();
+        case 9:
+          if ((_step = _iterator.n()).done) {
+            _context.next = 15;
             break;
           }
           v_ = _step.value;
-          _context.next = 15;
+          _context.next = 13;
           return [[k, ''], v_];
+        case 13:
+          _context.next = 9;
+          break;
         case 15:
-          _iteratorNormalCompletion = true;
-          _context.next = 11;
+          _context.next = 20;
           break;
-        case 18:
-          _context.next = 24;
-          break;
+        case 17:
+          _context.prev = 17;
+          _context.t0 = _context["catch"](7);
+          _iterator.e(_context.t0);
         case 20:
           _context.prev = 20;
-          _context.t0 = _context["catch"](9);
-          _didIteratorError = true;
-          _iteratorError = _context.t0;
-        case 24:
-          _context.prev = 24;
-          _context.prev = 25;
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        case 27:
-          _context.prev = 27;
-          if (!_didIteratorError) {
-            _context.next = 30;
-            break;
-          }
-          throw _iteratorError;
-        case 30:
-          return _context.finish(27);
-        case 31:
-          return _context.finish(24);
-        case 32:
-          _context.next = 65;
+          _iterator.f();
+          return _context.finish(20);
+        case 23:
+          _context.next = 47;
           break;
-        case 34:
+        case 25:
           if (!((0, _typeof2["default"])(v) === 'object')) {
-            _context.next = 63;
+            _context.next = 45;
             break;
           }
-          _iteratorNormalCompletion2 = true;
-          _didIteratorError2 = false;
-          _iteratorError2 = undefined;
-          _context.prev = 38;
-          _iterator2 = flattenObject(v)[Symbol.iterator]();
-        case 40:
-          if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
-            _context.next = 47;
+          _iterator2 = _createForOfIteratorHelper(flattenObject(v));
+          _context.prev = 27;
+          _iterator2.s();
+        case 29:
+          if ((_step2 = _iterator2.n()).done) {
+            _context.next = 35;
             break;
           }
           _step2$value = (0, _slicedToArray2["default"])(_step2.value, 2), k_ = _step2$value[0], _v_ = _step2$value[1];
-          _context.next = 44;
+          _context.next = 33;
           return [[k].concat((0, _toConsumableArray2["default"])(k_)), _v_];
-        case 44:
-          _iteratorNormalCompletion2 = true;
+        case 33:
+          _context.next = 29;
+          break;
+        case 35:
           _context.next = 40;
           break;
-        case 47:
-          _context.next = 53;
+        case 37:
+          _context.prev = 37;
+          _context.t1 = _context["catch"](27);
+          _iterator2.e(_context.t1);
+        case 40:
+          _context.prev = 40;
+          _iterator2.f();
+          return _context.finish(40);
+        case 43:
+          _context.next = 47;
           break;
-        case 49:
-          _context.prev = 49;
-          _context.t1 = _context["catch"](38);
-          _didIteratorError2 = true;
-          _iteratorError2 = _context.t1;
-        case 53:
-          _context.prev = 53;
-          _context.prev = 54;
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        case 56:
-          _context.prev = 56;
-          if (!_didIteratorError2) {
-            _context.next = 59;
-            break;
-          }
-          throw _iteratorError2;
-        case 59:
-          return _context.finish(56);
-        case 60:
-          return _context.finish(53);
-        case 61:
-          _context.next = 65;
-          break;
-        case 63:
-          _context.next = 65;
+        case 45:
+          _context.next = 47;
           return [[k], v];
-        case 65:
+        case 47:
           _i++;
           _context.next = 3;
           break;
-        case 68:
+        case 50:
         case "end":
           return _context.stop();
       }
     }
-  }, _marked, null, [[9, 20, 24, 32], [25,, 27, 31], [38, 49, 53, 61], [54,, 56, 60]]);
+  }, _marked, null, [[7, 17, 20, 23], [27, 37, 40, 43]]);
 }
 function flattenKey(keyList) {
   var _keyList = (0, _toArray2["default"])(keyList),
@@ -14047,29 +13568,19 @@ function toForm(data) {
     return data.toString();
   }
   var form = new FormData();
-  var _iteratorNormalCompletion3 = true;
-  var _didIteratorError3 = false;
-  var _iteratorError3 = undefined;
+  var _iterator3 = _createForOfIteratorHelper(flattenObject(data)),
+      _step3;
   try {
-    for (var _iterator3 = flattenObject(data)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
       var _step3$value = (0, _slicedToArray2["default"])(_step3.value, 2),
           k = _step3$value[0],
           v = _step3$value[1];
       form.append(flattenKey(k), v);
     }
   } catch (err) {
-    _didIteratorError3 = true;
-    _iteratorError3 = err;
+    _iterator3.e(err);
   } finally {
-    try {
-      if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-        _iterator3["return"]();
-      }
-    } finally {
-      if (_didIteratorError3) {
-        throw _iteratorError3;
-      }
-    }
+    _iterator3.f();
   }
   return form;
 }
@@ -14141,11 +13652,12 @@ function post(url, data, headers) {
 }
  }),
  (function(module, exports, __webpack_require__) {
-var arrayWithHoles = __webpack_require__(11);
-var iterableToArray = __webpack_require__(8);
-var nonIterableRest = __webpack_require__(13);
+var arrayWithHoles = __webpack_require__(13);
+var iterableToArray = __webpack_require__(9);
+var unsupportedIterableToArray = __webpack_require__(10);
+var nonIterableRest = __webpack_require__(15);
 function _toArray(arr) {
-  return arrayWithHoles(arr) || iterableToArray(arr) || nonIterableRest();
+  return arrayWithHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableRest();
 }
 module.exports = _toArray;
  }),
@@ -14158,7 +13670,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.setCookie = setCookie;
 exports.getCookie = getCookie;
 exports.resetCookies = resetCookies;
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(10));
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
 var _core = __webpack_require__(5);
 function setCookie(key, value) {
   document.cookie = "".concat(key, "=").concat(value, ";path=").concat(location.pathname, ";");
@@ -14212,20 +13724,22 @@ exports.querySelectorOrNull = querySelectorOrNull;
 exports.remove = remove;
 exports.searchFromScripts = searchFromScripts;
 exports.toDOM = toDOM;
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(10));
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(14));
-var _createClass2 = _interopRequireDefault(__webpack_require__(15));
-var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(16));
-var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(19));
-var _inherits2 = _interopRequireDefault(__webpack_require__(20));
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(16));
+var _createClass2 = _interopRequireDefault(__webpack_require__(17));
+var _inherits2 = _interopRequireDefault(__webpack_require__(18));
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(20));
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(23));
 var _core = __webpack_require__(5);
-var _logger = __webpack_require__(28);
-var DomNotFoundError =
-function (_AdsBypasserError) {
+var _logger = __webpack_require__(31);
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+var DomNotFoundError = function (_AdsBypasserError) {
   (0, _inherits2["default"])(DomNotFoundError, _AdsBypasserError);
+  var _super = _createSuper(DomNotFoundError);
   function DomNotFoundError(selector) {
     (0, _classCallCheck2["default"])(this, DomNotFoundError);
-    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(DomNotFoundError).call(this, "`".concat(selector, "` not found")));
+    return _super.call(this, "`".concat(selector, "` not found"));
   }
   (0, _createClass2["default"])(DomNotFoundError, [{
     key: "name",
@@ -14357,17 +13871,16 @@ Object.defineProperty(exports, "__esModule", {
 exports.openImage = openImage;
 var _regenerator = _interopRequireDefault(__webpack_require__(2));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(4));
-var _link = __webpack_require__(36);
-var _dom = __webpack_require__(34);
-var _logger = __webpack_require__(28);
-var _misc = __webpack_require__(37);
-var _platform = __webpack_require__(26);
+var _link = __webpack_require__(39);
+var _dom = __webpack_require__(37);
+var _logger = __webpack_require__(31);
+var _misc = __webpack_require__(40);
+var _platform = __webpack_require__(29);
 function openImage(_x, _x2) {
   return _openImage.apply(this, arguments);
 }
 function _openImage() {
-  _openImage = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee(imgSrc, options) {
+  _openImage = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee(imgSrc, options) {
     var replace, referer, redirectImage;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -14432,8 +13945,7 @@ function scaleImage(_x3) {
   return _scaleImage.apply(this, arguments);
 }
 function _scaleImage() {
-  _scaleImage = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee2(i) {
+  _scaleImage = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee2(i) {
     var siURL, h;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
@@ -14467,8 +13979,7 @@ function changeBackground() {
   return _changeBackground.apply(this, arguments);
 }
 function _changeBackground() {
-  _changeBackground = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee3() {
+  _changeBackground = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee3() {
     var bgImage;
     return _regenerator["default"].wrap(function _callee3$(_context3) {
       while (1) {
@@ -14493,8 +14004,7 @@ function alignCenter() {
   return _alignCenter.apply(this, arguments);
 }
 function _alignCenter() {
-  _alignCenter = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee4() {
+  _alignCenter = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee4() {
     var acURL;
     return _regenerator["default"].wrap(function _callee4$(_context4) {
       while (1) {
@@ -14530,8 +14040,7 @@ function replaceBody(_x4) {
   return _replaceBody.apply(this, arguments);
 }
 function _replaceBody() {
-  _replaceBody = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee5(imgSrc) {
+  _replaceBody = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee5(imgSrc) {
     var redirectImage, d, i, ac, si, cb;
     return _regenerator["default"].wrap(function _callee5$(_context5) {
       while (1) {
@@ -14618,7 +14127,7 @@ exports.openLink = openLink;
 var _regenerator = _interopRequireDefault(__webpack_require__(2));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(4));
 var _core = __webpack_require__(5);
-var _logger = __webpack_require__(28);
+var _logger = __webpack_require__(31);
 function prepare(e) {
   if (!document.body) {
     document.body = document.createElement('body');
@@ -14630,8 +14139,7 @@ function get(_x) {
   return _get.apply(this, arguments);
 }
 function _get() {
-  _get = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee(url) {
+  _get = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee(url) {
     var a, clicked, tick;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -14670,8 +14178,7 @@ function post(_x2, _x3) {
   return _post.apply(this, arguments);
 } 
 function _post() {
-  _post = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee2(path, params) {
+  _post = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee2(path, params) {
     var form;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
@@ -14705,8 +14212,7 @@ function openLink(_x4, _x5) {
   return _openLink.apply(this, arguments);
 }
 function _openLink() {
-  _openLink = (0, _asyncToGenerator2["default"])(
-  _regenerator["default"].mark(function _callee3(to, options) {
+  _openLink = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee3(to, options) {
     var withReferer, postData, from;
     return _regenerator["default"].wrap(function _callee3$(_context3) {
       while (1) {
@@ -14763,8 +14269,8 @@ exports.nuke = nuke;
 exports.generateRandomIP = generateRandomIP;
 exports.evil = evil;
 var _core = __webpack_require__(5);
-var _platform = __webpack_require__(26);
-var _logger = __webpack_require__(28);
+var _platform = __webpack_require__(29);
+var _logger = __webpack_require__(31);
 function removeAllTimer() {
   var handle = window.setInterval(_core.nop, 10);
   while (handle > 0) {
