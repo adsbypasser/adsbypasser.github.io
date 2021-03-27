@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.15.0
+// @version        7.16.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.15.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.16.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.15.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.15.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.15.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.16.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.16.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.16.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -94,11 +94,15 @@ __webpack_require__.r(__webpack_exports__);
  var _ADSBYPASSER_HANDLERS___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6);
 const isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
 function disableWindowOpen () {
-  util_platform__WEBPACK_IMPORTED_MODULE_2__["usw"].open = function () {
-    return {
-      closed: false,
+  try {
+    util_platform__WEBPACK_IMPORTED_MODULE_2__["usw"].open = function () {
+      return {
+        closed: false,
+      };
     };
-  };
+  } catch (e) {
+    Object(util_logger__WEBPACK_IMPORTED_MODULE_4__["warn"])('cannot mock window.open');
+  }
   util_platform__WEBPACK_IMPORTED_MODULE_2__["usw"].alert = util_core__WEBPACK_IMPORTED_MODULE_0__["nop"];
   util_platform__WEBPACK_IMPORTED_MODULE_2__["usw"].confirm = util_core__WEBPACK_IMPORTED_MODULE_0__["nop"];
 }
@@ -4956,6 +4960,17 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
+    host: /^imgviv\.xyz$/,
+    path: /^\/.*$/,
+  },
+  async ready () {
+    const d = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('.main-content-box');
+    const rv = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/document\.location\.href="([^"]+)"/, d);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(rv[1]);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
     host: /^fastpic\.ru$/,
     path: /^\/view\//,
   },
@@ -5443,9 +5458,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^(imgmonkey|imgtrex|imgve|uploadrr|imageeer|pic-maniac|hulkimge)\.com$/,
+        /^(imgmonkey|imgtrex|imgve|uploadrr|imageeer|pic-maniac)\.com$/,
+        /^(hulkimge|imgsen|imgsto|kvador)\.com$/,
         /^www\.uimgshare\.com$/,
-        /^(kropic)\.com$/,
+        /^(kropic|picdollar)\.com$/,
         /^(www\.)?imgsee\.me$/,
         /^imgclick\.net$/,
       ],
@@ -5486,6 +5502,25 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       }
       _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window._0x337c4b = null;
       const node = await getAmbiguousForm('div[id] + div[id] > style', (node) => {
+        return node.parentElement;
+      });
+      node.click();
+      node.click();
+      node.click();
+    },
+  });
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+    rule: {
+      host: /^picrok\.com$/,
+      path: PATH_RULE,
+    },
+    async ready () {
+      const i = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('img.picview');
+      if (i) {
+        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src);
+        return;
+      }
+      const node = await getAmbiguousForm('body > div > div[id] > style', (node) => {
         return node.parentElement;
       });
       node.click();
@@ -5677,9 +5712,9 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         table.set(c, true);
       }
     }
-    return Array.from(table.entries()).filter((unique) => {
+    return Array.from(table.entries()).filter(([_, unique]) => {
       return unique;
-    }).map((_, c) => {
+    }).map(([_, c]) => {
       return c;
     });
   }
@@ -5689,7 +5724,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       if (!form) {
         continue;
       }
-      const button = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('input[type="button"], button[type="button"]', form);
+      const button = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('input[type="button"], button[type="button"], button[class]', form);
+      if (!button) {
+        continue;
+      }
       const v = getComputedStyle(button).getPropertyValue('visibility');
       if (v !== 'visible') {
         continue;
@@ -6172,10 +6210,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: [
       {
         host: [
-          /^(imagecorn|imagedecode|imageko|imageshtorm|imageraven|imgixxx)\.com$/,
-          /^(imgicy|imgsavvy|imgtzar|imgtornado|imgkicks|img2share|imghit|imgmain)\.com$/,
-          /^(imgtrial|imgreputa|imgfapper|imgpart|imgbalana|imgjazz|img-planet|img-pay)\.com$/,
-          /^(hosturimage|greasyimage|damimage|xxxscreens|wpc8|dimtus|tinizo|erimge|nimzshare|hdmoza)\.com$/,
+          /^(imagecorn|imagedecode|imageko|imageshtorm|imageraven)\.com$/,
+          /^(imgicy|imgsavvy|imgtzar|imgtornado|imgkicks|img2share)\.com$/,
+          /^(imgtrial|imgreputa|imgfapper|imgpart|imgbalana|imgjazz)\.com$/,
+          /^(hosturimage|greasyimage|damimage|xxxscreens|wpc8|dimtus)\.com$/,
+          /^(imgixxx|imghit|imgmain|img-planet|img-pay)\.com$/,
+          /^(tinizo|erimge|nimzshare|hdmoza)\.com$/,
           /^(www\.)?(imglemon|imageblinks|multiimg)\.com$/,
           /^(i|xxx)\.hentaiyoutube\.com$/,
           /^(i\.)?imgseeds?\.com$/,

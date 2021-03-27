@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.15.0
+// @version        7.16.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.15.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.16.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -91,11 +91,15 @@ var _logger = __webpack_require__(31);
 __webpack_require__(32);
 var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
 function disableWindowOpen() {
-  _platform.usw.open = function () {
-    return {
-      closed: false
+  try {
+    _platform.usw.open = function () {
+      return {
+        closed: false
+      };
     };
-  };
+  } catch (e) {
+    (0, _logger.warn)('cannot mock window.open');
+  }
   _platform.usw.alert = _core.nop;
   _platform.usw.confirm = _core.nop;
 } 
