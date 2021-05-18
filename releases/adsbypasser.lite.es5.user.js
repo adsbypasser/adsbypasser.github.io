@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.16.0
+// @version        7.17.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.16.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.17.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -254,6 +254,7 @@ function _interopRequireDefault(obj) {
   };
 }
 module.exports = _interopRequireDefault;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports, __webpack_require__) {
 module.exports = __webpack_require__(3);
@@ -268,6 +269,22 @@ var runtime = (function (exports) {
   var iteratorSymbol = $Symbol.iterator || "@@iterator";
   var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
   var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+  function define(obj, key, value) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+    return obj[key];
+  }
+  try {
+    define({}, "");
+  } catch (err) {
+    define = function(obj, key, value) {
+      return obj[key] = value;
+    };
+  }
   function wrap(innerFn, outerFn, self, tryLocsList) {
     var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
     var generator = Object.create(protoGenerator.prototype);
@@ -306,13 +323,16 @@ var runtime = (function (exports) {
     Generator.prototype = Object.create(IteratorPrototype);
   GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
   GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunctionPrototype[toStringTagSymbol] =
-    GeneratorFunction.displayName = "GeneratorFunction";
+  GeneratorFunction.displayName = define(
+    GeneratorFunctionPrototype,
+    toStringTagSymbol,
+    "GeneratorFunction"
+  );
   function defineIteratorMethods(prototype) {
     ["next", "throw", "return"].forEach(function(method) {
-      prototype[method] = function(arg) {
+      define(prototype, method, function(arg) {
         return this._invoke(method, arg);
-      };
+      });
     });
   }
   exports.isGeneratorFunction = function(genFun) {
@@ -327,9 +347,7 @@ var runtime = (function (exports) {
       Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
     } else {
       genFun.__proto__ = GeneratorFunctionPrototype;
-      if (!(toStringTagSymbol in genFun)) {
-        genFun[toStringTagSymbol] = "GeneratorFunction";
-      }
+      define(genFun, toStringTagSymbol, "GeneratorFunction");
     }
     genFun.prototype = Object.create(Gp);
     return genFun;
@@ -496,7 +514,7 @@ var runtime = (function (exports) {
     return ContinueSentinel;
   }
   defineIteratorMethods(Gp);
-  Gp[toStringTagSymbol] = "Generator";
+  define(Gp, toStringTagSymbol, "Generator");
   Gp[iteratorSymbol] = function() {
     return this;
   };
@@ -770,9 +788,11 @@ function _asyncToGenerator(fn) {
   };
 }
 module.exports = _asyncToGenerator;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
+var _regeneratorRuntime2 = __webpack_require__(2);
 var _interopRequireDefault = __webpack_require__(1);
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -787,8 +807,8 @@ exports.partial = partial;
 exports.tryEvery = tryEvery;
 exports.wait = wait;
 exports.none = exports.AdsBypasserError = void 0;
-var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(6));
 var _regenerator = _interopRequireDefault(__webpack_require__(2));
+var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(6));
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(16));
 var _createClass2 = _interopRequireDefault(__webpack_require__(17));
@@ -796,12 +816,12 @@ var _inherits2 = _interopRequireDefault(__webpack_require__(18));
 var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(20));
 var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(23));
 var _wrapNativeSuper2 = _interopRequireDefault(__webpack_require__(24));
-var _marked = _regenerator["default"].mark(enumerate);
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+var _marked = _regeneratorRuntime2.mark(enumerate);
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 var AdsBypasserError = function (_Error) {
   (0, _inherits2["default"])(AdsBypasserError, _Error);
   var _super = _createSuper(AdsBypasserError);
@@ -963,6 +983,7 @@ function _toConsumableArray(arr) {
   return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
 }
 module.exports = _toConsumableArray;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports, __webpack_require__) {
 var arrayLikeToArray = __webpack_require__(8);
@@ -970,6 +991,7 @@ function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return arrayLikeToArray(arr);
 }
 module.exports = _arrayWithoutHoles;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _arrayLikeToArray(arr, len) {
@@ -980,12 +1002,14 @@ function _arrayLikeToArray(arr, len) {
   return arr2;
 }
 module.exports = _arrayLikeToArray;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
 }
 module.exports = _iterableToArray;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports, __webpack_require__) {
 var arrayLikeToArray = __webpack_require__(8);
@@ -998,12 +1022,14 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
 }
 module.exports = _unsupportedIterableToArray;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 module.exports = _nonIterableSpread;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports, __webpack_require__) {
 var arrayWithHoles = __webpack_require__(13);
@@ -1014,22 +1040,25 @@ function _slicedToArray(arr, i) {
   return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
 }
 module.exports = _slicedToArray;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 module.exports = _arrayWithHoles;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
+  if (_i == null) return;
   var _arr = [];
   var _n = true;
   var _d = false;
-  var _e = undefined;
+  var _s, _e;
   try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
       _arr.push(_s.value);
       if (i && _arr.length === i) break;
     }
@@ -1046,12 +1075,14 @@ function _iterableToArrayLimit(arr, i) {
   return _arr;
 }
 module.exports = _iterableToArrayLimit;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 module.exports = _nonIterableRest;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _classCallCheck(instance, Constructor) {
@@ -1060,6 +1091,7 @@ function _classCallCheck(instance, Constructor) {
   }
 }
 module.exports = _classCallCheck;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _defineProperties(target, props) {
@@ -1077,6 +1109,7 @@ function _createClass(Constructor, protoProps, staticProps) {
   return Constructor;
 }
 module.exports = _createClass;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports, __webpack_require__) {
 var setPrototypeOf = __webpack_require__(19);
@@ -1094,6 +1127,7 @@ function _inherits(subClass, superClass) {
   if (superClass) setPrototypeOf(subClass, superClass);
 }
 module.exports = _inherits;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _setPrototypeOf(o, p) {
@@ -1101,12 +1135,14 @@ function _setPrototypeOf(o, p) {
     o.__proto__ = p;
     return o;
   };
+  module.exports["default"] = module.exports, module.exports.__esModule = true;
   return _setPrototypeOf(o, p);
 }
 module.exports = _setPrototypeOf;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports, __webpack_require__) {
-var _typeof = __webpack_require__(21);
+var _typeof = __webpack_require__(21)["default"];
 var assertThisInitialized = __webpack_require__(22);
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
@@ -1115,6 +1151,7 @@ function _possibleConstructorReturn(self, call) {
   return assertThisInitialized(self);
 }
 module.exports = _possibleConstructorReturn;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _typeof(obj) {
@@ -1123,14 +1160,17 @@ function _typeof(obj) {
     module.exports = _typeof = function _typeof(obj) {
       return typeof obj;
     };
+    module.exports["default"] = module.exports, module.exports.__esModule = true;
   } else {
     module.exports = _typeof = function _typeof(obj) {
       return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
+    module.exports["default"] = module.exports, module.exports.__esModule = true;
   }
   return _typeof(obj);
 }
 module.exports = _typeof;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _assertThisInitialized(self) {
@@ -1140,15 +1180,18 @@ function _assertThisInitialized(self) {
   return self;
 }
 module.exports = _assertThisInitialized;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _getPrototypeOf(o) {
   module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
     return o.__proto__ || Object.getPrototypeOf(o);
   };
+  module.exports["default"] = module.exports, module.exports.__esModule = true;
   return _getPrototypeOf(o);
 }
 module.exports = _getPrototypeOf;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports, __webpack_require__) {
 var getPrototypeOf = __webpack_require__(23);
@@ -1179,15 +1222,18 @@ function _wrapNativeSuper(Class) {
     });
     return setPrototypeOf(Wrapper, Class);
   };
+  module.exports["default"] = module.exports, module.exports.__esModule = true;
   return _wrapNativeSuper(Class);
 }
 module.exports = _wrapNativeSuper;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _isNativeFunction(fn) {
   return Function.toString.call(fn).indexOf("[native code]") !== -1;
 }
 module.exports = _isNativeFunction;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports, __webpack_require__) {
 var setPrototypeOf = __webpack_require__(19);
@@ -1195,6 +1241,7 @@ var isNativeReflectConstruct = __webpack_require__(27);
 function _construct(Parent, args, Class) {
   if (isNativeReflectConstruct()) {
     module.exports = _construct = Reflect.construct;
+    module.exports["default"] = module.exports, module.exports.__esModule = true;
   } else {
     module.exports = _construct = function _construct(Parent, args, Class) {
       var a = [null];
@@ -1204,10 +1251,12 @@ function _construct(Parent, args, Class) {
       if (Class) setPrototypeOf(instance, Class.prototype);
       return instance;
     };
+    module.exports["default"] = module.exports, module.exports.__esModule = true;
   }
   return _construct.apply(null, arguments);
 }
 module.exports = _construct;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports) {
 function _isNativeReflectConstruct() {
@@ -1215,13 +1264,14 @@ function _isNativeReflectConstruct() {
   if (Reflect.construct.sham) return false;
   if (typeof Proxy === "function") return true;
   try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
     return true;
   } catch (e) {
     return false;
   }
 }
 module.exports = _isNativeReflectConstruct;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -1543,13 +1593,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.dumpConfig = dumpConfig;
 exports.loadConfig = loadConfig;
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
 var _regenerator = _interopRequireDefault(__webpack_require__(2));
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(4));
 var _core = __webpack_require__(5);
 var _dispatcher = __webpack_require__(28);
 var _platform = __webpack_require__(29);
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 var MANIFEST = [{
@@ -2057,17 +2107,17 @@ function warn() {
  (function(module, exports, __webpack_require__) {
 "use strict";
 var _interopRequireDefault = __webpack_require__(1);
+var _regenerator = _interopRequireDefault(__webpack_require__(2));
 var _inherits2 = _interopRequireDefault(__webpack_require__(18));
 var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(20));
 var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(23));
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(16));
 var _createClass2 = _interopRequireDefault(__webpack_require__(17));
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
-var _regenerator = _interopRequireDefault(__webpack_require__(2));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(4));
 var _ADSBYPASSER_NAMESPACE__ = __webpack_require__(33);
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^akoam\.net$/,
@@ -2437,8 +2487,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^mirrorace\.com$/,
-    path: /^\/m\//
+    host: /^mirrorace\.(com|org)$/,
+    path: /^\/m\/.+\/\d+/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee11() {
@@ -2697,7 +2747,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^zupload\.me$/
+    host: [/^zupload\.me$/, /^zeefiles\.download$/]
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee22() {
@@ -5571,17 +5621,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: {
       host: [
-      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani|agradarpan|birdurls)\.com$/, /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk|lnks4all|jejaklagu|urlshortx)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link|coolmitten|hosexx)\.com$/, /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural|akla4|techsapparel)\.com$/, /^(shrinkbuck|clkpay|linksht|haxrs|click2-url|cooltxtgen|arba7co|shortlinko|ez4linkss)\.com$/, /^(partqb2i|khraba|adlpu|tabakhelo|amenitiees|cosmicmony|ilinkshortx|a-egy|adsafelink)\.com$/, /^(advance-wishingjs|govtsmartjob|bloggingraja|techkti|sxtsquad|adpaytm|pustkala)\.com$/, /^(thegyaanipoint|downloaddoom|linkfay|5brgedid|earthpiclover|adigp|tomient|dz4invest)\.com$/, /^(techmen-world|razerflixs|gamesindians|dislooks|elkhbrel7sry|onaah|ultraskora)\.com$/, /^(wrap-w0rld|ommantrameditation|mawdok|techfinda|clixg|boardgift|beast-birds|click-paid)\.com$/, /^(talkittechy|newsinjules|kutpay|nikkarr|veblink|al3amall|6aba2day|oploverzhome)\.com$/, /^(kooramubashir|healthfary|justlikeyojna|sarkarijobsresultss|zalipay|thefreech)\.com$/, /^(hindibeen|pastekan|e7kelyana|ea-isly|aristoderas|shortzon|trading-area|alseoo)\.com$/, /^(techtremendous|freespinwins|w-rajem|timetoka|foodpuff|linksop|bollywooddramanews)\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/, /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/, /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/, /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/, /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/, /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/, /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24|adflyurl|kekolink|rifurl|ac-mo)\.com$/, /^(vy\.)?adsvy\.com$/, /^(www\.)?(clkpays|lnkjob|efshort)\.com$/, /^shrt(8|10)\.com$/, 
+      /^(dz4link|gocitlink|3rabcut|short2win|adsrt|shortglobal|jainjinvani|agradarpan|birdurls)\.com$/, /^(payshorturl|urltips|shrinkearn|itiad|cutsouf|enewstalk|lnks4all|jejaklagu|urlshortx)\.com$/, /^(earn-url|bit-url|cut-win|link-zero|cut-earn|oturl|glory-link|coolmitten|hosexx)\.com$/, /^(empireshort|empearn|tarnwh2i|tabeikh|yourw-ay|reb7konline|factural|akla4|techsapparel)\.com$/, /^(shrinkbuck|clkpay|linksht|haxrs|click2-url|cooltxtgen|arba7co|shortlinko|ez4linkss)\.com$/, /^(partqb2i|khraba|adlpu|tabakhelo|amenitiees|cosmicmony|ilinkshortx|a-egy|adsafelink)\.com$/, /^(advance-wishingjs|govtsmartjob|bloggingraja|techkti|sxtsquad|adpaytm|pustkala)\.com$/, /^(thegyaanipoint|downloaddoom|linkfay|5brgedid|earthpiclover|adigp|tomient|dz4invest)\.com$/, /^(techmen-world|razerflixs|gamesindians|dislooks|elkhbrel7sry|onaah|ultraskora)\.com$/, /^(wrap-w0rld|ommantrameditation|mawdok|techfinda|clixg|boardgift|beast-birds|click-paid)\.com$/, /^(talkittechy|newsinjules|kutpay|nikkarr|veblink|al3amall|6aba2day|oploverzhome)\.com$/, /^(kooramubashir|healthfary|justlikeyojna|sarkarijobsresultss|zalipay|thefreech)\.com$/, /^(hindibeen|pastekan|e7kelyana|ea-isly|aristoderas|shortzon|trading-area|alseoo)\.com$/, /^(techtremendous|freespinwins|w-rajem|timetoka|foodpuff|linksop|bollywooddramanews)\.com$/, /^(linkexa|admew|shrtfly|kuylink|cut4links|adskipme|skipurls|ely-om7|brenhealth)\.com$/, /^(smarteasystudy|cyahealth|ershadat|z2i|srtfly|arba7kpro|health-goood|stategossip)\.com$/, /^(blogginggyanbox|yourtechguider|gifsis|3rab-cash|pinkhindi|wishes2|weawp|a5barfawria)\.com$/, /^(mykinggo|li-nkz|win4cut|khabratk|programsfre|safelinkblogger|linkwea|ourcareerblog)\.com$/, /^(linkorlink|mrfourtech|fabsdeals|tech4utoday|urlsamo|earnwithshortlink|swiggygold)\.com$/, /^(earnmoneytalk|newupdatesonline|uptoos|bakilink|gossipcorners|slegle|futurefoundationngo)\.com$/, /^(loopdiet|infotaxco|newsatfit|go99tech|fullytech24|adflyurl|kekolink|rifurl|ac-mo)\.com$/, /^(apkshrt)\.com$/, /^(vy\.)?adsvy\.com$/, /^(www\.)?(clkpays|lnkjob|efshort)\.com$/, /^shrt(8|10)\.com$/, 
       /^(trlink|wolink|tocdo|cuturl|counsellingresult2016|iitjeemainguide|healthhindigyan)\.in$/, /^(utimetableresult|daily-sale|linkszone|viraltechnical)\.in$/, 
-      /^(oke|cuon|cuio|cuee|cuus|cuto|linktor|flylink|uiz|uii|exe|shrinkme|shotly)\.io$/, /^cu(2|3|5|6|7)\.io$/, 
-      /^(adbilty|adpop|ujv|tpx|adsrt|2fly|lin65|short2win|suarankri|infotrendy)\.me$/, /^(advancedautorepairtips|takeitfor|jelajahinternet|virtualdata|muhammadyoga|s2w)\.me$/, /^(cepmuzikindir)\.me$/, 
-      /^link\.akuno\.net$/, /^(safelinku|tinylinks|licklink|linkrex|zlshorte|vivads|clickar|bigb0ss)\.net$/, /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly|shortye|ventax)\.net$/, /^(link4win|linksad|topurl|xemlink|directedlink)\.net$/, 
+      /^(oke|cuon|cuio|cuee|cuus|cuto|linktor|flylink|uiz|uii|exey|shrinkme|shotly)\.io$/, /^cu(2|3|5|6|7)\.io$/, 
+      /^(adbilty|adpop|ujv|tpx|adsrt|2fly|lin65|short2win|suarankri|infotrendy)\.me$/, /^(advancedautorepairtips|takeitfor|jelajahinternet|virtualdata|muhammadyoga|s2w)\.me$/, /^(cepmuzikindir|shrinke)\.me$/, 
+      /^link\.akuno\.net$/, /^(safelinku|tinylinks|licklink|linkrex|zlshorte|vivads|clickar|bigb0ss)\.net$/, /^(vnurl|vinaurl|foxurl|short2win|cashat|shrtfly|shortye|ventax)\.net$/, /^(link4win|linksad|topurl|xemlink|directedlink|illink)\.net$/, 
       /^(click2url|ln435|merdekaid)\.online$/, /^(www\.)?bloggerworld\.online$/, 
       /^(lotechnocan|updatetribun|templink|ez4link|shortearn|adbull|oneurls|adsrt|freebcc)\.org$/, /^voxc\.org$/, 
       /^(clik|tokenfly|getlink|psl|pss|shln|lpe|chrt|szs|miniurl)\.pw$/, /^(www\.)?lwt\.pw$/, 
       /^(el3id|allreports|clickskaro)\.site$/, /^123link\.carpartsviet97\.site$/, 
       /^(shink|shrten|gg-l|vnurl|bloggingdekh|ln11|sh11|tradeguru|newskart|kidsors|xz2)\.xyz$/, /^(techinhub|viralnow|shophipro|technocanvas|getfreshcloud|profitstudy|ijobanana)\.xyz$/, /^(autocarsmagz|getpocket|yasinews|dunyanews|komiupdates|allapp|smwebs|news-tech)\.xyz$/, /^cutdl\.xyz$/, 
-      /^(ckk|iir|tii)\.ai$/, /^thin\.at$/, /^(tips\.)?atv\.pw$/, /^skip\.az$/, /^(funnyquiz|mediakita|kabarviral)\.blog$/, /^(icutit|earnbig|cutearn)\.ca$/, /^e2s\.cc$/, /^(adzurl|link2link)\.cf$/, /^(mlink|cl250|xpickle|infosehatku)\.club$/, /^(3bst|coinlink|itiurl|coshink|link5s|curs|makeurl|mooddisorder|cutls)\.co$/, /^bestscholaeshipdegree\.date$/, /^click2see\.desi$/, /^(tny|tiny)\.ec$/, /^8o\.ee$/, /^pa4l\.esy\.es$/, /^(shortearn|enrt)\.eu$/, /^(sciencelife|cpm4all)\.ga$/, /^za\.gl$/, /^zi\.ht$/, /^shorted\.id$/, /^(igram|gram|pingit)\.im$/, /^megaurl\.(in|link)$/, /^(businessiss2|techandreview|yesmoviesapp|kpscthulasilogin)\.info$/, /^stfly\.(io|press)$/, /^lyon\.kim$/, /^fc\.lc$/, /^(petty|skips|tr|flaz)\.link$/, /^payskip\.(me|org)$/, /^btc\.ms$/, /^splashnews\.ooo$/, /^express-cut\.ovh$/, /^short\.pe$/, /^(clk|cll)\.(press|ink|sh|icu)$/, /^(lopte|megalink)\.pro$/, /^123link\.(pw|vip)$/, /^royalown\.review$/, /^earn\.theplusit\.ro$/, /^sk-ip\.(ru|tech)$/, /^tinylink\.run$/, /^(oko|aii|shorten)\.sh$/, /^(dutchycorp|abouttech)\.space$/, /^buyitonline\.store$/, /^eatings\.stream$/, /^tl\.tc$/, /^(1921681254|geki|wegner|gpshort)\.tech$/, /^(linkvip|4short)\.tk$/, /^(www\.)?pnd\.tl$/, /^get\.ujv\.al$/, /^(urlcloud|imageoptimizer)\.us$/, /^(koylinks|buy-in-599rs)\.win$/]
+      /^(ckk|iir|tii)\.ai$/, /^thin\.at$/, /^(tips\.)?atv\.pw$/, /^skip\.az$/, /^(funnyquiz|mediakita|kabarviral)\.blog$/, /^(icutit|earnbig|cutearn)\.ca$/, /^e2s\.cc$/, /^(adzurl|link2link)\.cf$/, /^(mlink|cl250|xpickle|infosehatku)\.club$/, /^(3bst|coinlink|itiurl|coshink|link5s|curs|makeurl|mooddisorder|cutls)\.co$/, /^bestscholaeshipdegree\.date$/, /^click2see\.desi$/, /^(tny|tiny)\.ec$/, /^8o\.ee$/, /^pa4l\.esy\.es$/, /^(shortearn|enrt)\.eu$/, /^(sciencelife|cpm4all)\.ga$/, /^za\.gl$/, /^zi\.ht$/, /^shorted\.id$/, /^(igram|gram|pingit)\.im$/, /^megaurl\.(in|link)$/, /^(businessiss2|techandreview|yesmoviesapp|kpscthulasilogin)\.info$/, /^stfly\.(io|press)$/, /^lyon\.kim$/, /^fc\.lc$/, /^(petty|skips|tr|flaz)\.link$/, /^payskip\.(me|org)$/, /^btc\.ms$/, /^splashnews\.ooo$/, /^express-cut\.ovh$/, /^short\.pe$/, /^(clk|cll)\.(press|ink|sh|icu)$/, /^(lopte|megalink)\.pro$/, /^123link\.(pw|vip)$/, /^royalown\.review$/, /^earn\.theplusit\.ro$/, /^sk-ip\.(ru|tech)$/, /^tinylink\.run$/, /^(oko|aii|shorten)\.sh$/, /^(dutchycorp|abouttech)\.space$/, /^buyitonline\.store$/, /^eatings\.stream$/, /^tl\.tc$/, /^(1921681254|geki|wegner|gpshort)\.tech$/, /^(linkvip|4short)\.tk$/, /^(www\.)?pnd\.tl$/, /^get\.ujv\.al$/, /^(urlcloud|imageoptimizer)\.us$/, /^(koylinks|buy-in-599rs)\.win$/, /^exe\.(io|app)$/, /^slink\.bid$/]
     },
     ready: function ready() {
       return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee111() {
@@ -9939,14 +9989,15 @@ $.window = _platform.usw;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
+var _regeneratorRuntime2 = __webpack_require__(2);
 var _interopRequireDefault = __webpack_require__(1);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.get = get;
 exports.post = post;
-var _toArray2 = _interopRequireDefault(__webpack_require__(35));
 var _regenerator = _interopRequireDefault(__webpack_require__(2));
+var _toArray2 = _interopRequireDefault(__webpack_require__(35));
 var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(6));
 var _typeof2 = _interopRequireDefault(__webpack_require__(21));
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
@@ -9958,12 +10009,12 @@ var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(23));
 var _core = __webpack_require__(5);
 var _platform = __webpack_require__(29);
 var _logger = __webpack_require__(31);
-var _marked = _regenerator["default"].mark(flattenObject);
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+var _marked = _regeneratorRuntime2.mark(flattenObject);
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 var AjaxError = function (_AdsBypasserError) {
   (0, _inherits2["default"])(AjaxError, _AdsBypasserError);
   var _super = _createSuper(AjaxError);
@@ -10261,6 +10312,7 @@ function _toArray(arr) {
   return arrayWithHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableRest();
 }
 module.exports = _toArray;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -10334,7 +10386,7 @@ var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(23));
 var _core = __webpack_require__(5);
 var _logger = __webpack_require__(31);
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 var DomNotFoundError = function (_AdsBypasserError) {
   (0, _inherits2["default"])(DomNotFoundError, _AdsBypasserError);
   var _super = _createSuper(DomNotFoundError);
