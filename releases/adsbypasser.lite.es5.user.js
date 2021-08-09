@@ -2,14 +2,14 @@
 // @name           AdsBypasser Lite Legacy
 // @namespace      AdsBypasser
 // @description    Bypass Ads
-// @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.17.0
+// @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
+// @version        7.18.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.17.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.18.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -9142,7 +9142,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
     query: /^\?page=([^&]+)/
   }, {
     host: /^www\.javlibrary\.com$/,
-    query: /url=(.+)$/
+    query: /url=([^&]+)/
   }],
   start: function start(m) {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee230() {

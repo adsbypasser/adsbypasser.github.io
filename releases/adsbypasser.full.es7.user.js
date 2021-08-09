@@ -2,14 +2,14 @@
 // @name           AdsBypasser
 // @namespace      AdsBypasser
 // @description    Bypass Ads
-// @copyright      2012+, Wei-Cheng Pan (legnaleurc)
-// @version        7.17.0
+// @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
+// @version        7.18.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.17.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.18.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.17.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.17.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.17.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.18.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.18.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.18.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -4480,7 +4480,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
     {
       host: /^www\.javlibrary\.com$/,
-      query: /url=(.+)$/,
+      query: /url=([^&]+)/,
     },
   ],
   async start (m) {
@@ -4989,6 +4989,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
+    host: /^fastpic\.org$/,
+    path: /^\/view\//,
+  },
+  async ready () {
+    const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('#picContainer img');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: {
     host: /^fopkodiak\.site$/,
     path: /^\/image\//,
   },
@@ -5239,13 +5249,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         path: /^\/show\//,
       },
       {
-        host: [
-          /^www\.imagesnake\.(com|org)$/,
-          /^www\.imagefruit\.com$/,
-        ],
-        path: /^\/(img|show)\/.+/,
-      },
-      {
         host: /^imageban\.(ru|net)$/,
         path: /^\/show\/\d{4}\/\d{2}\/\d{2}\/.+/,
       },
@@ -5260,10 +5263,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: [
-        /^www\.imgcarry\.com$/,
+        /^www\.(imgcarry|imagefruit)\.com$/,
         /^www\.pornbus\.org$/,
+        /^www\.imagesnake\.(com|org)$/,
       ],
-      path: /^\/show\//,
+      path: /^\/(img|show)\//,
     },
     ready: run2,
   });
@@ -5812,7 +5816,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       host: [
         /^www\.(imgsky|imgfile|imgsee)\.net$/,
         /^www\.imagespicy\.site$/,
-        /^(imgxen|imgweng|imgtiger|imgvivo)\.xyz$/,
+        /^(imgxen|imgweng|imgtiger|imgvivo|imgwewo|imgflyer)\.xyz$/,
       ],
       path: /^\/[a-z|0-9]{4,10}$/,
     },
@@ -5821,11 +5825,28 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^(www\.)?imgair\.net$/,
         /^(www\.)?imageking\.xyz$/,
         /^www\.cloudgallery\.net$/,
+        /^kekolangti\.com$/,
+        /^imgkia\.buzz$/,
       ],
     },
   ],
   async ready () {
     const matches = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/document\.getElementById\("soDaBug"\)\.src = "([^"]+)";/);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(matches[1]);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  rule: [
+    {
+      host: [
+        /^imgkuiw\.xyz$/,
+        /^(imgwex|imgwang)\.buzz$/,
+      ],
+      path: /^\/[a-z|0-9]{4,10}$/,
+    },
+  ],
+  async ready () {
+    const matches = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].searchFromScripts(/document\.getElementById\("newImgE"\)\.src = "([^"]+)";/);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(matches[1]);
   },
 });
@@ -6040,7 +6061,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: [
-      /^picpic\.online$/,
+      /^(drlink|picpic)\.online$/,
       /^picclock\.ru$/,
     ],
     path: /^\/\d+\/\d+\/$/,
@@ -6124,10 +6145,16 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-  rule: {
-    host: /^(www\.)?pixhost\.to$/,
-    path: /^\/show\//,
-  },
+  rule: [
+    {
+      host: /^(www\.)?pixhost\.to$/,
+      path: /^\/show\//,
+    },
+    {
+      host: /^3xplanet\.com$/,
+      path: /^\/viewimage\//,
+    },
+  ],
   async ready () {
     _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].remove('iframe, #ad');
     let o = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].$('#all');
