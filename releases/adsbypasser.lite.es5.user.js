@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.18.0
+// @version        7.19.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.18.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.19.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -253,8 +253,7 @@ function _interopRequireDefault(obj) {
     "default": obj
   };
 }
-module.exports = _interopRequireDefault;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports, __webpack_require__) {
 module.exports = __webpack_require__(3);
@@ -309,9 +308,9 @@ var runtime = (function (exports) {
   function GeneratorFunction() {}
   function GeneratorFunctionPrototype() {}
   var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
+  define(IteratorPrototype, iteratorSymbol, function () {
     return this;
-  };
+  });
   var getProto = Object.getPrototypeOf;
   var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
   if (NativeIteratorPrototype &&
@@ -321,8 +320,9 @@ var runtime = (function (exports) {
   }
   var Gp = GeneratorFunctionPrototype.prototype =
     Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunction.prototype = GeneratorFunctionPrototype;
+  define(Gp, "constructor", GeneratorFunctionPrototype);
+  define(GeneratorFunctionPrototype, "constructor", GeneratorFunction);
   GeneratorFunction.displayName = define(
     GeneratorFunctionPrototype,
     toStringTagSymbol,
@@ -396,9 +396,9 @@ var runtime = (function (exports) {
     this._invoke = enqueue;
   }
   defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+  define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
     return this;
-  };
+  });
   exports.AsyncIterator = AsyncIterator;
   exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
     if (PromiseImpl === void 0) PromiseImpl = Promise;
@@ -515,12 +515,12 @@ var runtime = (function (exports) {
   }
   defineIteratorMethods(Gp);
   define(Gp, toStringTagSymbol, "Generator");
-  Gp[iteratorSymbol] = function() {
+  define(Gp, iteratorSymbol, function() {
     return this;
-  };
-  Gp.toString = function() {
+  });
+  define(Gp, "toString", function() {
     return "[object Generator]";
-  };
+  });
   function pushTryEntry(locs) {
     var entry = { tryLoc: locs[0] };
     if (1 in locs) {
@@ -753,7 +753,11 @@ var runtime = (function (exports) {
 try {
   regeneratorRuntime = runtime;
 } catch (accidentalStrictMode) {
-  Function("r", "regeneratorRuntime = r")(runtime);
+  if (typeof globalThis === "object") {
+    globalThis.regeneratorRuntime = runtime;
+  } else {
+    Function("r", "regeneratorRuntime = r")(runtime);
+  }
 }
  }),
  (function(module, exports) {
@@ -787,8 +791,7 @@ function _asyncToGenerator(fn) {
     });
   };
 }
-module.exports = _asyncToGenerator;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _asyncToGenerator, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -797,16 +800,17 @@ var _interopRequireDefault = __webpack_require__(1);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.AdsBypasserError = void 0;
 exports.every = every;
 exports.find = find;
 exports.forEach = forEach;
 exports.isString = isString;
 exports.map = map;
+exports.none = void 0;
 exports.nop = nop;
 exports.partial = partial;
 exports.tryEvery = tryEvery;
 exports.wait = wait;
-exports.none = exports.AdsBypasserError = void 0;
 var _regenerator = _interopRequireDefault(__webpack_require__(2));
 var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(6));
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
@@ -982,16 +986,14 @@ var nonIterableSpread = __webpack_require__(11);
 function _toConsumableArray(arr) {
   return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
 }
-module.exports = _toConsumableArray;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _toConsumableArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports, __webpack_require__) {
 var arrayLikeToArray = __webpack_require__(8);
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return arrayLikeToArray(arr);
 }
-module.exports = _arrayWithoutHoles;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _arrayWithoutHoles, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _arrayLikeToArray(arr, len) {
@@ -1001,15 +1003,13 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-module.exports = _arrayLikeToArray;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _arrayLikeToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _iterableToArray(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
 }
-module.exports = _iterableToArray;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _iterableToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports, __webpack_require__) {
 var arrayLikeToArray = __webpack_require__(8);
@@ -1021,15 +1021,13 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
 }
-module.exports = _unsupportedIterableToArray;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _unsupportedIterableToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-module.exports = _nonIterableSpread;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _nonIterableSpread, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports, __webpack_require__) {
 var arrayWithHoles = __webpack_require__(13);
@@ -1039,19 +1037,17 @@ var nonIterableRest = __webpack_require__(15);
 function _slicedToArray(arr, i) {
   return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
 }
-module.exports = _slicedToArray;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _slicedToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-module.exports = _arrayWithHoles;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _arrayWithHoles, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _iterableToArrayLimit(arr, i) {
-  var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
   if (_i == null) return;
   var _arr = [];
   var _n = true;
@@ -1074,15 +1070,13 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-module.exports = _iterableToArrayLimit;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _iterableToArrayLimit, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-module.exports = _nonIterableRest;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _nonIterableRest, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _classCallCheck(instance, Constructor) {
@@ -1090,8 +1084,7 @@ function _classCallCheck(instance, Constructor) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
-module.exports = _classCallCheck;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _classCallCheck, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _defineProperties(target, props) {
@@ -1106,10 +1099,12 @@ function _defineProperties(target, props) {
 function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
+  Object.defineProperty(Constructor, "prototype", {
+    writable: false
+  });
   return Constructor;
 }
-module.exports = _createClass;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _createClass, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports, __webpack_require__) {
 var setPrototypeOf = __webpack_require__(19);
@@ -1124,22 +1119,22 @@ function _inherits(subClass, superClass) {
       configurable: true
     }
   });
+  Object.defineProperty(subClass, "prototype", {
+    writable: false
+  });
   if (superClass) setPrototypeOf(subClass, superClass);
 }
-module.exports = _inherits;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _inherits, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _setPrototypeOf(o, p) {
   module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
     o.__proto__ = p;
     return o;
-  };
-  module.exports["default"] = module.exports, module.exports.__esModule = true;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
   return _setPrototypeOf(o, p);
 }
-module.exports = _setPrototypeOf;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _setPrototypeOf, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports, __webpack_require__) {
 var _typeof = __webpack_require__(21)["default"];
@@ -1147,30 +1142,23 @@ var assertThisInitialized = __webpack_require__(22);
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
     return call;
+  } else if (call !== void 0) {
+    throw new TypeError("Derived constructors may only return object or undefined");
   }
   return assertThisInitialized(self);
 }
-module.exports = _possibleConstructorReturn;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _possibleConstructorReturn, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _typeof(obj) {
   "@babel/helpers - typeof";
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-    module.exports["default"] = module.exports, module.exports.__esModule = true;
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-    module.exports["default"] = module.exports, module.exports.__esModule = true;
-  }
-  return _typeof(obj);
+  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
 }
-module.exports = _typeof;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _assertThisInitialized(self) {
@@ -1179,19 +1167,16 @@ function _assertThisInitialized(self) {
   }
   return self;
 }
-module.exports = _assertThisInitialized;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _assertThisInitialized, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _getPrototypeOf(o) {
   module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
     return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  module.exports["default"] = module.exports, module.exports.__esModule = true;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
   return _getPrototypeOf(o);
 }
-module.exports = _getPrototypeOf;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _getPrototypeOf, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports, __webpack_require__) {
 var getPrototypeOf = __webpack_require__(23);
@@ -1221,27 +1206,23 @@ function _wrapNativeSuper(Class) {
       }
     });
     return setPrototypeOf(Wrapper, Class);
-  };
-  module.exports["default"] = module.exports, module.exports.__esModule = true;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
   return _wrapNativeSuper(Class);
 }
-module.exports = _wrapNativeSuper;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _wrapNativeSuper, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _isNativeFunction(fn) {
   return Function.toString.call(fn).indexOf("[native code]") !== -1;
 }
-module.exports = _isNativeFunction;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _isNativeFunction, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports, __webpack_require__) {
 var setPrototypeOf = __webpack_require__(19);
 var isNativeReflectConstruct = __webpack_require__(27);
 function _construct(Parent, args, Class) {
   if (isNativeReflectConstruct()) {
-    module.exports = _construct = Reflect.construct;
-    module.exports["default"] = module.exports, module.exports.__esModule = true;
+    module.exports = _construct = Reflect.construct, module.exports.__esModule = true, module.exports["default"] = module.exports;
   } else {
     module.exports = _construct = function _construct(Parent, args, Class) {
       var a = [null];
@@ -1250,13 +1231,11 @@ function _construct(Parent, args, Class) {
       var instance = new Constructor();
       if (Class) setPrototypeOf(instance, Class.prototype);
       return instance;
-    };
-    module.exports["default"] = module.exports, module.exports.__esModule = true;
+    }, module.exports.__esModule = true, module.exports["default"] = module.exports;
   }
   return _construct.apply(null, arguments);
 }
-module.exports = _construct;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _construct, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports) {
 function _isNativeReflectConstruct() {
@@ -1270,8 +1249,7 @@ function _isNativeReflectConstruct() {
     return false;
   }
 }
-module.exports = _isNativeReflectConstruct;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _isNativeReflectConstruct, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -1279,8 +1257,8 @@ var _interopRequireDefault = __webpack_require__(1);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.register = register;
 exports.findHandler = findHandler;
+exports.register = register;
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
 var _core = __webpack_require__(5);
 var patterns = [];
@@ -1422,7 +1400,7 @@ var _interopRequireDefault = __webpack_require__(1);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.GMAPI = exports.usw = exports.rawUSW = void 0;
+exports.usw = exports.rawUSW = exports.GMAPI = void 0;
 var _typeof2 = _interopRequireDefault(__webpack_require__(21));
 var _core = __webpack_require__(5);
 var rawUSW = getUnsafeWindow();
@@ -9163,21 +9141,30 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?totaldebrid\.org$/,
-    path: /\/l\/(l\.php)?$/,
-    query: /\?ads=([a-zA-Z0-9=]+)$/
+    host: /^tinyurl\.is$/
   },
-  start: function start(m) {
+  ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee231() {
-      var l;
+      var link;
       return _regenerator["default"].wrap(function _callee231$(_context231) {
         while (1) {
           switch (_context231.prev = _context231.next) {
             case 0:
-              l = atob(m.query[1]);
+              _ADSBYPASSER_NAMESPACE__.$.window.count = 0;
               _context231.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
+              return _ADSBYPASSER_NAMESPACE__._.tryEvery(200, function () {
+                var link = (0, _ADSBYPASSER_NAMESPACE__.$)('a[id^=skip-btn]').href;
+                if (link.includes('tinyurl.is')) {
+                  return _ADSBYPASSER_NAMESPACE__._.none;
+                } else {
+                  return link;
+                }
+              });
             case 3:
+              link = _context231.sent;
+              _context231.next = 6;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(link);
+            case 6:
             case "end":
               return _context231.stop();
           }
@@ -9188,26 +9175,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^turkdown\.com$/,
-    path: /^\/link/,
-    query: /^\?id=(.+)/
+    host: /^(www\.)?totaldebrid\.org$/,
+    path: /\/l\/(l\.php)?$/,
+    query: /\?ads=([a-zA-Z0-9=]+)$/
   },
-  ready: function ready(m) {
+  start: function start(m) {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee232() {
-      var html, res;
+      var l;
       return _regenerator["default"].wrap(function _callee232$(_context232) {
         while (1) {
           switch (_context232.prev = _context232.next) {
             case 0:
-              _context232.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.get("?ajax=".concat(m.query[1]));
-            case 2:
-              html = _context232.sent;
-              html = JSON.parse(html);
-              res = /stepone=(.+)/.exec(html.url);
-              _context232.next = 7;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(atob(res[1]));
-            case 7:
+              l = atob(m.query[1]);
+              _context232.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
+            case 3:
             case "end":
               return _context232.stop();
           }
@@ -9218,20 +9200,26 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^u\.to$/,
-    path: /^\/[\w-]+/
+    host: /^turkdown\.com$/,
+    path: /^\/link/,
+    query: /^\?id=(.+)/
   },
-  ready: function ready() {
+  ready: function ready(m) {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee233() {
-      var u;
+      var html, res;
       return _regenerator["default"].wrap(function _callee233$(_context233) {
         while (1) {
           switch (_context233.prev = _context233.next) {
             case 0:
-              u = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/window.location='([^']+)';/);
-              _context233.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(u[1]);
-            case 3:
+              _context233.next = 2;
+              return _ADSBYPASSER_NAMESPACE__.$.get("?ajax=".concat(m.query[1]));
+            case 2:
+              html = _context233.sent;
+              html = JSON.parse(html);
+              res = /stepone=(.+)/.exec(html.url);
+              _context233.next = 7;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(atob(res[1]));
+            case 7:
             case "end":
               return _context233.stop();
           }
@@ -9242,20 +9230,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^unfake\.it$/
+    host: /^u\.to$/,
+    path: /^\/[\w-]+/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee234() {
-      var frame, i;
+      var u;
       return _regenerator["default"].wrap(function _callee234$(_context234) {
         while (1) {
           switch (_context234.prev = _context234.next) {
             case 0:
-              frame = (0, _ADSBYPASSER_NAMESPACE__.$)('frame');
-              i = frame.src.lastIndexOf('http://');
-              _context234.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(frame.src.substr(i));
-            case 4:
+              u = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/window.location='([^']+)';/);
+              _context234.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(u[1]);
+            case 3:
             case "end":
               return _context234.stop();
           }
@@ -9266,20 +9254,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^ur\.ly$/, /^urly\.mobi$/],
-    path: /^\/x(.+)/
+    host: /^unfake\.it$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee235() {
-      var path;
+      var frame, i;
       return _regenerator["default"].wrap(function _callee235$(_context235) {
         while (1) {
           switch (_context235.prev = _context235.next) {
             case 0:
-              path = window.location.href.replace('/x', '/goii/');
-              _context235.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
-            case 3:
+              frame = (0, _ADSBYPASSER_NAMESPACE__.$)('frame');
+              i = frame.src.lastIndexOf('http://');
+              _context235.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(frame.src.substr(i));
+            case 4:
             case "end":
               return _context235.stop();
           }
@@ -9290,18 +9278,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^url\.fm$/
+    host: [/^ur\.ly$/, /^urly\.mobi$/],
+    path: /^\/x(.+)/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee236() {
-      var a;
+      var path;
       return _regenerator["default"].wrap(function _callee236$(_context236) {
         while (1) {
           switch (_context236.prev = _context236.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#clickbtn a');
+              path = window.location.href.replace('/x', '/goii/');
               _context236.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
             case 3:
             case "end":
               return _context236.stop();
@@ -9313,7 +9302,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^url\.ie$/
+    host: /^url\.fm$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee237() {
@@ -9322,7 +9311,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context237.prev = _context237.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a[title="Link to original URL"]');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#clickbtn a');
               _context237.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
@@ -9336,34 +9325,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/(^|\.)urlcash\.(com|net|org)$/, /^(bat5|detonating|celebclk|eightteen|smilinglinks|peekatmygirlfriend|pornyhost|clb1|urlgalleries)\.com$/, /^looble\.net$/, /^xxxs\.org$/]
+    host: /^url\.ie$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee238() {
-      var matches;
+      var a;
       return _regenerator["default"].wrap(function _callee238$(_context238) {
         while (1) {
           switch (_context238.prev = _context238.next) {
             case 0:
-              if (!(_ADSBYPASSER_NAMESPACE__.$.window && _ADSBYPASSER_NAMESPACE__.$.window.linkDestUrl)) {
-                _context238.next = 4;
-                break;
-              }
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a[title="Link to original URL"]');
               _context238.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(_ADSBYPASSER_NAMESPACE__.$.window.linkDestUrl);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
-              return _context238.abrupt("return");
-            case 4:
-              matches = document.body.innerHTML.match(/linkDestUrl = '(.+)'/);
-              if (!matches) {
-                _context238.next = 9;
-                break;
-              }
-              _context238.next = 8;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(matches[1]);
-            case 8:
-              return _context238.abrupt("return");
-            case 9:
             case "end":
               return _context238.stop();
           }
@@ -9374,23 +9348,34 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^urlinn\.com$/
+    host: [/(^|\.)urlcash\.(com|net|org)$/, /^(bat5|detonating|celebclk|eightteen|smilinglinks|peekatmygirlfriend|pornyhost|clb1|urlgalleries)\.com$/, /^looble\.net$/, /^xxxs\.org$/]
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee239() {
-      var m;
+      var matches;
       return _regenerator["default"].wrap(function _callee239$(_context239) {
         while (1) {
           switch (_context239.prev = _context239.next) {
             case 0:
-              m = (0, _ADSBYPASSER_NAMESPACE__.$)('META[HTTP-EQUIV=refresh]').getAttribute('CONTENT').match(/url='([^']+)'/);
-              if (!m) {
+              if (!(_ADSBYPASSER_NAMESPACE__.$.window && _ADSBYPASSER_NAMESPACE__.$.window.linkDestUrl)) {
                 _context239.next = 4;
                 break;
               }
-              _context239.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
+              _context239.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(_ADSBYPASSER_NAMESPACE__.$.window.linkDestUrl);
+            case 3:
+              return _context239.abrupt("return");
             case 4:
+              matches = document.body.innerHTML.match(/linkDestUrl = '(.+)'/);
+              if (!matches) {
+                _context239.next = 9;
+                break;
+              }
+              _context239.next = 8;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(matches[1]);
+            case 8:
+              return _context239.abrupt("return");
+            case 9:
             case "end":
               return _context239.stop();
           }
@@ -9401,19 +9386,23 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^urlms\.com$/
+    host: /^urlinn\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee240() {
-      var iframe;
+      var m;
       return _regenerator["default"].wrap(function _callee240$(_context240) {
         while (1) {
           switch (_context240.prev = _context240.next) {
             case 0:
-              iframe = (0, _ADSBYPASSER_NAMESPACE__.$)('#content');
-              _context240.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(iframe.src);
-            case 3:
+              m = (0, _ADSBYPASSER_NAMESPACE__.$)('META[HTTP-EQUIV=refresh]').getAttribute('CONTENT').match(/url='([^']+)'/);
+              if (!m) {
+                _context240.next = 4;
+                break;
+              }
+              _context240.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
+            case 4:
             case "end":
               return _context240.stop();
           }
@@ -9424,33 +9413,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?urlv2\.com$/
+    host: /^urlms\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee241() {
-      var path, m, l;
+      var iframe;
       return _regenerator["default"].wrap(function _callee241$(_context241) {
         while (1) {
           switch (_context241.prev = _context241.next) {
             case 0:
-              if (!(window.location.pathname.indexOf('locked') >= 0)) {
-                _context241.next = 5;
-                break;
-              }
-              path = window.location.pathname.replace('/locked', '');
-              _context241.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
-            case 4:
-              return _context241.abrupt("return");
-            case 5:
-              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/jeton=([\w]+)/);
-              l = 'http://urlv2.com/algo.php?action=passer&px=0&so=1&jeton=' + m[1]; 
-              _context241.next = 9;
-              return _ADSBYPASSER_NAMESPACE__._.wait(5 * 1000);
-            case 9:
-              _context241.next = 11;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
-            case 11:
+              iframe = (0, _ADSBYPASSER_NAMESPACE__.$)('#content');
+              _context241.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(iframe.src);
+            case 3:
             case "end":
               return _context241.stop();
           }
@@ -9461,20 +9436,33 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?uskip\.me$/,
-    path: /^\/go\/\w+$/
+    host: /^(www\.)?urlv2\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee242() {
-      var a;
+      var path, m, l;
       return _regenerator["default"].wrap(function _callee242$(_context242) {
         while (1) {
           switch (_context242.prev = _context242.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#btn-main');
-              _context242.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+              if (!(window.location.pathname.indexOf('locked') >= 0)) {
+                _context242.next = 5;
+                break;
+              }
+              path = window.location.pathname.replace('/locked', '');
+              _context242.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
+            case 4:
+              return _context242.abrupt("return");
+            case 5:
+              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/jeton=([\w]+)/);
+              l = 'http://urlv2.com/algo.php?action=passer&px=0&so=1&jeton=' + m[1]; 
+              _context242.next = 9;
+              return _ADSBYPASSER_NAMESPACE__._.wait(5 * 1000);
+            case 9:
+              _context242.next = 11;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
+            case 11:
             case "end":
               return _context242.stop();
           }
@@ -9485,20 +9473,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^ux9\.de$/
+    host: /^(www\.)?uskip\.me$/,
+    path: /^\/go\/\w+$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee243() {
-      var meta, url;
+      var a;
       return _regenerator["default"].wrap(function _callee243$(_context243) {
         while (1) {
           switch (_context243.prev = _context243.next) {
             case 0:
-              meta = (0, _ADSBYPASSER_NAMESPACE__.$)('meta[http-equiv="refresh"][content*="url="]');
-              url = meta.getAttribute('content').match(/http.*/)[0];
-              _context243.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
-            case 4:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#btn-main');
+              _context243.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
             case "end":
               return _context243.stop();
           }
@@ -9509,19 +9497,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^vavi\.co$/
+    host: /^ux9\.de$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee244() {
-      var l;
+      var meta, url;
       return _regenerator["default"].wrap(function _callee244$(_context244) {
         while (1) {
           switch (_context244.prev = _context244.next) {
             case 0:
-              l = (0, _ADSBYPASSER_NAMESPACE__.$)('#goLink');
-              _context244.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(l.href);
-            case 3:
+              meta = (0, _ADSBYPASSER_NAMESPACE__.$)('meta[http-equiv="refresh"][content*="url="]');
+              url = meta.getAttribute('content').match(/http.*/)[0];
+              _context244.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
+            case 4:
             case "end":
               return _context244.stop();
           }
@@ -9532,19 +9521,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^vcrypt\.net$/,
-    path: /^\/fastshield\//
+    host: /^vavi\.co$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee245() {
-      var v;
+      var l;
       return _regenerator["default"].wrap(function _callee245$(_context245) {
         while (1) {
           switch (_context245.prev = _context245.next) {
             case 0:
-              v = (0, _ADSBYPASSER_NAMESPACE__.$)('form input.btncontinue');
-              v.click();
-            case 2:
+              l = (0, _ADSBYPASSER_NAMESPACE__.$)('#goLink');
+              _context245.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(l.href);
+            case 3:
             case "end":
               return _context245.stop();
           }
@@ -9555,20 +9544,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.viidii\.info$/,
-    query: /url=([^&]+)/
+    host: /^vcrypt\.net$/,
+    path: /^\/fastshield\//
   },
-  start: function start(m) {
+  ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee246() {
-      var url;
+      var v;
       return _regenerator["default"].wrap(function _callee246$(_context246) {
         while (1) {
           switch (_context246.prev = _context246.next) {
             case 0:
-              url = decodeURIComponent(m.query[1]);
-              _context246.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
-            case 3:
+              v = (0, _ADSBYPASSER_NAMESPACE__.$)('form input.btncontinue');
+              v.click();
+            case 2:
             case "end":
               return _context246.stop();
           }
@@ -9579,18 +9567,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.viidii\.info$/
+    host: /^www\.viidii\.info$/,
+    query: /url=([^&]+)/
   },
-  ready: function ready() {
+  start: function start(m) {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee247() {
-      var o;
+      var url;
       return _regenerator["default"].wrap(function _callee247$(_context247) {
         while (1) {
           switch (_context247.prev = _context247.next) {
             case 0:
-              o = (0, _ADSBYPASSER_NAMESPACE__.$)('.bglink');
+              url = decodeURIComponent(m.query[1]);
               _context247.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(o.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
             case 3:
             case "end":
               return _context247.stop();
@@ -9602,25 +9591,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?vir\.al$/
+    host: /^www\.viidii\.info$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee248() {
-      var m;
+      var o;
       return _regenerator["default"].wrap(function _callee248$(_context248) {
         while (1) {
           switch (_context248.prev = _context248.next) {
             case 0:
-              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/const target_url = '([^']+)';/);
-              if (m) {
-                _context248.next = 3;
-                break;
-              }
-              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('site changed');
+              o = (0, _ADSBYPASSER_NAMESPACE__.$)('.bglink');
+              _context248.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(o.href);
             case 3:
-              _context248.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
-            case 5:
             case "end":
               return _context248.stop();
           }
@@ -9631,19 +9614,25 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?vzturl\.com$/
+    host: /^(www\.)?vir\.al$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee249() {
-      var frame;
+      var m;
       return _regenerator["default"].wrap(function _callee249$(_context249) {
         while (1) {
           switch (_context249.prev = _context249.next) {
             case 0:
-              frame = (0, _ADSBYPASSER_NAMESPACE__.$)('frame[scrolling=yes]');
-              _context249.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(frame.src);
+              m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/const target_url = '([^']+)';/);
+              if (m) {
+                _context249.next = 3;
+                break;
+              }
+              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('site changed');
             case 3:
+              _context249.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(m[1]);
+            case 5:
             case "end":
               return _context249.stop();
           }
@@ -9654,19 +9643,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^st\.wardhanime\.net$/,
-    path: /^\/i\/\d+$/
+    host: /^(www\.)?vzturl\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee250() {
-      var a;
+      var frame;
       return _regenerator["default"].wrap(function _callee250$(_context250) {
         while (1) {
           switch (_context250.prev = _context250.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#wrapper > [class^="tombo"] > a[target="_blank"]');
+              frame = (0, _ADSBYPASSER_NAMESPACE__.$)('frame[scrolling=yes]');
               _context250.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(frame.src);
             case 3:
             case "end":
               return _context250.stop();
@@ -9675,17 +9663,41 @@ _ADSBYPASSER_NAMESPACE__._.register({
       }, _callee250);
     }))();
   }
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^st\.wardhanime\.net$/,
+    path: /^\/i\/\d+$/
+  },
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee251() {
+      var a;
+      return _regenerator["default"].wrap(function _callee251$(_context251) {
+        while (1) {
+          switch (_context251.prev = _context251.next) {
+            case 0:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#wrapper > [class^="tombo"] > a[target="_blank"]');
+              _context251.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
+            case "end":
+              return _context251.stop();
+          }
+        }
+      }, _callee251);
+    }))();
+  }
 }); 
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
     host: /^wikiall\.org$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee251() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee252() {
       var div, o;
-      return _regenerator["default"].wrap(function _callee251$(_context251) {
+      return _regenerator["default"].wrap(function _callee252$(_context252) {
         while (1) {
-          switch (_context251.prev = _context251.next) {
+          switch (_context252.prev = _context252.next) {
             case 0:
               div = (0, _ADSBYPASSER_NAMESPACE__.$)('div#place.get-btn');
               o = new MutationObserver(function () {
@@ -9699,10 +9711,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
               });
             case 3:
             case "end":
-              return _context251.stop();
+              return _context252.stop();
           }
         }
-      }, _callee251);
+      }, _callee252);
     }))();
   }
 });
@@ -9711,11 +9723,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^won\.pe$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee252() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee253() {
       var captcha, p;
-      return _regenerator["default"].wrap(function _callee252$(_context252) {
+      return _regenerator["default"].wrap(function _callee253$(_context253) {
         while (1) {
-          switch (_context252.prev = _context252.next) {
+          switch (_context253.prev = _context253.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('.progress.captcha_loader, skipbox'); 
               captcha = (0, _ADSBYPASSER_NAMESPACE__.$)('#recaptcha');
@@ -9731,33 +9743,12 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   attributes: true
                 });
               });
-              _context252.next = 6;
+              _context253.next = 6;
               return p;
             case 6:
-              _context252.next = 8;
+              _context253.next = 8;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(_ADSBYPASSER_NAMESPACE__.$.window.longURL);
             case 8:
-            case "end":
-              return _context252.stop();
-          }
-        }
-      }, _callee252);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: 'http://yep.it/preview.php?p=*',
-  ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee253() {
-      var link;
-      return _regenerator["default"].wrap(function _callee253$(_context253) {
-        while (1) {
-          switch (_context253.prev = _context253.next) {
-            case 0:
-              link = (0, _ADSBYPASSER_NAMESPACE__.$)('font[color="grey"]').innerHTML;
-              _context253.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(link);
-            case 3:
             case "end":
               return _context253.stop();
           }
@@ -9766,34 +9757,55 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }))();
   }
 });
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: 'http://yep.it/preview.php?p=*',
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee254() {
+      var link;
+      return _regenerator["default"].wrap(function _callee254$(_context254) {
+        while (1) {
+          switch (_context254.prev = _context254.next) {
+            case 0:
+              link = (0, _ADSBYPASSER_NAMESPACE__.$)('font[color="grey"]').innerHTML;
+              _context254.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(link);
+            case 3:
+            case "end":
+              return _context254.stop();
+          }
+        }
+      }, _callee254);
+    }))();
+  }
+});
 (function () {
   _ADSBYPASSER_NAMESPACE__._.register({
     rule: 'http://www.yooclick.com/l/*',
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee254() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee255() {
         var uniq, path, url;
-        return _regenerator["default"].wrap(function _callee254$(_context254) {
+        return _regenerator["default"].wrap(function _callee255$(_context255) {
           while (1) {
-            switch (_context254.prev = _context254.next) {
+            switch (_context255.prev = _context255.next) {
               case 0:
                 _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
                 uniq = _ADSBYPASSER_NAMESPACE__.$.window.uniq || _ADSBYPASSER_NAMESPACE__.$.window.uniqi;
                 if (uniq) {
-                  _context254.next = 4;
+                  _context255.next = 4;
                   break;
                 }
-                return _context254.abrupt("return");
+                return _context255.abrupt("return");
               case 4:
                 path = window.location.pathname; 
                 url = "".concat(path, "?ajax=true&adblock=false&old=false&framed=false&uniq=").concat(uniq);
-                _context254.next = 8;
+                _context255.next = 8;
                 return getURL(url);
               case 8:
               case "end":
-                return _context254.stop();
+                return _context255.stop();
             }
           }
-        }, _callee254);
+        }, _callee255);
       }))();
     }
   });
@@ -9801,37 +9813,37 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _getURL6.apply(this, arguments);
   }
   function _getURL6() {
-    _getURL6 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee255(url) {
+    _getURL6 = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee256(url) {
       var text, goodURL;
-      return _regenerator["default"].wrap(function _callee255$(_context255) {
+      return _regenerator["default"].wrap(function _callee256$(_context256) {
         while (1) {
-          switch (_context255.prev = _context255.next) {
+          switch (_context256.prev = _context256.next) {
             case 0:
-              _context255.next = 2;
+              _context256.next = 2;
               return _ADSBYPASSER_NAMESPACE__.$.get(url);
             case 2:
-              text = _context255.sent;
+              text = _context256.sent;
               goodURL = /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!$&'()*+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!$&'()*+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!$&'()*+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!$&'()*+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!$&'()*+,;=]|:|@)|\/|\?)*)?$/i.test(text); 
               if (!goodURL) {
-                _context255.next = 8;
+                _context256.next = 8;
                 break;
               }
-              _context255.next = 7;
+              _context256.next = 7;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(text);
             case 7:
-              return _context255.abrupt("return");
+              return _context256.abrupt("return");
             case 8:
-              _context255.next = 10;
+              _context256.next = 10;
               return _ADSBYPASSER_NAMESPACE__._.wait(500);
             case 10:
-              _context255.next = 12;
+              _context256.next = 12;
               return getURL(url);
             case 12:
             case "end":
-              return _context255.stop();
+              return _context256.stop();
           }
         }
-      }, _callee255);
+      }, _callee256);
     }));
     return _getURL6.apply(this, arguments);
   }
@@ -9844,17 +9856,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
       hash: /(?:#([a-zA-Z0-9]+))?/
     },
     ready: function ready(m) {
-      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee256() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee257() {
         var sjcl, paste_id, paste_salt, API_URL, pasteInfo, raw_paste, elm, frame;
-        return _regenerator["default"].wrap(function _callee256$(_context256) {
+        return _regenerator["default"].wrap(function _callee257$(_context257) {
           while (1) {
-            switch (_context256.prev = _context256.next) {
+            switch (_context257.prev = _context257.next) {
               case 0:
                 sjcl = _ADSBYPASSER_NAMESPACE__.$.window.sjcl;
                 paste_id = m.path[1];
                 paste_salt = m.hash[1];
                 API_URL = "https://binbox.io/".concat(paste_id, ".json");
-                _context256.next = 6;
+                _context257.next = 6;
                 return _ADSBYPASSER_NAMESPACE__.$.get(API_URL, false, {
                   Origin: _ADSBYPASSER_NAMESPACE__._.none,
                   Referer: _ADSBYPASSER_NAMESPACE__._.none,
@@ -9862,32 +9874,32 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   'X-Requested-With': _ADSBYPASSER_NAMESPACE__._.none
                 });
               case 6:
-                pasteInfo = _context256.sent;
+                pasteInfo = _context257.sent;
                 pasteInfo = JSON.parse(pasteInfo);
                 if (pasteInfo.ok) {
-                  _context256.next = 10;
+                  _context257.next = 10;
                   break;
                 }
                 throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('error when getting paste information');
               case 10:
                 if (!pasteInfo.paste.url) {
-                  _context256.next = 14;
+                  _context257.next = 14;
                   break;
                 }
-                _context256.next = 13;
+                _context257.next = 13;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(pasteInfo.paste.url);
               case 13:
-                return _context256.abrupt("return");
+                return _context257.abrupt("return");
               case 14:
                 raw_paste = sjcl.decrypt(paste_salt, pasteInfo.paste.text);
                 if (!isLink(raw_paste)) {
-                  _context256.next = 19;
+                  _context257.next = 19;
                   break;
                 }
-                _context256.next = 18;
+                _context257.next = 18;
                 return _ADSBYPASSER_NAMESPACE__.$.openLink(raw_paste);
               case 18:
-                return _context256.abrupt("return");
+                return _context257.abrupt("return");
               case 19:
                 elm = document.createElement('pre');
                 elm.id = 'paste-text';
@@ -9896,10 +9908,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 frame.parentNode.replaceChild(elm, frame);
               case 24:
               case "end":
-                return _context256.stop();
+                return _context257.stop();
             }
           }
-        }, _callee256);
+        }, _callee257);
       }))();
     }
   });
@@ -9921,18 +9933,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
     path: /^\/\w+$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee257() {
-      return _regenerator["default"].wrap(function _callee257$(_context257) {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee258() {
+      return _regenerator["default"].wrap(function _callee258$(_context258) {
         while (1) {
-          switch (_context257.prev = _context257.next) {
+          switch (_context258.prev = _context258.next) {
             case 0:
               _ADSBYPASSER_NAMESPACE__.$.remove('#captcha_overlay');
             case 1:
             case "end":
-              return _context257.stop();
+              return _context258.stop();
           }
         }
-      }, _callee257);
+      }, _callee258);
     }))();
   }
 });
@@ -10311,8 +10323,7 @@ var nonIterableRest = __webpack_require__(15);
 function _toArray(arr) {
   return arrayWithHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableRest();
 }
-module.exports = _toArray;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+module.exports = _toArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
  }),
  (function(module, exports, __webpack_require__) {
 "use strict";
@@ -10320,9 +10331,9 @@ var _interopRequireDefault = __webpack_require__(1);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setCookie = setCookie;
 exports.getCookie = getCookie;
 exports.resetCookies = resetCookies;
+exports.setCookie = setCookie;
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(12));
 var _core = __webpack_require__(5);
 function setCookie(key, value) {
@@ -10662,10 +10673,10 @@ function _openLink() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.removeAllTimer = removeAllTimer;
-exports.nuke = nuke;
-exports.generateRandomIP = generateRandomIP;
 exports.evil = evil;
+exports.generateRandomIP = generateRandomIP;
+exports.nuke = nuke;
+exports.removeAllTimer = removeAllTimer;
 var _core = __webpack_require__(5);
 var _platform = __webpack_require__(29);
 var _logger = __webpack_require__(31);
