@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.19.0
+// @version        7.20.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.19.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.20.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -24,9 +24,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.19.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.19.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.19.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.20.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.20.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.20.0/resources/img/imagedoc-darknoise.png
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -4491,10 +4491,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   rule: {
     host: /^tinyurl\.is$/,
   },
-  async ready () {
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window.count=0;
+  async ready() {
+    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].window.count = 0;
     const link = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].tryEvery(200, () => {
-      const link = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('a[id^=skip-btn]').href;
+      const link = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('a[id^=newskip-btn]').href;
       if (link.includes('tinyurl.is')) {
         return _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].none;
       } else {
@@ -5128,6 +5128,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     'http://ifotos.pl/zobacz/*',
     'https://postimg.cc/*',
     'https://pixxxels.cc/*',
+    'https://img.javstore.net/image/*',
   ],
   async ready () {
     const m = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('meta[property="og:image"]');
@@ -5327,7 +5328,9 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   });
   async function run () {
     const i = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('img.pic');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(i.src, {
+      replace: true,
+    });
   }
 })();
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
@@ -5459,6 +5462,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
       /^imghost\.(top|club)$/,
       /^pornbaker\.men$/,
       /^somnath2003\.xyz$/,
+      /^starimage\.club$/,
     ],
     path: /^\/image\/.+$/,
   },
@@ -5489,6 +5493,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
         /^www\.uimgshare\.com$/,
         /^(www\.)?imgsee\.me$/,
         /^(imgclick|pics4you)\.net$/,
+        /^(imgstar)\.eu$/,
       ],
       path: PATH_RULE,
     },
@@ -5859,7 +5864,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     {
       host: [
         /^imgkuiw\.xyz$/,
-        /^(imgwex|imgwang|imgmeno|imgwav|imgxvd|imgbbd|imgqte|imgkoc)\.buzz$/,
+        /^(imgwex|imgwang|imgmeno|imgwav|imgxvd|imgbbd|imgqte|imgkoc|imgkorle|imgwia|imgizx)\.buzz$/,
       ],
       path: /^\/[a-z|0-9]{4,10}$/,
     },
@@ -6416,17 +6421,27 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: /^22pixx\.xyz$/,
-      path: /^\/x-o\/(.+)\.jpeg\.html/,
+      path: /^\/i-a\/(.+)\.jpeg\.html/,
+    },
+    async start () {
+      const path = window.location.href.replace('/i-', '/').replace('.html', '');
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(path);
+    },
+  });
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+    rule: {
+      host: /^22pixx\.xyz$/,
+      path: /^\/x-[or]\/(.+)\.jpeg\.html/,
     },
     async start () {
       const path = window.location.href.replace('/x-', '/').replace('.html', '');
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openLink(path);
     },
   });
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
+  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     rule: {
       host: /^22pixx\.xyz$/,
-      path: /^\/y-o\/(.+)\.jpeg\.html/,
+      path: /^\/y-[ao]\/(.+)\.jpeg\.html/,
     },
     async start () {
       const path = window.location.href.replace('/y-', '/').replace('.html', '');
@@ -6523,7 +6538,13 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
     },
   });
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["_"].register({
-    rule: 'https://imgcloud.pw/image/*',
+    rule: {
+      host: [
+        /^imgcloud\.pw$/,
+        /^pspic\.org$/,
+      ],
+      path: /^\/image\/.*/,
+    },
     async ready () {
       const l = Object(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"])('link[rel="image_src"]');
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__["$"].openImage(l.href);
