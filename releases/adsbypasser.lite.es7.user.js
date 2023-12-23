@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.23.0
+// @version        7.24.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.23.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_openInTab
@@ -22,6 +22,7 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
+// @noframes
 // @run-at         document-start
 // @include        http://*
 // @include        https://*
@@ -278,7 +279,7 @@ __webpack_require__.r(__webpack_exports__);
  });
  var util_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 const rawUSW = getUnsafeWindow();
-const usw = getUnsafeWindowProxy();
+const usw = rawUSW;
 const GMAPI = getGreaseMonkeyAPI();
 function getUnsafeWindow () {
   let w = null;
@@ -341,97 +342,6 @@ function getGreaseMonkeyAPI () {
     gm.getResourceUrl = GM.getResourceUrl;
   }
   return gm;
-}
-const MAGIC_KEY = '__adsbypasser_reverse_proxy__';
-function getUnsafeWindowProxy () {
-  const isFirefox = typeof InstallTrigger !== 'undefined';
-  const isWebExtension = typeof cloneInto === 'undefined' || typeof exportFunction === 'undefined';
-  if (!isFirefox || isWebExtension) {
-    return rawUSW;
-  }
-  const decorator = {
-    set (target, key, value) {
-      if (key === MAGIC_KEY) {
-        return false;
-      }
-      if (target === unsafeWindow && key === 'open') {
-        const d = Object.getOwnPropertyDescriptor(target, key);
-        d.value = clone(function () {
-          const rv = value();
-          return cloneInto(rv, unsafeWindow);
-        });
-        Object.defineProperty(target, key, d);
-      } else {
-        target[key] = clone(value);
-      }
-      return true;
-    },
-    get (target, key) {
-      if (key === MAGIC_KEY) {
-        return target;
-      }
-      const value = target[key];
-      const type = typeof value;
-      if (value === null || (type !== 'function' && type !== 'object')) {
-        return value;
-      }
-      return new Proxy(value, decorator);
-    },
-    apply (target, self, args) {
-      args = Array.prototype.slice.call(args);
-      if (target === unsafeWindow.Object.defineProperty) {
-        args[0] = args[0][MAGIC_KEY];
-      }
-      if (target === unsafeWindow.Function.apply) {
-        self = self[MAGIC_KEY];
-        args[1] = Array.prototype.slice.call(args[1]);
-      }
-      if (target === unsafeWindow.document.querySelector) {
-        self = self[MAGIC_KEY];
-      }
-      if (target === unsafeWindow.document.write) {
-        self = self[MAGIC_KEY];
-      }
-      const usargs = clone(args);
-      return target.apply(self, usargs);
-    },
-    construct (target, args) {
-      args = Array.prototype.slice.call(args);
-      args.unshift(undefined);
-      const usargs = clone(args);
-      const bind = unsafeWindow.Function.prototype.bind;
-      return new (bind.apply(target, usargs));
-    },
-  };
-  return new Proxy(unsafeWindow, decorator);
-}
-function clone (safe) {
-  if (safe === null || !(safe instanceof Object)) {
-    return safe;
-  }
-  if (safe === unsafeWindow) {
-    return safe;
-  }
-  if (safe instanceof String) {
-    return safe.toString();
-  }
-  if (safe instanceof Function) {
-    return exportFunction(safe, unsafeWindow, {
-      allowCrossOriginArguments: true,
-    });
-  }
-  if (safe instanceof Array) {
-    const unsafe = new unsafeWindow.Array();
-    for (let i = 0; i < safe.length; ++i) {
-      unsafe.push(clone(safe[i]));
-    }
-    return unsafe;
-  }
-  const unsafe = new unsafeWindow.Object();
-  (0,util_core__WEBPACK_IMPORTED_MODULE_0__.forEach)(safe, (v, k) => {
-    unsafe[k] = clone(v);
-  });
-  return unsafe;
 }
  }),
  ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -740,16 +650,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^mirrorace\.(com|org)$/,
-    path: /^\/m\/.+\/\d+/,
-  },
-  async ready () {
-    const ma = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('a.uk-button:nth-child(2)');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(ma.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: 'https://www.mirrored.to/files/*',
   async ready () {
     const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.col-sm.centered.extra-top a');
@@ -762,7 +662,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
       /^multiup\.io$/,
   },
   async ready () {
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('button[class="btn btn-info btn-lg btn-block p-xlg hvr-shutter-out-horizontal"]');
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-info.btn-lg.btn-block');
     b.click();
   },
 });
@@ -791,8 +691,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     path: /^\/download\//,
   },
   async ready () {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(5000);
-    const f = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.contactForm #downloadNowBtn.btn.btn-primary');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(18000);
+    const f = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-submit-free.btn-download-free');
     f.click();
   },
 });
@@ -801,22 +701,17 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     host: /^usersdrive\.com$/,
   },
   async ready () {
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('a[class="btn btn-download"]');
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-download');
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: /^1ink\.cc$/,
-    path: /^\/\w+$/,
   },
   async ready () {
-    let url = document.head.querySelector('[name=keywords]').content;
-    const urlCheck = url.match(/^https?:\/\//);
-    if (!urlCheck) {
-      url = 'http://' + url;
-    }
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(url);
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#countingbtn');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -824,7 +719,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     host: /^1link\.club$/,
   },
   async ready () {
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('a.btn.btn-lg.btn-outline');
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#download.btn');
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
@@ -840,134 +735,34 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^(www\.)?4fun\.tw$/,
+    host:
+      /^a2zapk\.io$/,
   },
   async ready () {
-    const i = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#original_url');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(i.value);
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#dlbtn li a');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^ad4\.fr$/,
+    host: /^adfoc\.us$/,
   },
   async ready () {
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('iframe');
-    const s = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/"src", "([^"]+)"/);
-    if (!s) {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.warn('changed');
-      return;
-    }
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(s[1]);
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.skip');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
-(function () {
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-    rule: {
-      host: /^ad7\.biz$/,
-      path: /^\/\d+\/(.*)$/,
-    },
-    async start (m) {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('iframe');
-      let redirectLink = m.path[1];
-      if (!redirectLink.match(/^https?:\/\//)) {
-        redirectLink = 'http://' + redirectLink;
-      }
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(redirectLink);
-    },
-  });
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-    rule: {
-      host: /^ad7\.biz$/,
-      path: /^\/\w+$/,
-    },
-    async ready () {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('iframe');
-      const script = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts('const r_url');
-      let url = script.match(/&url=([^&]+)/);
-      url = url[1];
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(url);
-    },
-  });
-})();
-(function () {
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-    rule: {
-      host: /^(www\.)?adb\.ug$/,
-      path: /^(?!\/(?:privacy|terms|contact(\/.*)?|#.*)?$).*$/,
-    },
-    async ready () {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('iframe');
-      const m = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/top\.location\.href="([^"]+)"/);
-      if (m) {
-        await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(m[1]);
-        return;
-      }
-      const args = await getArguments();
-      tryLink(args);
-    },
-  });
-  function getArguments () {
-    const PATTERN = /\{\s*_args[^}]+\}[^}]+\}/;
-    return new Promise((resolve) => {
-      const m = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(PATTERN);
-      if (m) {
-        resolve(m);
-        return;
-      }
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          mutation.addedNodes.forEach((node) => {
-            if (node.localName === 'script') {
-              const m = node.textContent.match(PATTERN);
-              if (m) {
-                observer.disconnect();
-                resolve(m);
-              }
-            }
-          });
-        });
-      });
-      observer.observe(document.body, {
-        childList: true,
-      });
-    }).then((m) => {
-      return _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.evil(`(${m[0]})`);
-    });
-  }
-  function tryLink (args) {
-    const url = window.location.pathname + '/skip_timer';
-    const i = setInterval(() => {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.post(url, args).then((text) => {
-        const jj = JSON.parse(text);
-        if (!jj.errors && jj.messages) {
-          clearInterval(i);
-          _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(jj.messages.url);
-        }
-      });
-    }, 1000);
-  }
-})();
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: 'http://adfoc.us/*',
+  rule: {
+    host: /^adshnk\.com$/,
+  },
   async ready () {
-    const promise = new Promise((resolve) => {
-      const root = document.body;
-      const observer = new MutationObserver(() => {
-        let o = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.$('#showSkip');
-        if (o) {
-          observer.disconnect();
-          o = o.querySelector('a');
-          resolve(o.href);
-        }
-      });
-      observer.observe(root, {
-        childList: true,
-        subtree: true,
-      });
-    });
-    const url = await promise;
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(url);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(16000);
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('button[class="ui right labeled icon button primary huge fluid"]');
+    b.click();
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(18000);
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('a[id="final_redirect"]');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -982,195 +777,14 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^(www\.)?ah-informatique\.com$/,
-    path: /^\/ZipUrl/,
+    host: /^bcvc\.ink$/,
   },
   async ready () {
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#zip3 a');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(5000);
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#getLink');
+    b.click();
   },
 });
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^al\.ly$/,
-  },
-  async ready () {
-    let i = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.$('#html_element');
-    if (i) {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('#messa');
-      i.classList.remove('hidden');
-      return;
-    }
-    i = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/"href","([^"]+)" \+ hash\)\.remove/);
-    if (!i) {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.warn('site changed');
-      return;
-    }
-    i = i[1] + location.hash;
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(i);
-  },
-});
-(function () {
-  const ajaxPattern = /\$.post\('([^']*)'[^{]+(\{\s*opt:\s*'make_log'[^}]+\}\s*\}),/i;
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-    rule: {
-      host: /^bc\.vc$/,
-      path: /^.+(https?:\/\/.+)$/,
-    },
-    async start (m) {
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(m.path[1] + document.location.search + document.location.hash);
-    },
-  });
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-    rule: {
-      host: /^bc\.vc$/,
-      path: /^\/.+/,
-    },
-    async ready () {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('iframe');
-      const token = await findAJAXToken();
-      const time = fakeAJAXToken();
-      const url = `/fly/ln.php?wds=${token.wds}&time=${time}`;
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(5000);
-      let rv = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.post(url, {
-        xdf: {
-          afg: 300,
-          bfg: 640,
-          cfg: 480,
-          jki: token.jki,
-          dfg: 640,
-          efg: 480,
-          rt: token.rt,
-        },
-        ojk: token.ojk,
-      });
-      rv = JSON.parse(rv);
-      if (rv.error) {
-        throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasserError('auth error');
-      }
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(rv.message.url);
-    },
-  });
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-    rule: {
-      host: [
-        /^mylink\.us$/,
-        /^zpoz\.net$/,
-      ],
-      path: /^\/.+/,
-    },
-    ready: run,
-  });
-  function decompress (script, unzip) {
-    if (!unzip) {
-      return script;
-    }
-    let matches = script.match(/eval(.*)/);
-    if (!matches) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasserError('no script matches /eval(.*)/');
-    }
-    matches = matches[1];
-    script = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.evil(matches);
-    return script;
-  }
-  function searchScript (unzip) {
-    let content = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts('make_log');
-    if (content) {
-      return {
-        direct: false,
-        script: decompress(content, unzip),
-      };
-    }
-    content = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts('click_log');
-    if (content) {
-      return {
-        direct: true,
-        script: decompress(content, unzip),
-      };
-    }
-    throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasserError('script changed');
-  }
-  function knockServer (script, dirtyFix) {
-    const matches = script.match(ajaxPattern);
-    if (!matches) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasserError('(in knock server) no script matches $.post');
-    }
-    const make_url = matches[1];
-    const make_opts = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.evil(`(${matches[2]})`);
-    const i = setInterval(function () {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.post(make_url, make_opts).then(function (text) {
-        if (dirtyFix) {
-          text = text.match(/\{.+\}/)[0];
-        }
-        const jj = JSON.parse(text);
-        if (jj.message) {
-          clearInterval(i);
-          return _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(jj.message.url);
-        }
-      });
-    }, 1000);
-  }
-  async function run (dirtyFix) {
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('iframe');
-    let result = searchScript(true);
-    if (!result.direct) {
-      knockServer(result.script,dirtyFix);
-    } else {
-      result = result.script.match(/top\.location\.href='([^']+)'/);
-      if (!result) {
-        throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasserError('script changed');
-      }
-      result = result[1];
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(result);
-    }
-  }
-  async function findAJAXToken () {
-    const rv = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts('xyz');
-    if (!rv) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasserError('script changed');
-    }
-    let wds = rv.match(/xyz\s*=\s*'([^']+)'/);
-    if (!wds) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasserError('script changed');
-    }
-    wds = wds[1];
-    let jki = rv.match(/tkn\s*=\s*'([^']+)'/);
-    if (!jki) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasserError('script changed');
-    }
-    jki = jki[1];
-    const rt = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#recaptchaToken');
-    while (!rt.value) {
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(500);
-    }
-    return {
-      wds: wds,
-      jki: jki,
-      ojk: 'jfhg',
-      rt: rt.value,
-    };
-  }
-  function fakeAJAXToken () {
-    const skipAd = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#getLink').parentElement;
-    const margin = 6;
-    const fakePageX = skipAd.offsetLeft + margin + 50 + (Math.random() * 10);
-    const fakePageY = skipAd.offsetTop + margin + 15 + (Math.random() * 1);
-    const po = fakePageX + ',' + fakePageY;
-    const posX = jQueryOffset(skipAd).left + margin;
-    const posY = jQueryOffset(skipAd).top + margin;
-    const pos = Math.abs(fakePageX - posX) + ',' + Math.abs(fakePageY - posY);
-    const tsta_ = Math.floor((5 + Math.random()) * 1000);
-    const time = po + ':' + pos + ':' + tsta_;
-    return time;
-  }
-  function jQueryOffset (element) {
-    const r = element.getBoundingClientRect();
-    return {
-      top: r.top + document.body.scrollTop,
-      left: r.left + document.body.scrollLeft,
-    };
-  }
-})();
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: /^(www\.)?biglistofwebsites\.com$/,
@@ -1181,22 +795,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: 'http://www.bild.me/bild.php?file=*',
-  async ready () {
-    const i = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#Bild');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(i.src);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: [
     {
       host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
       path: /\/o\/([a-zA-Z0-9]+)/,
-    },
-    {
-      host: /^gsmzone\.site$/,
-      path: /\/go\/([a-zA-Z0-9]+)/,
-    },
+    }
   ],
   async start (m) {
     const direct_link = window.atob(m.path[1]);
@@ -1236,41 +839,27 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: [
-    {
-      host: /^cpmlink\.net$/,
-      path: /^\/go\/[\w-]+$/,
-    },
-  ],
+  rule:{
+    host: /^cpmlink\.net$/,
+  },
   async ready () {
-    let a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#btn-main');
-    const i = a.href.lastIndexOf('http');
-    a = a.href.substr(i);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a);
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#btn-main');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [
-      /^shon\.xyz$/,
-      /^shink\.me$/,
-    ],
-    path: /^\/[\w-]+$/,
+    host: /^cutpaid\.com$/,
   },
   async ready () {
-    const f = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#skip');
-    f.submit();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^cshort\.org$/,
-  },
-  async ready () {
-    let matches = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/window\.location\.href = "([^"]+)"/);
-    matches = matches[1];
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.nuke(matches);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(matches);
+    let a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-primary');
+    if (a) {
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(20000);
+      a.click();
+    }
+    a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-success.btn-lg.get-link');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(9000);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1280,19 +869,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   async ready() {
     const directUrl = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/"([^"]+)"\)\.html\("Continue"\)/);
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(directUrl[1]);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: [
-      /^easyurl\.net$/,
-      /^(atu|clickthru|redirects|readthis)\.ca$/,
-      /^goshrink\.com$/,
-    ],
-  },
-  async ready () {
-    const f = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('frame[name=main]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(f.src);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1322,11 +898,29 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^(www\.)?filoops\.info$/,
+    host: /^fc-lc\.(com|xyz)$/,
   },
   async ready () {
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#text > center a, #text > div[align=center] a');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(2000);
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-primary.btn-captcha.mb-4');
+    b.click();
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
+    host: /^loaninsurehub\.com$/,
+  },
+  async ready () {
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#glink');
+    if (b) {
+      b.click();
+    }
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(12000);
+    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('#overlay');
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#surl');
+    if (a) {
+      a.click();
+    }
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1352,11 +946,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^gkurl\.us$/,
+    host: /^getthot\.com$/,
   },
   async ready () {
-    const iframe = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#gkurl-frame');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(iframe.src);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(12000);
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.skip-btn');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1390,21 +985,22 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^iiv\.pl$/,
+    host: /^icutlink\.com$/,
   },
   async ready () {
-    let d = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#counting');
-    let rv = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.post(location.pathname, {
-      blocker: 0,
-      salt: d.dataset.salt,
-    }, {
-      'X-OCTOBER-REQUEST-HANDLER': 'onAfterShortcutView',
-      'X-OCTOBER-REQUEST-PARTIALS': 'shortcut/link_show',
-    });
-    rv = JSON.parse(rv);
-    d = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.toDOM(rv['shortcut/link_show']);
-    rv = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('a', d);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(rv.href);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(10000);
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-success.btn-lg.get-link');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a);
+  },
+});
+            _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
+    host: /^zegtrends\.com$/,
+  },
+  async ready () {
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(12000);
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('div > button.bsub');
+    b.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1447,49 +1043,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^leechall\.download$/,
-    path: /^\/file\/([a-zA-Z0-9/=]+)/,
-  },
-  async start (m) {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(decodeURIComponent(atob(m.path[1])));
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: 
-    {
-      host: /^leechpremium\.link$/,
-      path: /^\/cheat\//,
-      query: /^\?link=([a-zA-Z0-9/=]+)$/,
-    },
-  async start (m) {
-    const rawLink = atob(decodeURIComponent(m.query[1]));
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(rawLink);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^link\.tl$/,
-    path: /\//,
-  },
-  async ready () {
-    let m = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/eval\((.+}\))\)/);
-    m = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.evil(`(${m[1]})`);
-    let l = m.match(/(?:\$\.ajax.+|href=')(http.+skip.+|http[^']+)',data/);
-    l = l[1];
-    if (!l.match(/skip/)) {
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(l);
-      return;
-    }
-    const token = m.match(/'X-CSRF-TOKEN':'([^']+)'},/);
-    let rl = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.post(l, '', {
-      'X-CSRF-TOKEN': token[1],
-    });
-    rl = JSON.parse(rl);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(rl.url);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^link\.turkdown\.com$/,
   },
   async ready () {
@@ -1508,102 +1061,31 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     b.click();
   },
 });
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^www\.linkdecode\.com$/,
-    path: /^\/$/,
-    query: /^\?(.+)$/,
-  },
-  async ready (m) {
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('iframe');
-    let lnk = m.query[1];
-    if (m.query[1].match(/^https?:\/\//)) {
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(lnk);
-      return;
-    }
-    let b = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.$('#popup');
-    if (b && b.href) {
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(b.href);
-      return;
-    }
-    b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#m > .Visit_Link');
-    b = b.onclick.toString().match(/window\.open\('([^']+)'/);
-    if (!b) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasser('pattern changed');
-    }
-    lnk = b[1].match(/\?(https?:\/\/.*)$/);
-    if (lnk) {
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(lnk[1]);
-      return;
-    }
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(b[1]);
-  },
-});
 (function () {
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     rule: {
       host: [
         /^adsafelink\.com$/,
         /^birdurls\.com$/,
-        /^clicksfly\.com$/,
-        /^linkmoni\.com$/,
-        /^go.linksop\.com$/,
-        /^shrinkearn\.com$/,
+        /^dz4link\.com$/,
+        /^(linkmoni|shrinkcash)\.com$/,
         /^shrt10\.com$/,
-        /^try2link\.com$/,
-        /^urlshortx\.com$/,
-        /^megaurl\.in$/,
-        /^miniurl\.io$/,
-        /^oke\.io$/,
-        /^shrinkme\.io$/,
-        /^uii\.io$/,
-        /^illink\.net$/,
-        /^linkrex\.net$/,
+        /^tmearn\.net$/,
         /^vinaurl\.net$/,
         /^payskip\.org$/,
         /^clik\.pw$/,
-        /^clk\.sh$/,
+        /^miniurl\.pw$/,
+        /^aylink\.co$/,
+        /^(clk|oko)\.sh$/,
         /^megalink\.pro$/,
+        /^met\.bz/,
+        /^mitly\.us$/,
+        /^oke\.io$/,
         /^pingit\.im$/,
-        /^short\.pe$/,
-        /^stfly\.(me|xyz)$/,
-        /^tii\.la$/,
-        /^tl\.tc$/,
       ],
     },
     async ready () {
       const handler = new RecaptchaHandler();
-      await handler.call();
-    },
-  });
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-    rule: {
-      host: [  
-        /^aylink\.co$/,
-        /^cutpaid\.com$/,
-        /^dz4link\.com$/,
-        /^fc-lc\.(com|xyz)$/,
-        /^met\.bz/,
-        /^mitly\.us$/,
-        /^tmearn\.net$/,
-      ],
-    },
-    async ready () {
-      const handler = new InvisibleRecaptchaHandler();
-      await handler.call();
-    },
-  });
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-    rule: {
-      host: [
-        /^adbull\.me$/,
-        /^adshort\.co$/,
-        /^adslink\.pw$/,
-        /^linclik\.com$/,
-      ],
-    },
-    async ready () {
-      const handler = new StagedHandler();
       await handler.call();
     },
   });
@@ -1661,8 +1143,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
       if (!b) {
         return false;
       }
-      await this.submitListen(b, f);
-      return false;
     }
     async submitListen (b) {
       const o = new MutationObserver(() => {
@@ -1694,56 +1174,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
         }
       }
     }
-  }
-  class InvisibleRecaptchaHandler extends RecaptchaHandler {
-    async submitListen (b, f) {
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(1000);
-      const click = f.clientWidth === 0 || f.childNodes.length === 0;
-      if (click && !b.disabled) {
-        _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.info('clicking submit button, because recaptcha was empty');
-        b.setAttribute('onclick', '');
-        b.click();
-      }
-    }
-  }
-  class StagedHandler extends AbstractHandler {
-    prepare () {
-      this.removeFrame();
-      this.removeOverlay();
-      return true;
-    }
-    async getMiddleware () {
-      const f = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.$('#link-view');
-      if (!f) {
-        return document;
-      }
-      const args = extractArgument(f);
-      const url = f.getAttribute('action');
-      let page = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.post(url, args);
-      page = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.toDOM(page);
-      return page;
-    }
-    withoutMiddleware () {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.info('no page');
-    }
-    async getURL (page) {
-      const f = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#go-link', page);
-      const args = extractArgument(f);
-      const url = f.getAttribute('action');
-      let data = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.post(url, args);
-      data = JSON.parse(data);
-      if (data && data.url) {
-        return data.url;
-      }
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasserError('wrong data');
-    }
-  }
-  function extractArgument (form) {
-    const args = {};
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.forEach(_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.$$('input', form), (v) => {
-      args[v.name] = v.value;
-    });
-    return args;
   }
   async function getJQueryForm (selector) {
     let jQuery = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.window.$;
@@ -1794,15 +1224,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^(www\.)?linkplugapp\.com$/,
-  },
-  async ready () {
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#mc_embed_signup_scroll a');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^linkpoi\.me$/,
   },
   async ready () {
@@ -1830,18 +1251,33 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     host: /^linksly\.co$/,
   },
   async ready () {
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn.btn-primary');
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-primary');
     b.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^go\.linksly\.co$/,
+    host: [
+      /^go\.linksly\.co$/,
+      /^go\.bitcosite\.com$/,
+    ],
   },
   async ready () {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(6000);
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('a[class="btn btn-success btn-lg get-link"]');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(8000);
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-success.btn-lg.get-link');
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
+    host: /^lnk2\.cc$/,
+    path: /^\/go\//,
+  },
+  async ready () {
+    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('iframe, .popupOverlay');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(18000);
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#getLink');
+    b.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1855,56 +1291,33 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [
-      /^lonelymoon\.net$/,
-      /^(intercelestial|sweetlantern)\.com$/,
-    ],
-  },
-  async ready () {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(1000);
-    const ln = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#landing.soractrl .to a');
-    ln.click();
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(2000); 
-    const tl = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.soractrl img#showlink.spoint');
-    tl.click();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^mangalist\.org$/,
   },
   async ready () {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(1000);
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('[class="btn btn-primary url text-center center-block"]');
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-primary.url.text-center');
     b.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^mirrorfilehost\.com$/,
+    host:
+      /^mylink\.us$/,
   },
   async ready () {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(3 * 1000);
-    const frame = frames[0];
-    const form = frame.document.createElement('form');
-    form.target = '_parent';
-    form.action = location.toString();
-    const input = frame.document.createElement('input');
-    input.value = 'Download';
-    input.type = 'submit';
-    form.appendChild(input);
-    frame.document.body.appendChild(form);
-    input.click();
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(8000);
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('div.skip_btn a');
+    a.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: /^nmac\.to$/,
-    path: /^\/download\/(.+)/,
+    path: /^\/dl\/(.+)/,
   },
-  async start (m) {
-    const url = atob(m.path[1]);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(url);
+  async ready () {
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-medium.btn-block');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1913,14 +1326,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
   async ready () {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(10000);
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.uk-button.uk-button-large.uk-button-primary.go-to-button');
-    if (b) {
-      b.click();
-    }
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.uk-button.uk-button-large.uk-button-primary.go-to-button');
-    if (a) {
-      a.click();
-    }
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.uk-button-primary.go-to-button');
+    b.click();
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(1000);
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.uk-button-primary.go-to-button');
+    a.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1970,18 +1380,18 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^pucuk\.xyz$/,
-    path: /^\/\w+/,
+    host: /^icerik\.site$/,
+    path: /^\/go/,
   },
   async ready () {
-    const px = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#content article center a.button.icon.fa-link');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(px.href);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(500);
+    const button = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#get_link_btn');
+    button.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: [
-      /^vyvmedia\.my\.id$/,
       /^realsht\.mobi$/,
     ],
   },
@@ -2001,10 +1411,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [
+    host:
       /^segmentnext\.com$/,
-      /^(www\.)?videogamesblogger\.com$/,
-    ],
     path: /^\/interstitial\.html$/,
     query: /return_url=([^&]+)/,
   },
@@ -2015,67 +1423,38 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: [
-      /^(www\.)?semprot\.com$/,
-      /^46\.166\.167\.16$/,
+      /^shink\.me$/,
+      /^shon\.xyz$/,
     ],
-    path: /^\/ahli\.php/,
-    query: /^\?url=(.*)/,
   },
   async ready () {
-    const sem = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/var the_url = '([^']+)';/);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(sem[1]);
+    const f = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#skip');
+    f.submit();
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
+    host: /^(short|srt)\.am$/,
+  },
+  async ready () {
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(5000);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink('', {
+      post: {
+        _image: 'Continue',
+      },
+    });
   },
 });
 (function () {
   const hostRules = [
-    /^(jnw0|cllkme|clkmein|corneey|ceesty)\.com$/,
+    /^(cllkme|clkmein|corneey|ceesty)\.com$/,
     /^(destyy|festyy|gestyy)\.com$/,
     /^sh\.st$/,
-    /^(viid|wiid)\.me$/,
   ];
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     rule: {
       host: hostRules,
-      path: /^\/freeze\/.+/,
-    },
-    async ready () {
-      const promise = new Promise((resolve) => {
-        const o = new MutationObserver((mutations) => {
-          mutations.forEach((mutation) => {
-            if (mutation.target.getAttribute('class').match(/active/)) {
-              o.disconnect();
-              resolve(mutation.target.href);
-            }
-          });
-        });
-        o.observe((0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#skip_button'), {
-          attributes: true,
-          attributeFilter: ['class'],
-        });
-      });
-      const url = await promise;
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(url);
-    },
-  });
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-    rule: {
-      host: hostRules,
-      path: /https?:\/\//,
-    },
-    async start () {
-      let url = window.location.pathname + window.location.search + window.location.hash;
-      url = url.match(/(https?:\/\/.*)$/);
-      url = url[1];
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(url);
-    },
-  });
-  _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-    rule: {
-      host: hostRules,
       path: /^\/[\d\w]+/,
-    },
-    async start () {
-      _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.window._impspcabe = 0;
     },
     async ready () {
       _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('iframe');
@@ -2125,27 +1504,14 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 })();
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^(short|srt)\.am$/,
-  },
-  async ready () {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(5000);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink('', {
-      post: {
-        _image: 'Continue',
-      },
-    });
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: [
-      /^shortlinkto\.site$/,
+      /^shortlinkto\.biz$/,
       /^uplinkto\.hair$/,
     ],  
   },
   async ready () {
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn.btn-primary.btn-block');
-    b.click();
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.view-well a');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -2165,61 +1531,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   async ready () {
     const button = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn.btn-primary.btn-block');
     button.click();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^get\.shrink-service\.it$/,
-    path: /^\/(.+)/,
-  },
-  async start (m) {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(`//www.shrink-service.it/shrinked/${m.path[1]}`);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^www\.shrink-service\.it$/,
-    path: /^\/btn\/(.+)/,
-  },
-  async ready (m) {
-    const path_id = m.path[1];
-    const API_URL = '//www.shrink-service.it/v3/api/prototype/init?req=init&uri=https://adshnk.com/'+path_id;
-    let linkInfo = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.get(API_URL, false, {
-      Origin: _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.none,
-      Referer: _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.none,
-      Cookie: 'referrer=1',
-      'X-Requested-With': _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.none,
-    });
-    linkInfo = JSON.parse(linkInfo);
-    if (!linkInfo.success) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.AdsBypasserError('error when getting api information');
-    }
-    const urlInfo = JSON.parse(linkInfo['0'].metadata);
-    if (urlInfo.url) {
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(urlInfo.url);
-      return;
-    }
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^www\.shrink-service\.it$/,
-    path: /^\/shrinked\//,
-  },
-  async ready () {
-    const i = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('input[id][name]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(i.value);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^www\.shrink-service\.it$/,
-    path: /^\/[se]\//,
-  },
-  async ready () {
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove('iframe');
-    const i = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('body > input[id][name]');
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(i.value);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -2247,22 +1558,31 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^sub2unlock\.com$/,
-    path: /^\/link\/get\//,
+    host: /^stfly\.(me|xyz)$/,
   },
   async ready () {
-    const su = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('a#link.unlock-step-link.getlink');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(su.href);
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-captcha.m-2.form-send');
+    b.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^sub2unlock\.com$/,
-    path: /^\/[a-zA-Z0-9]+/,
+    host: /^blogbux\.net$/,
   },
   async ready () {
-    const su = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/'href', '([^']+)'/);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(su[1]);
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-captcha.m-2.form-send');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(12000);
+    b.click();
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
+    host: /^techtrendmakers\.com$/,
+  },
+  async ready () {
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-captcha.m-2.form-send.step_btn');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(6000);
+    b.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -2277,54 +1597,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^surfsees\.com$/,
-    query: /^\?go=([a-zA-Z0-9]+)$/,
-  },
-  async start () {
-    const path = window.location.href.replace('go', 'link');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(path);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^surfsees\.com$/,
-    query: /^\?link=([a-zA-Z0-9]+)(clickarurl)?$/,
-  },
-  async ready () {
-    const s = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('input.btn.btn-primary');
-    s.click();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^surfsees\.com$/,
-  },
-  async ready () {
-    const surl = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#wpsafe-linkz a');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(surl.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^swzz\.xyz$/,
-    path: /^\/link\/\w+\/$/,
+    path: /^\/link\//,
   },
   async ready () {
-    const g = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('a.btn-wrapper.link');
+    const g = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('a.btn.btn-primary');
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(g.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^techfunda\.net$/,
-    path: [
-      /^\/link\//,
-      /^\/safe\//,
-    ],
-  },
-  async ready () {
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.hide a.btn');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -2378,21 +1656,17 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^u\.to$/,
-    path: /^\/[\w-]+/,
+    host: /^tutwuri\.id$/,
   },
   async ready () {
-    const u = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/window.location='([^']+)';/);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(u[1]);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^url\.ie$/,
-  },
-  async ready () {
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('a[title="Link to original URL"]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(1000);
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#btn-1');
+    a.click();
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(12000);
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#btn-2');
+    b.click();
+    const c = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#btn-3');
+    c.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -2418,16 +1692,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^ux9\.de$/,
-  },
-  async ready () {
-    const meta = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('meta[http-equiv="refresh"][content*="url="]');
-    const url = meta.getAttribute('content').match(/http.*/)[0];
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(url);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^(www\.)?vzturl\.com$/,
   },
   async ready () {
@@ -2441,7 +1705,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
   async ready () {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(8000);
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn.btn-success.btn-lg.get-link');
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.btn-success.btn-lg.get-link');
     a.click();
   },
 });
