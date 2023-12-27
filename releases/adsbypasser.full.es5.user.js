@@ -3,16 +3,17 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.24.0
+// @version        7.24.1
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.1/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
+// @grant          GM_info
 // @grant          GM_openInTab
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
@@ -20,13 +21,14 @@
 // @grant          GM.deleteValue
 // @grant          GM.getResourceUrl
 // @grant          GM.getValue
+// @grant          GM.info
 // @grant          GM.openInTab
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.1/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.1/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.1/resources/img/imagedoc-darknoise.png
 // @noframes
 // @run-at         document-start
 // @include        http://*
@@ -1195,7 +1197,7 @@ var _typeof2 = _interopRequireDefault(__webpack_require__(21));
 var _core = __webpack_require__(5);
 var rawUSW = getUnsafeWindow();
 exports.rawUSW = rawUSW;
-var usw = rawUSW;
+var usw = getUnsafeWindowProxy();
 exports.usw = usw;
 var GMAPI = getGreaseMonkeyAPI();
 exports.GMAPI = GMAPI;
@@ -1260,6 +1262,97 @@ function getGreaseMonkeyAPI() {
     gm.getResourceUrl = GM.getResourceUrl;
   }
   return gm;
+}
+function getGMInfo() {
+  if ((typeof GM_info === "undefined" ? "undefined" : (0, _typeof2["default"])(GM_info)) === "object" && GM_info) {
+    return GM_info;
+  } else if ((typeof GM === "undefined" ? "undefined" : (0, _typeof2["default"])(GM)) === 'object' && GM && GM.info) {
+    return GM.info;
+  } else {
+    return {};
+  }
+}
+var MAGIC_KEY = '__adsbypasser_reverse_proxy__';
+function getUnsafeWindowProxy() {
+  var isGreaseMonkey = getGMInfo().scriptHandler === 'Greasemonkey';
+  if (!isGreaseMonkey) {
+    return rawUSW;
+  }
+  var decorator = {
+    set: function set(target, key, value) {
+      if (key === MAGIC_KEY) {
+        return false;
+      } else {
+        target[key] = clone(value);
+      }
+      return true;
+    },
+    get: function get(target, key) {
+      if (key === MAGIC_KEY) {
+        return target;
+      }
+      var value = target[key];
+      var type = (0, _typeof2["default"])(value);
+      if (value === null || type !== 'function' && type !== 'object') {
+        return value;
+      }
+      return new Proxy(value, decorator);
+    },
+    apply: function apply(target, self, args) {
+      args = Array.prototype.slice.call(args);
+      if (target === unsafeWindow.Object.defineProperty) {
+        args[0] = args[0][MAGIC_KEY];
+      }
+      if (target === unsafeWindow.Function.apply) {
+        self = self[MAGIC_KEY];
+        args[1] = Array.prototype.slice.call(args[1]);
+      }
+      if (target === unsafeWindow.document.querySelector) {
+        self = self[MAGIC_KEY];
+      }
+      if (target === unsafeWindow.document.write) {
+        self = self[MAGIC_KEY];
+      }
+      var usargs = clone(args);
+      return target.apply(self, usargs);
+    },
+    construct: function construct(target, args) {
+      args = Array.prototype.slice.call(args);
+      args.unshift(undefined);
+      var usargs = clone(args);
+      var bind = unsafeWindow.Function.prototype.bind;
+      return new (bind.apply(target, usargs))();
+    }
+  };
+  return new Proxy(unsafeWindow, decorator);
+}
+function clone(safe) {
+  if (safe === null || !(safe instanceof Object)) {
+    return safe;
+  }
+  if (safe === unsafeWindow) {
+    return safe;
+  }
+  if (safe instanceof String) {
+    return safe.toString();
+  }
+  if (safe instanceof Function) {
+    return exportFunction(safe, unsafeWindow, {
+      allowCrossOriginArguments: true
+    });
+  }
+  if (safe instanceof Array) {
+    var _unsafe = new unsafeWindow.Array();
+    for (var i = 0; i < safe.length; ++i) {
+      _unsafe.push(clone(safe[i]));
+    }
+    return _unsafe;
+  }
+  var unsafe = new unsafeWindow.Object();
+  (0, _core.forEach)(safe, function (v, k) {
+    unsafe[k] = clone(v);
+  });
+  return unsafe;
 }
  }),
  ((__unused_webpack_module, exports, __webpack_require__) => {
