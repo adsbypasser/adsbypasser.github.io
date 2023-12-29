@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.24.1
+// @version        7.25.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.1/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.25.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -1259,7 +1259,7 @@ function getGreaseMonkeyAPI() {
   return gm;
 }
 function getGMInfo() {
-  if ((typeof GM_info === "undefined" ? "undefined" : (0, _typeof2["default"])(GM_info)) === "object" && GM_info) {
+  if ((typeof GM_info === "undefined" ? "undefined" : (0, _typeof2["default"])(GM_info)) === 'object' && GM_info) {
     return GM_info;
   } else if ((typeof GM === "undefined" ? "undefined" : (0, _typeof2["default"])(GM)) === 'object' && GM && GM.info) {
     return GM.info;

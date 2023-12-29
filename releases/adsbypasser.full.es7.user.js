@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.24.1
+// @version        7.25.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.1/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.25.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -26,9 +26,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.1/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.1/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.24.1/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.25.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.25.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.25.0/resources/img/imagedoc-darknoise.png
 // @noframes
 // @run-at         document-start
 // @include        http://*
@@ -351,7 +351,7 @@ function getGreaseMonkeyAPI () {
   return gm;
 }
 function getGMInfo () {
-  if (typeof GM_info === "object" && GM_info) {
+  if (typeof GM_info === 'object' && GM_info) {
     return GM_info;
   } else if (typeof GM === 'object' && GM && GM.info) {
     return GM.info;
@@ -1859,15 +1859,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^2i\.(sk|cz)$/,
-  },
-  async ready () {
-    const m = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('meta[property="og:image"]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(m.content);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: [
       /^abload\.de$/,
       /^imageup\.ru$/,
@@ -1990,8 +1981,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     host: /^www\.imagebam\.com$/,
   },
   async ready () {
-    const img = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('img.main-image');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(img.src);
+    let a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#continue > a');
+    if (a) {
+      a.click();
+    }
+    a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.main-image');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(a.src);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -2015,7 +2010,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: 'https://www.imagehost.at/image/*',
+  rule: [    
+    'https://2i.cz/i/*',
+    'https://2i.sk/i/*',
+    'https://www.imagehost.at/image/*',
+  ],
   async ready () {
     const i = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('meta[property="og:image"]');
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(i.content);
@@ -2079,12 +2078,13 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule:
     {
       host: [
+        /^cloudgallery\.net$/,
         /^imgair\.net$/,
         /^imgblaze\.net$/,
         /^imgfrost\.net$/,
         /^imgqklw\.shop$/,
         /^imgrehd\.shop$/,
-        /^www\.cloudgallery\.net$/,
+        /^imgtgd\.shop$/,
       ],
     },
   async ready () {
@@ -2118,6 +2118,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: [
+      /^37xpics\.space$/,
       /^imgcloud\.pw$/,
       /^pilot007\.org$/,
       /^www\.imghit\.com$/,
@@ -2131,13 +2132,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [
-      /^acidimg\.cc$/,
-      /^imgdawgknuttz\.com$/,
-    ],
+    host: /^imgdawgknuttz\.com$/,
   },
   async ready () {
-    let a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.button');
+    let a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.button.blue');
     if (a) {
       a.click();
     }
@@ -2224,6 +2222,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     'https://picnew.space/image/*',
     'https://pig69.com/upload/en/*',
     'https://porn4f.com/upload/en/*',
+    'https://xxxaddicted.top/image/*',
   ],
   async ready () {
     const m = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('meta[property="og:image"]');
