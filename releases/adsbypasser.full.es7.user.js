@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.26.0
+// @version        7.27.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.26.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.27.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -26,9 +26,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.26.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.26.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.26.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.27.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.27.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.27.0/resources/img/imagedoc-darknoise.png
 // @noframes
 // @run-at         document-start
 // @include        http://*
@@ -1171,6 +1171,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
+    host: /^linegee\.net$/,
+  },
+  async ready () {
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('p.kecil a');
+    b.click();
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
     host: /^link\.turkdown\.com$/,
   },
   async ready () {
@@ -1205,11 +1214,14 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
         /^miniurl\.pw$/,
         /^aylink\.co$/,
         /^(clk|oko)\.sh$/,
+        /^cpmlink\.pro$/,
+        /^gitlink\.pro$/,
         /^megalink\.pro$/,
         /^met\.bz/,
         /^mitly\.us$/,
         /^oke\.io$/,
         /^pingit\.im$/,
+        /^thotpacks\.xyz$/,
       ],
     },
     async ready () {
@@ -1686,6 +1698,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
+    host: /^spacetica\.com$/,
+  },
+  async ready () {
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('center a');
+    b.click();
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
     host: /^www\.spaste\.com$/,
     path: /^\/site\//,
   },
@@ -1921,6 +1942,22 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
+    host: [
+      /^acidimg\.cc$/,
+      /^imx\.to$/,
+    ],
+  },
+  async ready () {
+    let a = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.$('#continuebutton, .button');
+    if (a) {
+      a.click();
+    }
+    a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.centred');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(a.src);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
     host: /^bayimg\.com$/,
   },
   async ready () {
@@ -1986,6 +2023,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: [
+      /^crownimg\.com$/,
       /^fotokiz\.com$/,
       /^imgbaron\.com$/,
       /^imgsen\.com$/,
@@ -1996,8 +2034,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
       /^picdollar\.com$/,
       /^pics4upload\.com$/,
       /^silverpic\.com$/,
+      /^barbit\.net$/,
       /^pics4you\.net$/,
       /^imgstar\.eu$/,
+      /^www\.fappic\.com$/,
     ],
   },
   async ready () {
@@ -2129,9 +2169,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
         /^imgair\.net$/,
         /^imgblaze\.net$/,
         /^imgfrost\.net$/,
-        /^img[a-z]{2,6}\.shop$/,
-        /^pic[a-z]{2,6}\.shop$/,
-        /^img[a-z]{2,6}\.sbs$/,
+        /^img[a-z]{2,6}\.(sbs|shop)$/,
+        /^pic[a-z]{2,6}\.(sbs|shop)$/,
         /^pix[a-z]{2,6}\.sbs$/,
       ],
     },
@@ -2301,19 +2340,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^imx\.to$/,
-  },
-  async ready () {
-    let a = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.$('#continuebutton, .button');
-    if (a) {
-      a.click();
-    }
-    a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.centred');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(a.src);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: [
     'https://ai18.pics/upload/en/*',
     'https://cnpics.org/upload/en/*',
@@ -2381,6 +2407,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
       /^dewimg\.com$/,
       /^outletpic\.com$/,
       /^pictwn\.com$/,
+      /^picyield\.com$/,
       /^tezzpic\.com$/,
     ],  
   },
@@ -2574,7 +2601,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     host: /^xxxwebdlxxx\.(org|top)$/,
   },
   async ready () { 
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.centred, .centred_resize');
+    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.centred, .centred_resized');
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(a.src);
   },
 });
