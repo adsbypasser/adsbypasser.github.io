@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.27.0
+// @version        7.28.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.27.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.28.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -26,9 +26,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.27.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.27.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.27.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.28.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.28.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.28.0/resources/img/imagedoc-darknoise.png
 // @noframes
 // @run-at         document-start
 // @include        http://*
@@ -3140,7 +3140,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       /^tmearn\.net$/, /^vinaurl\.net$/,
       /^payskip\.org$/,
       /^clik\.pw$/, /^miniurl\.pw$/,
-      /^aylink\.co$/, /^(clk|oko)\.sh$/, /^cpmlink\.pro$/, /^gitlink\.pro$/, /^megalink\.pro$/, /^met\.bz/, /^mitly\.us$/, /^oke\.io$/, /^pingit\.im$/, /^thotpacks\.xyz$/]
+      /^aylink\.co$/, /^(clk|oko)\.sh$/, /^cpmlink\.pro$/, /^gitlink\.pro$/, /^megalink\.pro$/, /^met\.bz/, /^mitly\.us$/, /^oke\.io$/, /^pahe\.plus$/, /^pingit\.im$/, /^thotpacks\.xyz$/]
     },
     ready: function ready() {
       return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee51() {
@@ -4190,7 +4190,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context86.prev = _context86.next) {
             case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('center a');
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-primary.btn-xs');
               b.click();
             case 2:
             case "end":
@@ -5217,7 +5217,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^cloudgallery\.net$/, /^imgair\.net$/, /^imgblaze\.net$/, /^imgfrost\.net$/, /^img[a-z]{2,6}\.(sbs|shop)$/, /^pic[a-z]{2,6}\.(sbs|shop)$/, /^pix[a-z]{2,6}\.sbs$/]
+    host: [/^cloudgallery\.net$/, /^imgair\.net$/, /^imgblaze\.net$/, /^imgfrost\.net$/, /^img[a-z]{2,10}\.(sbs|shop)$/, /^pic[a-z]{2,10}\.(sbs|shop)$/, /^pix[a-z]{2,10}\.sbs$/]
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee128() {
@@ -5569,7 +5569,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: ['https://ai18.pics/upload/en/*', 'https://cnpics.org/upload/en/*', 'https://cnxx.me/upload/en/*', 'https://cosplay18.pics/upload/en/*', 'https://idol69.net/upload/en/*', 'https://javball.com/upload/en/*', 'https://ovabee.com/upload/en/*', 'https://pig69.com/upload/en/*', 'https://porn4f.com/upload/en/*'],
+  rule: ['https://555fap.com/upload/en/*', 'https://ai18.pics/upload/en/*', 'https://cnpics.org/upload/en/*', 'https://cnxx.me/upload/en/*', 'https://cosplay18.pics/upload/en/*', 'https://idol69.net/upload/en/*', 'https://javball.com/upload/en/*', 'https://ovabee.com/upload/en/*', 'https://pig69.com/upload/en/*', 'https://porn4f.com/upload/en/*'],
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee142() {
       var m;

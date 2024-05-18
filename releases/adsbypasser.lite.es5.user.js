@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.27.0
+// @version        7.28.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.27.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.28.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -3135,7 +3135,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
       /^tmearn\.net$/, /^vinaurl\.net$/,
       /^payskip\.org$/,
       /^clik\.pw$/, /^miniurl\.pw$/,
-      /^aylink\.co$/, /^(clk|oko)\.sh$/, /^cpmlink\.pro$/, /^gitlink\.pro$/, /^megalink\.pro$/, /^met\.bz/, /^mitly\.us$/, /^oke\.io$/, /^pingit\.im$/, /^thotpacks\.xyz$/]
+      /^aylink\.co$/, /^(clk|oko)\.sh$/, /^cpmlink\.pro$/, /^gitlink\.pro$/, /^megalink\.pro$/, /^met\.bz/, /^mitly\.us$/, /^oke\.io$/, /^pahe\.plus$/, /^pingit\.im$/, /^thotpacks\.xyz$/]
     },
     ready: function ready() {
       return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee51() {
@@ -4185,7 +4185,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context86.prev = _context86.next) {
             case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('center a');
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-primary.btn-xs');
               b.click();
             case 2:
             case "end":
