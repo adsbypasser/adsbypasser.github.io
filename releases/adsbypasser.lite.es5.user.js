@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.29.0
+// @version        7.30.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.29.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.30.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -2265,19 +2265,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^1v\.to$/,
-    path: /^\/t\/[a-zA-Z0-9/=]+/
+    host: /^a2zapk\.io$/
   },
-  start: function start() {
+  ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee17() {
-      var path;
+      var a;
       return _regenerator["default"].wrap(function _callee17$(_context17) {
         while (1) {
           switch (_context17.prev = _context17.next) {
             case 0:
-              path = window.location.href.replace('/t/', '/saliendo/');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#dlbtn li a');
               _context17.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(path);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
             case "end":
               return _context17.stop();
@@ -2289,7 +2288,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^a2zapk\.io$/
+    host: /^adfoc\.us$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee18() {
@@ -2298,7 +2297,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context18.prev = _context18.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#dlbtn li a');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.skip');
               _context18.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
@@ -2312,19 +2311,27 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^adfoc\.us$/
+    host: /^adshnk\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee19() {
-      var a;
+      var b, a;
       return _regenerator["default"].wrap(function _callee19$(_context19) {
         while (1) {
           switch (_context19.prev = _context19.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.skip');
-              _context19.next = 3;
+              _context19.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(16000);
+            case 2:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('button[class="ui right labeled icon button primary huge fluid"]');
+              b.click();
+              _context19.next = 6;
+              return _ADSBYPASSER_NAMESPACE__._.wait(18000);
+            case 6:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a[id="final_redirect"]');
+              _context19.next = 9;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+            case 9:
             case "end":
               return _context19.stop();
           }
@@ -2335,27 +2342,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^adshnk\.com$/
+    host: /^www\.adz7short\.space$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee20() {
-      var b, a;
+      var b;
       return _regenerator["default"].wrap(function _callee20$(_context20) {
         while (1) {
           switch (_context20.prev = _context20.next) {
             case 0:
-              _context20.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(16000);
-            case 2:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('button[class="ui right labeled icon button primary huge fluid"]');
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('#continue');
+              _context20.next = 3;
+              return _ADSBYPASSER_NAMESPACE__._.wait(10000);
+            case 3:
               b.click();
-              _context20.next = 6;
-              return _ADSBYPASSER_NAMESPACE__._.wait(18000);
-            case 6:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a[id="final_redirect"]');
-              _context20.next = 9;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 9:
+            case 4:
             case "end":
               return _context20.stop();
           }
@@ -2366,7 +2367,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.adz7short\.space$/
+    host: /^bcvc\.ink$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee21() {
@@ -2375,10 +2376,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context21.prev = _context21.next) {
             case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('#continue');
-              _context21.next = 3;
-              return _ADSBYPASSER_NAMESPACE__._.wait(10000);
-            case 3:
+              _context21.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(5000);
+            case 2:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('#getLink');
               b.click();
             case 4:
             case "end":
@@ -2391,21 +2392,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^bcvc\.ink$/
+    host: /^(www\.)?biglistofwebsites\.com$/,
+    path: /^\/go\/(\w+\.\w+)$/
   },
-  ready: function ready() {
+  start: function start(m) {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee22() {
-      var b;
       return _regenerator["default"].wrap(function _callee22$(_context22) {
         while (1) {
           switch (_context22.prev = _context22.next) {
             case 0:
               _context22.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(5000);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink('http://' + m.path[1]);
             case 2:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('#getLink');
-              b.click();
-            case 4:
             case "end":
               return _context22.stop();
           }
@@ -2415,19 +2413,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^(www\.)?biglistofwebsites\.com$/,
-    path: /^\/go\/(\w+\.\w+)$/
-  },
+  rule: [{
+    host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
+    path: /\/o\/([a-zA-Z0-9]+)/
+  }],
   start: function start(m) {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee23() {
+      var direct_link;
       return _regenerator["default"].wrap(function _callee23$(_context23) {
         while (1) {
           switch (_context23.prev = _context23.next) {
             case 0:
-              _context23.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink('http://' + m.path[1]);
-            case 2:
+              direct_link = window.atob(m.path[1]);
+              _context23.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(direct_link);
+            case 3:
             case "end":
               return _context23.stop();
           }
@@ -2437,21 +2437,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: [{
-    host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
-    path: /\/o\/([a-zA-Z0-9]+)/
-  }],
-  start: function start(m) {
+  rule: {
+    host: /^bioskopkeren\.boo$/
+  },
+  ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee24() {
-      var direct_link;
+      var c;
       return _regenerator["default"].wrap(function _callee24$(_context24) {
         while (1) {
           switch (_context24.prev = _context24.next) {
             case 0:
-              direct_link = window.atob(m.path[1]);
-              _context24.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(direct_link);
-            case 3:
+              _context24.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(1000);
+            case 2:
+              c = (0, _ADSBYPASSER_NAMESPACE__.$)('.reklamgec');
+              c.click();
+            case 4:
             case "end":
               return _context24.stop();
           }
@@ -2462,21 +2463,28 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^bioskopkeren\.boo$/
+    host: /^boost\.ink$/
   },
-  ready: function ready() {
+  start: function start() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee25() {
-      var c;
+      var b;
       return _regenerator["default"].wrap(function _callee25$(_context25) {
         while (1) {
           switch (_context25.prev = _context25.next) {
             case 0:
-              _context25.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(1000);
-            case 2:
-              c = (0, _ADSBYPASSER_NAMESPACE__.$)('.reklamgec');
-              c.click();
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('body').getAttribute('result');
+              if (!b) {
+                _context25.next = 6;
+                break;
+              }
+              _context25.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(atob(b));
             case 4:
+              _context25.next = 7;
+              break;
+            case 6:
+              return _context25.abrupt("return");
+            case 7:
             case "end":
               return _context25.stop();
           }
@@ -2487,28 +2495,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^boost\.ink$/
+    host: /^cocoleech\.com$/
   },
-  start: function start() {
+  ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee26() {
-      var b;
+      var a;
       return _regenerator["default"].wrap(function _callee26$(_context26) {
         while (1) {
           switch (_context26.prev = _context26.next) {
             case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('body').getAttribute('result');
-              if (!b) {
-                _context26.next = 6;
-                break;
-              }
-              _context26.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(atob(b));
-            case 4:
-              _context26.next = 7;
-              break;
-            case 6:
-              return _context26.abrupt("return");
-            case 7:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-block.btn-success');
+              _context26.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
             case "end":
               return _context26.stop();
           }
@@ -2519,7 +2518,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^cocoleech\.com$/
+    host: /^cpmlink\.net$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee27() {
@@ -2528,7 +2527,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context27.prev = _context27.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-block.btn-success');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#btn-main');
               _context27.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
@@ -2542,7 +2541,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^cpmlink\.net$/
+    host: /^cutpaid\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee28() {
@@ -2551,10 +2550,23 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context28.prev = _context28.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#btn-main');
-              _context28.next = 3;
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-primary');
+              if (!a) {
+                _context28.next = 5;
+                break;
+              }
+              _context28.next = 4;
+              return _ADSBYPASSER_NAMESPACE__._.wait(20000);
+            case 4:
+              a.click();
+            case 5:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-success.btn-lg.get-link');
+              _context28.next = 8;
+              return _ADSBYPASSER_NAMESPACE__._.wait(9000);
+            case 8:
+              _context28.next = 10;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+            case 10:
             case "end":
               return _context28.stop();
           }
@@ -2565,11 +2577,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^ctr\.sh$/
+    host: /^www\.dlink3\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee29() {
-      var b;
+      var a;
       return _regenerator["default"].wrap(function _callee29$(_context29) {
         while (1) {
           switch (_context29.prev = _context29.next) {
@@ -2577,9 +2589,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
               _context29.next = 2;
               return _ADSBYPASSER_NAMESPACE__._.wait(12000);
             case 2:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-primary.btn-captcha');
-              b.click();
-            case 4:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('[class="myButton"]');
+              _context29.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 5:
             case "end":
               return _context29.stop();
           }
@@ -2590,32 +2603,26 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^cutpaid\.com$/
+    host: /^dlupload\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee30() {
-      var a;
+      var b, btn;
       return _regenerator["default"].wrap(function _callee30$(_context30) {
         while (1) {
           switch (_context30.prev = _context30.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-primary');
-              if (!a) {
-                _context30.next = 5;
-                break;
-              }
-              _context30.next = 4;
-              return _ADSBYPASSER_NAMESPACE__._.wait(20000);
-            case 4:
-              a.click();
-            case 5:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-success.btn-lg.get-link');
-              _context30.next = 8;
-              return _ADSBYPASSER_NAMESPACE__._.wait(9000);
+              _context30.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(3500);
+            case 2:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-block.btn-primary.text-white.shadow.m-1.position-relative.up-tooltip-container');
+              b.click();
+              _context30.next = 6;
+              return _ADSBYPASSER_NAMESPACE__._.wait(6000);
+            case 6:
+              btn = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-block.continue-btn-bg');
+              btn.click();
             case 8:
-              _context30.next = 10;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 10:
             case "end":
               return _context30.stop();
           }
@@ -2626,22 +2633,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.dlink3\.com$/
+    host: /^earnlink\.io$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee31() {
-      var a;
+      var directUrl;
       return _regenerator["default"].wrap(function _callee31$(_context31) {
         while (1) {
           switch (_context31.prev = _context31.next) {
             case 0:
-              _context31.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(12000);
-            case 2:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('[class="myButton"]');
-              _context31.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 5:
+              directUrl = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/"([^"]+)"\)\.html\("Continue"\)/);
+              _context31.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(directUrl[1]);
+            case 3:
             case "end":
               return _context31.stop();
           }
@@ -2652,26 +2656,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^dlupload\.com$/
+    host: /^forex-trnd\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee32() {
-      var b, btn;
+      var a;
       return _regenerator["default"].wrap(function _callee32$(_context32) {
         while (1) {
           switch (_context32.prev = _context32.next) {
             case 0:
               _context32.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(3500);
+              return _ADSBYPASSER_NAMESPACE__._.wait(10000);
             case 2:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-block.btn-primary.text-white.shadow.m-1.position-relative.up-tooltip-container');
-              b.click();
-              _context32.next = 6;
-              return _ADSBYPASSER_NAMESPACE__._.wait(6000);
-            case 6:
-              btn = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-block.continue-btn-bg');
-              btn.click();
-            case 8:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.get-link');
+              a.click();
+            case 4:
             case "end":
               return _context32.stop();
           }
@@ -2682,19 +2681,28 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^earnlink\.io$/
+    host: /^exeo\.app$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee33() {
-      var directUrl;
+      var a, b, c;
       return _regenerator["default"].wrap(function _callee33$(_context33) {
         while (1) {
           switch (_context33.prev = _context33.next) {
             case 0:
-              directUrl = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/"([^"]+)"\)\.html\("Continue"\)/);
-              _context33.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(directUrl[1]);
-            case 3:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.link-button.button');
+              a.click();
+              _context33.next = 4;
+              return _ADSBYPASSER_NAMESPACE__._.wait(2000);
+            case 4:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.link-button');
+              b.click();
+              _context33.next = 8;
+              return _ADSBYPASSER_NAMESPACE__._.wait(6000);
+            case 8:
+              c = (0, _ADSBYPASSER_NAMESPACE__.$)('.link-button.get-link');
+              c.click();
+            case 10:
             case "end":
               return _context33.stop();
           }
@@ -2705,20 +2713,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^forex-trnd\.com$/
+    host: /^fc-lc\.(com|xyz)$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee34() {
-      var a;
+      var b;
       return _regenerator["default"].wrap(function _callee34$(_context34) {
         while (1) {
           switch (_context34.prev = _context34.next) {
             case 0:
               _context34.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(10000);
+              return _ADSBYPASSER_NAMESPACE__._.wait(2000);
             case 2:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.get-link');
-              a.click();
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-primary.btn-captcha.mb-4');
+              b.click();
             case 4:
             case "end":
               return _context34.stop();
@@ -2730,28 +2738,28 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^exeo\.app$/
+    host: /^loaninsurehub\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee35() {
-      var a, b, c;
+      var b, a;
       return _regenerator["default"].wrap(function _callee35$(_context35) {
         while (1) {
           switch (_context35.prev = _context35.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.link-button.button');
-              a.click();
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('#glink');
+              if (b) {
+                b.click();
+              }
               _context35.next = 4;
-              return _ADSBYPASSER_NAMESPACE__._.wait(2000);
+              return _ADSBYPASSER_NAMESPACE__._.wait(12000);
             case 4:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.link-button');
-              b.click();
-              _context35.next = 8;
-              return _ADSBYPASSER_NAMESPACE__._.wait(6000);
-            case 8:
-              c = (0, _ADSBYPASSER_NAMESPACE__.$)('.link-button.get-link');
-              c.click();
-            case 10:
+              _ADSBYPASSER_NAMESPACE__.$.remove('#overlay');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#surl');
+              if (a) {
+                a.click();
+              }
+            case 7:
             case "end":
               return _context35.stop();
           }
@@ -2762,7 +2770,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^fc-lc\.(com|xyz)$/
+    host: /^fir3\.net$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee36() {
@@ -2772,9 +2780,9 @@ _ADSBYPASSER_NAMESPACE__._.register({
           switch (_context36.prev = _context36.next) {
             case 0:
               _context36.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(2000);
+              return _ADSBYPASSER_NAMESPACE__._.wait(12000);
             case 2:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-primary.btn-captcha.mb-4');
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-success.btn-lg.get-link');
               b.click();
             case 4:
             case "end":
@@ -2787,28 +2795,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^loaninsurehub\.com$/
+    host: /^get-click2\.blogspot\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee37() {
-      var b, a;
+      var clbt;
       return _regenerator["default"].wrap(function _callee37$(_context37) {
         while (1) {
           switch (_context37.prev = _context37.next) {
             case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('#glink');
-              if (b) {
-                b.click();
-              }
+              clbt = (0, _ADSBYPASSER_NAMESPACE__.$)('button#gotolink');
+              clbt.removeAttribute('disabled');
               _context37.next = 4;
-              return _ADSBYPASSER_NAMESPACE__._.wait(12000);
+              return _ADSBYPASSER_NAMESPACE__._.wait(1);
             case 4:
-              _ADSBYPASSER_NAMESPACE__.$.remove('#overlay');
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#surl');
-              if (a) {
-                a.click();
-              }
-            case 7:
+              clbt.click();
+            case 5:
             case "end":
               return _context37.stop();
           }
@@ -2819,11 +2821,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^fir3\.net$/
+    host: /^getthot\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee38() {
-      var b;
+      var a;
       return _regenerator["default"].wrap(function _callee38$(_context38) {
         while (1) {
           switch (_context38.prev = _context38.next) {
@@ -2831,9 +2833,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
               _context38.next = 2;
               return _ADSBYPASSER_NAMESPACE__._.wait(12000);
             case 2:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-success.btn-lg.get-link');
-              b.click();
-            case 4:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.skip-btn');
+              _context38.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 5:
             case "end":
               return _context38.stop();
           }
@@ -2844,22 +2847,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^get-click2\.blogspot\.com$/
+    host: /^gplinks\.co$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee39() {
-      var clbt;
+      var d;
       return _regenerator["default"].wrap(function _callee39$(_context39) {
         while (1) {
           switch (_context39.prev = _context39.next) {
             case 0:
-              clbt = (0, _ADSBYPASSER_NAMESPACE__.$)('button#gotolink');
-              clbt.removeAttribute('disabled');
-              _context39.next = 4;
-              return _ADSBYPASSER_NAMESPACE__._.wait(1);
+              _context39.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(8000);
+            case 2:
+              d = (0, _ADSBYPASSER_NAMESPACE__.$)('.get-link');
+              d.click();
             case 4:
-              clbt.click();
-            case 5:
             case "end":
               return _context39.stop();
           }
@@ -2870,22 +2872,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^getthot\.com$/
+    host: /^hen-tay\.net$/,
+    path: /^\/go\//
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee40() {
-      var a;
+      var h;
       return _regenerator["default"].wrap(function _callee40$(_context40) {
         while (1) {
           switch (_context40.prev = _context40.next) {
             case 0:
-              _context40.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(12000);
-            case 2:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.skip-btn');
-              _context40.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 5:
+              h = (0, _ADSBYPASSER_NAMESPACE__.$)('#download_url div a');
+              _context40.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(h.href);
+            case 3:
             case "end":
               return _context40.stop();
           }
@@ -2896,21 +2896,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^gplinks\.co$/
+    host: /^hotshorturl\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee41() {
-      var d;
+      var frame;
       return _regenerator["default"].wrap(function _callee41$(_context41) {
         while (1) {
           switch (_context41.prev = _context41.next) {
             case 0:
-              _context41.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(8000);
-            case 2:
-              d = (0, _ADSBYPASSER_NAMESPACE__.$)('.get-link');
-              d.click();
-            case 4:
+              frame = (0, _ADSBYPASSER_NAMESPACE__.$)('frame[scrolling=yes]');
+              _context41.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(frame.src);
+            case 3:
             case "end":
               return _context41.stop();
           }
@@ -2921,20 +2919,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^hen-tay\.net$/,
-    path: /^\/go\//
+    host: /^icutlink\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee42() {
-      var h;
+      var a;
       return _regenerator["default"].wrap(function _callee42$(_context42) {
         while (1) {
           switch (_context42.prev = _context42.next) {
             case 0:
-              h = (0, _ADSBYPASSER_NAMESPACE__.$)('#download_url div a');
-              _context42.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(h.href);
-            case 3:
+              _context42.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(10000);
+            case 2:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-success.btn-lg.get-link');
+              _context42.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a);
+            case 5:
             case "end":
               return _context42.stop();
           }
@@ -2945,19 +2945,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^hotshorturl\.com$/
+    host: /^zegtrends\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee43() {
-      var frame;
+      var b;
       return _regenerator["default"].wrap(function _callee43$(_context43) {
         while (1) {
           switch (_context43.prev = _context43.next) {
             case 0:
-              frame = (0, _ADSBYPASSER_NAMESPACE__.$)('frame[scrolling=yes]');
-              _context43.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(frame.src);
-            case 3:
+              _context43.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(12000);
+            case 2:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('div > button.bsub');
+              b.click();
+            case 4:
             case "end":
               return _context43.stop();
           }
@@ -2968,7 +2970,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^icutlink\.com$/
+    host: /^imagetwist\.netlify\.app$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee44() {
@@ -2977,13 +2979,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context44.prev = _context44.next) {
             case 0:
-              _context44.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(10000);
-            case 2:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-success.btn-lg.get-link');
-              _context44.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a);
-            case 5:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-dark');
+              _context44.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
             case "end":
               return _context44.stop();
           }
@@ -2994,21 +2993,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^zegtrends\.com$/
+    host: /^www\.javlibrary\.com$/,
+    query: /url=([^&]+)/
   },
-  ready: function ready() {
+  start: function start(m) {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee45() {
-      var b;
       return _regenerator["default"].wrap(function _callee45$(_context45) {
         while (1) {
           switch (_context45.prev = _context45.next) {
             case 0:
               _context45.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(12000);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(decodeURIComponent(m.query[1]));
             case 2:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('div > button.bsub');
-              b.click();
-            case 4:
             case "end":
               return _context45.stop();
           }
@@ -3019,18 +3015,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^imagetwist\.netlify\.app$/
+    host: /^kimochi\.info$/,
+    path: /^\/inter$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee46() {
-      var a;
+      var ma;
       return _regenerator["default"].wrap(function _callee46$(_context46) {
         while (1) {
           switch (_context46.prev = _context46.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-dark');
+              ma = (0, _ADSBYPASSER_NAMESPACE__.$)('a#next');
               _context46.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(ma.href);
             case 3:
             case "end":
               return _context46.stop();
@@ -3042,18 +3039,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.javlibrary\.com$/,
-    query: /url=([^&]+)/
+    host: /^(www\.)?kingofshrink\.com$/
   },
-  start: function start(m) {
+  ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee47() {
+      var l;
       return _regenerator["default"].wrap(function _callee47$(_context47) {
         while (1) {
           switch (_context47.prev = _context47.next) {
             case 0:
-              _context47.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(decodeURIComponent(m.query[1]));
-            case 2:
+              l = (0, _ADSBYPASSER_NAMESPACE__.$)('#textresult > a');
+              _context47.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(l.href);
+            case 3:
             case "end":
               return _context47.stop();
           }
@@ -3064,20 +3062,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^kimochi\.info$/,
-    path: /^\/inter$/
+    host: /^linegee\.net$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee48() {
-      var ma;
+      var b;
       return _regenerator["default"].wrap(function _callee48$(_context48) {
         while (1) {
           switch (_context48.prev = _context48.next) {
             case 0:
-              ma = (0, _ADSBYPASSER_NAMESPACE__.$)('a#next');
-              _context48.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(ma.href);
-            case 3:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('p.kecil a');
+              b.click();
+            case 2:
             case "end":
               return _context48.stop();
           }
@@ -3088,19 +3084,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?kingofshrink\.com$/
+    host: /^link\.turkdown\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee49() {
-      var l;
+      var a;
       return _regenerator["default"].wrap(function _callee49$(_context49) {
         while (1) {
           switch (_context49.prev = _context49.next) {
             case 0:
-              l = (0, _ADSBYPASSER_NAMESPACE__.$)('#textresult > a');
-              _context49.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(l.href);
-            case 3:
+              _context49.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(5000);
+            case 2:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-success.btn-lg.get-link');
+              _context49.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 5:
             case "end":
               return _context49.stop();
           }
@@ -3111,7 +3110,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^linegee\.net$/
+    host: /^link1s\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee50() {
@@ -3120,65 +3119,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context50.prev = _context50.next) {
             case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('p.kecil a');
-              b.click();
-            case 2:
-            case "end":
-              return _context50.stop();
-          }
-        }
-      }, _callee50);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^link\.turkdown\.com$/
-  },
-  ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee51() {
-      var a;
-      return _regenerator["default"].wrap(function _callee51$(_context51) {
-        while (1) {
-          switch (_context51.prev = _context51.next) {
-            case 0:
-              _context51.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(5000);
-            case 2:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-success.btn-lg.get-link');
-              _context51.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 5:
-            case "end":
-              return _context51.stop();
-          }
-        }
-      }, _callee51);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^link1s\.com$/
-  },
-  ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee52() {
-      var b;
-      return _regenerator["default"].wrap(function _callee52$(_context52) {
-        while (1) {
-          switch (_context52.prev = _context52.next) {
-            case 0:
-              _context52.next = 2;
+              _context50.next = 2;
               return _ADSBYPASSER_NAMESPACE__._.wait(10000);
             case 2:
               b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-success.btn-lg.get-link');
               b.click();
             case 4:
             case "end":
-              return _context52.stop();
+              return _context50.stop();
           }
         }
-      }, _callee52);
+      }, _callee50);
     }))();
   }
 });
@@ -3193,21 +3144,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
       /^aylink\.co$/, /^(clk|oko)\.sh$/, /^cpmlink\.pro$/, /^gitlink\.pro$/, /^megalink\.pro$/, /^met\.bz/, /^mitly\.us$/, /^oke\.io$/, /^pahe\.plus$/, /^pingit\.im$/, /^thotpacks\.xyz$/]
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee53() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee51() {
         var handler;
-        return _regenerator["default"].wrap(function _callee53$(_context53) {
+        return _regenerator["default"].wrap(function _callee51$(_context51) {
           while (1) {
-            switch (_context53.prev = _context53.next) {
+            switch (_context51.prev = _context51.next) {
               case 0:
                 handler = new RecaptchaHandler();
-                _context53.next = 3;
+                _context51.next = 3;
                 return handler.call();
               case 3:
               case "end":
-                return _context53.stop();
+                return _context51.stop();
             }
           }
-        }, _callee53);
+        }, _callee51);
       }))();
     }
   });
@@ -3234,45 +3185,45 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "call",
       value: function () {
-        var _call = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee54() {
+        var _call = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee52() {
           var ok, mw, url;
-          return _regenerator["default"].wrap(function _callee54$(_context54) {
+          return _regenerator["default"].wrap(function _callee52$(_context52) {
             while (1) {
-              switch (_context54.prev = _context54.next) {
+              switch (_context52.prev = _context52.next) {
                 case 0:
-                  _context54.next = 2;
+                  _context52.next = 2;
                   return this.prepare();
                 case 2:
-                  ok = _context54.sent;
+                  ok = _context52.sent;
                   if (ok) {
-                    _context54.next = 5;
+                    _context52.next = 5;
                     break;
                   }
-                  return _context54.abrupt("return");
+                  return _context52.abrupt("return");
                 case 5:
-                  _context54.next = 7;
+                  _context52.next = 7;
                   return this.getMiddleware();
                 case 7:
-                  mw = _context54.sent;
+                  mw = _context52.sent;
                   if (mw) {
-                    _context54.next = 11;
+                    _context52.next = 11;
                     break;
                   }
                   this.withoutMiddleware();
-                  return _context54.abrupt("return");
+                  return _context52.abrupt("return");
                 case 11:
-                  _context54.next = 13;
+                  _context52.next = 13;
                   return this.getURL(mw);
                 case 13:
-                  url = _context54.sent;
-                  _context54.next = 16;
+                  url = _context52.sent;
+                  _context52.next = 16;
                   return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
                 case 16:
                 case "end":
-                  return _context54.stop();
+                  return _context52.stop();
               }
             }
-          }, _callee54, this);
+          }, _callee52, this);
         }));
         function call() {
           return _call.apply(this, arguments);
@@ -3292,34 +3243,34 @@ _ADSBYPASSER_NAMESPACE__._.register({
     (0, _createClass2["default"])(RecaptchaHandler, [{
       key: "prepare",
       value: function () {
-        var _prepare = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee55() {
+        var _prepare = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee53() {
           var f, b;
-          return _regenerator["default"].wrap(function _callee55$(_context55) {
+          return _regenerator["default"].wrap(function _callee53$(_context53) {
             while (1) {
-              switch (_context55.prev = _context55.next) {
+              switch (_context53.prev = _context53.next) {
                 case 0:
                   this.removeOverlay();
                   f = _ADSBYPASSER_NAMESPACE__.$.$('#captchaShortlink, div.g-recaptcha');
                   if (f) {
-                    _context55.next = 4;
+                    _context53.next = 4;
                     break;
                   }
-                  return _context55.abrupt("return", true);
+                  return _context53.abrupt("return", true);
                 case 4:
                   _ADSBYPASSER_NAMESPACE__._.info('recaptcha detected, stop');
                   _ADSBYPASSER_NAMESPACE__._.info('trying to listen submit button');
                   b = _ADSBYPASSER_NAMESPACE__.$.$('#invisibleCaptchaShortlink');
                   if (b) {
-                    _context55.next = 9;
+                    _context53.next = 9;
                     break;
                   }
-                  return _context55.abrupt("return", false);
+                  return _context53.abrupt("return", false);
                 case 9:
                 case "end":
-                  return _context55.stop();
+                  return _context53.stop();
               }
             }
-          }, _callee55, this);
+          }, _callee53, this);
         }));
         function prepare() {
           return _prepare.apply(this, arguments);
@@ -3329,11 +3280,11 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "submitListen",
       value: function () {
-        var _submitListen = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee56(b) {
+        var _submitListen = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee54(b) {
           var o;
-          return _regenerator["default"].wrap(function _callee56$(_context56) {
+          return _regenerator["default"].wrap(function _callee54$(_context54) {
             while (1) {
-              switch (_context56.prev = _context56.next) {
+              switch (_context54.prev = _context54.next) {
                 case 0:
                   o = new MutationObserver(function () {
                     if (!b.disabled) {
@@ -3345,10 +3296,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
                   });
                 case 2:
                 case "end":
-                  return _context56.stop();
+                  return _context54.stop();
               }
             }
-          }, _callee56);
+          }, _callee54);
         }));
         function submitListen(_x) {
           return _submitListen.apply(this, arguments);
@@ -3358,21 +3309,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "getMiddleware",
       value: function () {
-        var _getMiddleware = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee57() {
-          return _regenerator["default"].wrap(function _callee57$(_context57) {
+        var _getMiddleware = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee55() {
+          return _regenerator["default"].wrap(function _callee55$(_context55) {
             while (1) {
-              switch (_context57.prev = _context57.next) {
+              switch (_context55.prev = _context55.next) {
                 case 0:
-                  _context57.next = 2;
+                  _context55.next = 2;
                   return getJQueryForm(this._formSelector);
                 case 2:
-                  return _context57.abrupt("return", _context57.sent);
+                  return _context55.abrupt("return", _context55.sent);
                 case 3:
                 case "end":
-                  return _context57.stop();
+                  return _context55.stop();
               }
             }
-          }, _callee57, this);
+          }, _callee55, this);
         }));
         function getMiddleware() {
           return _getMiddleware.apply(this, arguments);
@@ -3388,42 +3339,42 @@ _ADSBYPASSER_NAMESPACE__._.register({
     }, {
       key: "getURL",
       value: function () {
-        var _getURL = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee58(jForm) {
+        var _getURL = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee56(jForm) {
           var url;
-          return _regenerator["default"].wrap(function _callee58$(_context58) {
+          return _regenerator["default"].wrap(function _callee56$(_context56) {
             while (1) {
-              switch (_context58.prev = _context58.next) {
+              switch (_context56.prev = _context56.next) {
                 case 0:
                   if (false) {}
-                  _context58.next = 3;
+                  _context56.next = 3;
                   return _ADSBYPASSER_NAMESPACE__._.wait(1000);
                 case 3:
-                  _context58.prev = 3;
-                  _context58.next = 6;
+                  _context56.prev = 3;
+                  _context56.next = 6;
                   return getURLFromJQueryForm(jForm);
                 case 6:
-                  url = _context58.sent;
+                  url = _context56.sent;
                   if (!url) {
-                    _context58.next = 9;
+                    _context56.next = 9;
                     break;
                   }
-                  return _context58.abrupt("return", url);
+                  return _context56.abrupt("return", url);
                 case 9:
-                  _context58.next = 14;
+                  _context56.next = 14;
                   break;
                 case 11:
-                  _context58.prev = 11;
-                  _context58.t0 = _context58["catch"](3);
-                  _ADSBYPASSER_NAMESPACE__._.warn(_context58.t0);
+                  _context56.prev = 11;
+                  _context56.t0 = _context56["catch"](3);
+                  _ADSBYPASSER_NAMESPACE__._.warn(_context56.t0);
                 case 14:
-                  _context58.next = 0;
+                  _context56.next = 0;
                   break;
                 case 16:
                 case "end":
-                  return _context58.stop();
+                  return _context56.stop();
               }
             }
-          }, _callee58, null, [[3, 11]]);
+          }, _callee56, null, [[3, 11]]);
         }));
         function getURL(_x2) {
           return _getURL.apply(this, arguments);
@@ -3437,39 +3388,39 @@ _ADSBYPASSER_NAMESPACE__._.register({
     return _getJQueryForm.apply(this, arguments);
   }
   function _getJQueryForm() {
-    _getJQueryForm = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee59(selector) {
+    _getJQueryForm = (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee57(selector) {
       var jQuery, f;
-      return _regenerator["default"].wrap(function _callee59$(_context59) {
+      return _regenerator["default"].wrap(function _callee57$(_context57) {
         while (1) {
-          switch (_context59.prev = _context59.next) {
+          switch (_context57.prev = _context57.next) {
             case 0:
               jQuery = _ADSBYPASSER_NAMESPACE__.$.window.$;
             case 1:
               if (jQuery) {
-                _context59.next = 7;
+                _context57.next = 7;
                 break;
               }
-              _context59.next = 4;
+              _context57.next = 4;
               return _ADSBYPASSER_NAMESPACE__._.wait(50);
             case 4:
               jQuery = _ADSBYPASSER_NAMESPACE__.$.window.$;
-              _context59.next = 1;
+              _context57.next = 1;
               break;
             case 7:
               f = jQuery(selector);
               if (!(f.length > 0)) {
-                _context59.next = 10;
+                _context57.next = 10;
                 break;
               }
-              return _context59.abrupt("return", f);
+              return _context57.abrupt("return", f);
             case 10:
-              return _context59.abrupt("return", null);
+              return _context57.abrupt("return", null);
             case 11:
             case "end":
-              return _context59.stop();
+              return _context57.stop();
           }
         }
-      }, _callee59);
+      }, _callee57);
     }));
     return _getJQueryForm.apply(this, arguments);
   }
@@ -3504,21 +3455,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^n\.fcd\.su$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee60() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee58() {
       var btn;
-      return _regenerator["default"].wrap(function _callee60$(_context60) {
+      return _regenerator["default"].wrap(function _callee58$(_context58) {
         while (1) {
-          switch (_context60.prev = _context60.next) {
+          switch (_context58.prev = _context58.next) {
             case 0:
               btn = (0, _ADSBYPASSER_NAMESPACE__.$)('a.btn:nth-child(2)');
-              _context60.next = 3;
+              _context58.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(btn.href);
             case 3:
             case "end":
-              return _context60.stop();
+              return _context58.stop();
           }
         }
-      }, _callee60);
+      }, _callee58);
     }))();
   }
 });
@@ -3527,17 +3478,57 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^linkpoi\.me$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee61() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee59() {
       var b;
-      return _regenerator["default"].wrap(function _callee61$(_context61) {
+      return _regenerator["default"].wrap(function _callee59$(_context59) {
         while (1) {
-          switch (_context61.prev = _context61.next) {
+          switch (_context59.prev = _context59.next) {
             case 0:
-              _context61.next = 2;
+              _context59.next = 2;
               return _ADSBYPASSER_NAMESPACE__._.wait(6000);
             case 2:
               b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-primary.btn-block.redirect.get-link');
               b.click();
+            case 4:
+            case "end":
+              return _context59.stop();
+          }
+        }
+      }, _callee59);
+    }))();
+  }
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^linkshrink\.net$/,
+    path: /^\/[a-zA-Z0-9]+$/
+  },
+  start: function start() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee60() {
+      return _regenerator["default"].wrap(function _callee60$(_context60) {
+        while (1) {
+          switch (_context60.prev = _context60.next) {
+            case 0:
+              _ADSBYPASSER_NAMESPACE__.$.window._impspcabe = 0;
+            case 1:
+            case "end":
+              return _context60.stop();
+          }
+        }
+      }, _callee60);
+    }))();
+  },
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee61() {
+      var l;
+      return _regenerator["default"].wrap(function _callee61$(_context61) {
+        while (1) {
+          switch (_context61.prev = _context61.next) {
+            case 0:
+              l = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/revC\("([^"]+)"\)/);
+              l = atob(l[1]);
+              _context61.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink('/' + l);
             case 4:
             case "end":
               return _context61.stop();
@@ -3549,36 +3540,44 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^linkshrink\.net$/,
-    path: /^\/[a-zA-Z0-9]+$/
+    host: /^linksly\.co$/
   },
-  start: function start() {
+  ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee62() {
+      var b;
       return _regenerator["default"].wrap(function _callee62$(_context62) {
         while (1) {
           switch (_context62.prev = _context62.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.window._impspcabe = 0;
-            case 1:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-primary');
+              b.click();
+            case 2:
             case "end":
               return _context62.stop();
           }
         }
       }, _callee62);
     }))();
+  }
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: [/^go\.linksly\.co$/, /^go\.bitcosite\.com$/]
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee63() {
-      var l;
+      var a;
       return _regenerator["default"].wrap(function _callee63$(_context63) {
         while (1) {
           switch (_context63.prev = _context63.next) {
             case 0:
-              l = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/revC\("([^"]+)"\)/);
-              l = atob(l[1]);
-              _context63.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink('/' + l);
-            case 4:
+              _context63.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(8000);
+            case 2:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-success.btn-lg.get-link');
+              _context63.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 5:
             case "end":
               return _context63.stop();
           }
@@ -3589,7 +3588,8 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^linksly\.co$/
+    host: /^lnk2\.cc$/,
+    path: /^\/go\//
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee64() {
@@ -3598,9 +3598,13 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context64.prev = _context64.next) {
             case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-primary');
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe, .popupOverlay');
+              _context64.next = 3;
+              return _ADSBYPASSER_NAMESPACE__._.wait(18000);
+            case 3:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('#getLink');
               b.click();
-            case 2:
+            case 5:
             case "end":
               return _context64.stop();
           }
@@ -3611,22 +3615,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: [/^go\.linksly\.co$/, /^go\.bitcosite\.com$/]
+    host: /^www\.lolinez\.com$/,
+    query: /\?(.+)/
   },
-  ready: function ready() {
+  start: function start(m) {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee65() {
-      var a;
       return _regenerator["default"].wrap(function _callee65$(_context65) {
         while (1) {
           switch (_context65.prev = _context65.next) {
             case 0:
               _context65.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(8000);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(m.query[1]);
             case 2:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-success.btn-lg.get-link');
-              _context65.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 5:
             case "end":
               return _context65.stop();
           }
@@ -3637,8 +3637,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^lnk2\.cc$/,
-    path: /^\/go\//
+    host: /^mangalist\.org$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee66() {
@@ -3647,13 +3646,12 @@ _ADSBYPASSER_NAMESPACE__._.register({
         while (1) {
           switch (_context66.prev = _context66.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe, .popupOverlay');
-              _context66.next = 3;
-              return _ADSBYPASSER_NAMESPACE__._.wait(18000);
-            case 3:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('#getLink');
+              _context66.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(1000);
+            case 2:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-primary.url.text-center');
               b.click();
-            case 5:
+            case 4:
             case "end":
               return _context66.stop();
           }
@@ -3664,18 +3662,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.lolinez\.com$/,
-    query: /\?(.+)/
+    host: /^nmac\.to$/,
+    path: /^\/dl\/(.+)/
   },
-  start: function start(m) {
+  ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee67() {
+      var a;
       return _regenerator["default"].wrap(function _callee67$(_context67) {
         while (1) {
           switch (_context67.prev = _context67.next) {
             case 0:
-              _context67.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(m.query[1]);
-            case 2:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-medium.btn-block');
+              _context67.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
             case "end":
               return _context67.stop();
           }
@@ -3686,21 +3686,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^mangalist\.org$/
+    host: /^noweconomy\.live$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee68() {
-      var b;
+      var a;
       return _regenerator["default"].wrap(function _callee68$(_context68) {
         while (1) {
           switch (_context68.prev = _context68.next) {
             case 0:
-              _context68.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(1000);
-            case 2:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-primary.url.text-center');
-              b.click();
-            case 4:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('[class="btn-main get-link"]');
+              _context68.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
             case "end":
               return _context68.stop();
           }
@@ -3711,21 +3709,31 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^mylink\.us$/
+    host: /^www\.oni\.vn$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee69() {
-      var a;
+      var data, url;
       return _regenerator["default"].wrap(function _callee69$(_context69) {
         while (1) {
           switch (_context69.prev = _context69.next) {
             case 0:
-              _context69.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(8000);
-            case 2:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div.skip_btn a');
-              a.click();
+              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
+              data = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/data:"([^"]+)"/);
+              if (data) {
+                _context69.next = 4;
+                break;
+              }
+              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('pattern changed');
             case 4:
+              data = data[1];
+              _context69.next = 7;
+              return _ADSBYPASSER_NAMESPACE__.$.get('/click.html', data);
+            case 7:
+              url = _context69.sent;
+              _context69.next = 10;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
+            case 10:
             case "end":
               return _context69.stop();
           }
@@ -3736,19 +3744,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^nmac\.to$/,
-    path: /^\/dl\/(.+)/
+    host: /^otomi-games\.com$/,
+    path: /^\/go\//
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee70() {
-      var a;
+      var ma;
       return _regenerator["default"].wrap(function _callee70$(_context70) {
         while (1) {
           switch (_context70.prev = _context70.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-medium.btn-block');
+              ma = (0, _ADSBYPASSER_NAMESPACE__.$)('#wpsafe-link a');
               _context70.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(ma.href);
             case 3:
             case "end":
               return _context70.stop();
@@ -3760,26 +3768,17 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^noriskdomain\.com$/
+    host: /^(www\.)?ouo\.(io|press)$/,
+    path: /(^\/\w+$|^\/go\/\w+$)/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee71() {
-      var b, a;
       return _regenerator["default"].wrap(function _callee71$(_context71) {
         while (1) {
           switch (_context71.prev = _context71.next) {
             case 0:
-              _context71.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(10000);
-            case 2:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.uk-button-primary.go-to-button');
-              b.click();
-              _context71.next = 6;
-              return _ADSBYPASSER_NAMESPACE__._.wait(1000);
-            case 6:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.uk-button-primary.go-to-button');
-              a.click();
-            case 8:
+              (0, _ADSBYPASSER_NAMESPACE__.$)('form').submit();
+            case 1:
             case "end":
               return _context71.stop();
           }
@@ -3790,19 +3789,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^noweconomy\.live$/
+    host: /^icerik\.site$/,
+    path: /^\/go/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee72() {
-      var a;
+      var button;
       return _regenerator["default"].wrap(function _callee72$(_context72) {
         while (1) {
           switch (_context72.prev = _context72.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('[class="btn-main get-link"]');
-              _context72.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+              _context72.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(500);
+            case 2:
+              button = (0, _ADSBYPASSER_NAMESPACE__.$)('#get_link_btn');
+              button.click();
+            case 4:
             case "end":
               return _context72.stop();
           }
@@ -3813,31 +3815,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.oni\.vn$/
+    host: [/^realsht\.mobi$/]
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee73() {
-      var data, url;
+      var n;
       return _regenerator["default"].wrap(function _callee73$(_context73) {
         while (1) {
           switch (_context73.prev = _context73.next) {
             case 0:
-              _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
-              data = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/data:"([^"]+)"/);
-              if (data) {
-                _context73.next = 4;
-                break;
-              }
-              throw new _ADSBYPASSER_NAMESPACE__._.AdsBypasserError('pattern changed');
-            case 4:
-              data = data[1];
-              _context73.next = 7;
-              return _ADSBYPASSER_NAMESPACE__.$.get('/click.html', data);
-            case 7:
-              url = _context73.sent;
-              _context73.next = 10;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(url);
-            case 10:
+              n = (0, _ADSBYPASSER_NAMESPACE__.$)('#download_link');
+              n.click();
+            case 2:
             case "end":
               return _context73.stop();
           }
@@ -3848,19 +3837,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^otomi-games\.com$/,
-    path: /^\/go\//
+    host: /^preview\.rlu\.ru$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee74() {
-      var ma;
+      var a;
       return _regenerator["default"].wrap(function _callee74$(_context74) {
         while (1) {
           switch (_context74.prev = _context74.next) {
             case 0:
-              ma = (0, _ADSBYPASSER_NAMESPACE__.$)('#wpsafe-link a');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#content > .long_url > a');
               _context74.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(ma.href);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
             case "end":
               return _context74.stop();
@@ -3872,17 +3860,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?ouo\.(io|press)$/,
-    path: /(^\/\w+$|^\/go\/\w+$)/
+    host: /^www\.ryuugames\.com$/,
+    query: /^\?eroge=/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee75() {
+      var ma;
       return _regenerator["default"].wrap(function _callee75$(_context75) {
         while (1) {
           switch (_context75.prev = _context75.next) {
             case 0:
-              (0, _ADSBYPASSER_NAMESPACE__.$)('form').submit();
-            case 1:
+              ma = (0, _ADSBYPASSER_NAMESPACE__.$)('#wpsafe-link a');
+              _context75.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(ma.href);
+            case 3:
             case "end":
               return _context75.stop();
           }
@@ -3893,23 +3884,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^paylinnk\.com$/
+    host: /^segmentnext\.com$/,
+    path: /^\/interstitial\.html$/,
+    query: /return_url=([^&]+)/
   },
-  ready: function ready() {
+  start: function start(m) {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee76() {
-      var a, b;
       return _regenerator["default"].wrap(function _callee76$(_context76) {
         while (1) {
           switch (_context76.prev = _context76.next) {
             case 0:
               _context76.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(2000);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(decodeURIComponent(m.query[1]));
             case 2:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div.banner.banner-captcha');
-              a.click();
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-success.btn-lg.get-link');
-              b.click();
-            case 6:
             case "end":
               return _context76.stop();
           }
@@ -3920,134 +3907,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^icerik\.site$/,
-    path: /^\/go/
+    host: /^(short|srt)\.am$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee77() {
-      var button;
       return _regenerator["default"].wrap(function _callee77$(_context77) {
         while (1) {
           switch (_context77.prev = _context77.next) {
             case 0:
               _context77.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(500);
-            case 2:
-              button = (0, _ADSBYPASSER_NAMESPACE__.$)('#get_link_btn');
-              button.click();
-            case 4:
-            case "end":
-              return _context77.stop();
-          }
-        }
-      }, _callee77);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: [/^realsht\.mobi$/]
-  },
-  ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee78() {
-      var n;
-      return _regenerator["default"].wrap(function _callee78$(_context78) {
-        while (1) {
-          switch (_context78.prev = _context78.next) {
-            case 0:
-              n = (0, _ADSBYPASSER_NAMESPACE__.$)('#download_link');
-              n.click();
-            case 2:
-            case "end":
-              return _context78.stop();
-          }
-        }
-      }, _callee78);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^preview\.rlu\.ru$/
-  },
-  ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee79() {
-      var a;
-      return _regenerator["default"].wrap(function _callee79$(_context79) {
-        while (1) {
-          switch (_context79.prev = _context79.next) {
-            case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('#content > .long_url > a');
-              _context79.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
-            case "end":
-              return _context79.stop();
-          }
-        }
-      }, _callee79);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^segmentnext\.com$/,
-    path: /^\/interstitial\.html$/,
-    query: /return_url=([^&]+)/
-  },
-  start: function start(m) {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee80() {
-      return _regenerator["default"].wrap(function _callee80$(_context80) {
-        while (1) {
-          switch (_context80.prev = _context80.next) {
-            case 0:
-              _context80.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(decodeURIComponent(m.query[1]));
-            case 2:
-            case "end":
-              return _context80.stop();
-          }
-        }
-      }, _callee80);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: [/^shink\.me$/, /^shon\.xyz$/]
-  },
-  ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee81() {
-      var f;
-      return _regenerator["default"].wrap(function _callee81$(_context81) {
-        while (1) {
-          switch (_context81.prev = _context81.next) {
-            case 0:
-              f = (0, _ADSBYPASSER_NAMESPACE__.$)('#skip');
-              f.submit();
-            case 2:
-            case "end":
-              return _context81.stop();
-          }
-        }
-      }, _callee81);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^(short|srt)\.am$/
-  },
-  ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee82() {
-      return _regenerator["default"].wrap(function _callee82$(_context82) {
-        while (1) {
-          switch (_context82.prev = _context82.next) {
-            case 0:
-              _context82.next = 2;
               return _ADSBYPASSER_NAMESPACE__._.wait(5000);
             case 2:
-              _context82.next = 4;
+              _context77.next = 4;
               return _ADSBYPASSER_NAMESPACE__.$.openLink('', {
                 post: {
                   _image: 'Continue'
@@ -4055,10 +3926,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
               });
             case 4:
             case "end":
-              return _context82.stop();
+              return _context77.stop();
           }
         }
-      }, _callee82);
+      }, _callee77);
     }))();
   }
 });
@@ -4071,21 +3942,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
       path: /^\/[\d\w]+/
     },
     ready: function ready() {
-      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee83() {
+      return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee78() {
         var m, o;
-        return _regenerator["default"].wrap(function _callee83$(_context83) {
+        return _regenerator["default"].wrap(function _callee78$(_context78) {
           while (1) {
-            switch (_context83.prev = _context83.next) {
+            switch (_context78.prev = _context78.next) {
               case 0:
                 _ADSBYPASSER_NAMESPACE__.$.remove('iframe');
                 _ADSBYPASSER_NAMESPACE__.$.removeAllTimer();
                 m = _ADSBYPASSER_NAMESPACE__.$.searchFromScripts(/sessionId: "([\d\w]+)",/);
                 if (!m) {
-                  _context83.next = 6;
+                  _context78.next = 6;
                   break;
                 }
                 afterGotSessionId(m[1]);
-                return _context83.abrupt("return");
+                return _context78.abrupt("return");
               case 6:
                 o = new MutationObserver(function (mutations) {
                   mutations.forEach(function () {
@@ -4101,10 +3972,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
                 });
               case 8:
               case "end":
-                return _context83.stop();
+                return _context78.stop();
             }
           }
-        }, _callee83);
+        }, _callee78);
       }))();
     }
   });
@@ -4137,16 +4008,133 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/^shortlinkto\.biz$/, /^uplinkto\.hair$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee84() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee79() {
       var a;
+      return _regenerator["default"].wrap(function _callee79$(_context79) {
+        while (1) {
+          switch (_context79.prev = _context79.next) {
+            case 0:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.view-well a');
+              _context79.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 3:
+            case "end":
+              return _context79.stop();
+          }
+        }
+      }, _callee79);
+    }))();
+  }
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^shortmoz\.link$/
+  },
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee80() {
+      var button;
+      return _regenerator["default"].wrap(function _callee80$(_context80) {
+        while (1) {
+          switch (_context80.prev = _context80.next) {
+            case 0:
+              button = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-primary.btn-block');
+              button.click();
+            case 2:
+            case "end":
+              return _context80.stop();
+          }
+        }
+      }, _callee80);
+    }))();
+  }
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^(www\.)?similarsites\.com$/,
+    path: /^\/goto\/([^?]+)/
+  },
+  start: function start(m) {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee81() {
+      var l;
+      return _regenerator["default"].wrap(function _callee81$(_context81) {
+        while (1) {
+          switch (_context81.prev = _context81.next) {
+            case 0:
+              l = m.path[1];
+              if (!/^https?:\/\//.test(l)) {
+                l = 'http://' + l;
+              }
+              _context81.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
+            case 4:
+            case "end":
+              return _context81.stop();
+          }
+        }
+      }, _callee81);
+    }))();
+  }
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^spacetica\.com$/
+  },
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee82() {
+      var b;
+      return _regenerator["default"].wrap(function _callee82$(_context82) {
+        while (1) {
+          switch (_context82.prev = _context82.next) {
+            case 0:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-primary.btn-xs');
+              b.click();
+            case 2:
+            case "end":
+              return _context82.stop();
+          }
+        }
+      }, _callee82);
+    }))();
+  }
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^www\.spaste\.com$/,
+    path: /^\/site\//
+  },
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee83() {
+      return _regenerator["default"].wrap(function _callee83$(_context83) {
+        while (1) {
+          switch (_context83.prev = _context83.next) {
+            case 0:
+              _context83.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(15000);
+            case 2:
+              (0, _ADSBYPASSER_NAMESPACE__.$)('#template-contactform-submit').click();
+            case 3:
+            case "end":
+              return _context83.stop();
+          }
+        }
+      }, _callee83);
+    }))();
+  }
+});
+_ADSBYPASSER_NAMESPACE__._.register({
+  rule: {
+    host: /^stfly\.(me|xyz)$/
+  },
+  ready: function ready() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee84() {
+      var b;
       return _regenerator["default"].wrap(function _callee84$(_context84) {
         while (1) {
           switch (_context84.prev = _context84.next) {
             case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.view-well a');
-              _context84.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-captcha.m-2.form-send');
+              b.click();
+            case 2:
             case "end":
               return _context84.stop();
           }
@@ -4157,20 +4145,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?shortly\.xyz$/
+    host: /^blogbux\.net$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee85() {
-      var a;
+      var b;
       return _regenerator["default"].wrap(function _callee85$(_context85) {
         while (1) {
           switch (_context85.prev = _context85.next) {
             case 0:
-              _context85.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(8000);
-            case 2:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-success.btn-lg.get-link');
-              a.click();
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-captcha.m-2.form-send');
+              _context85.next = 3;
+              return _ADSBYPASSER_NAMESPACE__._.wait(12000);
+            case 3:
+              b.click();
             case 4:
             case "end":
               return _context85.stop();
@@ -4182,18 +4170,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^shortmoz\.link$/
+    host: /^techtrendmakers\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee86() {
-      var button;
+      var b;
       return _regenerator["default"].wrap(function _callee86$(_context86) {
         while (1) {
           switch (_context86.prev = _context86.next) {
             case 0:
-              button = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-primary.btn-block');
-              button.click();
-            case 2:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-captcha.m-2.form-send.step_btn');
+              _context86.next = 3;
+              return _ADSBYPASSER_NAMESPACE__._.wait(6000);
+            case 3:
+              b.click();
+            case 4:
             case "end":
               return _context86.stop();
           }
@@ -4204,23 +4195,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?similarsites\.com$/,
-    path: /^\/goto\/([^?]+)/
+    host: /^(www\.)?supercheats\.com$/,
+    path: /^\/interstitial\.html$/,
+    query: /(?:\?|&)oldurl=([^&]+)(?:$|&)/
   },
   start: function start(m) {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee87() {
-      var l;
       return _regenerator["default"].wrap(function _callee87$(_context87) {
         while (1) {
           switch (_context87.prev = _context87.next) {
             case 0:
-              l = m.path[1];
-              if (!/^https?:\/\//.test(l)) {
-                l = 'http://' + l;
-              }
-              _context87.next = 4;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(l);
-            case 4:
+              _context87.next = 2;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(m.query[1]);
+            case 2:
             case "end":
               return _context87.stop();
           }
@@ -4231,18 +4218,20 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^spacetica\.com$/
+    host: /^swzz\.xyz$/,
+    path: /^\/link\//
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee88() {
-      var b;
+      var g;
       return _regenerator["default"].wrap(function _callee88$(_context88) {
         while (1) {
           switch (_context88.prev = _context88.next) {
             case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn.btn-primary.btn-xs');
-              b.click();
-            case 2:
+              g = (0, _ADSBYPASSER_NAMESPACE__.$)('a.btn.btn-primary');
+              _context88.next = 3;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(g.href);
+            case 3:
             case "end":
               return _context88.stop();
           }
@@ -4253,20 +4242,27 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^www\.spaste\.com$/,
-    path: /^\/site\//
+    host: /^techgeek\.digital$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee89() {
+      var b, a;
       return _regenerator["default"].wrap(function _callee89$(_context89) {
         while (1) {
           switch (_context89.prev = _context89.next) {
             case 0:
-              _context89.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(15000);
-            case 2:
-              (0, _ADSBYPASSER_NAMESPACE__.$)('#template-contactform-submit').click();
-            case 3:
+              b = (0, _ADSBYPASSER_NAMESPACE__.$)('[class="btn-main get-link"]');
+              if (b) {
+                b.click();
+              }
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a[class="btn-main get-link"]');
+              if (!a) {
+                _context89.next = 6;
+                break;
+              }
+              _context89.next = 6;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 6:
             case "end":
               return _context89.stop();
           }
@@ -4277,17 +4273,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^stfly\.(me|xyz)$/
+    host: /^techstudify\.com$/,
+    path: /^\/elon.php/,
+    query: /link=([^&]+)/
   },
-  ready: function ready() {
+  start: function start(m) {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee90() {
-      var b;
       return _regenerator["default"].wrap(function _callee90$(_context90) {
         while (1) {
           switch (_context90.prev = _context90.next) {
             case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-captcha.m-2.form-send');
-              b.click();
+              _context90.next = 2;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink('https://rplinks.in/' + m.query[1]);
             case 2:
             case "end":
               return _context90.stop();
@@ -4299,21 +4296,19 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^blogbux\.net$/
+    host: /^thinfi\.com$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee91() {
-      var b;
+      var a;
       return _regenerator["default"].wrap(function _callee91$(_context91) {
         while (1) {
           switch (_context91.prev = _context91.next) {
             case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-captcha.m-2.form-send');
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div p a');
               _context91.next = 3;
-              return _ADSBYPASSER_NAMESPACE__._.wait(12000);
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
             case 3:
-              b.click();
-            case 4:
             case "end":
               return _context91.stop();
           }
@@ -4324,21 +4319,22 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^techtrendmakers\.com$/
+    host: /^go\.tnshort\.net$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee92() {
-      var b;
+      var a;
       return _regenerator["default"].wrap(function _callee92$(_context92) {
         while (1) {
           switch (_context92.prev = _context92.next) {
             case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-captcha.m-2.form-send.step_btn');
-              _context92.next = 3;
-              return _ADSBYPASSER_NAMESPACE__._.wait(6000);
-            case 3:
-              b.click();
-            case 4:
+              _context92.next = 2;
+              return _ADSBYPASSER_NAMESPACE__._.wait(3000);
+            case 2:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a[class="btn btn-success btn-lg get-link"]');
+              _context92.next = 5;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 5:
             case "end":
               return _context92.stop();
           }
@@ -4349,141 +4345,14 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^(www\.)?supercheats\.com$/,
-    path: /^\/interstitial\.html$/,
-    query: /(?:\?|&)oldurl=([^&]+)(?:$|&)/
-  },
-  start: function start(m) {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee93() {
-      return _regenerator["default"].wrap(function _callee93$(_context93) {
-        while (1) {
-          switch (_context93.prev = _context93.next) {
-            case 0:
-              _context93.next = 2;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(m.query[1]);
-            case 2:
-            case "end":
-              return _context93.stop();
-          }
-        }
-      }, _callee93);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^swzz\.xyz$/,
-    path: /^\/link\//
-  },
-  ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee94() {
-      var g;
-      return _regenerator["default"].wrap(function _callee94$(_context94) {
-        while (1) {
-          switch (_context94.prev = _context94.next) {
-            case 0:
-              g = (0, _ADSBYPASSER_NAMESPACE__.$)('a.btn.btn-primary');
-              _context94.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(g.href);
-            case 3:
-            case "end":
-              return _context94.stop();
-          }
-        }
-      }, _callee94);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^techgeek\.digital$/
-  },
-  ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee95() {
-      var b, a;
-      return _regenerator["default"].wrap(function _callee95$(_context95) {
-        while (1) {
-          switch (_context95.prev = _context95.next) {
-            case 0:
-              b = (0, _ADSBYPASSER_NAMESPACE__.$)('[class="btn-main get-link"]');
-              if (b) {
-                b.click();
-              }
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a[class="btn-main get-link"]');
-              if (!a) {
-                _context95.next = 6;
-                break;
-              }
-              _context95.next = 6;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 6:
-            case "end":
-              return _context95.stop();
-          }
-        }
-      }, _callee95);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^thinfi\.com$/
-  },
-  ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee96() {
-      var a;
-      return _regenerator["default"].wrap(function _callee96$(_context96) {
-        while (1) {
-          switch (_context96.prev = _context96.next) {
-            case 0:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('div p a');
-              _context96.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 3:
-            case "end":
-              return _context96.stop();
-          }
-        }
-      }, _callee96);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
-    host: /^go\.tnshort\.net$/
-  },
-  ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee97() {
-      var a;
-      return _regenerator["default"].wrap(function _callee97$(_context97) {
-        while (1) {
-          switch (_context97.prev = _context97.next) {
-            case 0:
-              _context97.next = 2;
-              return _ADSBYPASSER_NAMESPACE__._.wait(3000);
-            case 2:
-              a = (0, _ADSBYPASSER_NAMESPACE__.$)('a[class="btn btn-success btn-lg get-link"]');
-              _context97.next = 5;
-              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
-            case 5:
-            case "end":
-              return _context97.stop();
-          }
-        }
-      }, _callee97);
-    }))();
-  }
-});
-_ADSBYPASSER_NAMESPACE__._.register({
-  rule: {
     host: /^tribuntekno\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee98() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee93() {
       var b, c;
-      return _regenerator["default"].wrap(function _callee98$(_context98) {
+      return _regenerator["default"].wrap(function _callee93$(_context93) {
         while (1) {
-          switch (_context98.prev = _context98.next) {
+          switch (_context93.prev = _context93.next) {
             case 0:
               b = _ADSBYPASSER_NAMESPACE__.$.$('#lite-human-verif-button');
               if (b) {
@@ -4495,10 +4364,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
               }
             case 4:
             case "end":
-              return _context98.stop();
+              return _context93.stop();
           }
         }
-      }, _callee98);
+      }, _callee93);
     }))();
   }
 });
@@ -4507,18 +4376,18 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^tutwuri\.id$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee99() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee94() {
       var a, b, c;
-      return _regenerator["default"].wrap(function _callee99$(_context99) {
+      return _regenerator["default"].wrap(function _callee94$(_context94) {
         while (1) {
-          switch (_context99.prev = _context99.next) {
+          switch (_context94.prev = _context94.next) {
             case 0:
-              _context99.next = 2;
+              _context94.next = 2;
               return _ADSBYPASSER_NAMESPACE__._.wait(1000);
             case 2:
               a = (0, _ADSBYPASSER_NAMESPACE__.$)('#btn-1');
               a.click();
-              _context99.next = 6;
+              _context94.next = 6;
               return _ADSBYPASSER_NAMESPACE__._.wait(12000);
             case 6:
               b = (0, _ADSBYPASSER_NAMESPACE__.$)('#btn-2');
@@ -4527,10 +4396,10 @@ _ADSBYPASSER_NAMESPACE__._.register({
               c.click();
             case 10:
             case "end":
-              return _context99.stop();
+              return _context94.stop();
           }
         }
-      }, _callee99);
+      }, _callee94);
     }))();
   }
 });
@@ -4539,23 +4408,23 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^urlbluemedia\.shop$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee100() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee95() {
       var a;
-      return _regenerator["default"].wrap(function _callee100$(_context100) {
+      return _regenerator["default"].wrap(function _callee95$(_context95) {
         while (1) {
-          switch (_context100.prev = _context100.next) {
+          switch (_context95.prev = _context95.next) {
             case 0:
-              _context100.next = 2;
+              _context95.next = 2;
               return _ADSBYPASSER_NAMESPACE__._.wait(7000);
             case 2:
               a = (0, _ADSBYPASSER_NAMESPACE__.$)('input#nut');
               a.click();
             case 4:
             case "end":
-              return _context100.stop();
+              return _context95.stop();
           }
         }
-      }, _callee100);
+      }, _callee95);
     }))();
   }
 });
@@ -4564,36 +4433,36 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: [/(^|\.)urlcash\.(com|org)$/, /^(detonating|smilinglinks|pornyhost|urlgalleries)\.com$/, /^looble\.net$/, /^xxxs\.org$/]
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee101() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee96() {
       var matches;
-      return _regenerator["default"].wrap(function _callee101$(_context101) {
+      return _regenerator["default"].wrap(function _callee96$(_context96) {
         while (1) {
-          switch (_context101.prev = _context101.next) {
+          switch (_context96.prev = _context96.next) {
             case 0:
               if (!(_ADSBYPASSER_NAMESPACE__.$.window && _ADSBYPASSER_NAMESPACE__.$.window.linkDestUrl)) {
-                _context101.next = 4;
+                _context96.next = 4;
                 break;
               }
-              _context101.next = 3;
+              _context96.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(_ADSBYPASSER_NAMESPACE__.$.window.linkDestUrl);
             case 3:
-              return _context101.abrupt("return");
+              return _context96.abrupt("return");
             case 4:
               matches = document.body.innerHTML.match(/linkDestUrl = '(.+)'/);
               if (!matches) {
-                _context101.next = 9;
+                _context96.next = 9;
                 break;
               }
-              _context101.next = 8;
+              _context96.next = 8;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(matches[1]);
             case 8:
-              return _context101.abrupt("return");
+              return _context96.abrupt("return");
             case 9:
             case "end":
-              return _context101.stop();
+              return _context96.stop();
           }
         }
-      }, _callee101);
+      }, _callee96);
     }))();
   }
 });
@@ -4602,21 +4471,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^(www\.)?vzturl\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee102() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee97() {
       var frame;
-      return _regenerator["default"].wrap(function _callee102$(_context102) {
+      return _regenerator["default"].wrap(function _callee97$(_context97) {
         while (1) {
-          switch (_context102.prev = _context102.next) {
+          switch (_context97.prev = _context97.next) {
             case 0:
               frame = (0, _ADSBYPASSER_NAMESPACE__.$)('frame[scrolling=yes]');
-              _context102.next = 3;
+              _context97.next = 3;
               return _ADSBYPASSER_NAMESPACE__.$.openLink(frame.src);
             case 3:
             case "end":
-              return _context102.stop();
+              return _context97.stop();
           }
         }
-      }, _callee102);
+      }, _callee97);
     }))();
   }
 });
@@ -4625,23 +4494,23 @@ _ADSBYPASSER_NAMESPACE__._.register({
     host: /^xpshort\.com$/
   },
   ready: function ready() {
-    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee103() {
+    return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee98() {
       var a;
-      return _regenerator["default"].wrap(function _callee103$(_context103) {
+      return _regenerator["default"].wrap(function _callee98$(_context98) {
         while (1) {
-          switch (_context103.prev = _context103.next) {
+          switch (_context98.prev = _context98.next) {
             case 0:
-              _context103.next = 2;
+              _context98.next = 2;
               return _ADSBYPASSER_NAMESPACE__._.wait(8000);
             case 2:
               a = (0, _ADSBYPASSER_NAMESPACE__.$)('.btn-success.btn-lg.get-link');
               a.click();
             case 4:
             case "end":
-              return _context103.stop();
+              return _context98.stop();
           }
         }
-      }, _callee103);
+      }, _callee98);
     }))();
   }
 });
