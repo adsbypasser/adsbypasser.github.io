@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.30.0
+// @version        7.31.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es5.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es5.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.30.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.31.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -26,9 +26,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.30.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.30.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.30.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.31.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.31.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.31.0/resources/img/imagedoc-darknoise.png
 // @noframes
 // @run-at         document-start
 // @include        http://*
@@ -2686,7 +2686,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^exeo\.app$/
+    host: [/^exeo\.app$/, /^exe-links\.com$/]
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee33() {
@@ -4835,20 +4835,29 @@ _ADSBYPASSER_NAMESPACE__._.register({
 });
 _ADSBYPASSER_NAMESPACE__._.register({
   rule: {
-    host: /^fastpic\.org$/,
-    path: /^\/view\//
+    host: /^fastpic\.org$/
   },
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee112() {
-      var i;
+      var a;
       return _regenerator["default"].wrap(function _callee112$(_context112) {
         while (1) {
           switch (_context112.prev = _context112.next) {
             case 0:
-              i = (0, _ADSBYPASSER_NAMESPACE__.$)('#picContainer img');
-              _context112.next = 3;
-              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 3:
+              a = _ADSBYPASSER_NAMESPACE__.$.$('#imglink');
+              if (!a) {
+                _context112.next = 5;
+                break;
+              }
+              _context112.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openLink(a.href);
+            case 4:
+              return _context112.abrupt("return");
+            case 5:
+              a = (0, _ADSBYPASSER_NAMESPACE__.$)('.image');
+              _context112.next = 8;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(a.src);
+            case 8:
             case "end":
               return _context112.stop();
           }
@@ -5057,9 +5066,21 @@ _ADSBYPASSER_NAMESPACE__._.register({
           switch (_context121.prev = _context121.next) {
             case 0:
               i = (0, _ADSBYPASSER_NAMESPACE__.$)('img.pic');
-              _context121.next = 3;
+              if (!(window.location.host === 'vipr.im')) {
+                _context121.next = 6;
+                break;
+              }
+              _context121.next = 4;
+              return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src, {
+                replace: true
+              });
+            case 4:
+              _context121.next = 8;
+              break;
+            case 6:
+              _context121.next = 8;
               return _ADSBYPASSER_NAMESPACE__.$.openImage(i.src);
-            case 3:
+            case 8:
             case "end":
               return _context121.stop();
           }
@@ -5518,7 +5539,7 @@ _ADSBYPASSER_NAMESPACE__._.register({
   }
 });
 _ADSBYPASSER_NAMESPACE__._.register({
-  rule: ['https://3minx.com/upload/en/*', 'https://4fuk.me/upload/en/*', 'https://555fap.com/upload/en/*', 'https://ai18.pics/upload/en/*', 'https://cnpics.org/upload/en/*', 'https://cnxx.me/upload/en/*', 'https://cosplay18.pics/upload/en/*', 'https://fikfok.net/upload/en/*', 'https://hentaicovid.com/uploads/en/*', 'https://hentaipig.com/upload/en/*', 'https://idol69.net/upload/en/*', 'https://javball.com/upload/en/*', 'https://javsunday.com/upload/en/*', 'https://kin8-av.com/upload/en/*', 'https://ovabee.com/upload/en/*', 'https://pig69.com/upload/en/*', 'https://porn4f.com/upload/en/*', 'https://porn4f.org/upload/en/*', 'https://sweetie-fox.com/upload/en/*'],
+  rule: ['https://3minx.com/upload/en/*', 'https://4fuk.me/upload/en/*', 'https://555fap.com/upload/en/*', 'https://ai18.pics/upload/en/*', 'https://anime-jav.com/upload/en/*', 'https://blackwidof.org/upload/en/*', 'https://chinese-pics.com/upload/en/*', 'https://cn-av.com/upload/en/*', 'https://cnpics.org/upload/en/*', 'https://cnxx.me/upload/en/*', 'https://cosplay-xxx.com/upload/en/*', 'https://cosplay18.pics/upload/en/*', 'https://fc2ppv.stream/upload/en/*', 'https://fikfok.net/upload/en/*', 'https://gofile.download/upload/en/*', 'https://hentai-sub.com/upload/en/*', 'https://hentai4f.com/upload/en/*', 'https://hentaicovid.com/uploads/en/*', 'https://hentaicovid.org/upload/en/*', 'https://hentaipig.com/upload/en/*', 'https://hentaixnx.com/upload/en/*', 'https://idol69.net/upload/en/*', 'https://javball.com/upload/en/*', 'https://javring.com/upload/en/*', 'https://javsunday.com/upload/en/*', 'https://javtele.net/upload/en/*', 'https://kin8-av.com/upload/en/*', 'https://kin8-jav.com/upload/en/*', 'https://kr-av.com/upload/en/*', 'https://ovabee.com/upload/en/*', 'https://pig69.com/upload/en/*', 'https://porn-pig.com/upload/en/*', 'https://porn4f.com/upload/en/*', 'https://porn4f.org/upload/en/*', 'https://sweetie-fox.com/upload/en/*', 'https://xcamcovid.com/upload/en/*', 'https://xxpics.org/upload/en/*'],
   ready: function ready() {
     return (0, _asyncToGenerator2["default"])( _regenerator["default"].mark(function _callee140() {
       var m;

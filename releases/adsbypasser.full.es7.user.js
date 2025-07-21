@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        7.30.0
+// @version        7.31.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.es7.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.es7.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.30.0/resources/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.31.0/resources/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -26,9 +26,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.30.0/resources/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.30.0/resources/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.30.0/resources/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.31.0/resources/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.31.0/resources/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v7.31.0/resources/img/imagedoc-darknoise.png
 // @noframes
 // @run-at         document-start
 // @include        http://*
@@ -1014,7 +1014,10 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^exeo\.app$/,
+    host: [
+      /^exeo\.app$/,
+      /^exe-links\.com$/,
+    ],
   },
   async ready () {
     const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.link-button.button');
@@ -1983,11 +1986,15 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: /^fastpic\.org$/,
-    path: /^\/view\//,
   },
   async ready () {
-    const i = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('#picContainer img');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(i.src);
+    let a = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.$('#imglink');
+    if (a) {
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
+      return;
+    }
+    a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('.image');
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(a.src);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -2080,7 +2087,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     },
   async ready () {
     const i = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('img.pic');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(i.src);
+    if (window.location.host === 'vipr.im') {
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(i.src, { replace: true });
+    } else {
+      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(i.src);
+    }
   }
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -2308,21 +2319,39 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     'https://4fuk.me/upload/en/*',
     'https://555fap.com/upload/en/*',
     'https://ai18.pics/upload/en/*',
+    'https://anime-jav.com/upload/en/*',
+    'https://blackwidof.org/upload/en/*',
+    'https://chinese-pics.com/upload/en/*',
+    'https://cn-av.com/upload/en/*',
     'https://cnpics.org/upload/en/*',
     'https://cnxx.me/upload/en/*',
+    'https://cosplay-xxx.com/upload/en/*',
     'https://cosplay18.pics/upload/en/*',
+    'https://fc2ppv.stream/upload/en/*',
     'https://fikfok.net/upload/en/*',
+    'https://gofile.download/upload/en/*',
+    'https://hentai-sub.com/upload/en/*',
+    'https://hentai4f.com/upload/en/*',
     'https://hentaicovid.com/uploads/en/*',
+    'https://hentaicovid.org/upload/en/*',
     'https://hentaipig.com/upload/en/*',
+    'https://hentaixnx.com/upload/en/*',
     'https://idol69.net/upload/en/*',
     'https://javball.com/upload/en/*',
+    'https://javring.com/upload/en/*',
     'https://javsunday.com/upload/en/*',
+    'https://javtele.net/upload/en/*',
     'https://kin8-av.com/upload/en/*',
+    'https://kin8-jav.com/upload/en/*',
+    'https://kr-av.com/upload/en/*',
     'https://ovabee.com/upload/en/*',
     'https://pig69.com/upload/en/*',
+    'https://porn-pig.com/upload/en/*',
     'https://porn4f.com/upload/en/*',
     'https://porn4f.org/upload/en/*',
     'https://sweetie-fox.com/upload/en/*',
+    'https://xcamcovid.com/upload/en/*',
+    'https://xxpics.org/upload/en/*',
   ],
   async ready () {
     const m = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('meta[property="og:image"]');
