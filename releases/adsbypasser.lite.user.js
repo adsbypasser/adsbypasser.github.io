@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        8.0.0
+// @version        8.1.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.0.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -48,22 +48,16 @@
 // @match          *://*.apunkasoftware.net/*
 // @match          *://aylink.co/*
 // @match          *://*.aylink.co/*
-// @match          *://bc.vc/*
-// @match          *://*.bc.vc/*
 // @match          *://bcvc.ink/*
 // @match          *://*.bcvc.ink/*
 // @match          *://biglistofwebsites.com/*
 // @match          *://*.biglistofwebsites.com/*
 // @match          *://binbox.io/*
 // @match          *://*.binbox.io/*
-// @match          *://bioskopkeren.boo/*
-// @match          *://*.bioskopkeren.boo/*
 // @match          *://birdurls.com/*
 // @match          *://*.birdurls.com/*
 // @match          *://bitcosite.com/*
 // @match          *://*.bitcosite.com/*
-// @match          *://blogbux.net/*
-// @match          *://*.blogbux.net/*
 // @match          *://boost.ink/*
 // @match          *://*.boost.ink/*
 // @match          *://ceesty.com/*
@@ -72,8 +66,6 @@
 // @match          *://*.clik.pw/*
 // @match          *://clk.sh/*
 // @match          *://*.clk.sh/*
-// @match          *://clkmein.com/*
-// @match          *://*.clkmein.com/*
 // @match          *://cllkme.com/*
 // @match          *://*.cllkme.com/*
 // @match          *://cocoleech.com/*
@@ -90,8 +82,6 @@
 // @match          *://*.destyy.com/*
 // @match          *://detonating.com/*
 // @match          *://*.detonating.com/*
-// @match          *://dlink3.com/*
-// @match          *://*.dlink3.com/*
 // @match          *://dlupload.com/*
 // @match          *://*.dlupload.com/*
 // @match          *://dz4link.com/*
@@ -152,8 +142,6 @@
 // @match          *://*.kingofshrink.com/*
 // @match          *://linegee.net/*
 // @match          *://*.linegee.net/*
-// @match          *://link1s.com/*
-// @match          *://*.link1s.com/*
 // @match          *://linkmoni.com/*
 // @match          *://*.linkmoni.com/*
 // @match          *://linkpoi.me/*
@@ -168,14 +156,8 @@
 // @match          *://*.loaninsurehub.com/*
 // @match          *://lolinez.com/*
 // @match          *://*.lolinez.com/*
-// @match          *://looble.net/*
-// @match          *://*.looble.net/*
 // @match          *://mangalist.org/*
 // @match          *://*.mangalist.org/*
-// @match          *://megalink.pro/*
-// @match          *://*.megalink.pro/*
-// @match          *://met.bz/*
-// @match          *://*.met.bz/*
 // @match          *://miniurl.pw/*
 // @match          *://*.miniurl.pw/*
 // @match          *://mirrored.to/*
@@ -186,14 +168,10 @@
 // @match          *://*.multiup.io/*
 // @match          *://nmac.to/*
 // @match          *://*.nmac.to/*
-// @match          *://noweconomy.live/*
-// @match          *://*.noweconomy.live/*
 // @match          *://oke.io/*
 // @match          *://*.oke.io/*
 // @match          *://oko.sh/*
 // @match          *://*.oko.sh/*
-// @match          *://oni.vn/*
-// @match          *://*.oni.vn/*
 // @match          *://onlinefreecourse.net/*
 // @match          *://*.onlinefreecourse.net/*
 // @match          *://otomi-games.com/*
@@ -208,10 +186,6 @@
 // @match          *://*.payskip.org/*
 // @match          *://pingit.im/*
 // @match          *://*.pingit.im/*
-// @match          *://pornyhost.com/*
-// @match          *://*.pornyhost.com/*
-// @match          *://realsht.mobi/*
-// @match          *://*.realsht.mobi/*
 // @match          *://rlu.ru/*
 // @match          *://*.rlu.ru/*
 // @match          *://ryuugames.com/*
@@ -220,24 +194,12 @@
 // @match          *://*.segmentnext.com/*
 // @match          *://sfile.mobi/*
 // @match          *://*.sfile.mobi/*
-// @match          *://sh.st/*
-// @match          *://*.sh.st/*
 // @match          *://short.am/*
 // @match          *://*.short.am/*
-// @match          *://shortlinkto.biz/*
-// @match          *://*.shortlinkto.biz/*
 // @match          *://shortmoz.link/*
 // @match          *://*.shortmoz.link/*
-// @match          *://shrinkcash.com/*
-// @match          *://*.shrinkcash.com/*
-// @match          *://shrt10.com/*
-// @match          *://*.shrt10.com/*
 // @match          *://similarsites.com/*
 // @match          *://*.similarsites.com/*
-// @match          *://smilinglinks.com/*
-// @match          *://*.smilinglinks.com/*
-// @match          *://spacetica.com/*
-// @match          *://*.spacetica.com/*
 // @match          *://spaste.com/*
 // @match          *://*.spaste.com/*
 // @match          *://srt.am/*
@@ -272,8 +234,6 @@
 // @match          *://*.turkdown.com/*
 // @match          *://tutwuri.id/*
 // @match          *://*.tutwuri.id/*
-// @match          *://uplinkto.hair/*
-// @match          *://*.uplinkto.hair/*
 // @match          *://uploadhaven.com/*
 // @match          *://*.uploadhaven.com/*
 // @match          *://uploadrar.com/*
@@ -282,16 +242,10 @@
 // @match          *://*.urlbluemedia.shop/*
 // @match          *://urlcash.com/*
 // @match          *://*.urlcash.com/*
-// @match          *://urlcash.org/*
-// @match          *://*.urlcash.org/*
 // @match          *://urlgalleries.com/*
 // @match          *://*.urlgalleries.com/*
 // @match          *://usersdrive.com/*
 // @match          *://*.usersdrive.com/*
-// @match          *://vinaurl.net/*
-// @match          *://*.vinaurl.net/*
-// @match          *://vzturl.com/*
-// @match          *://*.vzturl.com/*
 // @match          *://xpshort.com/*
 // @match          *://*.xpshort.com/*
 // @match          *://xxxs.org/*
@@ -1005,16 +959,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^bioskopkeren\.boo$/,
-  },
-  async ready() {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(1000);
-    const c = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".reklamgec");
-    c.click();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^boost\.ink$/,
   },
   async start() {
@@ -1061,16 +1005,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^www\.dlink3\.com$/,
-  },
-  async ready() {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(12000);
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('[class="myButton"]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^dlupload\.com$/,
   },
   async ready() {
@@ -1105,7 +1039,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [/^exeo\.app$/, /^exe-links\.com$/],
+    host: [/^exe-links\.com$/, /^exeo\.app$/],
   },
   async ready() {
     const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".link-button.button");
@@ -1207,6 +1141,17 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
+    host: /^icerik\.site$/,
+    path: /^\/go/,
+  },
+  async ready() {
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(500);
+    const button = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("#get_link_btn");
+    button.click();
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
     host: /^icutlink\.com$/,
   },
   async ready() {
@@ -1267,7 +1212,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     host: /^linegee\.net$/,
   },
   async ready() {
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("p.kecil a");
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(3000);
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn-xs");
     b.click();
   },
 });
@@ -1281,16 +1227,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^link1s\.com$/,
-  },
-  async ready() {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(10000);
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn.btn-success.btn-lg.get-link");
-    b.click();
-  },
-});
 (function () {
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     rule: {
@@ -1298,10 +1234,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
         /^adsafelink\.com$/,
         /^birdurls\.com$/,
         /^dz4link\.com$/,
-        /^(linkmoni|shrinkcash)\.com$/,
-        /^shrt10\.com$/,
+        /^linkmoni\.com$/,
         /^tmearn\.net$/,
-        /^vinaurl\.net$/,
         /^payskip\.org$/,
         /^clik\.pw$/,
         /^miniurl\.pw$/,
@@ -1309,8 +1243,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
         /^(clk|oko)\.sh$/,
         /^cpmlink\.pro$/,
         /^gitlink\.pro$/,
-        /^megalink\.pro$/,
-        /^met\.bz/,
         /^mitly\.us$/,
         /^oke\.io$/,
         /^pahe\.plus$/,
@@ -1449,15 +1381,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 })();
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^n\.fcd\.su$/,
-  },
-  async ready() {
-    const btn = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("a.btn:nth-child(2)");
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(btn.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^linkpoi\.me$/,
   },
   async ready() {
@@ -1491,7 +1414,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [/^go\.linksly\.co$/, /^go\.bitcosite\.com$/],
+    host: [/^go\.bitcosite\.com$/, /^go\.linksly\.co$/],
   },
   async ready() {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(8000);
@@ -1532,36 +1455,21 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
+    host: /^n\.fcd\.su$/,
+  },
+  async ready() {
+    const btn = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("a.btn:nth-child(2)");
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(btn.href);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
     host: /^nmac\.to$/,
     path: /^\/dl\/(.+)/,
   },
   async ready() {
     const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn-medium.btn-block");
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^noweconomy\.live$/,
-  },
-  async ready() {
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('[class="btn-main get-link"]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^www\.oni\.vn$/,
-  },
-  async ready() {
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove("iframe");
-    let data = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/data:"([^"]+)"/);
-    if (!data) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasserError("pattern changed");
-    }
-    data = data[1];
-    const url = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.get("/click.html", data);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(url);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1581,26 +1489,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
   async ready() {
     (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("form").submit();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^icerik\.site$/,
-    path: /^\/go/,
-  },
-  async ready() {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(500);
-    const button = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("#get_link_btn");
-    button.click();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: [/^realsht\.mobi$/],
-  },
-  async ready() {
-    const n = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("#download_link");
-    n.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1646,11 +1534,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
 });
 (function () {
-  const hostRules = [
-    /^(cllkme|clkmein|corneey|ceesty)\.com$/,
-    /^(destyy|festyy|gestyy)\.com$/,
-    /^sh\.st$/,
-  ];
+  const hostRules = [/^(ceesty|cllkme|corneey|destyy|festyy|gestyy)\.com$/];
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     rule: {
       host: hostRules,
@@ -1704,15 +1588,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 })();
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [/^shortlinkto\.biz$/, /^uplinkto\.hair$/],
-  },
-  async ready() {
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".view-well a");
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^shortmoz\.link$/,
   },
   async ready() {
@@ -1735,15 +1610,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^spacetica\.com$/,
-  },
-  async ready() {
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn.btn-primary.btn-xs");
-    b.click();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^www\.spaste\.com$/,
     path: /^\/site\//,
   },
@@ -1758,16 +1624,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
   async ready() {
     const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn-captcha.m-2.form-send");
-    b.click();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^blogbux\.net$/,
-  },
-  async ready() {
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn-captcha.m-2.form-send");
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(12000);
     b.click();
   },
 });
@@ -1888,9 +1744,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: [
-      /(^|\.)urlcash\.(com|org)$/,
-      /^(detonating|smilinglinks|pornyhost|urlgalleries)\.com$/,
-      /^looble\.net$/,
+      /^(detonating|urlgalleries)\.com$/,
+      /(^|\.)urlcash\.com$/,
       /^xxxs\.org$/,
     ],
   },
@@ -1904,15 +1759,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(matches[1]);
       return;
     }
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^(www\.)?vzturl\.com$/,
-  },
-  async ready() {
-    const frame = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("frame[scrolling=yes]");
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(frame.src);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({

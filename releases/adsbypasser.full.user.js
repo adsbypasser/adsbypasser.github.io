@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        8.0.0
+// @version        8.1.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.0.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -26,15 +26,13 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.0.0/static/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.0.0/static/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.0.0/static/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/img/imagedoc-darknoise.png
 // @noframes
 // @run-at         document-start
 // @connect        *
 // @match          *://adsbypasser.github.io/*
-// @match          *://13xpics.space/*
-// @match          *://*.13xpics.space/*
 // @match          *://14xpics.space/*
 // @match          *://*.14xpics.space/*
 // @match          *://1ink.cc/*
@@ -47,16 +45,12 @@
 // @match          *://*.2i.cz/*
 // @match          *://2i.sk/*
 // @match          *://*.2i.sk/*
-// @match          *://37xpics.space/*
-// @match          *://*.37xpics.space/*
 // @match          *://3minx.com/*
 // @match          *://*.3minx.com/*
 // @match          *://3xplanet.com/*
 // @match          *://*.3xplanet.com/*
 // @match          *://3xplanet.net/*
 // @match          *://*.3xplanet.net/*
-// @match          *://47xpics.space/*
-// @match          *://*.47xpics.space/*
 // @match          *://4fuk.me/*
 // @match          *://*.4fuk.me/*
 // @match          *://555fap.com/*
@@ -85,8 +79,6 @@
 // @match          *://*.aylink.co/*
 // @match          *://bayimg.com/*
 // @match          *://*.bayimg.com/*
-// @match          *://bc.vc/*
-// @match          *://*.bc.vc/*
 // @match          *://bcvc.ink/*
 // @match          *://*.bcvc.ink/*
 // @match          *://beeimg.com/*
@@ -95,16 +87,12 @@
 // @match          *://*.biglistofwebsites.com/*
 // @match          *://binbox.io/*
 // @match          *://*.binbox.io/*
-// @match          *://bioskopkeren.boo/*
-// @match          *://*.bioskopkeren.boo/*
 // @match          *://birdurls.com/*
 // @match          *://*.birdurls.com/*
 // @match          *://bitcosite.com/*
 // @match          *://*.bitcosite.com/*
 // @match          *://blackwidof.org/*
 // @match          *://*.blackwidof.org/*
-// @match          *://blogbux.net/*
-// @match          *://*.blogbux.net/*
 // @match          *://boost.ink/*
 // @match          *://*.boost.ink/*
 // @match          *://casimages.com/*
@@ -117,8 +105,6 @@
 // @match          *://*.clik.pw/*
 // @match          *://clk.sh/*
 // @match          *://*.clk.sh/*
-// @match          *://clkmein.com/*
-// @match          *://*.clkmein.com/*
 // @match          *://cllkme.com/*
 // @match          *://*.cllkme.com/*
 // @match          *://cloudgallery.net/*
@@ -133,8 +119,6 @@
 // @match          *://*.cocoleech.com/*
 // @match          *://corneey.com/*
 // @match          *://*.corneey.com/*
-// @match          *://cosplay-xxx.com/*
-// @match          *://*.cosplay-xxx.com/*
 // @match          *://cosplay18.pics/*
 // @match          *://*.cosplay18.pics/*
 // @match          *://cpmlink.net/*
@@ -153,12 +137,8 @@
 // @match          *://*.destyy.com/*
 // @match          *://detonating.com/*
 // @match          *://*.detonating.com/*
-// @match          *://dewimg.com/*
-// @match          *://*.dewimg.com/*
 // @match          *://directupload.eu/*
 // @match          *://*.directupload.eu/*
-// @match          *://dlink3.com/*
-// @match          *://*.dlink3.com/*
 // @match          *://dlupload.com/*
 // @match          *://*.dlupload.com/*
 // @match          *://dpic.me/*
@@ -289,6 +269,8 @@
 // @match          *://*.imgfrost.net/*
 // @match          *://imghit.com/*
 // @match          *://*.imghit.com/*
+// @match          *://imgouhmde.sbs/*
+// @match          *://*.imgouhmde.sbs/*
 // @match          *://imgspice.com/*
 // @match          *://*.imgspice.com/*
 // @match          *://imgsto.com/*
@@ -343,8 +325,6 @@
 // @match          *://*.kr-av.com/*
 // @match          *://linegee.net/*
 // @match          *://*.linegee.net/*
-// @match          *://link1s.com/*
-// @match          *://*.link1s.com/*
 // @match          *://linkmoni.com/*
 // @match          *://*.linkmoni.com/*
 // @match          *://linkpoi.me/*
@@ -359,16 +339,10 @@
 // @match          *://*.loaninsurehub.com/*
 // @match          *://lolinez.com/*
 // @match          *://*.lolinez.com/*
-// @match          *://looble.net/*
-// @match          *://*.looble.net/*
 // @match          *://lookmyimg.com/*
 // @match          *://*.lookmyimg.com/*
 // @match          *://mangalist.org/*
 // @match          *://*.mangalist.org/*
-// @match          *://megalink.pro/*
-// @match          *://*.megalink.pro/*
-// @match          *://met.bz/*
-// @match          *://*.met.bz/*
 // @match          *://miniurl.pw/*
 // @match          *://*.miniurl.pw/*
 // @match          *://miragepics.com/*
@@ -383,14 +357,10 @@
 // @match          *://*.nmac.to/*
 // @match          *://noelshack.com/*
 // @match          *://*.noelshack.com/*
-// @match          *://noweconomy.live/*
-// @match          *://*.noweconomy.live/*
 // @match          *://oke.io/*
 // @match          *://*.oke.io/*
 // @match          *://oko.sh/*
 // @match          *://*.oko.sh/*
-// @match          *://oni.vn/*
-// @match          *://*.oni.vn/*
 // @match          *://onlinefreecourse.net/*
 // @match          *://*.onlinefreecourse.net/*
 // @match          *://otomi-games.com/*
@@ -399,8 +369,6 @@
 // @match          *://*.ouo.io/*
 // @match          *://ouo.press/*
 // @match          *://*.ouo.press/*
-// @match          *://outletpic.com/*
-// @match          *://*.outletpic.com/*
 // @match          *://ovabee.com/*
 // @match          *://*.ovabee.com/*
 // @match          *://pahe.plus/*
@@ -413,12 +381,6 @@
 // @match          *://*.picforall.ru/*
 // @match          *://picstate.com/*
 // @match          *://*.picstate.com/*
-// @match          *://picturedent.org/*
-// @match          *://*.picturedent.org/*
-// @match          *://pictwn.com/*
-// @match          *://*.pictwn.com/*
-// @match          *://picyield.com/*
-// @match          *://*.picyield.com/*
 // @match          *://pig69.com/*
 // @match          *://*.pig69.com/*
 // @match          *://pilot007.org/*
@@ -439,48 +401,34 @@
 // @match          *://*.porn4f.com/*
 // @match          *://porn4f.org/*
 // @match          *://*.porn4f.org/*
-// @match          *://pornyhost.com/*
-// @match          *://*.pornyhost.com/*
 // @match          *://postimg.cc/*
 // @match          *://*.postimg.cc/*
 // @match          *://postlmg.cc/*
 // @match          *://*.postlmg.cc/*
 // @match          *://prnt.sc/*
 // @match          *://*.prnt.sc/*
-// @match          *://realsht.mobi/*
-// @match          *://*.realsht.mobi/*
 // @match          *://rintor.space/*
 // @match          *://*.rintor.space/*
 // @match          *://rlu.ru/*
 // @match          *://*.rlu.ru/*
 // @match          *://ryuugames.com/*
 // @match          *://*.ryuugames.com/*
+// @match          *://s-porn.com/*
+// @match          *://*.s-porn.com/*
 // @match          *://segmentnext.com/*
 // @match          *://*.segmentnext.com/*
 // @match          *://sfile.mobi/*
 // @match          *://*.sfile.mobi/*
-// @match          *://sh.st/*
-// @match          *://*.sh.st/*
 // @match          *://short.am/*
 // @match          *://*.short.am/*
-// @match          *://shortlinkto.biz/*
-// @match          *://*.shortlinkto.biz/*
 // @match          *://shortmoz.link/*
 // @match          *://*.shortmoz.link/*
 // @match          *://shotcan.com/*
 // @match          *://*.shotcan.com/*
-// @match          *://shrinkcash.com/*
-// @match          *://*.shrinkcash.com/*
-// @match          *://shrt10.com/*
-// @match          *://*.shrt10.com/*
 // @match          *://silverpic.com/*
 // @match          *://*.silverpic.com/*
 // @match          *://similarsites.com/*
 // @match          *://*.similarsites.com/*
-// @match          *://smilinglinks.com/*
-// @match          *://*.smilinglinks.com/*
-// @match          *://spacetica.com/*
-// @match          *://*.spacetica.com/*
 // @match          *://spaste.com/*
 // @match          *://*.spaste.com/*
 // @match          *://srt.am/*
@@ -503,8 +451,6 @@
 // @match          *://*.techstudify.com/*
 // @match          *://techtrendmakers.com/*
 // @match          *://*.techtrendmakers.com/*
-// @match          *://tezzpic.com/*
-// @match          *://*.tezzpic.com/*
 // @match          *://thefileslocker.net/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://thinfi.com/*
@@ -527,8 +473,6 @@
 // @match          *://*.tutwuri.id/*
 // @match          *://uncenav.com/*
 // @match          *://*.uncenav.com/*
-// @match          *://uplinkto.hair/*
-// @match          *://*.uplinkto.hair/*
 // @match          *://uploadhaven.com/*
 // @match          *://*.uploadhaven.com/*
 // @match          *://uploadrar.com/*
@@ -537,18 +481,12 @@
 // @match          *://*.urlbluemedia.shop/*
 // @match          *://urlcash.com/*
 // @match          *://*.urlcash.com/*
-// @match          *://urlcash.org/*
-// @match          *://*.urlcash.org/*
 // @match          *://urlgalleries.com/*
 // @match          *://*.urlgalleries.com/*
 // @match          *://usersdrive.com/*
 // @match          *://*.usersdrive.com/*
-// @match          *://vinaurl.net/*
-// @match          *://*.vinaurl.net/*
 // @match          *://vipr.im/*
 // @match          *://*.vipr.im/*
-// @match          *://vzturl.com/*
-// @match          *://*.vzturl.com/*
 // @match          *://xcamcovid.com/*
 // @match          *://*.xcamcovid.com/*
 // @match          *://xpshort.com/*
@@ -1270,16 +1208,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^bioskopkeren\.boo$/,
-  },
-  async ready() {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(1000);
-    const c = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".reklamgec");
-    c.click();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^boost\.ink$/,
   },
   async start() {
@@ -1326,16 +1254,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^www\.dlink3\.com$/,
-  },
-  async ready() {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(12000);
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('[class="myButton"]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^dlupload\.com$/,
   },
   async ready() {
@@ -1370,7 +1288,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [/^exeo\.app$/, /^exe-links\.com$/],
+    host: [/^exe-links\.com$/, /^exeo\.app$/],
   },
   async ready() {
     const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".link-button.button");
@@ -1472,6 +1390,17 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
+    host: /^icerik\.site$/,
+    path: /^\/go/,
+  },
+  async ready() {
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(500);
+    const button = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("#get_link_btn");
+    button.click();
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
     host: /^icutlink\.com$/,
   },
   async ready() {
@@ -1532,7 +1461,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     host: /^linegee\.net$/,
   },
   async ready() {
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("p.kecil a");
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(3000);
+    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn-xs");
     b.click();
   },
 });
@@ -1546,16 +1476,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
   },
 });
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^link1s\.com$/,
-  },
-  async ready() {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(10000);
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn.btn-success.btn-lg.get-link");
-    b.click();
-  },
-});
 (function () {
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     rule: {
@@ -1563,10 +1483,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
         /^adsafelink\.com$/,
         /^birdurls\.com$/,
         /^dz4link\.com$/,
-        /^(linkmoni|shrinkcash)\.com$/,
-        /^shrt10\.com$/,
+        /^linkmoni\.com$/,
         /^tmearn\.net$/,
-        /^vinaurl\.net$/,
         /^payskip\.org$/,
         /^clik\.pw$/,
         /^miniurl\.pw$/,
@@ -1574,8 +1492,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
         /^(clk|oko)\.sh$/,
         /^cpmlink\.pro$/,
         /^gitlink\.pro$/,
-        /^megalink\.pro$/,
-        /^met\.bz/,
         /^mitly\.us$/,
         /^oke\.io$/,
         /^pahe\.plus$/,
@@ -1714,15 +1630,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 })();
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^n\.fcd\.su$/,
-  },
-  async ready() {
-    const btn = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("a.btn:nth-child(2)");
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(btn.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^linkpoi\.me$/,
   },
   async ready() {
@@ -1756,7 +1663,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [/^go\.linksly\.co$/, /^go\.bitcosite\.com$/],
+    host: [/^go\.bitcosite\.com$/, /^go\.linksly\.co$/],
   },
   async ready() {
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(8000);
@@ -1797,36 +1704,21 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
+    host: /^n\.fcd\.su$/,
+  },
+  async ready() {
+    const btn = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("a.btn:nth-child(2)");
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(btn.href);
+  },
+});
+_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
+  rule: {
     host: /^nmac\.to$/,
     path: /^\/dl\/(.+)/,
   },
   async ready() {
     const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn-medium.btn-block");
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^noweconomy\.live$/,
-  },
-  async ready() {
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)('[class="btn-main get-link"]');
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^www\.oni\.vn$/,
-  },
-  async ready() {
-    _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.remove("iframe");
-    let data = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/data:"([^"]+)"/);
-    if (!data) {
-      throw new _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.AdsBypasserError("pattern changed");
-    }
-    data = data[1];
-    const url = await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.get("/click.html", data);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(url);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1846,26 +1738,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
   async ready() {
     (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("form").submit();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^icerik\.site$/,
-    path: /^\/go/,
-  },
-  async ready() {
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(500);
-    const button = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("#get_link_btn");
-    button.click();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: [/^realsht\.mobi$/],
-  },
-  async ready() {
-    const n = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("#download_link");
-    n.click();
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -1911,11 +1783,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
 });
 (function () {
-  const hostRules = [
-    /^(cllkme|clkmein|corneey|ceesty)\.com$/,
-    /^(destyy|festyy|gestyy)\.com$/,
-    /^sh\.st$/,
-  ];
+  const hostRules = [/^(ceesty|cllkme|corneey|destyy|festyy|gestyy)\.com$/];
   _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     rule: {
       host: hostRules,
@@ -1969,15 +1837,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 })();
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [/^shortlinkto\.biz$/, /^uplinkto\.hair$/],
-  },
-  async ready() {
-    const a = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".view-well a");
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^shortmoz\.link$/,
   },
   async ready() {
@@ -2000,15 +1859,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: /^spacetica\.com$/,
-  },
-  async ready() {
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn.btn-primary.btn-xs");
-    b.click();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^www\.spaste\.com$/,
     path: /^\/site\//,
   },
@@ -2023,16 +1873,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
   async ready() {
     const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn-captcha.m-2.form-send");
-    b.click();
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^blogbux\.net$/,
-  },
-  async ready() {
-    const b = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".btn-captcha.m-2.form-send");
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.wait(12000);
     b.click();
   },
 });
@@ -2153,9 +1993,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: [
-      /(^|\.)urlcash\.(com|org)$/,
-      /^(detonating|smilinglinks|pornyhost|urlgalleries)\.com$/,
-      /^looble\.net$/,
+      /^(detonating|urlgalleries)\.com$/,
+      /(^|\.)urlcash\.com$/,
       /^xxxs\.org$/,
     ],
   },
@@ -2169,15 +2008,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
       await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(matches[1]);
       return;
     }
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: /^(www\.)?vzturl\.com$/,
-  },
-  async ready() {
-    const frame = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("frame[scrolling=yes]");
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(frame.src);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -2327,13 +2157,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     host: /^fastpic\.org$/,
   },
   async ready() {
-    const a = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.$("#imglink");
-    if (a) {
-      await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(a.href);
-      return;
-    }
-    const directUrl = _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.searchFromScripts(/loading_img = '([^"]+)';/);
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openLink(directUrl[1]);
+    const img = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("img.image.img-fluid");
+    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(img.src);
   },
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
@@ -2415,11 +2240,11 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: [
-      /^imagetwist\.com$/,
-      /^imagenpic\.com$/,
-      /^imagexport\.com$/,
-      /^imageshimage\.com$/,
       /^croea\.com$/,
+      /^imagenpic\.com$/,
+      /^imageshimage\.com$/,
+      /^imagetwist\.com$/,
+      /^imagexport\.com$/,
       /^vipr\.im$/,
     ],
   },
@@ -2465,8 +2290,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
       /^cloudgallery\.net$/,
       /^imgair\.net$/,
       /^imgblaze\.net$/,
-      /^imgfrost\.net$/,
       /^imgfira\.cc$/,
+      /^imgfrost\.net$/,
       /^img[a-z]{2,10}\.(sbs|shop)$/,
       /^pic[a-z]{2,10}\.(sbs|shop)$/,
       /^pix[a-z]{2,10}\.sbs$/,
@@ -2510,7 +2335,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [/^imgbb\.com$/, /^ibb\.co$/],
+    host: [/^ibb\.co$/, /^imgbb\.com$/],
   },
   async ready() {
     const img = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)(".image-viewer-container img");
@@ -2530,12 +2355,12 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: [
       /^2i\.(cz|sk)$/,
-      /^rintor\.space$/,
-      /^[0-9]{1,3}xpics\.space$/,
-      /^imgcloud\.pw$/,
-      /^pilot007\.org$/,
+      /^14xpics\.space$/,
       /^img\.javstore\.net$/,
+      /^imgcloud\.pw$/,
       /^(lookmyimg|shotcan)\.com$/,
+      /^pilot007\.org$/,
+      /^rintor\.space$/,
       /^www\.imghit\.com$/,
     ],
     path: /^\/(image|i)\/.*/,
@@ -2562,8 +2387,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
     host: [
+      /^(www\.)?(imgadult|imgtaxi|imgwallet)\.com$/,
       /^(www\.)?imgdrive\.net$/,
-      /^(www\.)?(imgtaxi|imgwallet|imgadult)\.com$/,
     ],
   },
   async ready() {
@@ -2642,7 +2467,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     "https://cn-av.com/upload/en/*",
     "https://cnpics.org/upload/en/*",
     "https://cnxx.me/upload/en/*",
-    "https://cosplay-xxx.com/upload/en/*",
     "https://cosplay18.pics/upload/en/*",
     "https://fc2ppv.stream/upload/en/*",
     "https://fikfok.net/upload/en/*",
@@ -2666,6 +2490,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     "https://porn-pig.com/upload/en/*",
     "https://porn4f.com/upload/en/*",
     "https://porn4f.org/upload/en/*",
+    "https://s-porn.com/upload/en/*",
     "https://sweetie-fox.com/upload/en/*",
     "https://xcamcovid.com/upload/en/*",
     "https://xxpics.org/upload/en/*",
@@ -2735,21 +2560,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [
-      /^dewimg\.com$/,
-      /^outletpic\.com$/,
-      /^pictwn\.com$/,
-      /^picyield\.com$/,
-      /^tezzpic\.com$/,
-    ],
-  },
-  async ready() {
-    const img = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("center > img.picview");
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(img.src);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
     host: /^www\.pic-upload\.de$/,
   },
   async ready() {
@@ -2764,20 +2574,6 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   },
   async ready() {
     const i = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("#image_container a img");
-    await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(i.src);
-  },
-});
-_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
-  rule: {
-    host: [
-      /^picturedent\.org$/,
-      /^everest\.picturedent\.org$/,
-      /^pacific\.picturedent\.org$/,
-    ],
-    path: /^\/image\//,
-  },
-  async ready() {
-    const i = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("#full_img");
     await _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$.openImage(i.src);
   },
 });
@@ -2810,8 +2606,8 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
     {
       host: [
         /^3xplanet\.(com|net)$/,
-        /^javtenshi\.com$/,
         /^jav-load\.com$/,
+        /^javtenshi\.com$/,
         /^uncenav\.com$/,
       ],
       path: /^\/viewimage\//,
@@ -2838,7 +2634,7 @@ _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
 });
 _ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__._.register({
   rule: {
-    host: [/^postimg\.cc$/, /^postlmg\.cc$/, /^pixxxels\.cc$/],
+    host: [/^pixxxels\.cc$/, /^postimg\.cc$/, /^postlmg\.cc$/],
   },
   async ready() {
     const ele = (0,_ADSBYPASSER_NAMESPACE___WEBPACK_IMPORTED_MODULE_0__.$)("#download");

@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        8.0.0
+// @version        8.1.0
 // @license        BSD
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.0.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -26,15 +26,13 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.0.0/static/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.0.0/static/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.0.0/static/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/img/imagedoc-darknoise.png
 // @noframes
 // @run-at         document-start
 // @connect        *
 // @match          *://adsbypasser.github.io/*
-// @match          *://13xpics.space/*
-// @match          *://*.13xpics.space/*
 // @match          *://14xpics.space/*
 // @match          *://*.14xpics.space/*
 // @match          *://1ink.cc/*
@@ -47,16 +45,12 @@
 // @match          *://*.2i.cz/*
 // @match          *://2i.sk/*
 // @match          *://*.2i.sk/*
-// @match          *://37xpics.space/*
-// @match          *://*.37xpics.space/*
 // @match          *://3minx.com/*
 // @match          *://*.3minx.com/*
 // @match          *://3xplanet.com/*
 // @match          *://*.3xplanet.com/*
 // @match          *://3xplanet.net/*
 // @match          *://*.3xplanet.net/*
-// @match          *://47xpics.space/*
-// @match          *://*.47xpics.space/*
 // @match          *://4fuk.me/*
 // @match          *://*.4fuk.me/*
 // @match          *://555fap.com/*
@@ -85,8 +79,6 @@
 // @match          *://*.aylink.co/*
 // @match          *://bayimg.com/*
 // @match          *://*.bayimg.com/*
-// @match          *://bc.vc/*
-// @match          *://*.bc.vc/*
 // @match          *://bcvc.ink/*
 // @match          *://*.bcvc.ink/*
 // @match          *://beeimg.com/*
@@ -95,16 +87,12 @@
 // @match          *://*.biglistofwebsites.com/*
 // @match          *://binbox.io/*
 // @match          *://*.binbox.io/*
-// @match          *://bioskopkeren.boo/*
-// @match          *://*.bioskopkeren.boo/*
 // @match          *://birdurls.com/*
 // @match          *://*.birdurls.com/*
 // @match          *://bitcosite.com/*
 // @match          *://*.bitcosite.com/*
 // @match          *://blackwidof.org/*
 // @match          *://*.blackwidof.org/*
-// @match          *://blogbux.net/*
-// @match          *://*.blogbux.net/*
 // @match          *://boost.ink/*
 // @match          *://*.boost.ink/*
 // @match          *://casimages.com/*
@@ -117,8 +105,6 @@
 // @match          *://*.clik.pw/*
 // @match          *://clk.sh/*
 // @match          *://*.clk.sh/*
-// @match          *://clkmein.com/*
-// @match          *://*.clkmein.com/*
 // @match          *://cllkme.com/*
 // @match          *://*.cllkme.com/*
 // @match          *://cloudgallery.net/*
@@ -133,8 +119,6 @@
 // @match          *://*.cocoleech.com/*
 // @match          *://corneey.com/*
 // @match          *://*.corneey.com/*
-// @match          *://cosplay-xxx.com/*
-// @match          *://*.cosplay-xxx.com/*
 // @match          *://cosplay18.pics/*
 // @match          *://*.cosplay18.pics/*
 // @match          *://cpmlink.net/*
@@ -153,12 +137,8 @@
 // @match          *://*.destyy.com/*
 // @match          *://detonating.com/*
 // @match          *://*.detonating.com/*
-// @match          *://dewimg.com/*
-// @match          *://*.dewimg.com/*
 // @match          *://directupload.eu/*
 // @match          *://*.directupload.eu/*
-// @match          *://dlink3.com/*
-// @match          *://*.dlink3.com/*
 // @match          *://dlupload.com/*
 // @match          *://*.dlupload.com/*
 // @match          *://dpic.me/*
@@ -289,6 +269,8 @@
 // @match          *://*.imgfrost.net/*
 // @match          *://imghit.com/*
 // @match          *://*.imghit.com/*
+// @match          *://imgouhmde.sbs/*
+// @match          *://*.imgouhmde.sbs/*
 // @match          *://imgspice.com/*
 // @match          *://*.imgspice.com/*
 // @match          *://imgsto.com/*
@@ -343,8 +325,6 @@
 // @match          *://*.kr-av.com/*
 // @match          *://linegee.net/*
 // @match          *://*.linegee.net/*
-// @match          *://link1s.com/*
-// @match          *://*.link1s.com/*
 // @match          *://linkmoni.com/*
 // @match          *://*.linkmoni.com/*
 // @match          *://linkpoi.me/*
@@ -359,16 +339,10 @@
 // @match          *://*.loaninsurehub.com/*
 // @match          *://lolinez.com/*
 // @match          *://*.lolinez.com/*
-// @match          *://looble.net/*
-// @match          *://*.looble.net/*
 // @match          *://lookmyimg.com/*
 // @match          *://*.lookmyimg.com/*
 // @match          *://mangalist.org/*
 // @match          *://*.mangalist.org/*
-// @match          *://megalink.pro/*
-// @match          *://*.megalink.pro/*
-// @match          *://met.bz/*
-// @match          *://*.met.bz/*
 // @match          *://miniurl.pw/*
 // @match          *://*.miniurl.pw/*
 // @match          *://miragepics.com/*
@@ -383,14 +357,10 @@
 // @match          *://*.nmac.to/*
 // @match          *://noelshack.com/*
 // @match          *://*.noelshack.com/*
-// @match          *://noweconomy.live/*
-// @match          *://*.noweconomy.live/*
 // @match          *://oke.io/*
 // @match          *://*.oke.io/*
 // @match          *://oko.sh/*
 // @match          *://*.oko.sh/*
-// @match          *://oni.vn/*
-// @match          *://*.oni.vn/*
 // @match          *://onlinefreecourse.net/*
 // @match          *://*.onlinefreecourse.net/*
 // @match          *://otomi-games.com/*
@@ -399,8 +369,6 @@
 // @match          *://*.ouo.io/*
 // @match          *://ouo.press/*
 // @match          *://*.ouo.press/*
-// @match          *://outletpic.com/*
-// @match          *://*.outletpic.com/*
 // @match          *://ovabee.com/*
 // @match          *://*.ovabee.com/*
 // @match          *://pahe.plus/*
@@ -413,12 +381,6 @@
 // @match          *://*.picforall.ru/*
 // @match          *://picstate.com/*
 // @match          *://*.picstate.com/*
-// @match          *://picturedent.org/*
-// @match          *://*.picturedent.org/*
-// @match          *://pictwn.com/*
-// @match          *://*.pictwn.com/*
-// @match          *://picyield.com/*
-// @match          *://*.picyield.com/*
 // @match          *://pig69.com/*
 // @match          *://*.pig69.com/*
 // @match          *://pilot007.org/*
@@ -439,48 +401,34 @@
 // @match          *://*.porn4f.com/*
 // @match          *://porn4f.org/*
 // @match          *://*.porn4f.org/*
-// @match          *://pornyhost.com/*
-// @match          *://*.pornyhost.com/*
 // @match          *://postimg.cc/*
 // @match          *://*.postimg.cc/*
 // @match          *://postlmg.cc/*
 // @match          *://*.postlmg.cc/*
 // @match          *://prnt.sc/*
 // @match          *://*.prnt.sc/*
-// @match          *://realsht.mobi/*
-// @match          *://*.realsht.mobi/*
 // @match          *://rintor.space/*
 // @match          *://*.rintor.space/*
 // @match          *://rlu.ru/*
 // @match          *://*.rlu.ru/*
 // @match          *://ryuugames.com/*
 // @match          *://*.ryuugames.com/*
+// @match          *://s-porn.com/*
+// @match          *://*.s-porn.com/*
 // @match          *://segmentnext.com/*
 // @match          *://*.segmentnext.com/*
 // @match          *://sfile.mobi/*
 // @match          *://*.sfile.mobi/*
-// @match          *://sh.st/*
-// @match          *://*.sh.st/*
 // @match          *://short.am/*
 // @match          *://*.short.am/*
-// @match          *://shortlinkto.biz/*
-// @match          *://*.shortlinkto.biz/*
 // @match          *://shortmoz.link/*
 // @match          *://*.shortmoz.link/*
 // @match          *://shotcan.com/*
 // @match          *://*.shotcan.com/*
-// @match          *://shrinkcash.com/*
-// @match          *://*.shrinkcash.com/*
-// @match          *://shrt10.com/*
-// @match          *://*.shrt10.com/*
 // @match          *://silverpic.com/*
 // @match          *://*.silverpic.com/*
 // @match          *://similarsites.com/*
 // @match          *://*.similarsites.com/*
-// @match          *://smilinglinks.com/*
-// @match          *://*.smilinglinks.com/*
-// @match          *://spacetica.com/*
-// @match          *://*.spacetica.com/*
 // @match          *://spaste.com/*
 // @match          *://*.spaste.com/*
 // @match          *://srt.am/*
@@ -503,8 +451,6 @@
 // @match          *://*.techstudify.com/*
 // @match          *://techtrendmakers.com/*
 // @match          *://*.techtrendmakers.com/*
-// @match          *://tezzpic.com/*
-// @match          *://*.tezzpic.com/*
 // @match          *://thefileslocker.net/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://thinfi.com/*
@@ -527,8 +473,6 @@
 // @match          *://*.tutwuri.id/*
 // @match          *://uncenav.com/*
 // @match          *://*.uncenav.com/*
-// @match          *://uplinkto.hair/*
-// @match          *://*.uplinkto.hair/*
 // @match          *://uploadhaven.com/*
 // @match          *://*.uploadhaven.com/*
 // @match          *://uploadrar.com/*
@@ -537,18 +481,12 @@
 // @match          *://*.urlbluemedia.shop/*
 // @match          *://urlcash.com/*
 // @match          *://*.urlcash.com/*
-// @match          *://urlcash.org/*
-// @match          *://*.urlcash.org/*
 // @match          *://urlgalleries.com/*
 // @match          *://*.urlgalleries.com/*
 // @match          *://usersdrive.com/*
 // @match          *://*.usersdrive.com/*
-// @match          *://vinaurl.net/*
-// @match          *://*.vinaurl.net/*
 // @match          *://vipr.im/*
 // @match          *://*.vipr.im/*
-// @match          *://vzturl.com/*
-// @match          *://*.vzturl.com/*
 // @match          *://xcamcovid.com/*
 // @match          *://*.xcamcovid.com/*
 // @match          *://xpshort.com/*
