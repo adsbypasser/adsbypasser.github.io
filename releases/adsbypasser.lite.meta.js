@@ -2,14 +2,14 @@
 // @name           AdsBypasser Lite
 // @namespace      AdsBypasser
 // @description    Bypass Ads
-// @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        8.1.0
-// @license        BSD
+// @author         AdsBypasser Team
+// @version        8.2.0
+// @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.2.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -50,36 +50,24 @@
 // @match          *://*.aylink.co/*
 // @match          *://bcvc.ink/*
 // @match          *://*.bcvc.ink/*
-// @match          *://biglistofwebsites.com/*
-// @match          *://*.biglistofwebsites.com/*
 // @match          *://binbox.io/*
 // @match          *://*.binbox.io/*
 // @match          *://birdurls.com/*
 // @match          *://*.birdurls.com/*
-// @match          *://bitcosite.com/*
-// @match          *://*.bitcosite.com/*
 // @match          *://boost.ink/*
 // @match          *://*.boost.ink/*
-// @match          *://ceesty.com/*
-// @match          *://*.ceesty.com/*
 // @match          *://clik.pw/*
 // @match          *://*.clik.pw/*
 // @match          *://clk.sh/*
 // @match          *://*.clk.sh/*
-// @match          *://cllkme.com/*
-// @match          *://*.cllkme.com/*
 // @match          *://cocoleech.com/*
 // @match          *://*.cocoleech.com/*
-// @match          *://corneey.com/*
-// @match          *://*.corneey.com/*
 // @match          *://cpmlink.net/*
 // @match          *://*.cpmlink.net/*
 // @match          *://cpmlink.pro/*
 // @match          *://*.cpmlink.pro/*
 // @match          *://cutpaid.com/*
 // @match          *://*.cutpaid.com/*
-// @match          *://destyy.com/*
-// @match          *://*.destyy.com/*
 // @match          *://detonating.com/*
 // @match          *://*.detonating.com/*
 // @match          *://dlupload.com/*
@@ -98,20 +86,18 @@
 // @match          *://*.fc-lc.xyz/*
 // @match          *://fcd.su/*
 // @match          *://*.fcd.su/*
-// @match          *://festyy.com/*
-// @match          *://*.festyy.com/*
 // @match          *://fir3.net/*
 // @match          *://*.fir3.net/*
 // @match          *://forex-trnd.com/*
 // @match          *://*.forex-trnd.com/*
-// @match          *://gestyy.com/*
-// @match          *://*.gestyy.com/*
 // @match          *://get-click2.blogspot.com/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://getthot.com/*
 // @match          *://*.getthot.com/*
 // @match          *://gitlink.pro/*
 // @match          *://*.gitlink.pro/*
+// @match          *://goo.st/*
+// @match          *://*.goo.st/*
 // @match          *://gplinks.co/*
 // @match          *://*.gplinks.co/*
 // @match          *://hen-tay.net/*
@@ -148,8 +134,6 @@
 // @match          *://*.linkpoi.me/*
 // @match          *://linkshrink.net/*
 // @match          *://*.linkshrink.net/*
-// @match          *://linksly.co/*
-// @match          *://*.linksly.co/*
 // @match          *://lnk2.cc/*
 // @match          *://*.lnk2.cc/*
 // @match          *://loaninsurehub.com/*

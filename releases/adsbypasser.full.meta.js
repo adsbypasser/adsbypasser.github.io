@@ -2,14 +2,14 @@
 // @name           AdsBypasser
 // @namespace      AdsBypasser
 // @description    Bypass Ads
-// @copyright      2012+, Wei-Cheng Pan, https://adsbypasser.github.io/
-// @version        8.1.0
-// @license        BSD
+// @author         AdsBypasser Team
+// @version        8.2.0
+// @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.2.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getResourceURL
 // @grant          GM_getValue
@@ -26,9 +26,9 @@
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.1.0/static/img/imagedoc-darknoise.png
+// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.2.0/static/css/align_center.css
+// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.2.0/static/css/scale_image.css
+// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.2.0/static/img/imagedoc-darknoise.png
 // @noframes
 // @run-at         document-start
 // @connect        *
@@ -83,30 +83,22 @@
 // @match          *://*.bcvc.ink/*
 // @match          *://beeimg.com/*
 // @match          *://*.beeimg.com/*
-// @match          *://biglistofwebsites.com/*
-// @match          *://*.biglistofwebsites.com/*
 // @match          *://binbox.io/*
 // @match          *://*.binbox.io/*
 // @match          *://birdurls.com/*
 // @match          *://*.birdurls.com/*
-// @match          *://bitcosite.com/*
-// @match          *://*.bitcosite.com/*
 // @match          *://blackwidof.org/*
 // @match          *://*.blackwidof.org/*
 // @match          *://boost.ink/*
 // @match          *://*.boost.ink/*
 // @match          *://casimages.com/*
 // @match          *://*.casimages.com/*
-// @match          *://ceesty.com/*
-// @match          *://*.ceesty.com/*
 // @match          *://chinese-pics.com/*
 // @match          *://*.chinese-pics.com/*
 // @match          *://clik.pw/*
 // @match          *://*.clik.pw/*
 // @match          *://clk.sh/*
 // @match          *://*.clk.sh/*
-// @match          *://cllkme.com/*
-// @match          *://*.cllkme.com/*
 // @match          *://cloudgallery.net/*
 // @match          *://*.cloudgallery.net/*
 // @match          *://cn-av.com/*
@@ -117,8 +109,6 @@
 // @match          *://*.cnxx.me/*
 // @match          *://cocoleech.com/*
 // @match          *://*.cocoleech.com/*
-// @match          *://corneey.com/*
-// @match          *://*.corneey.com/*
 // @match          *://cosplay18.pics/*
 // @match          *://*.cosplay18.pics/*
 // @match          *://cpmlink.net/*
@@ -133,8 +123,6 @@
 // @match          *://*.cutpaid.com/*
 // @match          *://depic.me/*
 // @match          *://*.depic.me/*
-// @match          *://destyy.com/*
-// @match          *://*.destyy.com/*
 // @match          *://detonating.com/*
 // @match          *://*.detonating.com/*
 // @match          *://directupload.eu/*
@@ -163,8 +151,6 @@
 // @match          *://*.fc2ppv.stream/*
 // @match          *://fcd.su/*
 // @match          *://*.fcd.su/*
-// @match          *://festyy.com/*
-// @match          *://*.festyy.com/*
 // @match          *://fikfok.net/*
 // @match          *://*.fikfok.net/*
 // @match          *://fir3.net/*
@@ -173,8 +159,6 @@
 // @match          *://*.forex-trnd.com/*
 // @match          *://fotosik.pl/*
 // @match          *://*.fotosik.pl/*
-// @match          *://gestyy.com/*
-// @match          *://*.gestyy.com/*
 // @match          *://get-click2.blogspot.com/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://getthot.com/*
@@ -183,6 +167,8 @@
 // @match          *://*.gitlink.pro/*
 // @match          *://gofile.download/*
 // @match          *://*.gofile.download/*
+// @match          *://goo.st/*
+// @match          *://*.goo.st/*
 // @match          *://gplinks.co/*
 // @match          *://*.gplinks.co/*
 // @match          *://hen-tay.net/*
@@ -331,8 +317,6 @@
 // @match          *://*.linkpoi.me/*
 // @match          *://linkshrink.net/*
 // @match          *://*.linkshrink.net/*
-// @match          *://linksly.co/*
-// @match          *://*.linksly.co/*
 // @match          *://lnk2.cc/*
 // @match          *://*.lnk2.cc/*
 // @match          *://loaninsurehub.com/*
@@ -379,6 +363,8 @@
 // @match          *://*.pic-upload.de/*
 // @match          *://picforall.ru/*
 // @match          *://*.picforall.ru/*
+// @match          *://pics4you.org/*
+// @match          *://*.pics4you.org/*
 // @match          *://picstate.com/*
 // @match          *://*.picstate.com/*
 // @match          *://pig69.com/*
@@ -425,16 +411,14 @@
 // @match          *://*.shortmoz.link/*
 // @match          *://shotcan.com/*
 // @match          *://*.shotcan.com/*
-// @match          *://silverpic.com/*
-// @match          *://*.silverpic.com/*
+// @match          *://silverpic.net/*
+// @match          *://*.silverpic.net/*
 // @match          *://similarsites.com/*
 // @match          *://*.similarsites.com/*
 // @match          *://spaste.com/*
 // @match          *://*.spaste.com/*
 // @match          *://srt.am/*
 // @match          *://*.srt.am/*
-// @match          *://starimage.club/*
-// @match          *://*.starimage.club/*
 // @match          *://stfly.me/*
 // @match          *://*.stfly.me/*
 // @match          *://stfly.xyz/*
