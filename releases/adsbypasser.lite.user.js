@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.2.0
+// @version        8.3.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.2.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.3.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -21,6 +21,7 @@
 // @grant          GM.getValue
 // @grant          GM.info
 // @grant          GM.openInTab
+// @grant          GM.registerMenuCommand
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
@@ -44,6 +45,8 @@
 // @match          *://*.adz7short.space/*
 // @match          *://ak.sv/*
 // @match          *://*.ak.sv/*
+// @match          *://anchoreth.com/*
+// @match          *://*.anchoreth.com/*
 // @match          *://apunkasoftware.net/*
 // @match          *://*.apunkasoftware.net/*
 // @match          *://aylink.co/*
@@ -52,8 +55,6 @@
 // @match          *://*.bcvc.ink/*
 // @match          *://binbox.io/*
 // @match          *://*.binbox.io/*
-// @match          *://birdurls.com/*
-// @match          *://*.birdurls.com/*
 // @match          *://boost.ink/*
 // @match          *://*.boost.ink/*
 // @match          *://clik.pw/*
@@ -66,10 +67,10 @@
 // @match          *://*.cpmlink.net/*
 // @match          *://cpmlink.pro/*
 // @match          *://*.cpmlink.pro/*
+// @match          *://curseforge.com/*
+// @match          *://*.curseforge.com/*
 // @match          *://cutpaid.com/*
 // @match          *://*.cutpaid.com/*
-// @match          *://detonating.com/*
-// @match          *://*.detonating.com/*
 // @match          *://dlupload.com/*
 // @match          *://*.dlupload.com/*
 // @match          *://dz4link.com/*
@@ -128,8 +129,6 @@
 // @match          *://*.kingofshrink.com/*
 // @match          *://linegee.net/*
 // @match          *://*.linegee.net/*
-// @match          *://linkmoni.com/*
-// @match          *://*.linkmoni.com/*
 // @match          *://linkpoi.me/*
 // @match          *://*.linkpoi.me/*
 // @match          *://linkshrink.net/*
@@ -142,14 +141,14 @@
 // @match          *://*.lolinez.com/*
 // @match          *://mangalist.org/*
 // @match          *://*.mangalist.org/*
-// @match          *://miniurl.pw/*
-// @match          *://*.miniurl.pw/*
 // @match          *://mirrored.to/*
 // @match          *://*.mirrored.to/*
 // @match          *://mitly.us/*
 // @match          *://*.mitly.us/*
 // @match          *://multiup.io/*
 // @match          *://*.multiup.io/*
+// @match          *://network-loop.com/*
+// @match          *://*.network-loop.com/*
 // @match          *://nmac.to/*
 // @match          *://*.nmac.to/*
 // @match          *://oke.io/*
@@ -168,8 +167,6 @@
 // @match          *://*.pahe.plus/*
 // @match          *://payskip.org/*
 // @match          *://*.payskip.org/*
-// @match          *://pingit.im/*
-// @match          *://*.pingit.im/*
 // @match          *://rlu.ru/*
 // @match          *://*.rlu.ru/*
 // @match          *://ryuugames.com/*
@@ -226,14 +223,12 @@
 // @match          *://*.urlbluemedia.shop/*
 // @match          *://urlcash.com/*
 // @match          *://*.urlcash.com/*
-// @match          *://urlgalleries.com/*
-// @match          *://*.urlgalleries.com/*
+// @match          *://urlgalleries.net/*
+// @match          *://*.urlgalleries.net/*
 // @match          *://usersdrive.com/*
 // @match          *://*.usersdrive.com/*
 // @match          *://xpshort.com/*
 // @match          *://*.xpshort.com/*
-// @match          *://xxxs.org/*
-// @match          *://*.xxxs.org/*
 // @match          *://zegtrends.com/*
 // @match          *://*.zegtrends.com/*
 // ==/UserScript==
@@ -413,6 +408,8 @@
   const rawUSW = getUnsafeWindow();
   const usw = getUnsafeWindowProxy();
   const GMAPI = getGreaseMonkeyAPI();
+  const FALLBACK_VERSION = "8.0.0";
+  getGMInfo().script?.version ?? FALLBACK_VERSION;
   function getUnsafeWindow() {
     let w = null;
     try {
@@ -426,70 +423,73 @@
     return w ? w : (0, eval)("this").window;
   }
   function getGreaseMonkeyAPI() {
-    if (rawUSW.global) return null;
-    const gm = {};
-    gm.openInTab =
-      typeof GM_openInTab === "function" ? GM_openInTab : GM.openInTab;
-    gm.getValue =
-      typeof GM_getValue === "function"
-        ? (name, default_) => Promise.resolve(GM_getValue(name, default_))
-        : GM.getValue;
-    gm.setValue =
-      typeof GM_setValue === "function"
-        ? (name, value) => Promise.resolve(GM_setValue(name, value))
-        : GM.setValue;
-    gm.deleteValue =
-      typeof GM_deleteValue === "function"
-        ? (name) => Promise.resolve(GM_deleteValue(name))
-        : GM.deleteValue;
-    gm.xmlHttpRequest =
-      typeof GM_xmlhttpRequest === "function"
-        ? GM_xmlhttpRequest
-        : GM.xmlHttpRequest;
-    gm.registerMenuCommand =
-      typeof GM_registerMenuCommand === "function" ? GM_registerMenuCommand : nop;
-    if (typeof GM_getResourceURL === "function") {
-      gm.getResourceUrl = (resourceName) =>
-        Promise.resolve(GM_getResourceURL(resourceName));
-    } else if (typeof GM === "object" && GM && GM.getResourceUrl) {
-      gm.getResourceUrl = GM.getResourceUrl;
+    if (rawUSW.global) {
+      return null;
     }
-    return gm;
+    return {
+      openInTab: GM?.openInTab ?? GM_openInTab,
+      getValue: GM?.getValue ?? promisify(GM_getValue),
+      setValue: GM?.setValue ?? promisify(GM_setValue),
+      deleteValue: GM?.deleteValue ?? promisify(GM_deleteValue),
+      xmlHttpRequest: GM?.xmlHttpRequest ?? GM_xmlhttpRequest,
+      registerMenuCommand: GM?.registerMenuCommand ?? GM_registerMenuCommand,
+    };
+  }
+  function promisify(fn) {
+    return (...args) => Promise.resolve(fn(...args));
   }
   function getGMInfo() {
-    if (typeof GM_info === "object" && GM_info) return GM_info;
-    if (typeof GM === "object" && GM && GM.info) return GM.info;
-    return {};
+    return GM?.info ?? GM_info ?? {};
+  }
+  function needStructuredClone() {
+    const isFirefox = typeof mozInnerScreenX === "number";
+    if (!isFirefox) {
+      return false;
+    }
+    const { scriptHandler } = getGMInfo();
+    const excludedHandlers = new Set(["Tampermonkey", "Violentmonkey"]);
+    return !excludedHandlers.has(scriptHandler);
   }
   const MAGIC_KEY = "__adsbypasser_reverse_proxy__";
   function getUnsafeWindowProxy() {
-    const isGreaseMonkey = getGMInfo().scriptHandler === "Greasemonkey";
-    if (!isGreaseMonkey) return rawUSW;
+    if (!needStructuredClone()) {
+      return rawUSW;
+    }
     const decorator = {
       set(target, key, value) {
-        if (key === MAGIC_KEY) return false;
-        target[key] = clone(value);
+        if (key === MAGIC_KEY) {
+          return false;
+        } else {
+          target[key] = clone(value);
+        }
         return true;
       },
       get(target, key) {
-        if (key === MAGIC_KEY) return target;
+        if (key === MAGIC_KEY) {
+          return target;
+        }
         const value = target[key];
         const type = typeof value;
-        if (value === null || (type !== "function" && type !== "object"))
+        if (value === null || (type !== "function" && type !== "object")) {
           return value;
+        }
         return new Proxy(value, decorator);
       },
       apply(target, self, args) {
         args = Array.prototype.slice.call(args);
-        if (target === unsafeWindow.Object.defineProperty)
+        if (target === unsafeWindow.Object.defineProperty) {
           args[0] = args[0][MAGIC_KEY];
+        }
         if (target === unsafeWindow.Function.apply) {
           self = self[MAGIC_KEY];
           args[1] = Array.prototype.slice.call(args[1]);
         }
-        if (target === unsafeWindow.document.querySelector)
+        if (target === unsafeWindow.document.querySelector) {
           self = self[MAGIC_KEY];
-        if (target === unsafeWindow.document.write) self = self[MAGIC_KEY];
+        }
+        if (target === unsafeWindow.document.write) {
+          self = self[MAGIC_KEY];
+        }
         const usargs = clone(args);
         return target.apply(self, usargs);
       },
@@ -504,16 +504,25 @@
     return new Proxy(unsafeWindow, decorator);
   }
   function clone(safe) {
-    if (safe === null || !(safe instanceof Object)) return safe;
-    if (safe === unsafeWindow) return safe;
-    if (safe instanceof String) return safe.toString();
-    if (safe instanceof Function)
+    if (safe === null || !(safe instanceof Object)) {
+      return safe;
+    }
+    if (safe === unsafeWindow) {
+      return safe;
+    }
+    if (safe instanceof String) {
+      return safe.toString();
+    }
+    if (safe instanceof Function) {
       return exportFunction(safe, unsafeWindow, {
         allowCrossOriginArguments: true,
       });
+    }
     if (safe instanceof Array) {
       const unsafe = new unsafeWindow.Array();
-      for (let i = 0; i < safe.length; i++) unsafe.push(clone(safe[i]));
+      for (let i = 0; i < safe.length; i++) {
+        unsafe.push(clone(safe[i]));
+      }
       return unsafe;
     }
     const unsafe = new unsafeWindow.Object();
@@ -1027,7 +1036,6 @@
     return ((
       GM,
       GM_deleteValue,
-      GM_getResourceURL,
       GM_getValue,
       GM_openInTab,
       GM_registerMenuCommand,
@@ -1268,6 +1276,15 @@
   });
   _.register({
     rule: {
+      host: /^anchoreth\.com$/,
+      query: /v=([^&]+)/,
+    },
+    async start(m) {
+      await $.openLink(atob(m.query[1]));
+    },
+  });
+  _.register({
+    rule: {
       host: /^bcvc\.ink$/,
     },
     async ready() {
@@ -1317,6 +1334,19 @@
     async ready() {
       const a = $("#btn-main");
       await $.openLink(a.href);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^www\.curseforge\.com$/,
+    },
+    async ready() {
+      await _.wait(1000);
+      const b = $(".btn-cta.download-btn");
+      b.click();
+      await _.wait(1000);
+      const c = $(".btn-lined.download-btn");
+      c.click();
     },
   });
   _.register({
@@ -1563,13 +1593,10 @@
       rule: {
         host: [
           /^adsafelink\.com$/,
-          /^birdurls\.com$/,
           /^dz4link\.com$/,
-          /^linkmoni\.com$/,
           /^tmearn\.net$/,
           /^payskip\.org$/,
           /^clik\.pw$/,
-          /^miniurl\.pw$/,
           /^aylink\.co$/,
           /^(clk|oko)\.sh$/,
           /^cpmlink\.pro$/,
@@ -1577,7 +1604,6 @@
           /^mitly\.us$/,
           /^oke\.io$/,
           /^pahe\.plus$/,
-          /^pingit\.im$/,
           /^thotpacks\.xyz$/,
         ],
       },
@@ -1772,6 +1798,19 @@
     async ready() {
       const btn = $("a.btn:nth-child(2)");
       await $.openLink(btn.href);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^network-loop\.com$/,
+      query: /u=([^&]+)/,
+    },
+    async start() {
+      await _.wait(3000);
+      const shadowHost = document.querySelector("#print_button");
+      const shadowRoot = shadowHost.shadowRoot;
+      const buttonInShadow = shadowRoot.querySelector("a#pb_2");
+      await $.openLink(buttonInShadow.href);
     },
   });
   _.register({
@@ -1992,11 +2031,7 @@
   });
   _.register({
     rule: {
-      host: [
-        /^(detonating|urlgalleries)\.com$/,
-        /(^|\.)urlcash\.com$/,
-        /^xxxs\.org$/,
-      ],
+      host: /(^|\.)urlcash\.com$/,
     },
     async ready() {
       if ($.window && $.window.linkDestUrl) {
@@ -2008,6 +2043,16 @@
         await $.openLink(matches[1]);
         return;
       }
+    },
+  });
+  _.register({
+    rule: {
+      host: /^urlgalleries\.net$/,
+    },
+    async ready() {
+      await _.wait(1000);
+      const b = $("#overlay.butstyle");
+      b.click();
     },
   });
   _.register({

@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.2.0
+// @version        8.3.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.2.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.3.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -21,6 +21,7 @@
 // @grant          GM.getValue
 // @grant          GM.info
 // @grant          GM.openInTab
+// @grant          GM.registerMenuCommand
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
@@ -44,6 +45,8 @@
 // @match          *://*.adz7short.space/*
 // @match          *://ak.sv/*
 // @match          *://*.ak.sv/*
+// @match          *://anchoreth.com/*
+// @match          *://*.anchoreth.com/*
 // @match          *://apunkasoftware.net/*
 // @match          *://*.apunkasoftware.net/*
 // @match          *://aylink.co/*
@@ -52,8 +55,6 @@
 // @match          *://*.bcvc.ink/*
 // @match          *://binbox.io/*
 // @match          *://*.binbox.io/*
-// @match          *://birdurls.com/*
-// @match          *://*.birdurls.com/*
 // @match          *://boost.ink/*
 // @match          *://*.boost.ink/*
 // @match          *://clik.pw/*
@@ -66,10 +67,10 @@
 // @match          *://*.cpmlink.net/*
 // @match          *://cpmlink.pro/*
 // @match          *://*.cpmlink.pro/*
+// @match          *://curseforge.com/*
+// @match          *://*.curseforge.com/*
 // @match          *://cutpaid.com/*
 // @match          *://*.cutpaid.com/*
-// @match          *://detonating.com/*
-// @match          *://*.detonating.com/*
 // @match          *://dlupload.com/*
 // @match          *://*.dlupload.com/*
 // @match          *://dz4link.com/*
@@ -128,8 +129,6 @@
 // @match          *://*.kingofshrink.com/*
 // @match          *://linegee.net/*
 // @match          *://*.linegee.net/*
-// @match          *://linkmoni.com/*
-// @match          *://*.linkmoni.com/*
 // @match          *://linkpoi.me/*
 // @match          *://*.linkpoi.me/*
 // @match          *://linkshrink.net/*
@@ -142,14 +141,14 @@
 // @match          *://*.lolinez.com/*
 // @match          *://mangalist.org/*
 // @match          *://*.mangalist.org/*
-// @match          *://miniurl.pw/*
-// @match          *://*.miniurl.pw/*
 // @match          *://mirrored.to/*
 // @match          *://*.mirrored.to/*
 // @match          *://mitly.us/*
 // @match          *://*.mitly.us/*
 // @match          *://multiup.io/*
 // @match          *://*.multiup.io/*
+// @match          *://network-loop.com/*
+// @match          *://*.network-loop.com/*
 // @match          *://nmac.to/*
 // @match          *://*.nmac.to/*
 // @match          *://oke.io/*
@@ -168,8 +167,6 @@
 // @match          *://*.pahe.plus/*
 // @match          *://payskip.org/*
 // @match          *://*.payskip.org/*
-// @match          *://pingit.im/*
-// @match          *://*.pingit.im/*
 // @match          *://rlu.ru/*
 // @match          *://*.rlu.ru/*
 // @match          *://ryuugames.com/*
@@ -226,14 +223,12 @@
 // @match          *://*.urlbluemedia.shop/*
 // @match          *://urlcash.com/*
 // @match          *://*.urlcash.com/*
-// @match          *://urlgalleries.com/*
-// @match          *://*.urlgalleries.com/*
+// @match          *://urlgalleries.net/*
+// @match          *://*.urlgalleries.net/*
 // @match          *://usersdrive.com/*
 // @match          *://*.usersdrive.com/*
 // @match          *://xpshort.com/*
 // @match          *://*.xpshort.com/*
-// @match          *://xxxs.org/*
-// @match          *://*.xxxs.org/*
 // @match          *://zegtrends.com/*
 // @match          *://*.zegtrends.com/*
 // ==/UserScript==

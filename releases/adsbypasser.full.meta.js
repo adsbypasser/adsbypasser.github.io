@@ -3,15 +3,14 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.2.0
+// @version        8.3.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.2.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.3.0/static/img/logo.png
 // @grant          GM_deleteValue
-// @grant          GM_getResourceURL
 // @grant          GM_getValue
 // @grant          GM_info
 // @grant          GM_openInTab
@@ -19,16 +18,13 @@
 // @grant          GM_setValue
 // @grant          GM_xmlhttpRequest
 // @grant          GM.deleteValue
-// @grant          GM.getResourceUrl
 // @grant          GM.getValue
 // @grant          GM.info
 // @grant          GM.openInTab
+// @grant          GM.registerMenuCommand
 // @grant          GM.setValue
 // @grant          GM.xmlHttpRequest
 // @grant          unsafeWindow
-// @resource       alignCenter https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.2.0/static/css/align_center.css
-// @resource       scaleImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.2.0/static/css/scale_image.css
-// @resource       bgImage https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.2.0/static/img/imagedoc-darknoise.png
 // @noframes
 // @run-at         document-start
 // @connect        *
@@ -39,8 +35,6 @@
 // @match          *://*.1ink.cc/*
 // @match          *://1link.club/*
 // @match          *://*.1link.club/*
-// @match          *://22pixx.xyz/*
-// @match          *://*.22pixx.xyz/*
 // @match          *://2i.cz/*
 // @match          *://*.2i.cz/*
 // @match          *://2i.sk/*
@@ -57,8 +51,6 @@
 // @match          *://*.555fap.com/*
 // @match          *://a2zapk.io/*
 // @match          *://*.a2zapk.io/*
-// @match          *://acidimg.cc/*
-// @match          *://*.acidimg.cc/*
 // @match          *://adfoc.us/*
 // @match          *://*.adfoc.us/*
 // @match          *://adsafelink.com/*
@@ -71,6 +63,8 @@
 // @match          *://*.ai18.pics/*
 // @match          *://ak.sv/*
 // @match          *://*.ak.sv/*
+// @match          *://anchoreth.com/*
+// @match          *://*.anchoreth.com/*
 // @match          *://anime-jav.com/*
 // @match          *://*.anime-jav.com/*
 // @match          *://apunkasoftware.net/*
@@ -85,8 +79,6 @@
 // @match          *://*.beeimg.com/*
 // @match          *://binbox.io/*
 // @match          *://*.binbox.io/*
-// @match          *://birdurls.com/*
-// @match          *://*.birdurls.com/*
 // @match          *://blackwidof.org/*
 // @match          *://*.blackwidof.org/*
 // @match          *://boost.ink/*
@@ -119,12 +111,12 @@
 // @match          *://*.croea.com/*
 // @match          *://cubeupload.com/*
 // @match          *://*.cubeupload.com/*
+// @match          *://curseforge.com/*
+// @match          *://*.curseforge.com/*
 // @match          *://cutpaid.com/*
 // @match          *://*.cutpaid.com/*
 // @match          *://depic.me/*
 // @match          *://*.depic.me/*
-// @match          *://detonating.com/*
-// @match          *://*.detonating.com/*
 // @match          *://directupload.eu/*
 // @match          *://*.directupload.eu/*
 // @match          *://dlupload.com/*
@@ -257,8 +249,6 @@
 // @match          *://*.imghit.com/*
 // @match          *://imgouhmde.sbs/*
 // @match          *://*.imgouhmde.sbs/*
-// @match          *://imgspice.com/*
-// @match          *://*.imgspice.com/*
 // @match          *://imgsto.com/*
 // @match          *://*.imgsto.com/*
 // @match          *://imgtaxi.com/*
@@ -311,8 +301,6 @@
 // @match          *://*.kr-av.com/*
 // @match          *://linegee.net/*
 // @match          *://*.linegee.net/*
-// @match          *://linkmoni.com/*
-// @match          *://*.linkmoni.com/*
 // @match          *://linkpoi.me/*
 // @match          *://*.linkpoi.me/*
 // @match          *://linkshrink.net/*
@@ -327,8 +315,6 @@
 // @match          *://*.lookmyimg.com/*
 // @match          *://mangalist.org/*
 // @match          *://*.mangalist.org/*
-// @match          *://miniurl.pw/*
-// @match          *://*.miniurl.pw/*
 // @match          *://miragepics.com/*
 // @match          *://*.miragepics.com/*
 // @match          *://mirrored.to/*
@@ -337,6 +323,8 @@
 // @match          *://*.mitly.us/*
 // @match          *://multiup.io/*
 // @match          *://*.multiup.io/*
+// @match          *://network-loop.com/*
+// @match          *://*.network-loop.com/*
 // @match          *://nmac.to/*
 // @match          *://*.nmac.to/*
 // @match          *://noelshack.com/*
@@ -373,8 +361,6 @@
 // @match          *://*.pilot007.org/*
 // @match          *://pimpandhost.com/*
 // @match          *://*.pimpandhost.com/*
-// @match          *://pingit.im/*
-// @match          *://*.pingit.im/*
 // @match          *://pixhost.to/*
 // @match          *://*.pixhost.to/*
 // @match          *://pixroute.com/*
@@ -465,8 +451,8 @@
 // @match          *://*.urlbluemedia.shop/*
 // @match          *://urlcash.com/*
 // @match          *://*.urlcash.com/*
-// @match          *://urlgalleries.com/*
-// @match          *://*.urlgalleries.com/*
+// @match          *://urlgalleries.net/*
+// @match          *://*.urlgalleries.net/*
 // @match          *://usersdrive.com/*
 // @match          *://*.usersdrive.com/*
 // @match          *://vipr.im/*
@@ -477,8 +463,6 @@
 // @match          *://*.xpshort.com/*
 // @match          *://xxpics.org/*
 // @match          *://*.xxpics.org/*
-// @match          *://xxxs.org/*
-// @match          *://*.xxxs.org/*
 // @match          *://xxxwebdlxxx.org/*
 // @match          *://*.xxxwebdlxxx.org/*
 // @match          *://xxxwebdlxxx.top/*
