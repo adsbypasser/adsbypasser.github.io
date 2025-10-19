@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.3.0
+// @version        8.4.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.3.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.4.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -29,445 +29,213 @@
 // @run-at         document-start
 // @connect        *
 // @match          *://adsbypasser.github.io/*
-// @match          *://14xpics.space/*
 // @match          *://*.14xpics.space/*
-// @match          *://1ink.cc/*
 // @match          *://*.1ink.cc/*
-// @match          *://1link.club/*
 // @match          *://*.1link.club/*
-// @match          *://2i.cz/*
 // @match          *://*.2i.cz/*
-// @match          *://2i.sk/*
 // @match          *://*.2i.sk/*
-// @match          *://3minx.com/*
 // @match          *://*.3minx.com/*
-// @match          *://3xplanet.com/*
 // @match          *://*.3xplanet.com/*
-// @match          *://3xplanet.net/*
 // @match          *://*.3xplanet.net/*
-// @match          *://4fuk.me/*
 // @match          *://*.4fuk.me/*
-// @match          *://555fap.com/*
 // @match          *://*.555fap.com/*
-// @match          *://a2zapk.io/*
 // @match          *://*.a2zapk.io/*
-// @match          *://adfoc.us/*
 // @match          *://*.adfoc.us/*
-// @match          *://adsafelink.com/*
 // @match          *://*.adsafelink.com/*
-// @match          *://adshnk.com/*
 // @match          *://*.adshnk.com/*
-// @match          *://adz7short.space/*
 // @match          *://*.adz7short.space/*
-// @match          *://ai18.pics/*
 // @match          *://*.ai18.pics/*
-// @match          *://ak.sv/*
 // @match          *://*.ak.sv/*
-// @match          *://anchoreth.com/*
 // @match          *://*.anchoreth.com/*
-// @match          *://anime-jav.com/*
 // @match          *://*.anime-jav.com/*
-// @match          *://apunkasoftware.net/*
 // @match          *://*.apunkasoftware.net/*
-// @match          *://aylink.co/*
 // @match          *://*.aylink.co/*
-// @match          *://bayimg.com/*
 // @match          *://*.bayimg.com/*
-// @match          *://bcvc.ink/*
 // @match          *://*.bcvc.ink/*
-// @match          *://beeimg.com/*
 // @match          *://*.beeimg.com/*
-// @match          *://binbox.io/*
 // @match          *://*.binbox.io/*
-// @match          *://blackwidof.org/*
 // @match          *://*.blackwidof.org/*
-// @match          *://boost.ink/*
+// @match          *://*.blogmado.com/*
 // @match          *://*.boost.ink/*
-// @match          *://casimages.com/*
 // @match          *://*.casimages.com/*
-// @match          *://chinese-pics.com/*
 // @match          *://*.chinese-pics.com/*
-// @match          *://clik.pw/*
 // @match          *://*.clik.pw/*
-// @match          *://clk.sh/*
 // @match          *://*.clk.sh/*
-// @match          *://cloudgallery.net/*
 // @match          *://*.cloudgallery.net/*
-// @match          *://cn-av.com/*
 // @match          *://*.cn-av.com/*
-// @match          *://cnpics.org/*
 // @match          *://*.cnpics.org/*
-// @match          *://cnxx.me/*
 // @match          *://*.cnxx.me/*
-// @match          *://cocoleech.com/*
-// @match          *://*.cocoleech.com/*
-// @match          *://cosplay18.pics/*
 // @match          *://*.cosplay18.pics/*
-// @match          *://cpmlink.net/*
 // @match          *://*.cpmlink.net/*
-// @match          *://cpmlink.pro/*
 // @match          *://*.cpmlink.pro/*
-// @match          *://croea.com/*
 // @match          *://*.croea.com/*
-// @match          *://cubeupload.com/*
 // @match          *://*.cubeupload.com/*
-// @match          *://curseforge.com/*
-// @match          *://*.curseforge.com/*
-// @match          *://cutpaid.com/*
 // @match          *://*.cutpaid.com/*
-// @match          *://depic.me/*
 // @match          *://*.depic.me/*
-// @match          *://directupload.eu/*
 // @match          *://*.directupload.eu/*
-// @match          *://dlupload.com/*
-// @match          *://*.dlupload.com/*
-// @match          *://dpic.me/*
 // @match          *://*.dpic.me/*
-// @match          *://dz4link.com/*
 // @match          *://*.dz4link.com/*
-// @match          *://earnlink.io/*
 // @match          *://*.earnlink.io/*
-// @match          *://exe-links.com/*
 // @match          *://*.exe-links.com/*
-// @match          *://exeo.app/*
 // @match          *://*.exeo.app/*
-// @match          *://fappic.com/*
 // @match          *://*.fappic.com/*
-// @match          *://fastpic.org/*
 // @match          *://*.fastpic.org/*
-// @match          *://fc-lc.com/*
 // @match          *://*.fc-lc.com/*
-// @match          *://fc-lc.xyz/*
 // @match          *://*.fc-lc.xyz/*
-// @match          *://fc2ppv.stream/*
 // @match          *://*.fc2ppv.stream/*
-// @match          *://fcd.su/*
-// @match          *://*.fcd.su/*
-// @match          *://fikfok.net/*
 // @match          *://*.fikfok.net/*
-// @match          *://fir3.net/*
 // @match          *://*.fir3.net/*
-// @match          *://forex-trnd.com/*
 // @match          *://*.forex-trnd.com/*
-// @match          *://fotosik.pl/*
 // @match          *://*.fotosik.pl/*
-// @match          *://get-click2.blogspot.com/*
 // @match          *://*.get-click2.blogspot.com/*
-// @match          *://getthot.com/*
 // @match          *://*.getthot.com/*
-// @match          *://gitlink.pro/*
 // @match          *://*.gitlink.pro/*
-// @match          *://gofile.download/*
 // @match          *://*.gofile.download/*
-// @match          *://goo.st/*
 // @match          *://*.goo.st/*
-// @match          *://gplinks.co/*
 // @match          *://*.gplinks.co/*
-// @match          *://hen-tay.net/*
 // @match          *://*.hen-tay.net/*
-// @match          *://hentai-sub.com/*
 // @match          *://*.hentai-sub.com/*
-// @match          *://hentai4f.com/*
 // @match          *://*.hentai4f.com/*
-// @match          *://hentaicovid.com/*
 // @match          *://*.hentaicovid.com/*
-// @match          *://hentaicovid.org/*
 // @match          *://*.hentaicovid.org/*
-// @match          *://hentaipig.com/*
 // @match          *://*.hentaipig.com/*
-// @match          *://hentaixnx.com/*
 // @match          *://*.hentaixnx.com/*
-// @match          *://hostpic.org/*
 // @match          *://*.hostpic.org/*
-// @match          *://hotshorturl.com/*
-// @match          *://*.hotshorturl.com/*
-// @match          *://ibb.co/*
 // @match          *://*.ibb.co/*
-// @match          *://icerik.site/*
-// @match          *://*.icerik.site/*
-// @match          *://icutlink.com/*
 // @match          *://*.icutlink.com/*
-// @match          *://idol69.net/*
 // @match          *://*.idol69.net/*
-// @match          *://im.ge/*
 // @match          *://*.im.ge/*
-// @match          *://imagebam.com/*
 // @match          *://*.imagebam.com/*
-// @match          *://imageban.ru/*
 // @match          *://*.imageban.ru/*
-// @match          *://imagehaha.com/*
 // @match          *://*.imagehaha.com/*
-// @match          *://imagehost.at/*
 // @match          *://*.imagehost.at/*
-// @match          *://imagenetz.de/*
 // @match          *://*.imagenetz.de/*
-// @match          *://imagenpic.com/*
 // @match          *://*.imagenpic.com/*
-// @match          *://imageshack.com/*
 // @match          *://*.imageshack.com/*
-// @match          *://imageshimage.com/*
 // @match          *://*.imageshimage.com/*
-// @match          *://imagetwist.com/*
 // @match          *://*.imagetwist.com/*
-// @match          *://imagetwist.netlify.app/*
 // @match          *://*.imagetwist.netlify.app/*
-// @match          *://imageup.ru/*
 // @match          *://*.imageup.ru/*
-// @match          *://imageupper.com/*
 // @match          *://*.imageupper.com/*
-// @match          *://imagevenue.com/*
 // @match          *://*.imagevenue.com/*
-// @match          *://imagexport.com/*
 // @match          *://*.imagexport.com/*
-// @match          *://imgadult.com/*
 // @match          *://*.imgadult.com/*
-// @match          *://imgair.net/*
 // @match          *://*.imgair.net/*
-// @match          *://imgbaron.com/*
 // @match          *://*.imgbaron.com/*
-// @match          *://imgbase.ru/*
 // @match          *://*.imgbase.ru/*
-// @match          *://imgbb.com/*
 // @match          *://*.imgbb.com/*
-// @match          *://imgblaze.net/*
 // @match          *://*.imgblaze.net/*
-// @match          *://imgbox.com/*
 // @match          *://*.imgbox.com/*
-// @match          *://imgcloud.pw/*
 // @match          *://*.imgcloud.pw/*
-// @match          *://imgdawgknuttz.com/*
 // @match          *://*.imgdawgknuttz.com/*
-// @match          *://imgdrive.net/*
 // @match          *://*.imgdrive.net/*
-// @match          *://imgfira.cc/*
 // @match          *://*.imgfira.cc/*
-// @match          *://imgflip.com/*
 // @match          *://*.imgflip.com/*
-// @match          *://imgfrost.net/*
 // @match          *://*.imgfrost.net/*
-// @match          *://imghit.com/*
 // @match          *://*.imghit.com/*
-// @match          *://imgouhmde.sbs/*
 // @match          *://*.imgouhmde.sbs/*
-// @match          *://imgsto.com/*
 // @match          *://*.imgsto.com/*
-// @match          *://imgtaxi.com/*
 // @match          *://*.imgtaxi.com/*
-// @match          *://imgtraffic.com/*
 // @match          *://*.imgtraffic.com/*
-// @match          *://imgwallet.com/*
 // @match          *://*.imgwallet.com/*
-// @match          *://imx.to/*
 // @match          *://*.imx.to/*
-// @match          *://indishare.org/*
 // @match          *://*.indishare.org/*
-// @match          *://infidrive.net/*
 // @match          *://*.infidrive.net/*
-// @match          *://jav-load.com/*
 // @match          *://*.jav-load.com/*
-// @match          *://javball.com/*
 // @match          *://*.javball.com/*
-// @match          *://javbee.vip/*
 // @match          *://*.javbee.vip/*
-// @match          *://javlibrary.com/*
 // @match          *://*.javlibrary.com/*
-// @match          *://javring.com/*
 // @match          *://*.javring.com/*
-// @match          *://javstore.net/*
 // @match          *://*.javstore.net/*
-// @match          *://javsunday.com/*
 // @match          *://*.javsunday.com/*
-// @match          *://javtele.net/*
 // @match          *://*.javtele.net/*
-// @match          *://javtenshi.com/*
 // @match          *://*.javtenshi.com/*
-// @match          *://k2s.cc/*
-// @match          *://*.k2s.cc/*
-// @match          *://katfile.com/*
 // @match          *://*.katfile.com/*
-// @match          *://keeplinks.org/*
 // @match          *://*.keeplinks.org/*
-// @match          *://keptarolo.hu/*
 // @match          *://*.keptarolo.hu/*
-// @match          *://kimochi.info/*
 // @match          *://*.kimochi.info/*
-// @match          *://kin8-av.com/*
 // @match          *://*.kin8-av.com/*
-// @match          *://kin8-jav.com/*
 // @match          *://*.kin8-jav.com/*
-// @match          *://kingofshrink.com/*
 // @match          *://*.kingofshrink.com/*
-// @match          *://kr-av.com/*
 // @match          *://*.kr-av.com/*
-// @match          *://linegee.net/*
 // @match          *://*.linegee.net/*
-// @match          *://linkpoi.me/*
 // @match          *://*.linkpoi.me/*
-// @match          *://linkshrink.net/*
 // @match          *://*.linkshrink.net/*
-// @match          *://lnk2.cc/*
 // @match          *://*.lnk2.cc/*
-// @match          *://loaninsurehub.com/*
 // @match          *://*.loaninsurehub.com/*
-// @match          *://lolinez.com/*
 // @match          *://*.lolinez.com/*
-// @match          *://lookmyimg.com/*
 // @match          *://*.lookmyimg.com/*
-// @match          *://mangalist.org/*
 // @match          *://*.mangalist.org/*
-// @match          *://miragepics.com/*
 // @match          *://*.miragepics.com/*
-// @match          *://mirrored.to/*
 // @match          *://*.mirrored.to/*
-// @match          *://mitly.us/*
 // @match          *://*.mitly.us/*
-// @match          *://multiup.io/*
 // @match          *://*.multiup.io/*
-// @match          *://network-loop.com/*
 // @match          *://*.network-loop.com/*
-// @match          *://nmac.to/*
-// @match          *://*.nmac.to/*
-// @match          *://noelshack.com/*
 // @match          *://*.noelshack.com/*
-// @match          *://oke.io/*
 // @match          *://*.oke.io/*
-// @match          *://oko.sh/*
 // @match          *://*.oko.sh/*
-// @match          *://onlinefreecourse.net/*
-// @match          *://*.onlinefreecourse.net/*
-// @match          *://otomi-games.com/*
 // @match          *://*.otomi-games.com/*
-// @match          *://ouo.io/*
 // @match          *://*.ouo.io/*
-// @match          *://ouo.press/*
 // @match          *://*.ouo.press/*
-// @match          *://ovabee.com/*
 // @match          *://*.ovabee.com/*
-// @match          *://pahe.plus/*
 // @match          *://*.pahe.plus/*
-// @match          *://payskip.org/*
 // @match          *://*.payskip.org/*
-// @match          *://pic-upload.de/*
 // @match          *://*.pic-upload.de/*
-// @match          *://picforall.ru/*
 // @match          *://*.picforall.ru/*
-// @match          *://pics4you.org/*
 // @match          *://*.pics4you.org/*
-// @match          *://picstate.com/*
 // @match          *://*.picstate.com/*
-// @match          *://pig69.com/*
 // @match          *://*.pig69.com/*
-// @match          *://pilot007.org/*
 // @match          *://*.pilot007.org/*
-// @match          *://pimpandhost.com/*
 // @match          *://*.pimpandhost.com/*
-// @match          *://pixhost.to/*
 // @match          *://*.pixhost.to/*
-// @match          *://pixroute.com/*
 // @match          *://*.pixroute.com/*
-// @match          *://pixxxels.cc/*
 // @match          *://*.pixxxels.cc/*
-// @match          *://porn-pig.com/*
 // @match          *://*.porn-pig.com/*
-// @match          *://porn4f.com/*
 // @match          *://*.porn4f.com/*
-// @match          *://porn4f.org/*
 // @match          *://*.porn4f.org/*
-// @match          *://postimg.cc/*
 // @match          *://*.postimg.cc/*
-// @match          *://postlmg.cc/*
 // @match          *://*.postlmg.cc/*
-// @match          *://prnt.sc/*
 // @match          *://*.prnt.sc/*
-// @match          *://rintor.space/*
 // @match          *://*.rintor.space/*
-// @match          *://rlu.ru/*
 // @match          *://*.rlu.ru/*
-// @match          *://ryuugames.com/*
 // @match          *://*.ryuugames.com/*
-// @match          *://s-porn.com/*
 // @match          *://*.s-porn.com/*
-// @match          *://segmentnext.com/*
-// @match          *://*.segmentnext.com/*
-// @match          *://sfile.mobi/*
 // @match          *://*.sfile.mobi/*
-// @match          *://short.am/*
 // @match          *://*.short.am/*
-// @match          *://shortmoz.link/*
 // @match          *://*.shortmoz.link/*
-// @match          *://shotcan.com/*
 // @match          *://*.shotcan.com/*
-// @match          *://silverpic.net/*
 // @match          *://*.silverpic.net/*
-// @match          *://similarsites.com/*
 // @match          *://*.similarsites.com/*
-// @match          *://spaste.com/*
 // @match          *://*.spaste.com/*
-// @match          *://srt.am/*
 // @match          *://*.srt.am/*
-// @match          *://stfly.me/*
 // @match          *://*.stfly.me/*
-// @match          *://stfly.xyz/*
 // @match          *://*.stfly.xyz/*
-// @match          *://supercheats.com/*
 // @match          *://*.supercheats.com/*
-// @match          *://sweetie-fox.com/*
 // @match          *://*.sweetie-fox.com/*
-// @match          *://swzz.xyz/*
 // @match          *://*.swzz.xyz/*
-// @match          *://techgeek.digital/*
-// @match          *://*.techgeek.digital/*
-// @match          *://techstudify.com/*
 // @match          *://*.techstudify.com/*
-// @match          *://techtrendmakers.com/*
 // @match          *://*.techtrendmakers.com/*
-// @match          *://thefileslocker.net/*
 // @match          *://*.thefileslocker.net/*
-// @match          *://thinfi.com/*
 // @match          *://*.thinfi.com/*
-// @match          *://thotpacks.xyz/*
 // @match          *://*.thotpacks.xyz/*
-// @match          *://tmearn.net/*
 // @match          *://*.tmearn.net/*
-// @match          *://tnshort.net/*
 // @match          *://*.tnshort.net/*
-// @match          *://trafficimage.club/*
 // @match          *://*.trafficimage.club/*
-// @match          *://tribuntekno.com/*
 // @match          *://*.tribuntekno.com/*
-// @match          *://turboimagehost.com/*
 // @match          *://*.turboimagehost.com/*
-// @match          *://turkdown.com/*
 // @match          *://*.turkdown.com/*
-// @match          *://tutwuri.id/*
 // @match          *://*.tutwuri.id/*
-// @match          *://uncenav.com/*
 // @match          *://*.uncenav.com/*
-// @match          *://uploadhaven.com/*
 // @match          *://*.uploadhaven.com/*
-// @match          *://uploadrar.com/*
 // @match          *://*.uploadrar.com/*
-// @match          *://urlbluemedia.shop/*
-// @match          *://*.urlbluemedia.shop/*
-// @match          *://urlcash.com/*
 // @match          *://*.urlcash.com/*
-// @match          *://urlgalleries.net/*
 // @match          *://*.urlgalleries.net/*
-// @match          *://usersdrive.com/*
 // @match          *://*.usersdrive.com/*
-// @match          *://vipr.im/*
 // @match          *://*.vipr.im/*
-// @match          *://xcamcovid.com/*
 // @match          *://*.xcamcovid.com/*
-// @match          *://xpshort.com/*
-// @match          *://*.xpshort.com/*
-// @match          *://xxpics.org/*
 // @match          *://*.xxpics.org/*
-// @match          *://xxxwebdlxxx.org/*
 // @match          *://*.xxxwebdlxxx.org/*
-// @match          *://xxxwebdlxxx.top/*
 // @match          *://*.xxxwebdlxxx.top/*
-// @match          *://zegtrends.com/*
 // @match          *://*.zegtrends.com/*
 // ==/UserScript==
 
@@ -646,8 +414,7 @@
   const rawUSW = getUnsafeWindow();
   const usw = getUnsafeWindowProxy();
   const GMAPI = getGreaseMonkeyAPI();
-  const FALLBACK_VERSION = "8.0.0";
-  const VERSION = getGMInfo().script?.version ?? FALLBACK_VERSION;
+  const VERSION = getGMInfo().script?.version ?? "";
   function getUnsafeWindow() {
     let w = null;
     try {
@@ -1331,7 +1098,7 @@
       this.classList.remove("adsbypasser-shrinked", "adsbypasser-resizable");
     }
   }
-  async function scaleImage(img) {
+  function scaleImage(img) {
     appendStyleURL(SCALE_IMAGE);
     if (img.naturalWidth && img.naturalHeight) {
       checkScaling.call(img);
@@ -1344,11 +1111,11 @@
       h = setTimeout(checkScaling.bind(img), 100);
     });
   }
-  async function changeBackground() {
+  function changeBackground() {
     document.body.style.backgroundColor = "#222222";
     document.body.style.backgroundImage = `url('${BACKGROUND_IMAGE}')`;
   }
-  async function alignCenter() {
+  function alignCenter() {
     appendStyleURL(ALIGN_CENTER);
   }
   function injectStyle(wrapper, img) {
@@ -1380,11 +1147,19 @@
     wrapper.appendChild(img);
     const ac = await GMAPI.getValue("align_center");
     const si = await GMAPI.getValue("scale_image");
-    if (ac || si) injectStyle(wrapper, img);
-    if (ac) await alignCenter();
+    if (ac || si) {
+      injectStyle(wrapper, img);
+    }
+    if (ac) {
+      alignCenter();
+    }
     const cb = await GMAPI.getValue("change_background");
-    if (cb) await changeBackground();
-    if (si) await scaleImage(img);
+    if (cb) {
+      changeBackground();
+    }
+    if (si) {
+      scaleImage(img);
+    }
   }
   const _ = {
     AdsBypasserError,
@@ -1472,16 +1247,6 @@
   });
   _.register({
     rule: {
-      host: /^k2s\.cc$/,
-    },
-    async ready() {
-      await _.wait(35000);
-      const a = $("a.link-to-file");
-      await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
       host: /^katfile\.com$/,
     },
     async ready() {
@@ -1499,10 +1264,13 @@
     },
   });
   _.register({
-    rule: "https://www.mirrored.to/files/*",
+    rule: {
+      host: /^(www\.)?mirrored\.to$/,
+      path: /^\/files\//,
+    },
     async ready() {
-      const a = $(".col-sm.centered.extra-top a");
-      await $.openLink(a.href);
+      const a = $(".secondary");
+      a.click();
     },
   });
   _.register({
@@ -1510,17 +1278,8 @@
       host: /^multiup\.io$/,
     },
     async ready() {
-      const b = $(".btn-info.btn-lg.btn-block");
+      const b = $("#download-button");
       b.click();
-    },
-  });
-  _.register({
-    rule: {
-      host: /^www\.onlinefreecourse\.net$/,
-    },
-    async ready() {
-      const a = $('a[class="btn btn-success"]');
-      await $.openLink(a);
     },
   });
   _.register({
@@ -1540,7 +1299,7 @@
     },
     async ready() {
       await _.wait(18000);
-      const f = $(".btn-submit-free.btn-download-free");
+      const f = $("#submitFree");
       f.click();
     },
   });
@@ -1647,6 +1406,16 @@
   });
   _.register({
     rule: {
+      host: /^blogmado\.com/,
+    },
+    async ready() {
+      await _.wait(3000);
+      const b = $(".btn");
+      b.click();
+    },
+  });
+  _.register({
+    rule: {
       host: /^boost\.ink$/,
     },
     async start() {
@@ -1660,15 +1429,6 @@
   });
   _.register({
     rule: {
-      host: /^cocoleech\.com$/,
-    },
-    async ready() {
-      const a = $(".btn.btn-block.btn-success");
-      await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
       host: /^cpmlink\.net$/,
     },
     async ready() {
@@ -1678,45 +1438,12 @@
   });
   _.register({
     rule: {
-      host: /^www\.curseforge\.com$/,
-    },
-    async ready() {
-      await _.wait(1000);
-      const b = $(".btn-cta.download-btn");
-      b.click();
-      await _.wait(1000);
-      const c = $(".btn-lined.download-btn");
-      c.click();
-    },
-  });
-  _.register({
-    rule: {
       host: /^cutpaid\.com$/,
     },
     async ready() {
-      let a = $(".btn-primary");
-      if (a) {
-        await _.wait(20000);
-        a.click();
-      }
-      a = $(".btn-success.btn-lg.get-link");
+      const a = $(".btn-lg.get-link");
       await _.wait(9000);
       await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^dlupload\.com$/,
-    },
-    async ready() {
-      await _.wait(3500);
-      const b = $(
-        ".btn-block.btn-primary.text-white.shadow.m-1.position-relative.up-tooltip-container",
-      );
-      b.click();
-      await _.wait(6000);
-      const btn = $(".btn-block.continue-btn-bg");
-      btn.click();
     },
   });
   _.register({
@@ -1833,26 +1560,6 @@
   });
   _.register({
     rule: {
-      host: /^hotshorturl\.com$/,
-    },
-    async ready() {
-      const frame = $("frame[scrolling=yes]");
-      await $.openLink(frame.src);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^icerik\.site$/,
-      path: /^\/go/,
-    },
-    async ready() {
-      await _.wait(500);
-      const button = $("#get_link_btn");
-      button.click();
-    },
-  });
-  _.register({
-    rule: {
       host: /^icutlink\.com$/,
     },
     async ready() {
@@ -1876,7 +1583,7 @@
       host: /^imagetwist\.netlify\.app$/,
     },
     async ready() {
-      const a = $(".btn.btn-dark");
+      const a = $("center h2 p a, .btn-dark");
       await $.openLink(a.href);
     },
   });
@@ -2133,15 +1840,6 @@
   });
   _.register({
     rule: {
-      host: /^n\.fcd\.su$/,
-    },
-    async ready() {
-      const btn = $("a.btn:nth-child(2)");
-      await $.openLink(btn.href);
-    },
-  });
-  _.register({
-    rule: {
       host: /^network-loop\.com$/,
       query: /u=([^&]+)/,
     },
@@ -2151,16 +1849,6 @@
       const shadowRoot = shadowHost.shadowRoot;
       const buttonInShadow = shadowRoot.querySelector("a#pb_2");
       await $.openLink(buttonInShadow.href);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^nmac\.to$/,
-      path: /^\/dl\/(.+)/,
-    },
-    async ready() {
-      const a = $(".btn-medium.btn-block");
-      await $.openLink(a.href);
     },
   });
   _.register({
@@ -2203,25 +1891,12 @@
   });
   _.register({
     rule: {
-      host: /^segmentnext\.com$/,
-      path: /^\/interstitial\.html$/,
-      query: /return_url=([^&]+)/,
-    },
-    async start(m) {
-      await $.openLink(decodeURIComponent(m.query[1]));
-    },
-  });
-  _.register({
-    rule: {
       host: /^(short|srt)\.am$/,
     },
     async ready() {
-      await _.wait(5000);
-      await $.openLink("", {
-        post: {
-          _image: "Continue",
-        },
-      });
+      await _.wait(6000);
+      const button = $(".skipp");
+      button.click();
     },
   });
   _.register({
@@ -2287,21 +1962,6 @@
   });
   _.register({
     rule: {
-      host: /^techgeek\.digital$/,
-    },
-    async ready() {
-      const b = $('[class="btn-main get-link"]');
-      if (b) {
-        b.click();
-      }
-      const a = $('a[class="btn-main get-link"]');
-      if (a) {
-        await $.openLink(a.href);
-      }
-    },
-  });
-  _.register({
-    rule: {
       host: /^techstudify\.com$/,
       path: /^\/elon.php/,
       query: /link=([^&]+)/,
@@ -2361,16 +2021,6 @@
   });
   _.register({
     rule: {
-      host: /^urlbluemedia\.shop$/,
-    },
-    async ready() {
-      await _.wait(7000);
-      const a = $("input#nut");
-      a.click();
-    },
-  });
-  _.register({
-    rule: {
       host: /(^|\.)urlcash\.com$/,
     },
     async ready() {
@@ -2393,16 +2043,6 @@
       await _.wait(1000);
       const b = $("#overlay.butstyle");
       b.click();
-    },
-  });
-  _.register({
-    rule: {
-      host: /^xpshort\.com$/,
-    },
-    async ready() {
-      await _.wait(8000);
-      const a = $(".btn-success.btn-lg.get-link");
-      a.click();
     },
   });
   _.register({
@@ -2649,14 +2289,16 @@
   _.register({
     rule: {
       host: [
-        /^2i\.(cz|sk)$/,
         /^14xpics\.space$/,
-        /^img\.javstore\.net$/,
+        /^www\.2i\.(cz|sk)$/,
         /^imgcloud\.pw$/,
-        /^(lookmyimg|shotcan)\.com$/,
+        /^www\.imghit\.com$/,
+        /^img\.javstore\.net$/,
+        /^lookmyimg\.com$/,
         /^pilot007\.org$/,
         /^rintor\.space$/,
-        /^www\.imghit\.com$/,
+        /^shotcan\.com$/,
+        /^(img\.)?trafficimage\.club$/,
       ],
       path: /^\/(image|i)\/.*/,
     },
@@ -2931,16 +2573,6 @@
     async ready() {
       const i = $("#screenshot-image");
       await $.openImage(i.src);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^(img\.)?trafficimage\.club$/,
-      path: /^\/image\//,
-    },
-    async ready() {
-      const img = $('meta[property="og:image"]');
-      await $.openImage(img.content);
     },
   });
   _.register({

@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.3.0
+// @version        8.4.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.3.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.4.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -29,207 +29,94 @@
 // @run-at         document-start
 // @connect        *
 // @match          *://adsbypasser.github.io/*
-// @match          *://1ink.cc/*
 // @match          *://*.1ink.cc/*
-// @match          *://1link.club/*
 // @match          *://*.1link.club/*
-// @match          *://a2zapk.io/*
 // @match          *://*.a2zapk.io/*
-// @match          *://adfoc.us/*
 // @match          *://*.adfoc.us/*
-// @match          *://adsafelink.com/*
 // @match          *://*.adsafelink.com/*
-// @match          *://adshnk.com/*
 // @match          *://*.adshnk.com/*
-// @match          *://adz7short.space/*
 // @match          *://*.adz7short.space/*
-// @match          *://ak.sv/*
 // @match          *://*.ak.sv/*
-// @match          *://anchoreth.com/*
 // @match          *://*.anchoreth.com/*
-// @match          *://apunkasoftware.net/*
 // @match          *://*.apunkasoftware.net/*
-// @match          *://aylink.co/*
 // @match          *://*.aylink.co/*
-// @match          *://bcvc.ink/*
 // @match          *://*.bcvc.ink/*
-// @match          *://binbox.io/*
 // @match          *://*.binbox.io/*
-// @match          *://boost.ink/*
+// @match          *://*.blogmado.com/*
 // @match          *://*.boost.ink/*
-// @match          *://clik.pw/*
 // @match          *://*.clik.pw/*
-// @match          *://clk.sh/*
 // @match          *://*.clk.sh/*
-// @match          *://cocoleech.com/*
-// @match          *://*.cocoleech.com/*
-// @match          *://cpmlink.net/*
 // @match          *://*.cpmlink.net/*
-// @match          *://cpmlink.pro/*
 // @match          *://*.cpmlink.pro/*
-// @match          *://curseforge.com/*
-// @match          *://*.curseforge.com/*
-// @match          *://cutpaid.com/*
 // @match          *://*.cutpaid.com/*
-// @match          *://dlupload.com/*
-// @match          *://*.dlupload.com/*
-// @match          *://dz4link.com/*
 // @match          *://*.dz4link.com/*
-// @match          *://earnlink.io/*
 // @match          *://*.earnlink.io/*
-// @match          *://exe-links.com/*
 // @match          *://*.exe-links.com/*
-// @match          *://exeo.app/*
 // @match          *://*.exeo.app/*
-// @match          *://fc-lc.com/*
 // @match          *://*.fc-lc.com/*
-// @match          *://fc-lc.xyz/*
 // @match          *://*.fc-lc.xyz/*
-// @match          *://fcd.su/*
-// @match          *://*.fcd.su/*
-// @match          *://fir3.net/*
 // @match          *://*.fir3.net/*
-// @match          *://forex-trnd.com/*
 // @match          *://*.forex-trnd.com/*
-// @match          *://get-click2.blogspot.com/*
 // @match          *://*.get-click2.blogspot.com/*
-// @match          *://getthot.com/*
 // @match          *://*.getthot.com/*
-// @match          *://gitlink.pro/*
 // @match          *://*.gitlink.pro/*
-// @match          *://goo.st/*
 // @match          *://*.goo.st/*
-// @match          *://gplinks.co/*
 // @match          *://*.gplinks.co/*
-// @match          *://hen-tay.net/*
 // @match          *://*.hen-tay.net/*
-// @match          *://hotshorturl.com/*
-// @match          *://*.hotshorturl.com/*
-// @match          *://icerik.site/*
-// @match          *://*.icerik.site/*
-// @match          *://icutlink.com/*
 // @match          *://*.icutlink.com/*
-// @match          *://imagetwist.netlify.app/*
 // @match          *://*.imagetwist.netlify.app/*
-// @match          *://indishare.org/*
 // @match          *://*.indishare.org/*
-// @match          *://infidrive.net/*
 // @match          *://*.infidrive.net/*
-// @match          *://javlibrary.com/*
 // @match          *://*.javlibrary.com/*
-// @match          *://k2s.cc/*
-// @match          *://*.k2s.cc/*
-// @match          *://katfile.com/*
 // @match          *://*.katfile.com/*
-// @match          *://keeplinks.org/*
 // @match          *://*.keeplinks.org/*
-// @match          *://kimochi.info/*
 // @match          *://*.kimochi.info/*
-// @match          *://kingofshrink.com/*
 // @match          *://*.kingofshrink.com/*
-// @match          *://linegee.net/*
 // @match          *://*.linegee.net/*
-// @match          *://linkpoi.me/*
 // @match          *://*.linkpoi.me/*
-// @match          *://linkshrink.net/*
 // @match          *://*.linkshrink.net/*
-// @match          *://lnk2.cc/*
 // @match          *://*.lnk2.cc/*
-// @match          *://loaninsurehub.com/*
 // @match          *://*.loaninsurehub.com/*
-// @match          *://lolinez.com/*
 // @match          *://*.lolinez.com/*
-// @match          *://mangalist.org/*
 // @match          *://*.mangalist.org/*
-// @match          *://mirrored.to/*
 // @match          *://*.mirrored.to/*
-// @match          *://mitly.us/*
 // @match          *://*.mitly.us/*
-// @match          *://multiup.io/*
 // @match          *://*.multiup.io/*
-// @match          *://network-loop.com/*
 // @match          *://*.network-loop.com/*
-// @match          *://nmac.to/*
-// @match          *://*.nmac.to/*
-// @match          *://oke.io/*
 // @match          *://*.oke.io/*
-// @match          *://oko.sh/*
 // @match          *://*.oko.sh/*
-// @match          *://onlinefreecourse.net/*
-// @match          *://*.onlinefreecourse.net/*
-// @match          *://otomi-games.com/*
 // @match          *://*.otomi-games.com/*
-// @match          *://ouo.io/*
 // @match          *://*.ouo.io/*
-// @match          *://ouo.press/*
 // @match          *://*.ouo.press/*
-// @match          *://pahe.plus/*
 // @match          *://*.pahe.plus/*
-// @match          *://payskip.org/*
 // @match          *://*.payskip.org/*
-// @match          *://rlu.ru/*
 // @match          *://*.rlu.ru/*
-// @match          *://ryuugames.com/*
 // @match          *://*.ryuugames.com/*
-// @match          *://segmentnext.com/*
-// @match          *://*.segmentnext.com/*
-// @match          *://sfile.mobi/*
 // @match          *://*.sfile.mobi/*
-// @match          *://short.am/*
 // @match          *://*.short.am/*
-// @match          *://shortmoz.link/*
 // @match          *://*.shortmoz.link/*
-// @match          *://similarsites.com/*
 // @match          *://*.similarsites.com/*
-// @match          *://spaste.com/*
 // @match          *://*.spaste.com/*
-// @match          *://srt.am/*
 // @match          *://*.srt.am/*
-// @match          *://stfly.me/*
 // @match          *://*.stfly.me/*
-// @match          *://stfly.xyz/*
 // @match          *://*.stfly.xyz/*
-// @match          *://supercheats.com/*
 // @match          *://*.supercheats.com/*
-// @match          *://swzz.xyz/*
 // @match          *://*.swzz.xyz/*
-// @match          *://techgeek.digital/*
-// @match          *://*.techgeek.digital/*
-// @match          *://techstudify.com/*
 // @match          *://*.techstudify.com/*
-// @match          *://techtrendmakers.com/*
 // @match          *://*.techtrendmakers.com/*
-// @match          *://thefileslocker.net/*
 // @match          *://*.thefileslocker.net/*
-// @match          *://thinfi.com/*
 // @match          *://*.thinfi.com/*
-// @match          *://thotpacks.xyz/*
 // @match          *://*.thotpacks.xyz/*
-// @match          *://tmearn.net/*
 // @match          *://*.tmearn.net/*
-// @match          *://tnshort.net/*
 // @match          *://*.tnshort.net/*
-// @match          *://tribuntekno.com/*
 // @match          *://*.tribuntekno.com/*
-// @match          *://turkdown.com/*
 // @match          *://*.turkdown.com/*
-// @match          *://tutwuri.id/*
 // @match          *://*.tutwuri.id/*
-// @match          *://uploadhaven.com/*
 // @match          *://*.uploadhaven.com/*
-// @match          *://uploadrar.com/*
 // @match          *://*.uploadrar.com/*
-// @match          *://urlbluemedia.shop/*
-// @match          *://*.urlbluemedia.shop/*
-// @match          *://urlcash.com/*
 // @match          *://*.urlcash.com/*
-// @match          *://urlgalleries.net/*
 // @match          *://*.urlgalleries.net/*
-// @match          *://usersdrive.com/*
 // @match          *://*.usersdrive.com/*
-// @match          *://xpshort.com/*
-// @match          *://*.xpshort.com/*
-// @match          *://zegtrends.com/*
 // @match          *://*.zegtrends.com/*
 // ==/UserScript==
 
@@ -408,8 +295,7 @@
   const rawUSW = getUnsafeWindow();
   const usw = getUnsafeWindowProxy();
   const GMAPI = getGreaseMonkeyAPI();
-  const FALLBACK_VERSION = "8.0.0";
-  getGMInfo().script?.version ?? FALLBACK_VERSION;
+  getGMInfo().script?.version ?? "";
   function getUnsafeWindow() {
     let w = null;
     try {
@@ -1132,16 +1018,6 @@
   });
   _.register({
     rule: {
-      host: /^k2s\.cc$/,
-    },
-    async ready() {
-      await _.wait(35000);
-      const a = $("a.link-to-file");
-      await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
       host: /^katfile\.com$/,
     },
     async ready() {
@@ -1159,10 +1035,13 @@
     },
   });
   _.register({
-    rule: "https://www.mirrored.to/files/*",
+    rule: {
+      host: /^(www\.)?mirrored\.to$/,
+      path: /^\/files\//,
+    },
     async ready() {
-      const a = $(".col-sm.centered.extra-top a");
-      await $.openLink(a.href);
+      const a = $(".secondary");
+      a.click();
     },
   });
   _.register({
@@ -1170,17 +1049,8 @@
       host: /^multiup\.io$/,
     },
     async ready() {
-      const b = $(".btn-info.btn-lg.btn-block");
+      const b = $("#download-button");
       b.click();
-    },
-  });
-  _.register({
-    rule: {
-      host: /^www\.onlinefreecourse\.net$/,
-    },
-    async ready() {
-      const a = $('a[class="btn btn-success"]');
-      await $.openLink(a);
     },
   });
   _.register({
@@ -1200,7 +1070,7 @@
     },
     async ready() {
       await _.wait(18000);
-      const f = $(".btn-submit-free.btn-download-free");
+      const f = $("#submitFree");
       f.click();
     },
   });
@@ -1307,6 +1177,16 @@
   });
   _.register({
     rule: {
+      host: /^blogmado\.com/,
+    },
+    async ready() {
+      await _.wait(3000);
+      const b = $(".btn");
+      b.click();
+    },
+  });
+  _.register({
+    rule: {
       host: /^boost\.ink$/,
     },
     async start() {
@@ -1320,15 +1200,6 @@
   });
   _.register({
     rule: {
-      host: /^cocoleech\.com$/,
-    },
-    async ready() {
-      const a = $(".btn.btn-block.btn-success");
-      await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
       host: /^cpmlink\.net$/,
     },
     async ready() {
@@ -1338,45 +1209,12 @@
   });
   _.register({
     rule: {
-      host: /^www\.curseforge\.com$/,
-    },
-    async ready() {
-      await _.wait(1000);
-      const b = $(".btn-cta.download-btn");
-      b.click();
-      await _.wait(1000);
-      const c = $(".btn-lined.download-btn");
-      c.click();
-    },
-  });
-  _.register({
-    rule: {
       host: /^cutpaid\.com$/,
     },
     async ready() {
-      let a = $(".btn-primary");
-      if (a) {
-        await _.wait(20000);
-        a.click();
-      }
-      a = $(".btn-success.btn-lg.get-link");
+      const a = $(".btn-lg.get-link");
       await _.wait(9000);
       await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^dlupload\.com$/,
-    },
-    async ready() {
-      await _.wait(3500);
-      const b = $(
-        ".btn-block.btn-primary.text-white.shadow.m-1.position-relative.up-tooltip-container",
-      );
-      b.click();
-      await _.wait(6000);
-      const btn = $(".btn-block.continue-btn-bg");
-      btn.click();
     },
   });
   _.register({
@@ -1493,26 +1331,6 @@
   });
   _.register({
     rule: {
-      host: /^hotshorturl\.com$/,
-    },
-    async ready() {
-      const frame = $("frame[scrolling=yes]");
-      await $.openLink(frame.src);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^icerik\.site$/,
-      path: /^\/go/,
-    },
-    async ready() {
-      await _.wait(500);
-      const button = $("#get_link_btn");
-      button.click();
-    },
-  });
-  _.register({
-    rule: {
       host: /^icutlink\.com$/,
     },
     async ready() {
@@ -1536,7 +1354,7 @@
       host: /^imagetwist\.netlify\.app$/,
     },
     async ready() {
-      const a = $(".btn.btn-dark");
+      const a = $("center h2 p a, .btn-dark");
       await $.openLink(a.href);
     },
   });
@@ -1793,15 +1611,6 @@
   });
   _.register({
     rule: {
-      host: /^n\.fcd\.su$/,
-    },
-    async ready() {
-      const btn = $("a.btn:nth-child(2)");
-      await $.openLink(btn.href);
-    },
-  });
-  _.register({
-    rule: {
       host: /^network-loop\.com$/,
       query: /u=([^&]+)/,
     },
@@ -1811,16 +1620,6 @@
       const shadowRoot = shadowHost.shadowRoot;
       const buttonInShadow = shadowRoot.querySelector("a#pb_2");
       await $.openLink(buttonInShadow.href);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^nmac\.to$/,
-      path: /^\/dl\/(.+)/,
-    },
-    async ready() {
-      const a = $(".btn-medium.btn-block");
-      await $.openLink(a.href);
     },
   });
   _.register({
@@ -1863,25 +1662,12 @@
   });
   _.register({
     rule: {
-      host: /^segmentnext\.com$/,
-      path: /^\/interstitial\.html$/,
-      query: /return_url=([^&]+)/,
-    },
-    async start(m) {
-      await $.openLink(decodeURIComponent(m.query[1]));
-    },
-  });
-  _.register({
-    rule: {
       host: /^(short|srt)\.am$/,
     },
     async ready() {
-      await _.wait(5000);
-      await $.openLink("", {
-        post: {
-          _image: "Continue",
-        },
-      });
+      await _.wait(6000);
+      const button = $(".skipp");
+      button.click();
     },
   });
   _.register({
@@ -1947,21 +1733,6 @@
   });
   _.register({
     rule: {
-      host: /^techgeek\.digital$/,
-    },
-    async ready() {
-      const b = $('[class="btn-main get-link"]');
-      if (b) {
-        b.click();
-      }
-      const a = $('a[class="btn-main get-link"]');
-      if (a) {
-        await $.openLink(a.href);
-      }
-    },
-  });
-  _.register({
-    rule: {
       host: /^techstudify\.com$/,
       path: /^\/elon.php/,
       query: /link=([^&]+)/,
@@ -2021,16 +1792,6 @@
   });
   _.register({
     rule: {
-      host: /^urlbluemedia\.shop$/,
-    },
-    async ready() {
-      await _.wait(7000);
-      const a = $("input#nut");
-      a.click();
-    },
-  });
-  _.register({
-    rule: {
       host: /(^|\.)urlcash\.com$/,
     },
     async ready() {
@@ -2053,16 +1814,6 @@
       await _.wait(1000);
       const b = $("#overlay.butstyle");
       b.click();
-    },
-  });
-  _.register({
-    rule: {
-      host: /^xpshort\.com$/,
-    },
-    async ready() {
-      await _.wait(8000);
-      const a = $(".btn-success.btn-lg.get-link");
-      a.click();
     },
   });
   const isSafari =
