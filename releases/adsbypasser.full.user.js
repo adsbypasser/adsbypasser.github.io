@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.4.0
+// @version        8.5.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.4.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.5.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -150,7 +150,7 @@
 // @match          *://*.javsunday.com/*
 // @match          *://*.javtele.net/*
 // @match          *://*.javtenshi.com/*
-// @match          *://*.katfile.com/*
+// @match          *://*.katfile.cloud/*
 // @match          *://*.keeplinks.org/*
 // @match          *://*.keptarolo.hu/*
 // @match          *://*.kimochi.info/*
@@ -189,6 +189,7 @@
 // @match          *://*.pimpandhost.com/*
 // @match          *://*.pixhost.to/*
 // @match          *://*.pixroute.com/*
+// @match          *://*.pixxxar.com/*
 // @match          *://*.pixxxels.cc/*
 // @match          *://*.porn-pig.com/*
 // @match          *://*.porn4f.com/*
@@ -1247,7 +1248,7 @@
   });
   _.register({
     rule: {
-      host: /^katfile\.com$/,
+      host: /^katfile\.cloud$/,
     },
     async ready() {
       const a = $('a[id="dlink"]');
@@ -2151,7 +2152,7 @@
   _.register({
     rule: [
       {
-        host: /^www\.imagehost\.at$/,
+        host: [/^www\.imagehost\.at$/, "pixxxar.com"],
         path: /^\/image\//,
       },
       {
@@ -2336,7 +2337,7 @@
     },
     async start() {
       const path = window.location.href.replace("/a-", "/").replace(".html", "");
-      await $.openLink(path);
+      await $.openImage(path);
     },
   });
   _.register({
@@ -2346,7 +2347,7 @@
     },
     async start() {
       const path = window.location.href.replace("/i-", "/").replace(".html", "");
-      await $.openLink(path);
+      await $.openImage(path);
     },
   });
   _.register({
@@ -2356,7 +2357,7 @@
     },
     async start() {
       const path = window.location.href.replace("/n-", "/").replace(".html", "");
-      await $.openLink(path);
+      await $.openImage(path);
     },
   });
   _.register({
@@ -2366,7 +2367,7 @@
     },
     async start() {
       const path = window.location.href.replace("/z-", "/").replace(".html", "");
-      await $.openLink(path);
+      await $.openImage(path);
     },
   });
   _.register({
@@ -2512,7 +2513,7 @@
       path: /^\/image\/\d+/,
     },
     async start(m) {
-      await $.openLink(m.path + "?size=original");
+      await $.openImage(m.path + "?size=original");
     },
   });
   _.register({
