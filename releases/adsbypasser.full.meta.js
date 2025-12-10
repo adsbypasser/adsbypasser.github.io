@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.5.0
+// @version        8.6.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.5.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.6.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -75,7 +75,6 @@
 // @match          *://*.directupload.eu/*
 // @match          *://*.dpic.me/*
 // @match          *://*.dz4link.com/*
-// @match          *://*.earnlink.io/*
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
 // @match          *://*.fappic.com/*
@@ -195,13 +194,13 @@
 // @match          *://*.porn4f.com/*
 // @match          *://*.porn4f.org/*
 // @match          *://*.postimg.cc/*
-// @match          *://*.postlmg.cc/*
 // @match          *://*.prnt.sc/*
 // @match          *://*.rintor.space/*
 // @match          *://*.rlu.ru/*
 // @match          *://*.ryuugames.com/*
 // @match          *://*.s-porn.com/*
 // @match          *://*.sfile.mobi/*
+// @match          *://*.shentai-anime.com/*
 // @match          *://*.short.am/*
 // @match          *://*.shortmoz.link/*
 // @match          *://*.shotcan.com/*
@@ -214,8 +213,6 @@
 // @match          *://*.supercheats.com/*
 // @match          *://*.sweetie-fox.com/*
 // @match          *://*.swzz.xyz/*
-// @match          *://*.techstudify.com/*
-// @match          *://*.techtrendmakers.com/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
 // @match          *://*.thotpacks.xyz/*

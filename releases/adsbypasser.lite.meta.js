@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.5.0
+// @version        8.6.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.5.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.6.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -50,7 +50,6 @@
 // @match          *://*.cpmlink.pro/*
 // @match          *://*.cutpaid.com/*
 // @match          *://*.dz4link.com/*
-// @match          *://*.earnlink.io/*
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
 // @match          *://*.fc-lc.com/*
@@ -102,8 +101,6 @@
 // @match          *://*.stfly.xyz/*
 // @match          *://*.supercheats.com/*
 // @match          *://*.swzz.xyz/*
-// @match          *://*.techstudify.com/*
-// @match          *://*.techtrendmakers.com/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
 // @match          *://*.thotpacks.xyz/*
