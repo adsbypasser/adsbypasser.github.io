@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.6.0
+// @version        8.7.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.6.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.7.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -87,7 +87,6 @@
 // @match          *://*.forex-trnd.com/*
 // @match          *://*.fotosik.pl/*
 // @match          *://*.get-click2.blogspot.com/*
-// @match          *://*.getthot.com/*
 // @match          *://*.gitlink.pro/*
 // @match          *://*.gofile.download/*
 // @match          *://*.goo.st/*
@@ -120,7 +119,6 @@
 // @match          *://*.imagexport.com/*
 // @match          *://*.imgadult.com/*
 // @match          *://*.imgair.net/*
-// @match          *://*.imgbaron.com/*
 // @match          *://*.imgbase.ru/*
 // @match          *://*.imgbb.com/*
 // @match          *://*.imgblaze.net/*
@@ -133,7 +131,7 @@
 // @match          *://*.imgfrost.net/*
 // @match          *://*.imghit.com/*
 // @match          *://*.imgouhmde.sbs/*
-// @match          *://*.imgsto.com/*
+// @match          *://*.imgpulse.top/*
 // @match          *://*.imgtaxi.com/*
 // @match          *://*.imgtraffic.com/*
 // @match          *://*.imgwallet.com/*
@@ -149,7 +147,7 @@
 // @match          *://*.javsunday.com/*
 // @match          *://*.javtele.net/*
 // @match          *://*.javtenshi.com/*
-// @match          *://*.katfile.cloud/*
+// @match          *://*.katfile.online/*
 // @match          *://*.keeplinks.org/*
 // @match          *://*.keptarolo.hu/*
 // @match          *://*.kimochi.info/*
@@ -173,6 +171,7 @@
 // @match          *://*.noelshack.com/*
 // @match          *://*.oke.io/*
 // @match          *://*.oko.sh/*
+// @match          *://*.orangepix.is/*
 // @match          *://*.otomi-games.com/*
 // @match          *://*.ouo.io/*
 // @match          *://*.ouo.press/*
@@ -181,13 +180,11 @@
 // @match          *://*.payskip.org/*
 // @match          *://*.pic-upload.de/*
 // @match          *://*.picforall.ru/*
-// @match          *://*.pics4you.org/*
 // @match          *://*.picstate.com/*
 // @match          *://*.pig69.com/*
 // @match          *://*.pilot007.org/*
 // @match          *://*.pimpandhost.com/*
 // @match          *://*.pixhost.to/*
-// @match          *://*.pixroute.com/*
 // @match          *://*.pixxxar.com/*
 // @match          *://*.pixxxels.cc/*
 // @match          *://*.porn-pig.com/*
@@ -204,7 +201,6 @@
 // @match          *://*.short.am/*
 // @match          *://*.shortmoz.link/*
 // @match          *://*.shotcan.com/*
-// @match          *://*.silverpic.net/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
 // @match          *://*.srt.am/*

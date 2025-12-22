@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.6.0
+// @version        8.7.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.6.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.7.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -87,7 +87,6 @@
 // @match          *://*.forex-trnd.com/*
 // @match          *://*.fotosik.pl/*
 // @match          *://*.get-click2.blogspot.com/*
-// @match          *://*.getthot.com/*
 // @match          *://*.gitlink.pro/*
 // @match          *://*.gofile.download/*
 // @match          *://*.goo.st/*
@@ -120,7 +119,6 @@
 // @match          *://*.imagexport.com/*
 // @match          *://*.imgadult.com/*
 // @match          *://*.imgair.net/*
-// @match          *://*.imgbaron.com/*
 // @match          *://*.imgbase.ru/*
 // @match          *://*.imgbb.com/*
 // @match          *://*.imgblaze.net/*
@@ -133,7 +131,7 @@
 // @match          *://*.imgfrost.net/*
 // @match          *://*.imghit.com/*
 // @match          *://*.imgouhmde.sbs/*
-// @match          *://*.imgsto.com/*
+// @match          *://*.imgpulse.top/*
 // @match          *://*.imgtaxi.com/*
 // @match          *://*.imgtraffic.com/*
 // @match          *://*.imgwallet.com/*
@@ -149,7 +147,7 @@
 // @match          *://*.javsunday.com/*
 // @match          *://*.javtele.net/*
 // @match          *://*.javtenshi.com/*
-// @match          *://*.katfile.cloud/*
+// @match          *://*.katfile.online/*
 // @match          *://*.keeplinks.org/*
 // @match          *://*.keptarolo.hu/*
 // @match          *://*.kimochi.info/*
@@ -173,6 +171,7 @@
 // @match          *://*.noelshack.com/*
 // @match          *://*.oke.io/*
 // @match          *://*.oko.sh/*
+// @match          *://*.orangepix.is/*
 // @match          *://*.otomi-games.com/*
 // @match          *://*.ouo.io/*
 // @match          *://*.ouo.press/*
@@ -181,13 +180,11 @@
 // @match          *://*.payskip.org/*
 // @match          *://*.pic-upload.de/*
 // @match          *://*.picforall.ru/*
-// @match          *://*.pics4you.org/*
 // @match          *://*.picstate.com/*
 // @match          *://*.pig69.com/*
 // @match          *://*.pilot007.org/*
 // @match          *://*.pimpandhost.com/*
 // @match          *://*.pixhost.to/*
-// @match          *://*.pixroute.com/*
 // @match          *://*.pixxxar.com/*
 // @match          *://*.pixxxels.cc/*
 // @match          *://*.porn-pig.com/*
@@ -204,7 +201,6 @@
 // @match          *://*.short.am/*
 // @match          *://*.shortmoz.link/*
 // @match          *://*.shotcan.com/*
-// @match          *://*.silverpic.net/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
 // @match          *://*.srt.am/*
@@ -1322,7 +1318,7 @@
   });
   _.register({
     rule: {
-      host: /^katfile\.cloud$/,
+      host: /^katfile\.online$/,
     },
     async ready() {
       const a = $('a[id="dlink"]');
@@ -1592,16 +1588,6 @@
       clbt.removeAttribute("disabled");
       await _.wait(1);
       clbt.click();
-    },
-  });
-  _.register({
-    rule: {
-      host: /^getthot\.com$/,
-    },
-    async ready() {
-      await _.wait(12000);
-      const a = $(".skip-btn");
-      await $.openLink(a.href);
     },
   });
   _.register({
@@ -2120,6 +2106,29 @@
   });
   _.register({
     rule: {
+      host: [
+        /^14xpics\.space$/,
+        /^www\.2i\.(cz|sk)$/,
+        /^imgcloud\.pw$/,
+        /^www\.imghit\.com$/,
+        /^img\.javstore\.net$/,
+        /^imgpulse\.top$/,
+        /^lookmyimg\.com$/,
+        /^orangepix\.is$/,
+        /^pilot007\.org$/,
+        /^rintor\.space$/,
+        /^shotcan\.com$/,
+        /^(img\.)?trafficimage\.club$/,
+      ],
+      path: /^\/(image|i)\/.*/,
+    },
+    async ready() {
+      const l = $('link[rel="image_src"]');
+      await $.openImage(l.href);
+    },
+  });
+  _.register({
+    rule: {
       host: /^cubeupload\.com$/,
     },
     async ready() {
@@ -2249,19 +2258,10 @@
   });
   _.register({
     rule: {
-      host: /^imageup\.ru$/,
+      host: [/^imageup\.ru$/, /^imageupper\.com$/, /^imgbox\.com$/],
     },
     async ready() {
-      const i = $("#image");
-      await $.openImage(i.src);
-    },
-  });
-  _.register({
-    rule: {
-      host: [/^imageupper\.com$/, /^imgbox\.com$/],
-    },
-    async ready() {
-      const i = $("#img");
+      const i = $("#img, #image");
       await $.openImage(i.src);
     },
   });
@@ -2270,8 +2270,13 @@
       host: /^www\.imagevenue\.com$/,
     },
     async ready() {
-      const i = $("#main-image");
-      await $.openImage(i.src);
+      const i = $.$("#main-image");
+      if (i) {
+        await $.openImage(i.src);
+        return;
+      }
+      const a = $('a[title="Continue to ImageVenue"]');
+      await $.openLink(a.href);
     },
   });
   _.register({
@@ -2294,25 +2299,6 @@
   });
   _.register({
     rule: {
-      host: [
-        /^imgbaron\.com$/,
-        /^imgsto\.com$/,
-        /^pics4you\.org$/,
-        /^silverpic\.net$/,
-      ],
-    },
-    async ready() {
-      const i = $.$(".main-content-image img");
-      if (i) {
-        await $.openImage(i.src);
-        return;
-      }
-      const f = $("form");
-      f.submit();
-    },
-  });
-  _.register({
-    rule: {
       host: [/^(imgbase|picforall)\.ru$/],
     },
     async ready() {
@@ -2330,27 +2316,6 @@
     async ready() {
       const img = $(".image-viewer-container img");
       await $.openImage(img.src);
-    },
-  });
-  _.register({
-    rule: {
-      host: [
-        /^14xpics\.space$/,
-        /^www\.2i\.(cz|sk)$/,
-        /^imgcloud\.pw$/,
-        /^www\.imghit\.com$/,
-        /^img\.javstore\.net$/,
-        /^lookmyimg\.com$/,
-        /^pilot007\.org$/,
-        /^rintor\.space$/,
-        /^shotcan\.com$/,
-        /^(img\.)?trafficimage\.club$/,
-      ],
-      path: /^\/(image|i)\/.*/,
-    },
-    async ready() {
-      const l = $('link[rel="image_src"]');
-      await $.openImage(l.href);
     },
   });
   _.register({
@@ -2452,6 +2417,7 @@
       "https://hentaixnx.com/upload/en/*",
       "https://idol69.net/upload/en/*",
       "https://javball.com/upload/en/*",
+      "https://javbee.vip/upload/en/*",
       "https://javring.com/upload/en/*",
       "https://javsunday.com/upload/en/*",
       "https://javtele.net/upload/en/*",
@@ -2492,13 +2458,6 @@
     async ready() {
       const a = $("a");
       await $.openImage(a.href);
-    },
-  });
-  _.register({
-    rule: "https://javbee.vip/upload/en/*",
-    async ready() {
-      const m = $('meta[property="og:image"]');
-      await $.openImage(m.content);
     },
   });
   _.register({
@@ -2590,20 +2549,12 @@
   });
   _.register({
     rule: {
-      host: /^(www\.)?pixroute\.com$/,
-    },
-    async ready() {
-      const o = $("#download_box img#imgpreview.pic");
-      await $.openImage(o.src);
-    },
-  });
-  _.register({
-    rule: {
       host: [/^pixxxels\.cc$/, /^postimg\.cc$/],
     },
     async ready() {
-      const img = $(".img-fluid");
-      await $.openImage(img.src);
+      const ele = $("#download");
+      const img = ele.href.replace("?dl=1", "");
+      await $.openImage(img, { referer: true });
     },
   });
   _.register({
