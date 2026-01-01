@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.7.0
+// @version        8.8.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.7.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.8.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -163,7 +163,6 @@
 // @match          *://*.lolinez.com/*
 // @match          *://*.lookmyimg.com/*
 // @match          *://*.mangalist.org/*
-// @match          *://*.miragepics.com/*
 // @match          *://*.mirrored.to/*
 // @match          *://*.mitly.us/*
 // @match          *://*.multiup.io/*
@@ -2157,10 +2156,16 @@
   _.register({
     rule: {
       host: /^fastpic\.org$/,
+      path: /^\/view\//
     },
     async ready() {
-      const img = $("img.image.img-fluid");
-      await $.openImage(img.src);
+    const a = $.$("#imglink");
+    if (a) {
+      await $.openLink(a.href);
+      return;
+    }
+    const directUrl = $.searchFromScripts(/loading_img = '([^"]+)';/);
+    await $.openLink(directUrl[1]);
     },
   });
   _.register({
@@ -2469,19 +2474,6 @@
       await $.openImage("http://www.keptarolo.hu/kep" + m.path[1]);
     },
   });
-  (function () {
-    _.register({
-      rule: {
-        host: /^miragepics\.com$/,
-        path: /^\/viewer\.php$/,
-        query: /file=([^&]+)/,
-      },
-      start: helper,
-    });
-    async function helper(m) {
-      await $.openImage("/images/" + m.query[1]);
-    }
-  })();
   _.register({
     rule: {
       host: /^www\.pic-upload\.de$/,
