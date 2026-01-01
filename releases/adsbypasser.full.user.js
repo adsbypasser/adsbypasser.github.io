@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.8.0
+// @version        8.8.1
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.8.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.8.1/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -2156,16 +2156,16 @@
   _.register({
     rule: {
       host: /^fastpic\.org$/,
-      path: /^\/view\//
+      path: /^\/view\//,
     },
     async ready() {
-    const a = $.$("#imglink");
-    if (a) {
-      await $.openLink(a.href);
-      return;
-    }
-    const directUrl = $.searchFromScripts(/loading_img = '([^"]+)';/);
-    await $.openLink(directUrl[1]);
+      const a = $.$("#imglink");
+      if (a) {
+        await $.openLink(a.href);
+        return;
+      }
+      const directUrl = $.searchFromScripts(/loading_img = '([^"]+)';/);
+      await $.openLink(directUrl[1]);
     },
   });
   _.register({
