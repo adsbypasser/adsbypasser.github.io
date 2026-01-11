@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.8.1
+// @version        8.9.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.8.1/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.9.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -135,6 +135,7 @@
 // @match          *://*.imgtaxi.com/*
 // @match          *://*.imgtraffic.com/*
 // @match          *://*.imgwallet.com/*
+// @match          *://*.imgxxt.in/*
 // @match          *://*.imx.to/*
 // @match          *://*.indishare.org/*
 // @match          *://*.infidrive.net/*
@@ -348,7 +349,7 @@
     return r !== none ? r : null;
   }
   function dispatchByString(rule, urlObj) {
-    const schemeRegex = /\*|https?|file|ftp|chrome-extension/;
+    const schemeRegex = /\*|https?|file/;
     const hostRegex = /\*|(\*\.)?([^/*]+)/;
     const pathRegex = /\/.*/;
     const tmp = `^(${schemeRegex.source})://(${hostRegex.source})?(${pathRegex.source})$`;
@@ -358,16 +359,20 @@
       return null;
     }
     const [, scheme, host, wc, sd, path] = matched;
-    if (
-      (scheme === "*" && !/https?/.test(urlObj.scheme)) ||
-      scheme !== urlObj.scheme
-    ) {
+    if (scheme === "*") {
+      if (!/https?/.test(urlObj.scheme)) {
+        return null;
+      }
+    } else if (scheme !== urlObj.scheme) {
+      return null;
+    }
+    if (scheme !== "file" && !host) {
       return null;
     }
     if (scheme !== "file" && host !== "*") {
       if (wc) {
         const idx = urlObj.host.indexOf(sd);
-        if (idx < 0 || idx + sd.length !== urlObj.host.length) {
+        if (idx <= 0 || idx + sd.length !== urlObj.host.length) {
           return null;
         }
       } else if (host !== urlObj.host) {
@@ -382,15 +387,9 @@
     }
     return urlObj;
   }
-  function dispatchByFunction(rule, url1, url3, url6) {
-    return rule(url1, url3, url6);
-  }
   function dispatch(rule, url1, url3, url6) {
     if (Array.isArray(rule)) {
       return dispatchByArray(rule, url1, url3, url6);
-    }
-    if (typeof rule === "function") {
-      return dispatchByFunction(rule, url1, url3, url6);
     }
     if (rule instanceof RegExp) {
       return dispatchByRegExp(rule, url1);
@@ -2112,6 +2111,7 @@
         /^www\.imghit\.com$/,
         /^img\.javstore\.net$/,
         /^imgpulse\.top$/,
+        /^imgxxt\.in$/,
         /^lookmyimg\.com$/,
         /^orangepix\.is$/,
         /^pilot007\.org$/,
