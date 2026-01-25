@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.9.0
+// @version        8.10.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.9.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.10.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -132,6 +132,7 @@
 // @match          *://*.imghit.com/*
 // @match          *://*.imgouhmde.sbs/*
 // @match          *://*.imgpulse.top/*
+// @match          *://*.imgpv.com/*
 // @match          *://*.imgtaxi.com/*
 // @match          *://*.imgtraffic.com/*
 // @match          *://*.imgwallet.com/*
@@ -2343,6 +2344,15 @@
     async ready() {
       const i = $("#im");
       await $.openImage(i.src);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^imgpv\.com$/,
+    },
+    async ready() {
+      const b = $("div > button");
+      b.click();
     },
   });
   _.register({
