@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.10.0
+// @version        8.11.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.10.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.11.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -81,6 +81,7 @@
 // @match          *://*.fastpic.org/*
 // @match          *://*.fc-lc.com/*
 // @match          *://*.fc-lc.xyz/*
+// @match          *://*.fc2ppv.me/*
 // @match          *://*.fc2ppv.stream/*
 // @match          *://*.fikfok.net/*
 // @match          *://*.fir3.net/*
@@ -2421,6 +2422,7 @@
       "https://cnpics.org/upload/en/*",
       "https://cnxx.me/upload/en/*",
       "https://cosplay18.pics/upload/en/*",
+      "https://fc2ppv.me/upload/en/*",
       "https://fc2ppv.stream/upload/en/*",
       "https://fikfok.net/upload/en/*",
       "https://gofile.download/upload/en/*",
