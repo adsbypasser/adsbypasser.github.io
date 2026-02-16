@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.11.0
+// @version        8.12.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.11.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.12.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -115,7 +115,6 @@
 // @match          *://*.imagetwist.com/*
 // @match          *://*.imagetwist.netlify.app/*
 // @match          *://*.imageup.ru/*
-// @match          *://*.imageupper.com/*
 // @match          *://*.imagevenue.com/*
 // @match          *://*.imagexport.com/*
 // @match          *://*.imgadult.com/*
@@ -164,7 +163,6 @@
 // @match          *://*.lnk2.cc/*
 // @match          *://*.loaninsurehub.com/*
 // @match          *://*.lolinez.com/*
-// @match          *://*.lookmyimg.com/*
 // @match          *://*.mangalist.org/*
 // @match          *://*.mirrored.to/*
 // @match          *://*.mitly.us/*
