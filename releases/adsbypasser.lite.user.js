@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.12.1
+// @version        8.13.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.12.1/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.13.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -66,7 +66,7 @@
 // @match          *://*.indishare.org/*
 // @match          *://*.infidrive.net/*
 // @match          *://*.javlibrary.com/*
-// @match          *://*.katfile.online/*
+// @match          *://*.katfile.vip/*
 // @match          *://*.keeplinks.org/*
 // @match          *://*.kimochi.info/*
 // @match          *://*.kingofshrink.com/*
@@ -81,6 +81,7 @@
 // @match          *://*.mitly.us/*
 // @match          *://*.multiup.io/*
 // @match          *://*.network-loop.com/*
+// @match          *://*.nmac.to/*
 // @match          *://*.oke.io/*
 // @match          *://*.oko.sh/*
 // @match          *://*.otomi-games.com/*
@@ -104,7 +105,6 @@
 // @match          *://*.thinfi.com/*
 // @match          *://*.thotpacks.xyz/*
 // @match          *://*.tmearn.net/*
-// @match          *://*.tnshort.net/*
 // @match          *://*.tribuntekno.com/*
 // @match          *://*.turkdown.com/*
 // @match          *://*.tutwuri.id/*
@@ -1087,7 +1087,7 @@
   });
   _.register({
     rule: {
-      host: /^katfile\.online$/,
+      host: /^katfile\.vip$/,
     },
     async ready() {
       const a = $('a[id="dlink"]');
@@ -1674,6 +1674,21 @@
   });
   _.register({
     rule: {
+      host: /^nmac\.to$/,
+      path: /^\/ads\/(.+)$/,
+    },
+    async start(m) {
+      try {
+        const b64 = m.path[1];
+        const decoded = atob(b64);
+        await $.openLink(decoded);
+      } catch (e) {
+        _.warn("Failed to decode nmac.to ads url", e);
+      }
+    },
+  });
+  _.register({
+    rule: {
       host: /^otomi-games\.com$/,
       path: /^\/go\//,
     },
@@ -1777,16 +1792,6 @@
     },
     async ready() {
       const a = $("div p a");
-      await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^go\.tnshort\.net$/,
-    },
-    async ready() {
-      await _.wait(3000);
-      const a = $('a[class="btn btn-success btn-lg get-link"]');
       await $.openLink(a.href);
     },
   });

@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.12.1
+// @version        8.13.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.12.1/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.13.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -32,6 +32,7 @@
 // @match          *://*.14xpics.space/*
 // @match          *://*.1ink.cc/*
 // @match          *://*.1link.club/*
+// @match          *://*.1minx.com/*
 // @match          *://*.2i.cz/*
 // @match          *://*.2i.sk/*
 // @match          *://*.3minx.com/*
@@ -59,6 +60,7 @@
 // @match          *://*.boost.ink/*
 // @match          *://*.casimages.com/*
 // @match          *://*.chinese-pics.com/*
+// @match          *://*.chinese-pics.vip/*
 // @match          *://*.clik.pw/*
 // @match          *://*.clk.sh/*
 // @match          *://*.cloudgallery.net/*
@@ -66,6 +68,7 @@
 // @match          *://*.cnpics.org/*
 // @match          *://*.cnxx.me/*
 // @match          *://*.cosplay18.pics/*
+// @match          *://*.cosplaytele.vip/*
 // @match          *://*.cpmlink.net/*
 // @match          *://*.cpmlink.pro/*
 // @match          *://*.croea.com/*
@@ -93,6 +96,7 @@
 // @match          *://*.goo.st/*
 // @match          *://*.gplinks.co/*
 // @match          *://*.hen-tay.net/*
+// @match          *://*.hentai-manga.org/*
 // @match          *://*.hentai-sub.com/*
 // @match          *://*.hentai4f.com/*
 // @match          *://*.hentaicovid.com/*
@@ -142,14 +146,14 @@
 // @match          *://*.infidrive.net/*
 // @match          *://*.jav-load.com/*
 // @match          *://*.javball.com/*
-// @match          *://*.javbee.vip/*
+// @match          *://*.javbee.co/*
 // @match          *://*.javlibrary.com/*
 // @match          *://*.javring.com/*
 // @match          *://*.javstore.net/*
 // @match          *://*.javsunday.com/*
 // @match          *://*.javtele.net/*
 // @match          *://*.javtenshi.com/*
-// @match          *://*.katfile.online/*
+// @match          *://*.katfile.vip/*
 // @match          *://*.keeplinks.org/*
 // @match          *://*.keptarolo.hu/*
 // @match          *://*.kimochi.info/*
@@ -163,11 +167,13 @@
 // @match          *://*.lnk2.cc/*
 // @match          *://*.loaninsurehub.com/*
 // @match          *://*.lolinez.com/*
+// @match          *://*.lookmyimg.com/*
 // @match          *://*.mangalist.org/*
 // @match          *://*.mirrored.to/*
 // @match          *://*.mitly.us/*
 // @match          *://*.multiup.io/*
 // @match          *://*.network-loop.com/*
+// @match          *://*.nmac.to/*
 // @match          *://*.noelshack.com/*
 // @match          *://*.oke.io/*
 // @match          *://*.oko.sh/*
@@ -185,7 +191,6 @@
 // @match          *://*.pilot007.org/*
 // @match          *://*.pimpandhost.com/*
 // @match          *://*.pixhost.to/*
-// @match          *://*.pixxxar.com/*
 // @match          *://*.pixxxels.cc/*
 // @match          *://*.porn-pig.com/*
 // @match          *://*.porn4f.com/*
@@ -213,7 +218,6 @@
 // @match          *://*.thinfi.com/*
 // @match          *://*.thotpacks.xyz/*
 // @match          *://*.tmearn.net/*
-// @match          *://*.tnshort.net/*
 // @match          *://*.trafficimage.club/*
 // @match          *://*.tribuntekno.com/*
 // @match          *://*.turboimagehost.com/*
