@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.13.0
+// @version        8.14.1
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.13.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.14.1/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -67,6 +67,7 @@
 // @match          *://*.cn-av.com/*
 // @match          *://*.cnpics.org/*
 // @match          *://*.cnxx.me/*
+// @match          *://*.cnxxx.org/*
 // @match          *://*.cosplay18.pics/*
 // @match          *://*.cosplaytele.vip/*
 // @match          *://*.cpmlink.net/*
@@ -101,6 +102,7 @@
 // @match          *://*.hentai4f.com/*
 // @match          *://*.hentaicovid.com/*
 // @match          *://*.hentaicovid.org/*
+// @match          *://*.hentaicovid.vip/*
 // @match          *://*.hentaipig.com/*
 // @match          *://*.hentaixnx.com/*
 // @match          *://*.hostpic.org/*
@@ -177,6 +179,7 @@
 // @match          *://*.noelshack.com/*
 // @match          *://*.oke.io/*
 // @match          *://*.oko.sh/*
+// @match          *://*.old-young.net/*
 // @match          *://*.orangepix.is/*
 // @match          *://*.otomi-games.com/*
 // @match          *://*.ouo.io/*

@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.13.0
+// @version        8.14.1
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.13.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.14.1/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -67,6 +67,7 @@
 // @match          *://*.cn-av.com/*
 // @match          *://*.cnpics.org/*
 // @match          *://*.cnxx.me/*
+// @match          *://*.cnxxx.org/*
 // @match          *://*.cosplay18.pics/*
 // @match          *://*.cosplaytele.vip/*
 // @match          *://*.cpmlink.net/*
@@ -101,6 +102,7 @@
 // @match          *://*.hentai4f.com/*
 // @match          *://*.hentaicovid.com/*
 // @match          *://*.hentaicovid.org/*
+// @match          *://*.hentaicovid.vip/*
 // @match          *://*.hentaipig.com/*
 // @match          *://*.hentaixnx.com/*
 // @match          *://*.hostpic.org/*
@@ -177,6 +179,7 @@
 // @match          *://*.noelshack.com/*
 // @match          *://*.oke.io/*
 // @match          *://*.oko.sh/*
+// @match          *://*.old-young.net/*
 // @match          *://*.orangepix.is/*
 // @match          *://*.otomi-games.com/*
 // @match          *://*.ouo.io/*
@@ -2430,6 +2433,7 @@
       "https://cn-av.com/upload/en/*",
       "https://cnpics.org/upload/en/*",
       "https://cnxx.me/upload/en/*",
+      "https://cnxxx.org/upload/en/*",
       "https://cosplay18.pics/upload/en/*",
       "https://cosplaytele.vip/upload/en/*",
       "https://fc2ppv.me/upload/en/*",
@@ -2441,6 +2445,7 @@
       "https://hentai4f.com/upload/en/*",
       "https://hentaicovid.com/uploads/en/*",
       "https://hentaicovid.org/upload/en/*",
+      "https://hentaicovid.vip/upload/en/*",
       "https://hentaipig.com/upload/en/*",
       "https://hentaixnx.com/upload/en/*",
       "https://idol69.net/upload/en/*",
@@ -2452,6 +2457,7 @@
       "https://kin8-av.com/upload/en/*",
       "https://kin8-jav.com/upload/en/*",
       "https://kr-av.com/upload/en/*",
+      "https://old-young.net/upload/en/*",
       "https://ovabee.com/upload/en/*",
       "https://pig69.com/upload/en/*",
       "https://porn-pig.com/upload/en/*",
@@ -2466,26 +2472,6 @@
     async ready() {
       const m = $('meta[property="og:image"]');
       await $.openImage(m.content);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^image\.javbee\.co$/,
-      path: /^\/en\//,
-    },
-    async ready() {
-      const i = $('meta[property="og:image"]');
-      await $.openLink(i.content);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^image\.javbee\.co$/,
-      path: /^\/ib\//,
-    },
-    async ready() {
-      const a = $("a");
-      await $.openImage(a.href);
     },
   });
   _.register({
