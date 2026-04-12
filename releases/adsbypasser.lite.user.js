@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.14.1
+// @version        8.15.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.14.1/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.15.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -35,7 +35,6 @@
 // @match          *://*.adfoc.us/*
 // @match          *://*.adsafelink.com/*
 // @match          *://*.adshnk.com/*
-// @match          *://*.adz7short.space/*
 // @match          *://*.ak.sv/*
 // @match          *://*.anchoreth.com/*
 // @match          *://*.apunkasoftware.net/*
@@ -55,7 +54,6 @@
 // @match          *://*.fc-lc.com/*
 // @match          *://*.fc-lc.xyz/*
 // @match          *://*.fir3.net/*
-// @match          *://*.forex-trnd.com/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.gitlink.pro/*
 // @match          *://*.goo.st/*
@@ -103,7 +101,6 @@
 // @match          *://*.swzz.xyz/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
-// @match          *://*.thotpacks.xyz/*
 // @match          *://*.tmearn.net/*
 // @match          *://*.tribuntekno.com/*
 // @match          *://*.turkdown.com/*
@@ -1205,16 +1202,6 @@
   });
   _.register({
     rule: {
-      host: /^www\.adz7short\.space$/,
-    },
-    async ready() {
-      const b = $("#continue");
-      await _.wait(10000);
-      b.click();
-    },
-  });
-  _.register({
-    rule: {
       host: /^anchoreth\.com$/,
       query: /v=([^&]+)/,
     },
@@ -1284,16 +1271,6 @@
       const a = $(".btn-lg.get-link");
       await _.wait(9000);
       await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^forex-trnd\.com$/,
-    },
-    async ready() {
-      await _.wait(10000);
-      const a = $(".get-link");
-      a.click();
     },
   });
   _.register({
@@ -1472,7 +1449,6 @@
           /^mitly\.us$/,
           /^oke\.io$/,
           /^pahe\.plus$/,
-          /^thotpacks\.xyz$/,
         ],
       },
       async ready() {

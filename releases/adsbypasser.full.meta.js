@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.14.1
+// @version        8.15.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.14.1/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.15.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -44,7 +44,6 @@
 // @match          *://*.adfoc.us/*
 // @match          *://*.adsafelink.com/*
 // @match          *://*.adshnk.com/*
-// @match          *://*.adz7short.space/*
 // @match          *://*.ai18.pics/*
 // @match          *://*.ak.sv/*
 // @match          *://*.anchoreth.com/*
@@ -89,7 +88,6 @@
 // @match          *://*.fc2ppv.stream/*
 // @match          *://*.fikfok.net/*
 // @match          *://*.fir3.net/*
-// @match          *://*.forex-trnd.com/*
 // @match          *://*.fotosik.pl/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.gitlink.pro/*
@@ -136,6 +134,7 @@
 // @match          *://*.imgflip.com/*
 // @match          *://*.imgfrost.net/*
 // @match          *://*.imghit.com/*
+// @match          *://*.imgo.info/*
 // @match          *://*.imgouhmde.sbs/*
 // @match          *://*.imgpulse.top/*
 // @match          *://*.imgpv.com/*
@@ -219,7 +218,6 @@
 // @match          *://*.swzz.xyz/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
-// @match          *://*.thotpacks.xyz/*
 // @match          *://*.tmearn.net/*
 // @match          *://*.trafficimage.club/*
 // @match          *://*.tribuntekno.com/*
