@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.16.0
+// @version        8.17.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.16.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.17.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -209,6 +209,7 @@
 // @match          *://*.short.am/*
 // @match          *://*.shortmoz.link/*
 // @match          *://*.shotcan.com/*
+// @match          *://*.sht-link.com/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
 // @match          *://*.srt.am/*
@@ -2444,6 +2445,7 @@
       "https://porn4f.org/upload/en/*",
       "https://s-porn.com/upload/en/*",
       "https://shentai-anime.com/upload/en/*",
+      "https://sht-link.com/upload/en/*",
       "https://sweetie-fox.com/upload/en/*",
       "https://xcamcovid.com/upload/en/*",
       "https://xxpics.org/upload/en/*",
