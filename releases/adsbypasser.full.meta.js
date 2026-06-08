@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.17.0
+// @version        8.18.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.17.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.18.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -42,14 +42,12 @@
 // @match          *://*.555fap.com/*
 // @match          *://*.a2zapk.io/*
 // @match          *://*.adfoc.us/*
-// @match          *://*.adsafelink.com/*
 // @match          *://*.adshnk.com/*
 // @match          *://*.ai18.pics/*
 // @match          *://*.ak.sv/*
 // @match          *://*.anchoreth.com/*
 // @match          *://*.anime-jav.com/*
 // @match          *://*.apunkasoftware.net/*
-// @match          *://*.aylink.co/*
 // @match          *://*.bayimg.com/*
 // @match          *://*.bcvc.ink/*
 // @match          *://*.beeimg.com/*
@@ -60,8 +58,6 @@
 // @match          *://*.casimages.com/*
 // @match          *://*.chinese-pics.com/*
 // @match          *://*.chinese-pics.vip/*
-// @match          *://*.clik.pw/*
-// @match          *://*.clk.sh/*
 // @match          *://*.cloudgallery.net/*
 // @match          *://*.cn-av.com/*
 // @match          *://*.cnpics.org/*
@@ -70,14 +66,12 @@
 // @match          *://*.cosplay18.pics/*
 // @match          *://*.cosplaytele.vip/*
 // @match          *://*.cpmlink.net/*
-// @match          *://*.cpmlink.pro/*
 // @match          *://*.croea.com/*
 // @match          *://*.cubeupload.com/*
 // @match          *://*.cutpaid.com/*
 // @match          *://*.depic.me/*
 // @match          *://*.directupload.eu/*
 // @match          *://*.dpic.me/*
-// @match          *://*.dz4link.com/*
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
 // @match          *://*.fappic.com/*
@@ -90,7 +84,6 @@
 // @match          *://*.fir3.net/*
 // @match          *://*.fotosik.pl/*
 // @match          *://*.get-click2.blogspot.com/*
-// @match          *://*.gitlink.pro/*
 // @match          *://*.gofile.download/*
 // @match          *://*.goo.st/*
 // @match          *://*.gplinks.co/*
@@ -141,10 +134,8 @@
 // @match          *://*.imgpv.com/*
 // @match          *://*.imgtaxi.com/*
 // @match          *://*.imgtraffic.com/*
-// @match          *://*.imgwallet.com/*
 // @match          *://*.imgxxt.in/*
 // @match          *://*.imx.to/*
-// @match          *://*.indishare.org/*
 // @match          *://*.infidrive.net/*
 // @match          *://*.jav-load.com/*
 // @match          *://*.javball.com/*
@@ -172,21 +163,16 @@
 // @match          *://*.lookmyimg.com/*
 // @match          *://*.mangalist.org/*
 // @match          *://*.mirrored.to/*
-// @match          *://*.mitly.us/*
 // @match          *://*.multiup.io/*
 // @match          *://*.network-loop.com/*
 // @match          *://*.nmac.to/*
 // @match          *://*.noelshack.com/*
-// @match          *://*.oke.io/*
-// @match          *://*.oko.sh/*
 // @match          *://*.old-young.net/*
 // @match          *://*.orangepix.is/*
 // @match          *://*.otomi-games.com/*
 // @match          *://*.ouo.io/*
 // @match          *://*.ouo.press/*
 // @match          *://*.ovabee.com/*
-// @match          *://*.pahe.plus/*
-// @match          *://*.payskip.org/*
 // @match          *://*.pic-upload.de/*
 // @match          *://*.picforall.ru/*
 // @match          *://*.picstate.com/*
@@ -220,7 +206,6 @@
 // @match          *://*.swzz.xyz/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
-// @match          *://*.tmearn.net/*
 // @match          *://*.trafficimage.club/*
 // @match          *://*.tribuntekno.com/*
 // @match          *://*.turboimagehost.com/*

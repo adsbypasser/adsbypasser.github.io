@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.17.0
+// @version        8.18.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.17.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.18.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -33,35 +33,27 @@
 // @match          *://*.1link.club/*
 // @match          *://*.a2zapk.io/*
 // @match          *://*.adfoc.us/*
-// @match          *://*.adsafelink.com/*
 // @match          *://*.adshnk.com/*
 // @match          *://*.ak.sv/*
 // @match          *://*.anchoreth.com/*
 // @match          *://*.apunkasoftware.net/*
-// @match          *://*.aylink.co/*
 // @match          *://*.bcvc.ink/*
 // @match          *://*.binbox.io/*
 // @match          *://*.blogmado.com/*
 // @match          *://*.boost.ink/*
-// @match          *://*.clik.pw/*
-// @match          *://*.clk.sh/*
 // @match          *://*.cpmlink.net/*
-// @match          *://*.cpmlink.pro/*
 // @match          *://*.cutpaid.com/*
-// @match          *://*.dz4link.com/*
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
 // @match          *://*.fc-lc.com/*
 // @match          *://*.fc-lc.xyz/*
 // @match          *://*.fir3.net/*
 // @match          *://*.get-click2.blogspot.com/*
-// @match          *://*.gitlink.pro/*
 // @match          *://*.goo.st/*
 // @match          *://*.gplinks.co/*
 // @match          *://*.hen-tay.net/*
 // @match          *://*.icutlink.com/*
 // @match          *://*.imagetwist.netlify.app/*
-// @match          *://*.indishare.org/*
 // @match          *://*.infidrive.net/*
 // @match          *://*.javlibrary.com/*
 // @match          *://*.katfile.vip/*
@@ -76,17 +68,12 @@
 // @match          *://*.lolinez.com/*
 // @match          *://*.mangalist.org/*
 // @match          *://*.mirrored.to/*
-// @match          *://*.mitly.us/*
 // @match          *://*.multiup.io/*
 // @match          *://*.network-loop.com/*
 // @match          *://*.nmac.to/*
-// @match          *://*.oke.io/*
-// @match          *://*.oko.sh/*
 // @match          *://*.otomi-games.com/*
 // @match          *://*.ouo.io/*
 // @match          *://*.ouo.press/*
-// @match          *://*.pahe.plus/*
-// @match          *://*.payskip.org/*
 // @match          *://*.rlu.ru/*
 // @match          *://*.ryuugames.com/*
 // @match          *://*.sfile.mobi/*
@@ -101,7 +88,6 @@
 // @match          *://*.swzz.xyz/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
-// @match          *://*.tmearn.net/*
 // @match          *://*.tribuntekno.com/*
 // @match          *://*.turkdown.com/*
 // @match          *://*.tutwuri.id/*
@@ -1064,16 +1050,6 @@
   });
   _.register({
     rule: {
-      host: [/^(www\.)?indishare\.org$/, /^uploadrar\.com$/],
-    },
-    async ready() {
-      const btn = $("button#downloadbtn.downloadbtn");
-      btn.removeAttribute("disabled");
-      btn.click();
-    },
-  });
-  _.register({
-    rule: {
       host: /^infidrive\.net$/,
     },
     async ready() {
@@ -1138,6 +1114,16 @@
       await _.wait(18000);
       const f = $("#submitFree");
       f.click();
+    },
+  });
+  _.register({
+    rule: {
+      host: /^uploadrar\.com$/,
+    },
+    async ready() {
+      const btn = $("button#downloadbtn.downloadbtn");
+      btn.removeAttribute("disabled");
+      btn.click();
     },
   });
   _.register({
@@ -1433,153 +1419,6 @@
       await $.openLink(a.href);
     },
   });
-  (function () {
-    _.register({
-      rule: {
-        host: [
-          /^adsafelink\.com$/,
-          /^dz4link\.com$/,
-          /^tmearn\.net$/,
-          /^payskip\.org$/,
-          /^clik\.pw$/,
-          /^aylink\.co$/,
-          /^(clk|oko)\.sh$/,
-          /^cpmlink\.pro$/,
-          /^gitlink\.pro$/,
-          /^mitly\.us$/,
-          /^oke\.io$/,
-          /^pahe\.plus$/,
-        ],
-      },
-      async ready() {
-        const handler = new RecaptchaHandler();
-        await handler.call();
-      },
-    });
-    class AbstractHandler {
-      constructor() {
-        this._overlaySelector = [
-          '[class$="Overlay"]',
-          "#__random_class_name__",
-          "#headlineatas",
-          "#myModal",
-          ".opacity_wrapper",
-          "#overlay",
-        ].join(", ");
-        this._formSelector = [
-          "#go-link",
-          ".go-link",
-          "#originalLink.get-link",
-          'form[action="/links/go"]',
-        ].join(", ");
-      }
-      removeOverlay() {
-        $.remove(this._overlaySelector);
-        $.block(this._overlaySelector, document.body);
-        setInterval(() => {
-          document.body.style.overflow = "initial";
-        }, 500);
-      }
-      removeFrame() {
-        $.remove("iframe");
-      }
-      async call() {
-        const ok = await this.prepare();
-        if (!ok) {
-          return;
-        }
-        const mw = await this.getMiddleware();
-        if (!mw) {
-          this.withoutMiddleware();
-          return;
-        }
-        const url = await this.getURL(mw);
-        await $.openLink(url);
-      }
-    }
-    class RecaptchaHandler extends AbstractHandler {
-      async prepare() {
-        this.removeOverlay();
-        const f = $.$("#captchaShortlink, div.g-recaptcha");
-        if (!f) {
-          return true;
-        }
-        _.info("recaptcha detected, stop");
-        _.info("trying to listen submit button");
-        const b = $.$("#invisibleCaptchaShortlink");
-        if (!b) {
-          return false;
-        }
-      }
-      async submitListen(b) {
-        const o = new MutationObserver(() => {
-          if (!b.disabled) {
-            b.click();
-          }
-        });
-        o.observe(b, {
-          attributes: true,
-        });
-      }
-      async getMiddleware() {
-        return await getJQueryForm(this._formSelector);
-      }
-      withoutMiddleware() {
-        const f = $("#link-view");
-        f.submit();
-      }
-      async getURL(jForm) {
-        while (true) {
-          await _.wait(1000);
-          try {
-            const url = await getURLFromJQueryForm(jForm);
-            if (url) {
-              return url;
-            }
-          } catch (e) {
-            _.warn(e);
-          }
-        }
-      }
-    }
-    async function getJQueryForm(selector) {
-      let jQuery = $.window.$;
-      while (!jQuery) {
-        await _.wait(50);
-        jQuery = $.window.$;
-      }
-      const f = jQuery(selector);
-      if (f.length > 0) {
-        return f;
-      }
-      return null;
-    }
-    function getURLFromJQueryForm(jForm) {
-      return new Promise((resolve, reject) => {
-        if (jForm.is("a") && jForm.attr("href")) {
-          resolve(jForm.attr("href"));
-        }
-        const jQuery = $.window.$;
-        jQuery.ajax({
-          dataType: "json",
-          type: "POST",
-          url: jForm.attr("action"),
-          data: jForm.serialize(),
-          success: (result) => {
-            if (result.url) {
-              resolve(result.url);
-            } else {
-              reject(new _.AdsBypasserError(result.message));
-            }
-          },
-          error: (xhr, status, error) => {
-            _.warn(xhr, status, error);
-            reject(new _.AdsBypasserError("request error"));
-          },
-        });
-      });
-    }
-  })();
   _.register({
     rule: {
       host: /^linkpoi\.me$/,
