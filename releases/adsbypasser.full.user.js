@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.18.0
+// @version        8.19.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.18.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.19.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -39,6 +39,7 @@
 // @match          *://*.3xplanet.com/*
 // @match          *://*.3xplanet.net/*
 // @match          *://*.4fuk.me/*
+// @match          *://*.4up.pics/*
 // @match          *://*.555fap.com/*
 // @match          *://*.a2zapk.io/*
 // @match          *://*.adfoc.us/*
@@ -104,7 +105,6 @@
 // @match          *://*.imagebam.com/*
 // @match          *://*.imageban.ru/*
 // @match          *://*.imagehaha.com/*
-// @match          *://*.imagehost.at/*
 // @match          *://*.imagenetz.de/*
 // @match          *://*.imagenpic.com/*
 // @match          *://*.imageshack.com/*
@@ -174,11 +174,12 @@
 // @match          *://*.ouo.press/*
 // @match          *://*.ovabee.com/*
 // @match          *://*.pic-upload.de/*
-// @match          *://*.picforall.ru/*
+// @match          *://*.picforall.eu/*
 // @match          *://*.picstate.com/*
 // @match          *://*.pig69.com/*
 // @match          *://*.pilot007.org/*
 // @match          *://*.pimpandhost.com/*
+// @match          *://*.pixfy.cfd/*
 // @match          *://*.pixhost.to/*
 // @match          *://*.pixxxels.cc/*
 // @match          *://*.porn-pig.com/*
@@ -1944,6 +1945,7 @@
         /^lookmyimg\.com$/,
         /^orangepix\.is$/,
         /^pilot007\.org$/,
+        /^pixfy\.cfd$/,
         /^rintor\.space$/,
         /^shotcan\.com$/,
         /^(img\.)?trafficimage\.club$/,
@@ -2017,6 +2019,16 @@
   });
   _.register({
     rule: {
+      host: /^im\.ge$/,
+      path: /^\/i\//,
+    },
+    async ready() {
+      const i = $('meta[property="og:image"]');
+      await $.openImage(i.content);
+    },
+  });
+  _.register({
+    rule: {
       host: /^www\.imagebam\.com$/,
     },
     async ready() {
@@ -2035,22 +2047,6 @@
     async ready() {
       const i = $("#img_main");
       await $.openImage(i.src);
-    },
-  });
-  _.register({
-    rule: [
-      {
-        host: /^www\.imagehost\.at$/,
-        path: /^\/image\//,
-      },
-      {
-        host: /^im\.ge$/,
-        path: /^\/i\//,
-      },
-    ],
-    async ready() {
-      const i = $('meta[property="og:image"]');
-      await $.openImage(i.content);
     },
   });
   _.register({
@@ -2133,7 +2129,7 @@
   });
   _.register({
     rule: {
-      host: [/^(imgbase|picforall)\.ru$/],
+      host: [/^imgbase\.ru$/, /^picforall\.eu$/],
     },
     async ready() {
       let i = $("#pay_thumb_img img, #d1 table tbody tr td img");
@@ -2154,10 +2150,7 @@
   });
   _.register({
     rule: {
-      host: [
-        /^(www\.)?(imgadult|imgtaxi)\.com$/,
-        /^(www\.)?imgdrive\.net$/,
-      ],
+      host: [/^(www\.)?(imgadult|imgtaxi)\.com$/, /^(www\.)?imgdrive\.net$/],
     },
     async ready() {
       let m = $('meta[property="og:image"]');
@@ -2238,6 +2231,7 @@
   });
   _.register({
     rule: [
+      "https://*.4up.pics/en/*",
       "https://1minx.com/upload/en/*",
       "https://3minx.com/upload/en/*",
       "https://4fuk.me/upload/en/*",
