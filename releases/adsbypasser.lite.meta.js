@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.19.0
+// @version        8.20.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.19.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.20.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -45,8 +45,6 @@
 // @match          *://*.cutpaid.com/*
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
-// @match          *://*.fc-lc.com/*
-// @match          *://*.fc-lc.xyz/*
 // @match          *://*.fir3.net/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.goo.st/*
@@ -64,7 +62,6 @@
 // @match          *://*.linkpoi.me/*
 // @match          *://*.linkshrink.net/*
 // @match          *://*.lnk2.cc/*
-// @match          *://*.loaninsurehub.com/*
 // @match          *://*.lolinez.com/*
 // @match          *://*.mangalist.org/*
 // @match          *://*.mirrored.to/*

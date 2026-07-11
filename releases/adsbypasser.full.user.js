@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.19.0
+// @version        8.20.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.19.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.20.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -77,14 +77,13 @@
 // @match          *://*.exeo.app/*
 // @match          *://*.fappic.com/*
 // @match          *://*.fastpic.org/*
-// @match          *://*.fc-lc.com/*
-// @match          *://*.fc-lc.xyz/*
 // @match          *://*.fc2ppv.me/*
 // @match          *://*.fc2ppv.stream/*
 // @match          *://*.fikfok.net/*
 // @match          *://*.fir3.net/*
 // @match          *://*.fotosik.pl/*
 // @match          *://*.get-click2.blogspot.com/*
+// @match          *://*.giphy.com/*
 // @match          *://*.gofile.download/*
 // @match          *://*.goo.st/*
 // @match          *://*.gplinks.co/*
@@ -96,7 +95,6 @@
 // @match          *://*.hentaicovid.org/*
 // @match          *://*.hentaicovid.vip/*
 // @match          *://*.hentaipig.com/*
-// @match          *://*.hentaixnx.com/*
 // @match          *://*.hostpic.org/*
 // @match          *://*.ibb.co/*
 // @match          *://*.icutlink.com/*
@@ -120,7 +118,6 @@
 // @match          *://*.imgbb.com/*
 // @match          *://*.imgblaze.net/*
 // @match          *://*.imgbox.com/*
-// @match          *://*.imgcloud.pw/*
 // @match          *://*.imgdawgknuttz.com/*
 // @match          *://*.imgdrive.net/*
 // @match          *://*.imgfira.cc/*
@@ -158,7 +155,6 @@
 // @match          *://*.linkpoi.me/*
 // @match          *://*.linkshrink.net/*
 // @match          *://*.lnk2.cc/*
-// @match          *://*.loaninsurehub.com/*
 // @match          *://*.lolinez.com/*
 // @match          *://*.lookmyimg.com/*
 // @match          *://*.mangalist.org/*
@@ -180,6 +176,7 @@
 // @match          *://*.pilot007.org/*
 // @match          *://*.pimpandhost.com/*
 // @match          *://*.pixfy.cfd/*
+// @match          *://*.pixhost.cc/*
 // @match          *://*.pixhost.to/*
 // @match          *://*.pixxxels.cc/*
 // @match          *://*.porn-pig.com/*
@@ -205,6 +202,7 @@
 // @match          *://*.supercheats.com/*
 // @match          *://*.sweetie-fox.com/*
 // @match          *://*.swzz.xyz/*
+// @match          *://*.tenor.com/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
 // @match          *://*.trafficimage.club/*
@@ -1084,15 +1082,19 @@
     }
   }
   function nuke(url) {
+    const doc = usw.document;
+    const safeUrl = String(url).replace(/[&<>"']/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c],
+    );
     try {
-      usw.document.write("nuked by AdsBypasser, leading to ...<br/>");
+      doc.open();
+      doc.write(
+        `nuked by AdsBypasser, leading to <a href="${safeUrl}">${safeUrl}</a>`,
+      );
+      doc.close();
     } catch (e) {
       warn("nuke failed", e);
     }
-    const a = document.createElement("a");
-    a.href = url;
-    a.textContent = url;
-    document.body.appendChild(a);
   }
   function generateRandomIP() {
     return [0, 0, 0, 0].map(() => Math.floor(Math.random() * 256)).join(".");
@@ -1515,33 +1517,6 @@
   });
   _.register({
     rule: {
-      host: /^fc-lc\.(com|xyz)$/,
-    },
-    async ready() {
-      await _.wait(2000);
-      const b = $(".btn-primary.btn-captcha.mb-4");
-      b.click();
-    },
-  });
-  _.register({
-    rule: {
-      host: /^loaninsurehub\.com$/,
-    },
-    async ready() {
-      const b = $("#glink");
-      if (b) {
-        b.click();
-      }
-      await _.wait(12000);
-      $.remove("#overlay");
-      const a = $("#surl");
-      if (a) {
-        a.click();
-      }
-    },
-  });
-  _.register({
-    rule: {
       host: /^fir3\.net$/,
     },
     async ready() {
@@ -1937,7 +1912,6 @@
       host: [
         /^14xpics\.space$/,
         /^www\.2i\.(cz|sk)$/,
-        /^imgcloud\.pw$/,
         /^www\.imghit\.com$/,
         /^img\.javstore\.net$/,
         /^imgpulse\.top$/,
@@ -2006,6 +1980,24 @@
     async ready() {
       const i = $(".simple-photo img");
       await $.openImage(i.src);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^giphy\.com$/,
+    },
+    async ready() {
+      const i = $('meta[property="og:image"]');
+      await $.openLink(i.content);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^media[0-9]\.giphy\.com$/,
+    },
+    async ready() {
+      const img = $("a img.media_gif__MBeQG");
+      await $.openImage(img.src);
     },
   });
   _.register({
@@ -2258,7 +2250,6 @@
       "https://hentaicovid.org/upload/en/*",
       "https://hentaicovid.vip/upload/en/*",
       "https://hentaipig.com/upload/en/*",
-      "https://hentaixnx.com/upload/en/*",
       "https://idol69.net/upload/en/*",
       "https://imgo.info/upload/en/*",
       "https://javball.com/upload/en/*",
@@ -2338,7 +2329,7 @@
   _.register({
     rule: [
       {
-        host: /^(www\.)?pixhost\.to$/,
+        host: /^(www\.)?pixhost\.(cc|to)$/,
         path: /^\/show\//,
       },
       {
@@ -2384,6 +2375,24 @@
     async ready() {
       const i = $("#screenshot-image");
       await $.openImage(i.src);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^tenor\.com$/,
+    },
+    async ready() {
+      const img = $('meta[property="og:url"]');
+      await $.openImage(img.content);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^media[0-9]\.tenor\.com$/,
+    },
+    async ready() {
+      const i = $("a#media-link.file img");
+      await $.openLink(i.src);
     },
   });
   _.register({
