@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.20.0
+// @version        8.21.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.20.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.21.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -70,6 +70,7 @@
 // @match          *://*.croea.com/*
 // @match          *://*.cubeupload.com/*
 // @match          *://*.cutpaid.com/*
+// @match          *://*.cuttty.com/*
 // @match          *://*.depic.me/*
 // @match          *://*.directupload.eu/*
 // @match          *://*.dpic.me/*
@@ -112,14 +113,11 @@
 // @match          *://*.imageup.ru/*
 // @match          *://*.imagevenue.com/*
 // @match          *://*.imagexport.com/*
-// @match          *://*.imgadult.com/*
 // @match          *://*.imgair.net/*
 // @match          *://*.imgbase.ru/*
 // @match          *://*.imgbb.com/*
 // @match          *://*.imgblaze.net/*
 // @match          *://*.imgbox.com/*
-// @match          *://*.imgdawgknuttz.com/*
-// @match          *://*.imgdrive.net/*
 // @match          *://*.imgfira.cc/*
 // @match          *://*.imgflip.com/*
 // @match          *://*.imgfrost.net/*
@@ -129,7 +127,6 @@
 // @match          *://*.imgouskel.sbs/*
 // @match          *://*.imgpulse.top/*
 // @match          *://*.imgpv.com/*
-// @match          *://*.imgtaxi.com/*
 // @match          *://*.imgtraffic.com/*
 // @match          *://*.imgxxt.in/*
 // @match          *://*.imx.to/*
@@ -221,5 +218,6 @@
 // @match          *://*.xxpics.org/*
 // @match          *://*.xxxwebdlxxx.org/*
 // @match          *://*.xxxwebdlxxx.top/*
+// @match          *://*.yasir252.com/*
 // @match          *://*.zegtrends.com/*
 // ==/UserScript==

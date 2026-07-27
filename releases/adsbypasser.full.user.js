@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.20.0
+// @version        8.21.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.20.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.21.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -70,6 +70,7 @@
 // @match          *://*.croea.com/*
 // @match          *://*.cubeupload.com/*
 // @match          *://*.cutpaid.com/*
+// @match          *://*.cuttty.com/*
 // @match          *://*.depic.me/*
 // @match          *://*.directupload.eu/*
 // @match          *://*.dpic.me/*
@@ -112,14 +113,11 @@
 // @match          *://*.imageup.ru/*
 // @match          *://*.imagevenue.com/*
 // @match          *://*.imagexport.com/*
-// @match          *://*.imgadult.com/*
 // @match          *://*.imgair.net/*
 // @match          *://*.imgbase.ru/*
 // @match          *://*.imgbb.com/*
 // @match          *://*.imgblaze.net/*
 // @match          *://*.imgbox.com/*
-// @match          *://*.imgdawgknuttz.com/*
-// @match          *://*.imgdrive.net/*
 // @match          *://*.imgfira.cc/*
 // @match          *://*.imgflip.com/*
 // @match          *://*.imgfrost.net/*
@@ -129,7 +127,6 @@
 // @match          *://*.imgouskel.sbs/*
 // @match          *://*.imgpulse.top/*
 // @match          *://*.imgpv.com/*
-// @match          *://*.imgtaxi.com/*
 // @match          *://*.imgtraffic.com/*
 // @match          *://*.imgxxt.in/*
 // @match          *://*.imx.to/*
@@ -221,6 +218,7 @@
 // @match          *://*.xxpics.org/*
 // @match          *://*.xxxwebdlxxx.org/*
 // @match          *://*.xxxwebdlxxx.top/*
+// @match          *://*.yasir252.com/*
 // @match          *://*.zegtrends.com/*
 // ==/UserScript==
 
@@ -1083,8 +1081,12 @@
   }
   function nuke(url) {
     const doc = usw.document;
-    const safeUrl = String(url).replace(/[&<>"']/g, (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c],
+    const safeUrl = String(url).replace(
+      /[&<>"']/g,
+      (c) =>
+        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+          c
+        ],
     );
     try {
       doc.open();
@@ -1502,6 +1504,16 @@
   });
   _.register({
     rule: {
+      host: /^cuttty\.com$/,
+    },
+    async ready() {
+      await _.wait(9000);
+      const b = $("#submit-button");
+      b.click();
+    },
+  });
+  _.register({
+    rule: {
       host: [/^exe-links\.com$/, /^exeo\.app$/],
     },
     async ready() {
@@ -1882,6 +1894,15 @@
   });
   _.register({
     rule: {
+      host: /^download\.yasir252\.com$/,
+    },
+    async ready() {
+      const a = $('a[id="downloadBtn"]');
+      await $.openLink(a.href);
+    },
+  });
+  _.register({
+    rule: {
       host: /^bayimg\.com$/,
     },
     async ready() {
@@ -1985,6 +2006,7 @@
   _.register({
     rule: {
       host: /^giphy\.com$/,
+      path: /^\/gifs\//,
     },
     async ready() {
       const i = $('meta[property="og:image"]');
@@ -2138,16 +2160,6 @@
     async ready() {
       const img = $(".image-viewer-container img");
       await $.openImage(img.src);
-    },
-  });
-  _.register({
-    rule: {
-      host: [/^(www\.)?(imgadult|imgtaxi)\.com$/, /^(www\.)?imgdrive\.net$/],
-    },
-    async ready() {
-      let m = $('meta[property="og:image"]');
-      m = m.content.replace("small", "big");
-      await $.openImage(m);
     },
   });
   _.register({
@@ -2380,6 +2392,7 @@
   _.register({
     rule: {
       host: /^tenor\.com$/,
+      path: /^\/view\//,
     },
     async ready() {
       const img = $('meta[property="og:url"]');
@@ -2407,7 +2420,7 @@
   });
   _.register({
     rule: {
-      host: [/^imgdawgknuttz\.com$/, /^xxxwebdlxxx\.(org|top)$/],
+      host: /^xxxwebdlxxx\.(org|top)$/,
     },
     async ready() {
       const a = $(".centred, .centred_resized");

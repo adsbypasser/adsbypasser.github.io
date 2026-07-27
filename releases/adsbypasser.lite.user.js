@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.20.0
+// @version        8.21.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.20.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.21.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -43,6 +43,7 @@
 // @match          *://*.boost.ink/*
 // @match          *://*.cpmlink.net/*
 // @match          *://*.cutpaid.com/*
+// @match          *://*.cuttty.com/*
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
 // @match          *://*.fir3.net/*
@@ -93,6 +94,7 @@
 // @match          *://*.urlcash.com/*
 // @match          *://*.urlgalleries.net/*
 // @match          *://*.usersdrive.com/*
+// @match          *://*.yasir252.com/*
 // @match          *://*.zegtrends.com/*
 // ==/UserScript==
 
@@ -955,8 +957,12 @@
   }
   function nuke(url) {
     const doc = usw.document;
-    const safeUrl = String(url).replace(/[&<>"']/g, (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c],
+    const safeUrl = String(url).replace(
+      /[&<>"']/g,
+      (c) =>
+        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+          c
+        ],
     );
     try {
       doc.open();
@@ -1258,6 +1264,16 @@
       const a = $(".btn-lg.get-link");
       await _.wait(9000);
       await $.openLink(a.href);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^cuttty\.com$/,
+    },
+    async ready() {
+      await _.wait(9000);
+      const b = $("#submit-button");
+      b.click();
     },
   });
   _.register({
@@ -1638,6 +1654,15 @@
       await _.wait(1000);
       const b = $("#overlay.butstyle");
       b.click();
+    },
+  });
+  _.register({
+    rule: {
+      host: /^download\.yasir252\.com$/,
+    },
+    async ready() {
+      const a = $('a[id="downloadBtn"]');
+      await $.openLink(a.href);
     },
   });
   const isSafari =
