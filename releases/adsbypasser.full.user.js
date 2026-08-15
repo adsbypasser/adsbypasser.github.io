@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.21.0
+// @version        8.22.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.21.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.22.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -36,8 +36,10 @@
 // @match          *://*.2i.cz/*
 // @match          *://*.2i.sk/*
 // @match          *://*.3minx.com/*
+// @match          *://*.3xpla.net/*
 // @match          *://*.3xplanet.com/*
 // @match          *://*.3xplanet.net/*
+// @match          *://*.3xplanet.xyz/*
 // @match          *://*.4fuk.me/*
 // @match          *://*.4up.pics/*
 // @match          *://*.555fap.com/*
@@ -76,6 +78,7 @@
 // @match          *://*.dpic.me/*
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
+// @match          *://*.exeygo.com/*
 // @match          *://*.fappic.com/*
 // @match          *://*.fastpic.org/*
 // @match          *://*.fc2ppv.me/*
@@ -87,6 +90,7 @@
 // @match          *://*.giphy.com/*
 // @match          *://*.gofile.download/*
 // @match          *://*.goo.st/*
+// @match          *://*.goonbox.cr/*
 // @match          *://*.gplinks.co/*
 // @match          *://*.hen-tay.net/*
 // @match          *://*.hentai-manga.org/*
@@ -130,7 +134,6 @@
 // @match          *://*.imgtraffic.com/*
 // @match          *://*.imgxxt.in/*
 // @match          *://*.imx.to/*
-// @match          *://*.infidrive.net/*
 // @match          *://*.jav-load.com/*
 // @match          *://*.javball.com/*
 // @match          *://*.javbee.co/*
@@ -140,6 +143,7 @@
 // @match          *://*.javsunday.com/*
 // @match          *://*.javtele.net/*
 // @match          *://*.javtenshi.com/*
+// @match          *://*.javxspot.com/*
 // @match          *://*.katfile.vip/*
 // @match          *://*.keeplinks.org/*
 // @match          *://*.keptarolo.hu/*
@@ -173,6 +177,7 @@
 // @match          *://*.pilot007.org/*
 // @match          *://*.pimpandhost.com/*
 // @match          *://*.pixfy.cfd/*
+// @match          *://*.pixho.st/*
 // @match          *://*.pixhost.cc/*
 // @match          *://*.pixhost.to/*
 // @match          *://*.pixxxels.cc/*
@@ -1293,16 +1298,6 @@
   });
   _.register({
     rule: {
-      host: /^infidrive\.net$/,
-    },
-    async ready() {
-      await _.wait(40000);
-      const b = $("button.inline-flex:nth-child(2)");
-      b.click();
-    },
-  });
-  _.register({
-    rule: {
       host: /^katfile\.vip$/,
     },
     async ready() {
@@ -1514,7 +1509,7 @@
   });
   _.register({
     rule: {
-      host: [/^exe-links\.com$/, /^exeo\.app$/],
+      host: [/^exe-links\.com$/, /^exeo\.app$/, /^exeygo\.com$/],
     },
     async ready() {
       const a = $(".link-button.button");
@@ -1903,6 +1898,23 @@
   });
   _.register({
     rule: {
+      host: [
+        /^3xpla\.net/,
+        /^3xplanet\.(com|net|xyz)$/,
+        /^jav-load\.com$/,
+        /^javtenshi\.com$/,
+        /^javxspot\.com$/,
+        /^uncenav\.com$/,
+      ],
+      path: /^\/viewimage\//,
+    },
+    async ready() {
+      const o = $("#show_image");
+      await $.openImage(o.src);
+    },
+  });
+  _.register({
+    rule: {
       host: /^bayimg\.com$/,
     },
     async ready() {
@@ -1982,7 +1994,7 @@
   _.register({
     rule: {
       host: /^fastpic\.org$/,
-      path: /^\/view\//,
+      path: [/^\/view\//, /^\/fullview\//],
     },
     async ready() {
       const a = $.$("#imglink");
@@ -2020,6 +2032,16 @@
     async ready() {
       const img = $("a img.media_gif__MBeQG");
       await $.openImage(img.src);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^goonbox\.cr$/,
+    },
+    async ready() {
+      await _.wait(300);
+      const a = $("img.max-w-full");
+      await $.openImage(a.src);
     },
   });
   _.register({
@@ -2339,29 +2361,13 @@
     },
   });
   _.register({
-    rule: [
-      {
-        host: /^(www\.)?pixhost\.(cc|to)$/,
-        path: /^\/show\//,
-      },
-      {
-        host: [
-          /^3xplanet\.(com|net)$/,
-          /^jav-load\.com$/,
-          /^javtenshi\.com$/,
-          /^uncenav\.com$/,
-        ],
-        path: /^\/viewimage\//,
-      },
-    ],
+    rule: {
+      host: [/^(www\.)?pixhost\.(cc|to)$/, /^pixho\.st$/],
+      path: /^\/show\//,
+    },
     async ready() {
-      $.remove("iframe, #ad");
-      let o = $.$("#all");
-      if (o) {
-        o.style.display = "";
-      }
-      o = $("#show_image, #image");
-      await $.openImage(o.src);
+      const i = $("#image");
+      await $.openImage(i.src);
     },
   });
   _.register({
