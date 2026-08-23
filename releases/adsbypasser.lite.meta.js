@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.22.0
+// @version        8.23.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.22.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.23.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -47,6 +47,7 @@
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
 // @match          *://*.exeygo.com/*
+// @match          *://*.f95zone.to/*
 // @match          *://*.fir3.net/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.goo.st/*
@@ -75,11 +76,8 @@
 // @match          *://*.rlu.ru/*
 // @match          *://*.ryuugames.com/*
 // @match          *://*.sfile.mobi/*
-// @match          *://*.short.am/*
-// @match          *://*.shortmoz.link/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
-// @match          *://*.srt.am/*
 // @match          *://*.stfly.me/*
 // @match          *://*.stfly.xyz/*
 // @match          *://*.supercheats.com/*

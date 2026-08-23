@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.22.0
+// @version        8.23.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.22.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.23.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -79,6 +79,7 @@
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
 // @match          *://*.exeygo.com/*
+// @match          *://*.f95zone.to/*
 // @match          *://*.fappic.com/*
 // @match          *://*.fastpic.org/*
 // @match          *://*.fc2ppv.me/*
@@ -192,13 +193,10 @@
 // @match          *://*.s-porn.com/*
 // @match          *://*.sfile.mobi/*
 // @match          *://*.shentai-anime.com/*
-// @match          *://*.short.am/*
-// @match          *://*.shortmoz.link/*
 // @match          *://*.shotcan.com/*
 // @match          *://*.sht-link.com/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
-// @match          *://*.srt.am/*
 // @match          *://*.stfly.me/*
 // @match          *://*.stfly.xyz/*
 // @match          *://*.supercheats.com/*

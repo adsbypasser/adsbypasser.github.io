@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.22.0
+// @version        8.23.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.22.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.23.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -79,6 +79,7 @@
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
 // @match          *://*.exeygo.com/*
+// @match          *://*.f95zone.to/*
 // @match          *://*.fappic.com/*
 // @match          *://*.fastpic.org/*
 // @match          *://*.fc2ppv.me/*
@@ -192,13 +193,10 @@
 // @match          *://*.s-porn.com/*
 // @match          *://*.sfile.mobi/*
 // @match          *://*.shentai-anime.com/*
-// @match          *://*.short.am/*
-// @match          *://*.shortmoz.link/*
 // @match          *://*.shotcan.com/*
 // @match          *://*.sht-link.com/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
-// @match          *://*.srt.am/*
 // @match          *://*.stfly.me/*
 // @match          *://*.stfly.xyz/*
 // @match          *://*.supercheats.com/*
@@ -300,13 +298,31 @@
   function wait(msDelay) {
     return new Promise((resolve) => setTimeout(resolve, msDelay));
   }
-  function tryEvery(msInterval, fn) {
-    return new Promise((resolve) => {
+  function tryEvery(msInterval, fn, maxAttempts) {
+    if (
+      maxAttempts !== undefined &&
+      (!Number.isInteger(maxAttempts) || maxAttempts <= 0)
+    ) {
+      throw new AdsBypasserError("maxAttempts must be a positive integer");
+    }
+    return new Promise((resolve, reject) => {
+      let attempts = 0;
       const handle = setInterval(() => {
-        const result = fn();
+        let result;
+        try {
+          result = fn();
+        } catch (error) {
+          clearInterval(handle);
+          reject(error);
+          return;
+        }
+        attempts += 1;
         if (result !== none) {
           clearInterval(handle);
           resolve(result);
+        } else if (attempts === maxAttempts) {
+          clearInterval(handle);
+          reject(new AdsBypasserError("maximum attempts reached"));
         }
       }, msInterval);
     });
@@ -1524,6 +1540,16 @@
   });
   _.register({
     rule: {
+      host: /^f95zone\.to$/,
+      path: [/^\/masked\//],
+    },
+    async ready() {
+      const a = await _.tryEvery(500, () => $.$(".host_link") ?? _.none);
+      a.click();
+    },
+  });
+  _.register({
+    rule: {
       host: /^fir3\.net$/,
     },
     async ready() {
@@ -1541,6 +1567,15 @@
       clbt.removeAttribute("disabled");
       await _.wait(1);
       clbt.click();
+    },
+  });
+  _.register({
+    rule: {
+      host: [/^goo\.st$/, /^swzz\.xyz$/],
+    },
+    async ready() {
+      const button = $(".btn-primary");
+      button.click();
     },
   });
   _.register({
@@ -1759,25 +1794,6 @@
     async ready() {
       const ma = $("#wpsafe-link a");
       await $.openLink(ma.href);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^(short|srt)\.am$/,
-    },
-    async ready() {
-      await _.wait(6000);
-      const button = $(".skipp");
-      button.click();
-    },
-  });
-  _.register({
-    rule: {
-      host: [/^goo\.st$/, /^shortmoz\.link$/, /^swzz\.xyz$/],
-    },
-    async ready() {
-      const button = $(".btn-primary");
-      button.click();
     },
   });
   _.register({
@@ -2039,7 +2055,7 @@
       host: /^goonbox\.cr$/,
     },
     async ready() {
-      await _.wait(300);
+      await _.wait(1000);
       const a = $("img.max-w-full");
       await $.openImage(a.src);
     },
@@ -2366,8 +2382,25 @@
       path: /^\/show\//,
     },
     async ready() {
-      const i = $("#image");
-      await $.openImage(i.src);
+      const button = document.querySelector("[data-age-gate-enter]");
+      if (button) {
+        button.click();
+        for (let i = 0; i < 20; i++) {
+          if (document.cookie.includes("pixhost_age_verified=1")) {
+            break;
+          }
+          await _.wait(25);
+        }
+      }
+      const image = document.querySelector("#image");
+      if (!image) {
+        return;
+      }
+      const url = image.currentSrc || image.src;
+      if (!url) {
+        return;
+      }
+      location.replace(url);
     },
   });
   _.register({
