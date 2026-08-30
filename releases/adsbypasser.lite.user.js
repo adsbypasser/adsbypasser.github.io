@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.23.0
+// @version        8.24.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.23.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.24.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -61,6 +61,7 @@
 // @match          *://*.kimochi.info/*
 // @match          *://*.kingofshrink.com/*
 // @match          *://*.linegee.net/*
+// @match          *://*.linkify.ru/*
 // @match          *://*.linkpoi.me/*
 // @match          *://*.linkshrink.net/*
 // @match          *://*.lnk2.cc/*
@@ -1293,7 +1294,7 @@
       const b = $(".link-button");
       b.click();
       await _.wait(6000);
-      const c = $(".link-button.get-link");
+      const c = $(".button.link-button");
       c.click();
     },
   });
@@ -1326,6 +1327,17 @@
       clbt.removeAttribute("disabled");
       await _.wait(1);
       clbt.click();
+    },
+  });
+  _.register({
+    rule: {
+      host: /^go\.linkify\.ru$/,
+    },
+    async ready() {
+      const url = $.searchFromScripts(
+        /https:\/\/go\.linkify\.ru\/get\/[^"]+/,
+      )?.[0];
+      await $.openLink(url);
     },
   });
   _.register({
