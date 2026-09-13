@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.24.0
+// @version        8.25.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.24.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.25.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -52,7 +52,6 @@
 // @match          *://*.anime-jav.com/*
 // @match          *://*.apunkasoftware.net/*
 // @match          *://*.bayimg.com/*
-// @match          *://*.bcvc.ink/*
 // @match          *://*.beeimg.com/*
 // @match          *://*.binbox.io/*
 // @match          *://*.blackwidof.org/*
@@ -100,7 +99,6 @@
 // @match          *://*.hentaicovid.com/*
 // @match          *://*.hentaicovid.org/*
 // @match          *://*.hentaicovid.vip/*
-// @match          *://*.hentaipig.com/*
 // @match          *://*.hostpic.org/*
 // @match          *://*.ibb.co/*
 // @match          *://*.icutlink.com/*
