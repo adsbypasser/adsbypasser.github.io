@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.25.0
+// @version        8.26.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.25.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.26.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -29,9 +29,7 @@
 // @run-at         document-start
 // @connect        *
 // @match          *://adsbypasser.github.io/*
-// @match          *://*.14xpics.space/*
 // @match          *://*.1ink.cc/*
-// @match          *://*.1link.club/*
 // @match          *://*.1minx.com/*
 // @match          *://*.2i.cz/*
 // @match          *://*.2i.sk/*
@@ -70,7 +68,6 @@
 // @match          *://*.cpmlink.net/*
 // @match          *://*.croea.com/*
 // @match          *://*.cubeupload.com/*
-// @match          *://*.cutpaid.com/*
 // @match          *://*.cuttty.com/*
 // @match          *://*.depic.me/*
 // @match          *://*.directupload.eu/*
@@ -81,11 +78,9 @@
 // @match          *://*.f95zone.to/*
 // @match          *://*.fappic.com/*
 // @match          *://*.fastpic.org/*
-// @match          *://*.fc2ppv.me/*
 // @match          *://*.fc2ppv.stream/*
 // @match          *://*.fikfok.net/*
 // @match          *://*.fir3.net/*
-// @match          *://*.fotosik.pl/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.giphy.com/*
 // @match          *://*.gofile.download/*
@@ -153,8 +148,6 @@
 // @match          *://*.kr-av.com/*
 // @match          *://*.linegee.net/*
 // @match          *://*.linkify.ru/*
-// @match          *://*.linkpoi.me/*
-// @match          *://*.linkshrink.net/*
 // @match          *://*.lnk2.cc/*
 // @match          *://*.lolinez.com/*
 // @match          *://*.lookmyimg.com/*
@@ -170,6 +163,7 @@
 // @match          *://*.ouo.io/*
 // @match          *://*.ouo.press/*
 // @match          *://*.ovabee.com/*
+// @match          *://*.photosex.biz/*
 // @match          *://*.pic-upload.de/*
 // @match          *://*.picforall.eu/*
 // @match          *://*.picstate.com/*
@@ -196,8 +190,6 @@
 // @match          *://*.sht-link.com/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
-// @match          *://*.stfly.me/*
-// @match          *://*.stfly.xyz/*
 // @match          *://*.supercheats.com/*
 // @match          *://*.sweetie-fox.com/*
 // @match          *://*.swzz.xyz/*

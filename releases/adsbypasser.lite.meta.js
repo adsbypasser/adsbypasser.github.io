@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.25.0
+// @version        8.26.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.25.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.26.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -30,7 +30,6 @@
 // @connect        *
 // @match          *://adsbypasser.github.io/*
 // @match          *://*.1ink.cc/*
-// @match          *://*.1link.club/*
 // @match          *://*.a2zapk.io/*
 // @match          *://*.adfoc.us/*
 // @match          *://*.adshnk.com/*
@@ -41,7 +40,6 @@
 // @match          *://*.blogmado.com/*
 // @match          *://*.boost.ink/*
 // @match          *://*.cpmlink.net/*
-// @match          *://*.cutpaid.com/*
 // @match          *://*.cuttty.com/*
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
@@ -61,8 +59,6 @@
 // @match          *://*.kingofshrink.com/*
 // @match          *://*.linegee.net/*
 // @match          *://*.linkify.ru/*
-// @match          *://*.linkpoi.me/*
-// @match          *://*.linkshrink.net/*
 // @match          *://*.lnk2.cc/*
 // @match          *://*.lolinez.com/*
 // @match          *://*.mangalist.org/*
@@ -78,8 +74,6 @@
 // @match          *://*.sfile.mobi/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
-// @match          *://*.stfly.me/*
-// @match          *://*.stfly.xyz/*
 // @match          *://*.supercheats.com/*
 // @match          *://*.swzz.xyz/*
 // @match          *://*.thefileslocker.net/*

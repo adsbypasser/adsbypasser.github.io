@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.25.0
+// @version        8.26.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.25.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.26.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -30,7 +30,6 @@
 // @connect        *
 // @match          *://adsbypasser.github.io/*
 // @match          *://*.1ink.cc/*
-// @match          *://*.1link.club/*
 // @match          *://*.a2zapk.io/*
 // @match          *://*.adfoc.us/*
 // @match          *://*.adshnk.com/*
@@ -41,7 +40,6 @@
 // @match          *://*.blogmado.com/*
 // @match          *://*.boost.ink/*
 // @match          *://*.cpmlink.net/*
-// @match          *://*.cutpaid.com/*
 // @match          *://*.cuttty.com/*
 // @match          *://*.exe-links.com/*
 // @match          *://*.exeo.app/*
@@ -61,8 +59,6 @@
 // @match          *://*.kingofshrink.com/*
 // @match          *://*.linegee.net/*
 // @match          *://*.linkify.ru/*
-// @match          *://*.linkpoi.me/*
-// @match          *://*.linkshrink.net/*
 // @match          *://*.lnk2.cc/*
 // @match          *://*.lolinez.com/*
 // @match          *://*.mangalist.org/*
@@ -78,8 +74,6 @@
 // @match          *://*.sfile.mobi/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
-// @match          *://*.stfly.me/*
-// @match          *://*.stfly.xyz/*
 // @match          *://*.supercheats.com/*
 // @match          *://*.swzz.xyz/*
 // @match          *://*.thefileslocker.net/*
@@ -1159,15 +1153,6 @@
   });
   _.register({
     rule: {
-      host: /^1link\.club$/,
-    },
-    async ready() {
-      const a = $("#download.btn");
-      await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
       host: /^a2zapk\.io$/,
     },
     async ready() {
@@ -1249,16 +1234,6 @@
     },
     async ready() {
       const a = $("#btn-main");
-      await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^cutpaid\.com$/,
-    },
-    async ready() {
-      const a = $(".btn-lg.get-link");
-      await _.wait(9000);
       await $.openLink(a.href);
     },
   });
@@ -1437,30 +1412,6 @@
   });
   _.register({
     rule: {
-      host: /^linkpoi\.me$/,
-    },
-    async ready() {
-      await _.wait(6000);
-      const b = $(".btn.btn-primary.btn-block.redirect.get-link");
-      b.click();
-    },
-  });
-  _.register({
-    rule: {
-      host: /^linkshrink\.net$/,
-      path: /^\/[a-zA-Z0-9]+$/,
-    },
-    async start() {
-      $.window._impspcabe = 0;
-    },
-    async ready() {
-      let l = $.searchFromScripts(/revC\("([^"]+)"\)/);
-      l = atob(l[1]);
-      await $.openLink("/" + l);
-    },
-  });
-  _.register({
-    rule: {
       host: /^lnk2\.cc$/,
       path: /^\/go\//,
     },
@@ -1577,15 +1528,6 @@
     async ready() {
       await _.wait(15000);
       $("#template-contactform-submit").click();
-    },
-  });
-  _.register({
-    rule: {
-      host: /^stfly\.(me|xyz)$/,
-    },
-    async ready() {
-      const b = $(".btn-captcha.m-2.form-send");
-      b.click();
     },
   });
   _.register({

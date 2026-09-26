@@ -3,13 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.25.0
+// @version        8.26.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.25.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.26.0/static/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -29,9 +29,7 @@
 // @run-at         document-start
 // @connect        *
 // @match          *://adsbypasser.github.io/*
-// @match          *://*.14xpics.space/*
 // @match          *://*.1ink.cc/*
-// @match          *://*.1link.club/*
 // @match          *://*.1minx.com/*
 // @match          *://*.2i.cz/*
 // @match          *://*.2i.sk/*
@@ -70,7 +68,6 @@
 // @match          *://*.cpmlink.net/*
 // @match          *://*.croea.com/*
 // @match          *://*.cubeupload.com/*
-// @match          *://*.cutpaid.com/*
 // @match          *://*.cuttty.com/*
 // @match          *://*.depic.me/*
 // @match          *://*.directupload.eu/*
@@ -81,11 +78,9 @@
 // @match          *://*.f95zone.to/*
 // @match          *://*.fappic.com/*
 // @match          *://*.fastpic.org/*
-// @match          *://*.fc2ppv.me/*
 // @match          *://*.fc2ppv.stream/*
 // @match          *://*.fikfok.net/*
 // @match          *://*.fir3.net/*
-// @match          *://*.fotosik.pl/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.giphy.com/*
 // @match          *://*.gofile.download/*
@@ -153,8 +148,6 @@
 // @match          *://*.kr-av.com/*
 // @match          *://*.linegee.net/*
 // @match          *://*.linkify.ru/*
-// @match          *://*.linkpoi.me/*
-// @match          *://*.linkshrink.net/*
 // @match          *://*.lnk2.cc/*
 // @match          *://*.lolinez.com/*
 // @match          *://*.lookmyimg.com/*
@@ -170,6 +163,7 @@
 // @match          *://*.ouo.io/*
 // @match          *://*.ouo.press/*
 // @match          *://*.ovabee.com/*
+// @match          *://*.photosex.biz/*
 // @match          *://*.pic-upload.de/*
 // @match          *://*.picforall.eu/*
 // @match          *://*.picstate.com/*
@@ -196,8 +190,6 @@
 // @match          *://*.sht-link.com/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
-// @match          *://*.stfly.me/*
-// @match          *://*.stfly.xyz/*
 // @match          *://*.supercheats.com/*
 // @match          *://*.sweetie-fox.com/*
 // @match          *://*.swzz.xyz/*
@@ -1399,15 +1391,6 @@
   });
   _.register({
     rule: {
-      host: /^1link\.club$/,
-    },
-    async ready() {
-      const a = $("#download.btn");
-      await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
       host: /^a2zapk\.io$/,
     },
     async ready() {
@@ -1489,16 +1472,6 @@
     },
     async ready() {
       const a = $("#btn-main");
-      await $.openLink(a.href);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^cutpaid\.com$/,
-    },
-    async ready() {
-      const a = $(".btn-lg.get-link");
-      await _.wait(9000);
       await $.openLink(a.href);
     },
   });
@@ -1677,30 +1650,6 @@
   });
   _.register({
     rule: {
-      host: /^linkpoi\.me$/,
-    },
-    async ready() {
-      await _.wait(6000);
-      const b = $(".btn.btn-primary.btn-block.redirect.get-link");
-      b.click();
-    },
-  });
-  _.register({
-    rule: {
-      host: /^linkshrink\.net$/,
-      path: /^\/[a-zA-Z0-9]+$/,
-    },
-    async start() {
-      $.window._impspcabe = 0;
-    },
-    async ready() {
-      let l = $.searchFromScripts(/revC\("([^"]+)"\)/);
-      l = atob(l[1]);
-      await $.openLink("/" + l);
-    },
-  });
-  _.register({
-    rule: {
       host: /^lnk2\.cc$/,
       path: /^\/go\//,
     },
@@ -1817,15 +1766,6 @@
     async ready() {
       await _.wait(15000);
       $("#template-contactform-submit").click();
-    },
-  });
-  _.register({
-    rule: {
-      host: /^stfly\.(me|xyz)$/,
-    },
-    async ready() {
-      const b = $(".btn-captcha.m-2.form-send");
-      b.click();
     },
   });
   _.register({
@@ -1959,7 +1899,6 @@
   _.register({
     rule: {
       host: [
-        /^14xpics\.space$/,
         /^www\.2i\.(cz|sk)$/,
         /^www\.imghit\.com$/,
         /^img\.javstore\.net$/,
@@ -2013,22 +1952,43 @@
       path: [/^\/view\//, /^\/fullview\//],
     },
     async ready() {
-      const a = $.$("#imglink");
-      if (a) {
-        await $.openLink(a.href);
-        return;
+      const findUrl = () => {
+        const links = [document.querySelectorAll("a[href]")];
+        const body = document.body?.textContent?.toLowerCase() || "";
+        const fallback = links.find((a) =>
+          /open the image page with this link/i.test(a.textContent),
+        );
+        if (
+          /button not working?/i.test(body) &&
+          /open the image page with this link/i.test(body)
+        ) {
+          return fallback?.href;
+        }
+        return links.find(
+          (a) =>
+            /fullview/i.test(a.href) &&
+            /continue to image|click to continue to image|перейти к изображению/i.test(
+              a.textContent,
+            ),
+        )?.href;
+      };
+      let url = findUrl();
+      if (!url) {
+        const scripts = document.scripts;
+        for (const script of scripts) {
+          const match = script.textContent.match(/pp0["sr"+"c"]="([^"]+)"/);
+          if (match) {
+            url = match[1];
+            break;
+          }
+        }
       }
-      const directUrl = $.searchFromScripts(/loading_img = '([^"]+)';/);
-      await $.openLink(directUrl[1]);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^www\.fotosik\.pl$/,
-    },
-    async ready() {
-      const i = $(".simple-photo img");
-      await $.openImage(i.src);
+      if (!url) {
+        url = document.querySelector("#imglink, #imga")?.href;
+      }
+      if (url) {
+        window.location.href = url;
+      }
     },
   });
   _.register({
@@ -2289,7 +2249,6 @@
       "https://cnxxx.org/upload/en/*",
       "https://cosplay18.pics/upload/en/*",
       "https://cosplaytele.vip/upload/en/*",
-      "https://fc2ppv.me/upload/en/*",
       "https://fc2ppv.stream/upload/en/*",
       "https://fikfok.net/upload/en/*",
       "https://gofile.download/upload/en/*",
@@ -2334,6 +2293,15 @@
     },
     async start(m) {
       await $.openImage("http://www.keptarolo.hu/kep" + m.path[1]);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^photosex\.biz$/,
+    },
+    async ready() {
+      const i = $("#img");
+      await $.openImage(i.src);
     },
   });
   _.register({
