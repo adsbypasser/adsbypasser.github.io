@@ -3,13 +3,14 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.27.0
+// @version        8.28.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.27.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.28.0/static/img/logo.png
+// @grant          GM_addStyle
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -17,6 +18,7 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @grant          GM_xmlhttpRequest
+// @grant          GM.addStyle
 // @grant          GM.deleteValue
 // @grant          GM.getValue
 // @grant          GM.info
@@ -46,9 +48,11 @@
 // @match          *://*.exeygo.com/*
 // @match          *://*.f95zone.to/*
 // @match          *://*.fir3.net/*
+// @match          *://*.forumdinheiro.com/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.goo.st/*
 // @match          *://*.gplinks.co/*
+// @match          *://*.guis2.com/*
 // @match          *://*.hen-tay.net/*
 // @match          *://*.icutlink.com/*
 // @match          *://*.imagetwist.netlify.app/*
@@ -76,11 +80,13 @@
 // @match          *://*.spaste.com/*
 // @match          *://*.supercheats.com/*
 // @match          *://*.swzz.xyz/*
+// @match          *://*.tarviral.com/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
 // @match          *://*.tribuntekno.com/*
 // @match          *://*.turkdown.com/*
 // @match          *://*.tutwuri.id/*
+// @match          *://*.umconto.com/*
 // @match          *://*.uploadhaven.com/*
 // @match          *://*.uploadrar.com/*
 // @match          *://*.urlcash.com/*

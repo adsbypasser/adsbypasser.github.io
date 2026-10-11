@@ -3,13 +3,14 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.27.0
+// @version        8.28.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.27.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.28.0/static/img/logo.png
+// @grant          GM_addStyle
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -17,6 +18,7 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @grant          GM_xmlhttpRequest
+// @grant          GM.addStyle
 // @grant          GM.deleteValue
 // @grant          GM.getValue
 // @grant          GM.info
@@ -46,9 +48,11 @@
 // @match          *://*.exeygo.com/*
 // @match          *://*.f95zone.to/*
 // @match          *://*.fir3.net/*
+// @match          *://*.forumdinheiro.com/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.goo.st/*
 // @match          *://*.gplinks.co/*
+// @match          *://*.guis2.com/*
 // @match          *://*.hen-tay.net/*
 // @match          *://*.icutlink.com/*
 // @match          *://*.imagetwist.netlify.app/*
@@ -76,11 +80,13 @@
 // @match          *://*.spaste.com/*
 // @match          *://*.supercheats.com/*
 // @match          *://*.swzz.xyz/*
+// @match          *://*.tarviral.com/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
 // @match          *://*.tribuntekno.com/*
 // @match          *://*.turkdown.com/*
 // @match          *://*.tutwuri.id/*
+// @match          *://*.umconto.com/*
 // @match          *://*.uploadhaven.com/*
 // @match          *://*.uploadrar.com/*
 // @match          *://*.urlcash.com/*
@@ -305,6 +311,130 @@
       ready: pattern.ready ? partial(pattern.ready, matched) : nop,
     };
   }
+  function log(method, args) {
+    args = Array.prototype.slice.call(args);
+    if (isString(args[0])) {
+      args[0] = "AdsBypasser: " + args[0];
+    } else {
+      args.unshift("AdsBypasser:");
+    }
+    const fn = console[method];
+    if (typeof fn === "function") {
+      fn.apply(console, args);
+    }
+  }
+  function debug() {
+    log("debug", arguments);
+  }
+  function info() {
+    log("info", arguments);
+  }
+  function warn() {
+    log("warn", arguments);
+  }
+  class DomNotFoundError extends AdsBypasserError {
+    constructor(selector) {
+      super(`\`${selector}\` not found`);
+    }
+    get name() {
+      return "DomNotFoundError";
+    }
+  }
+  function querySelector(selector, context) {
+    if (!context || !context.querySelector) {
+      context = document;
+    }
+    const node = context.querySelector(selector);
+    if (!node) {
+      throw new DomNotFoundError(selector);
+    }
+    return node;
+  }
+  function querySelectorOrNull(selector, context) {
+    try {
+      return querySelector(selector, context);
+    } catch {
+      return null;
+    }
+  }
+  function querySelectorAll(selector, context) {
+    if (!context || !context.querySelectorAll) {
+      context = document;
+    }
+    return context.querySelectorAll(selector);
+  }
+  function toDOM(rawHTML) {
+    try {
+      const parser = new DOMParser();
+      return parser.parseFromString(rawHTML, "text/html");
+    } catch {
+      throw new AdsBypasserError("could not parse HTML to DOM");
+    }
+  }
+  function remove(selector, context) {
+    const nodes = querySelectorAll(selector, context);
+    forEach(nodes, (el) => {
+      debug("removed", el);
+      el.remove();
+    });
+  }
+  function block(selector, context = document) {
+    let fn;
+    if (isString(selector)) {
+      fn = () => remove(selector, context);
+    } else if (typeof selector === "function") {
+      fn = (mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (selector(node)) {
+            node.parentNode.removeChild(node);
+          }
+        });
+      };
+    } else {
+      throw new TypeError("wrong selector");
+    }
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => fn(mutation));
+    });
+    observer.observe(context, {
+      childList: true,
+      subtree: true,
+    });
+  }
+  function searchFromScriptsByRegExp(pattern, context) {
+    const scripts = querySelectorAll("script", context);
+    const [, , m] = find(scripts, (s) => {
+      const match = s.textContent.match(pattern);
+      return match || none;
+    });
+    return m === none ? null : m;
+  }
+  function searchFromScriptsByString(pattern, context) {
+    const scripts = querySelectorAll("script", context);
+    const [, m] = find(scripts, (s) => {
+      const idx = s.textContent.indexOf(pattern);
+      return idx < 0 ? none : idx;
+    });
+    return m === none ? null : m.textContent;
+  }
+  function searchFromScripts(pattern, context) {
+    if (pattern instanceof RegExp) {
+      return searchFromScriptsByRegExp(pattern, context);
+    }
+    if (isString(pattern)) {
+      return searchFromScriptsByString(pattern, context);
+    }
+    return null;
+  }
+  function waitDOM() {
+    return new Promise((resolve) => {
+      if (document.readyState !== "loading") {
+        resolve();
+        return;
+      }
+      document.addEventListener("DOMContentLoaded", () => resolve());
+    });
+  }
   const rawUSW = getUnsafeWindow();
   const usw = getUnsafeWindowProxy();
   const GMAPI = getGreaseMonkeyAPI();
@@ -332,7 +462,16 @@
       deleteValue: GM?.deleteValue ?? promisify(GM_deleteValue),
       xmlHttpRequest: GM?.xmlHttpRequest ?? GM_xmlhttpRequest,
       registerMenuCommand: GM?.registerMenuCommand ?? GM_registerMenuCommand,
+      addStyle:
+        GM?.addStyle ??
+        (typeof GM_addStyle === "function" ? GM_addStyle : addStyleFallback),
     };
+  }
+  function addStyleFallback(css) {
+    const style = document.createElement("style");
+    style.textContent = css;
+    (document.head ?? document.documentElement).appendChild(style);
+    return style;
   }
   function promisify(fn) {
     return (...args) => Promise.resolve(fn(...args));
@@ -386,7 +525,10 @@
         if (target === unsafeWindow.document.querySelector) {
           self = self[MAGIC_KEY];
         }
-        if (target === unsafeWindow.document.write) {
+        if (
+          target === unsafeWindow.document.open ||
+          target === unsafeWindow.document.close
+        ) {
           self = self[MAGIC_KEY];
         }
         const usargs = clone(args);
@@ -429,6 +571,63 @@
       unsafe[k] = clone(v);
     });
     return unsafe;
+  }
+  const isSafari =
+    Object.prototype.toString.call(window.HTMLElement).indexOf("Constructor") > 0;
+  function removeAllTimer() {
+    let handle = window.setInterval(nop, 10);
+    while (handle > 0) {
+      window.clearInterval(handle--);
+    }
+    handle = window.setTimeout(nop, 10);
+    while (handle > 0) {
+      window.clearTimeout(handle--);
+    }
+  }
+  function disableLeavePrompt(element) {
+    if (!element) {
+      return;
+    }
+    const seal = {
+      set: () => info("blocked onbeforeunload"),
+    };
+    element.onbeforeunload = undefined;
+    if (isSafari) {
+      element.__defineSetter__("onbeforeunload", seal.set);
+    } else {
+      usw.Object.defineProperty(element, "onbeforeunload", {
+        configurable: true,
+        enumerable: false,
+        get: undefined,
+        set: seal.set,
+      });
+    }
+    const originalAddEventListener = element.addEventListener;
+    element.addEventListener = function (type) {
+      if (type === "beforeunload") {
+        info("blocked addEventListener onbeforeunload");
+        return;
+      }
+      return originalAddEventListener.apply(this, arguments);
+    };
+  }
+  function generateRandomIP() {
+    return [0, 0, 0, 0].map(() => Math.floor(Math.random() * 256)).join(".");
+  }
+  function evil(script) {
+    return ((
+      GM,
+      GM_deleteValue,
+      GM_getValue,
+      GM_openInTab,
+      GM_registerMenuCommand,
+      GM_setValue,
+      GM_xmlhttpRequest,
+      unsafeWindow,
+      window,
+    ) => {
+      return eval(script);
+    })();
   }
   const MANIFEST = [
     {
@@ -553,27 +752,6 @@
         usw.render({ version: config.version, options });
       },
     });
-  }
-  function log(method, args) {
-    args = Array.prototype.slice.call(args);
-    if (isString(args[0])) {
-      args[0] = "AdsBypasser: " + args[0];
-    } else {
-      args.unshift("AdsBypasser:");
-    }
-    const fn = console[method];
-    if (typeof fn === "function") {
-      fn.apply(console, args);
-    }
-  }
-  function debug() {
-    log("debug", arguments);
-  }
-  function info() {
-    log("info", arguments);
-  }
-  function warn() {
-    log("warn", arguments);
   }
   class AjaxError extends AdsBypasserError {
     constructor(method, url, data, headers, status, response) {
@@ -796,100 +974,6 @@
       document.cookie = cookieString(k, domainRoot, expired);
     });
   }
-  class DomNotFoundError extends AdsBypasserError {
-    constructor(selector) {
-      super(`\`${selector}\` not found`);
-    }
-    get name() {
-      return "DomNotFoundError";
-    }
-  }
-  function querySelector(selector, context) {
-    if (!context || !context.querySelector) {
-      context = document;
-    }
-    const node = context.querySelector(selector);
-    if (!node) {
-      throw new DomNotFoundError(selector);
-    }
-    return node;
-  }
-  function querySelectorOrNull(selector, context) {
-    try {
-      return querySelector(selector, context);
-    } catch {
-      return null;
-    }
-  }
-  function querySelectorAll(selector, context) {
-    if (!context || !context.querySelectorAll) {
-      context = document;
-    }
-    return context.querySelectorAll(selector);
-  }
-  function toDOM(rawHTML) {
-    try {
-      const parser = new DOMParser();
-      return parser.parseFromString(rawHTML, "text/html");
-    } catch {
-      throw new AdsBypasserError("could not parse HTML to DOM");
-    }
-  }
-  function remove(selector, context) {
-    const nodes = querySelectorAll(selector, context);
-    forEach(nodes, (el) => {
-      debug("removed", el);
-      el.remove();
-    });
-  }
-  function block(selector, context = document) {
-    let fn;
-    if (isString(selector)) {
-      fn = () => remove(selector, context);
-    } else if (typeof selector === "function") {
-      fn = (mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (selector(node)) {
-            node.parentNode.removeChild(node);
-          }
-        });
-      };
-    } else {
-      throw new TypeError("wrong selector");
-    }
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => fn(mutation));
-    });
-    observer.observe(context, {
-      childList: true,
-      subtree: true,
-    });
-  }
-  function searchFromScriptsByRegExp(pattern, context) {
-    const scripts = querySelectorAll("script", context);
-    const [, , m] = find(scripts, (s) => {
-      const match = s.textContent.match(pattern);
-      return match || none;
-    });
-    return m === none ? null : m;
-  }
-  function searchFromScriptsByString(pattern, context) {
-    const scripts = querySelectorAll("script", context);
-    const [, m] = find(scripts, (s) => {
-      const idx = s.textContent.indexOf(pattern);
-      return idx < 0 ? none : idx;
-    });
-    return m === none ? null : m.textContent;
-  }
-  function searchFromScripts(pattern, context) {
-    if (pattern instanceof RegExp) {
-      return searchFromScriptsByRegExp(pattern, context);
-    }
-    if (isString(pattern)) {
-      return searchFromScriptsByString(pattern, context);
-    }
-    return null;
-  }
   function prepare(element) {
     if (!document.body) {
       document.body = document.createElement("body");
@@ -955,53 +1039,6 @@
     }
     window.top.location.replace(to);
   }
-  function removeAllTimer() {
-    let handle = window.setInterval(nop, 10);
-    while (handle > 0) {
-      window.clearInterval(handle--);
-    }
-    handle = window.setTimeout(nop, 10);
-    while (handle > 0) {
-      window.clearTimeout(handle--);
-    }
-  }
-  function nuke(url) {
-    const doc = usw.document;
-    const safeUrl = String(url).replace(
-      /[&<>"']/g,
-      (c) =>
-        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
-          c
-        ],
-    );
-    try {
-      doc.open();
-      doc.write(
-        `nuked by AdsBypasser, leading to <a href="${safeUrl}">${safeUrl}</a>`,
-      );
-      doc.close();
-    } catch (e) {
-      warn("nuke failed", e);
-    }
-  }
-  function generateRandomIP() {
-    return [0, 0, 0, 0].map(() => Math.floor(Math.random() * 256)).join(".");
-  }
-  function evil(script) {
-    return ((
-      GM,
-      GM_deleteValue,
-      GM_getValue,
-      GM_openInTab,
-      GM_registerMenuCommand,
-      GM_setValue,
-      GM_xmlhttpRequest,
-      unsafeWindow,
-      window,
-    ) => {
-      return eval(script);
-    })();
-  }
   const _ = {
     AdsBypasserError,
     evil,
@@ -1024,7 +1061,6 @@
   $.block = block;
   $.get = get$1;
   $.getCookie = getCookie;
-  $.nuke = nuke;
   $.openLink = openLink;
   $.post = post$1;
   $.remove = remove;
@@ -1280,6 +1316,46 @@
       await _.wait(12000);
       const b = $(".btn.btn-success.btn-lg.get-link");
       b.click();
+    },
+  });
+  _.register({
+    rule: {
+      host: /^(www\.)?(forumdinheiro|guis2|tarviral|umconto)\.com$/,
+    },
+    async start() {
+      const api = `${window.location.origin}/api`;
+      const session = JSON.parse(await $.get(`${api}/session-info`));
+      if (!session.hasSession) {
+        return;
+      }
+      for (
+        let progress = session.stageNumber + 1;
+        progress <= session.totalStage + 1;
+        progress++
+      ) {
+        const text = await $.get(
+          `${api}/trpc/linkSession.nextStage`,
+          {
+            batch: 1,
+            input: JSON.stringify({
+              0: {
+                json: {
+                  token: session.sessionToken,
+                  progress,
+                  stageId: session.stageId,
+                },
+              },
+            }),
+          },
+          { "trpc-accept": "application/jsonl" },
+        );
+        const m = text.match(/"destinationLink":("(?:[^"\\]|\\.)*")/);
+        if (m) {
+          await $.openLink(JSON.parse(m[1]));
+          return;
+        }
+      }
+      _.warn("destination link not found");
     },
   });
   _.register({
@@ -1614,8 +1690,6 @@
       await $.openLink(a.href);
     },
   });
-  const isSafari =
-    Object.prototype.toString.call(window.HTMLElement).indexOf("Constructor") > 0;
   function disableWindowOpen() {
     try {
       usw.open = () => ({ closed: false });
@@ -1625,44 +1699,8 @@
     usw.alert = nop;
     usw.confirm = nop;
   }
-  function disableLeavePrompt(element) {
-    if (!element) {
-      return;
-    }
-    const seal = {
-      set: () => info("blocked onbeforeunload"),
-    };
-    element.onbeforeunload = undefined;
-    if (isSafari) {
-      element.__defineSetter__("onbeforeunload", seal.set);
-    } else {
-      usw.Object.defineProperty(element, "onbeforeunload", {
-        configurable: true,
-        enumerable: false,
-        get: undefined,
-        set: seal.set,
-      });
-    }
-    const originalAddEventListener = element.addEventListener;
-    element.addEventListener = function (type) {
-      if (type === "beforeunload") {
-        info("blocked addEventListener onbeforeunload");
-        return;
-      }
-      return originalAddEventListener.apply(this, arguments);
-    };
-  }
   function changeTitle() {
     document.title += " - AdsBypasser";
-  }
-  function waitDOM() {
-    return new Promise((resolve) => {
-      if (document.readyState !== "loading") {
-        resolve();
-        return;
-      }
-      document.addEventListener("DOMContentLoaded", () => resolve());
-    });
   }
   async function beforeDOMReady(handler) {
     const config = await dumpConfig();

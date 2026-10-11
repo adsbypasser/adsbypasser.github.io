@@ -3,13 +3,14 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.27.0
+// @version        8.28.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.27.0/static/img/logo.png
+// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.28.0/static/img/logo.png
+// @grant          GM_addStyle
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -17,6 +18,7 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @grant          GM_xmlhttpRequest
+// @grant          GM.addStyle
 // @grant          GM.deleteValue
 // @grant          GM.getValue
 // @grant          GM.info
@@ -82,12 +84,14 @@
 // @match          *://*.fc2ppv.stream/*
 // @match          *://*.fikfok.net/*
 // @match          *://*.fir3.net/*
+// @match          *://*.forumdinheiro.com/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.giphy.com/*
 // @match          *://*.gofile.download/*
 // @match          *://*.goo.st/*
 // @match          *://*.goonbox.cr/*
 // @match          *://*.gplinks.co/*
+// @match          *://*.guis2.com/*
 // @match          *://*.hen-tay.net/*
 // @match          *://*.hentai-manga.org/*
 // @match          *://*.hentai-sub.com/*
@@ -181,6 +185,7 @@
 // @match          *://*.porn4f.org/*
 // @match          *://*.postimg.cc/*
 // @match          *://*.prnt.sc/*
+// @match          *://*.ria-kurumi.vip/*
 // @match          *://*.rintor.space/*
 // @match          *://*.rlu.ru/*
 // @match          *://*.ryuugames.com/*
@@ -194,6 +199,7 @@
 // @match          *://*.supercheats.com/*
 // @match          *://*.sweetie-fox.com/*
 // @match          *://*.swzz.xyz/*
+// @match          *://*.tarviral.com/*
 // @match          *://*.tenor.com/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
@@ -202,6 +208,7 @@
 // @match          *://*.turboimagehost.com/*
 // @match          *://*.turkdown.com/*
 // @match          *://*.tutwuri.id/*
+// @match          *://*.umconto.com/*
 // @match          *://*.uncenav.com/*
 // @match          *://*.uploadhaven.com/*
 // @match          *://*.uploadrar.com/*
@@ -432,6 +439,130 @@
       ready: pattern.ready ? partial(pattern.ready, matched) : nop,
     };
   }
+  function log(method, args) {
+    args = Array.prototype.slice.call(args);
+    if (isString(args[0])) {
+      args[0] = "AdsBypasser: " + args[0];
+    } else {
+      args.unshift("AdsBypasser:");
+    }
+    const fn = console[method];
+    if (typeof fn === "function") {
+      fn.apply(console, args);
+    }
+  }
+  function debug() {
+    log("debug", arguments);
+  }
+  function info() {
+    log("info", arguments);
+  }
+  function warn() {
+    log("warn", arguments);
+  }
+  class DomNotFoundError extends AdsBypasserError {
+    constructor(selector) {
+      super(`\`${selector}\` not found`);
+    }
+    get name() {
+      return "DomNotFoundError";
+    }
+  }
+  function querySelector(selector, context) {
+    if (!context || !context.querySelector) {
+      context = document;
+    }
+    const node = context.querySelector(selector);
+    if (!node) {
+      throw new DomNotFoundError(selector);
+    }
+    return node;
+  }
+  function querySelectorOrNull(selector, context) {
+    try {
+      return querySelector(selector, context);
+    } catch {
+      return null;
+    }
+  }
+  function querySelectorAll(selector, context) {
+    if (!context || !context.querySelectorAll) {
+      context = document;
+    }
+    return context.querySelectorAll(selector);
+  }
+  function toDOM(rawHTML) {
+    try {
+      const parser = new DOMParser();
+      return parser.parseFromString(rawHTML, "text/html");
+    } catch {
+      throw new AdsBypasserError("could not parse HTML to DOM");
+    }
+  }
+  function remove(selector, context) {
+    const nodes = querySelectorAll(selector, context);
+    forEach(nodes, (el) => {
+      debug("removed", el);
+      el.remove();
+    });
+  }
+  function block(selector, context = document) {
+    let fn;
+    if (isString(selector)) {
+      fn = () => remove(selector, context);
+    } else if (typeof selector === "function") {
+      fn = (mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (selector(node)) {
+            node.parentNode.removeChild(node);
+          }
+        });
+      };
+    } else {
+      throw new TypeError("wrong selector");
+    }
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => fn(mutation));
+    });
+    observer.observe(context, {
+      childList: true,
+      subtree: true,
+    });
+  }
+  function searchFromScriptsByRegExp(pattern, context) {
+    const scripts = querySelectorAll("script", context);
+    const [, , m] = find(scripts, (s) => {
+      const match = s.textContent.match(pattern);
+      return match || none;
+    });
+    return m === none ? null : m;
+  }
+  function searchFromScriptsByString(pattern, context) {
+    const scripts = querySelectorAll("script", context);
+    const [, m] = find(scripts, (s) => {
+      const idx = s.textContent.indexOf(pattern);
+      return idx < 0 ? none : idx;
+    });
+    return m === none ? null : m.textContent;
+  }
+  function searchFromScripts(pattern, context) {
+    if (pattern instanceof RegExp) {
+      return searchFromScriptsByRegExp(pattern, context);
+    }
+    if (isString(pattern)) {
+      return searchFromScriptsByString(pattern, context);
+    }
+    return null;
+  }
+  function waitDOM() {
+    return new Promise((resolve) => {
+      if (document.readyState !== "loading") {
+        resolve();
+        return;
+      }
+      document.addEventListener("DOMContentLoaded", () => resolve());
+    });
+  }
   const rawUSW = getUnsafeWindow();
   const usw = getUnsafeWindowProxy();
   const GMAPI = getGreaseMonkeyAPI();
@@ -459,7 +590,16 @@
       deleteValue: GM?.deleteValue ?? promisify(GM_deleteValue),
       xmlHttpRequest: GM?.xmlHttpRequest ?? GM_xmlhttpRequest,
       registerMenuCommand: GM?.registerMenuCommand ?? GM_registerMenuCommand,
+      addStyle:
+        GM?.addStyle ??
+        (typeof GM_addStyle === "function" ? GM_addStyle : addStyleFallback),
     };
+  }
+  function addStyleFallback(css) {
+    const style = document.createElement("style");
+    style.textContent = css;
+    (document.head ?? document.documentElement).appendChild(style);
+    return style;
   }
   function promisify(fn) {
     return (...args) => Promise.resolve(fn(...args));
@@ -513,7 +653,10 @@
         if (target === unsafeWindow.document.querySelector) {
           self = self[MAGIC_KEY];
         }
-        if (target === unsafeWindow.document.write) {
+        if (
+          target === unsafeWindow.document.open ||
+          target === unsafeWindow.document.close
+        ) {
           self = self[MAGIC_KEY];
         }
         const usargs = clone(args);
@@ -556,6 +699,74 @@
       unsafe[k] = clone(v);
     });
     return unsafe;
+  }
+  const isSafari =
+    Object.prototype.toString.call(window.HTMLElement).indexOf("Constructor") > 0;
+  function removeAllTimer() {
+    let handle = window.setInterval(nop, 10);
+    while (handle > 0) {
+      window.clearInterval(handle--);
+    }
+    handle = window.setTimeout(nop, 10);
+    while (handle > 0) {
+      window.clearTimeout(handle--);
+    }
+  }
+  function disableLeavePrompt(element) {
+    if (!element) {
+      return;
+    }
+    const seal = {
+      set: () => info("blocked onbeforeunload"),
+    };
+    element.onbeforeunload = undefined;
+    if (isSafari) {
+      element.__defineSetter__("onbeforeunload", seal.set);
+    } else {
+      usw.Object.defineProperty(element, "onbeforeunload", {
+        configurable: true,
+        enumerable: false,
+        get: undefined,
+        set: seal.set,
+      });
+    }
+    const originalAddEventListener = element.addEventListener;
+    element.addEventListener = function (type) {
+      if (type === "beforeunload") {
+        info("blocked addEventListener onbeforeunload");
+        return;
+      }
+      return originalAddEventListener.apply(this, arguments);
+    };
+  }
+  async function rebuildDocument() {
+    await waitDOM();
+    const doc = usw.document;
+    doc.open();
+    doc.close();
+    if (doc.adoptedStyleSheets?.length) {
+      doc.adoptedStyleSheets.length = 0;
+    }
+    removeAllTimer();
+    disableLeavePrompt(doc.body);
+  }
+  function generateRandomIP() {
+    return [0, 0, 0, 0].map(() => Math.floor(Math.random() * 256)).join(".");
+  }
+  function evil(script) {
+    return ((
+      GM,
+      GM_deleteValue,
+      GM_getValue,
+      GM_openInTab,
+      GM_registerMenuCommand,
+      GM_setValue,
+      GM_xmlhttpRequest,
+      unsafeWindow,
+      window,
+    ) => {
+      return eval(script);
+    })();
   }
   const MANIFEST = [
     {
@@ -680,27 +891,6 @@
         usw.render({ version: config.version, options });
       },
     });
-  }
-  function log(method, args) {
-    args = Array.prototype.slice.call(args);
-    if (isString(args[0])) {
-      args[0] = "AdsBypasser: " + args[0];
-    } else {
-      args.unshift("AdsBypasser:");
-    }
-    const fn = console[method];
-    if (typeof fn === "function") {
-      fn.apply(console, args);
-    }
-  }
-  function debug() {
-    log("debug", arguments);
-  }
-  function info() {
-    log("info", arguments);
-  }
-  function warn() {
-    log("warn", arguments);
   }
   class AjaxError extends AdsBypasserError {
     constructor(method, url, data, headers, status, response) {
@@ -923,100 +1113,6 @@
       document.cookie = cookieString(k, domainRoot, expired);
     });
   }
-  class DomNotFoundError extends AdsBypasserError {
-    constructor(selector) {
-      super(`\`${selector}\` not found`);
-    }
-    get name() {
-      return "DomNotFoundError";
-    }
-  }
-  function querySelector(selector, context) {
-    if (!context || !context.querySelector) {
-      context = document;
-    }
-    const node = context.querySelector(selector);
-    if (!node) {
-      throw new DomNotFoundError(selector);
-    }
-    return node;
-  }
-  function querySelectorOrNull(selector, context) {
-    try {
-      return querySelector(selector, context);
-    } catch {
-      return null;
-    }
-  }
-  function querySelectorAll(selector, context) {
-    if (!context || !context.querySelectorAll) {
-      context = document;
-    }
-    return context.querySelectorAll(selector);
-  }
-  function toDOM(rawHTML) {
-    try {
-      const parser = new DOMParser();
-      return parser.parseFromString(rawHTML, "text/html");
-    } catch {
-      throw new AdsBypasserError("could not parse HTML to DOM");
-    }
-  }
-  function remove(selector, context) {
-    const nodes = querySelectorAll(selector, context);
-    forEach(nodes, (el) => {
-      debug("removed", el);
-      el.remove();
-    });
-  }
-  function block(selector, context = document) {
-    let fn;
-    if (isString(selector)) {
-      fn = () => remove(selector, context);
-    } else if (typeof selector === "function") {
-      fn = (mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (selector(node)) {
-            node.parentNode.removeChild(node);
-          }
-        });
-      };
-    } else {
-      throw new TypeError("wrong selector");
-    }
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => fn(mutation));
-    });
-    observer.observe(context, {
-      childList: true,
-      subtree: true,
-    });
-  }
-  function searchFromScriptsByRegExp(pattern, context) {
-    const scripts = querySelectorAll("script", context);
-    const [, , m] = find(scripts, (s) => {
-      const match = s.textContent.match(pattern);
-      return match || none;
-    });
-    return m === none ? null : m;
-  }
-  function searchFromScriptsByString(pattern, context) {
-    const scripts = querySelectorAll("script", context);
-    const [, m] = find(scripts, (s) => {
-      const idx = s.textContent.indexOf(pattern);
-      return idx < 0 ? none : idx;
-    });
-    return m === none ? null : m.textContent;
-  }
-  function searchFromScripts(pattern, context) {
-    if (pattern instanceof RegExp) {
-      return searchFromScriptsByRegExp(pattern, context);
-    }
-    if (isString(pattern)) {
-      return searchFromScriptsByString(pattern, context);
-    }
-    return null;
-  }
   function prepare(element) {
     if (!document.body) {
       document.body = document.createElement("body");
@@ -1082,56 +1178,9 @@
     }
     window.top.location.replace(to);
   }
-  function removeAllTimer() {
-    let handle = window.setInterval(nop, 10);
-    while (handle > 0) {
-      window.clearInterval(handle--);
-    }
-    handle = window.setTimeout(nop, 10);
-    while (handle > 0) {
-      window.clearTimeout(handle--);
-    }
-  }
-  function nuke(url) {
-    const doc = usw.document;
-    const safeUrl = String(url).replace(
-      /[&<>"']/g,
-      (c) =>
-        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
-          c
-        ],
-    );
-    try {
-      doc.open();
-      doc.write(
-        `nuked by AdsBypasser, leading to <a href="${safeUrl}">${safeUrl}</a>`,
-      );
-      doc.close();
-    } catch (e) {
-      warn("nuke failed", e);
-    }
-  }
-  function generateRandomIP() {
-    return [0, 0, 0, 0].map(() => Math.floor(Math.random() * 256)).join(".");
-  }
-  function evil(script) {
-    return ((
-      GM,
-      GM_deleteValue,
-      GM_getValue,
-      GM_openInTab,
-      GM_registerMenuCommand,
-      GM_setValue,
-      GM_xmlhttpRequest,
-      unsafeWindow,
-      window,
-    ) => {
-      return eval(script);
-    })();
-  }
+  var alignCenterCSS = "html{height:100%}body{height:100%;margin:0}#adsbypasser-wrapper{width:100%;height:100%;position:relative;text-align:center;line-height:0}#adsbypasser-image{margin:auto;top:0;bottom:0;left:0;right:0}";
+  var scaleImageCSS = "#adsbypasser-image.adsbypasser-resizable{cursor:-webkit-zoom-out;cursor:-moz-zoom-out;cursor:zoom-out}#adsbypasser-image.adsbypasser-resizable.adsbypasser-shrinked{max-width:100%;max-height:100%;cursor:-webkit-zoom-in;cursor:-moz-zoom-in;cursor:zoom-in}";
   const RESOURCE_ROOT = `https://raw.githubusercontent.com/adsbypasser/adsbypasser/v${VERSION}/static`;
-  const ALIGN_CENTER = `${RESOURCE_ROOT}/css/align_center.css`;
-  const SCALE_IMAGE = `${RESOURCE_ROOT}/css/scale_image.css`;
   const BACKGROUND_IMAGE = `${RESOURCE_ROOT}/img/imagedoc-darknoise.png`;
   async function openImage(imgSrc, options = {}) {
     const replace = !!options.replace;
@@ -1145,15 +1194,20 @@
       await openLink(imgSrc, { referer });
     }
   }
-  function enableScrolling() {
-    const el =
-      document.compatMode === "CSS1Compat"
-        ? document.documentElement
-        : document.body;
-    el.style.overflow = "";
-  }
-  function toggleShrinking() {
-    this.classList.toggle("adsbypasser-shrinked");
+  function toggleShrinking(event) {
+    if (!this.classList.contains("adsbypasser-shrinked")) {
+      this.classList.add("adsbypasser-shrinked");
+      return;
+    }
+    const before = this.getBoundingClientRect();
+    const rx = (event.clientX - before.left) / before.width;
+    const ry = (event.clientY - before.top) / before.height;
+    this.classList.remove("adsbypasser-shrinked");
+    const after = this.getBoundingClientRect();
+    window.scrollBy(
+      after.left + rx * after.width - event.clientX,
+      after.top + ry * after.height - event.clientY,
+    );
   }
   function checkScaling() {
     const nw = this.naturalWidth;
@@ -1176,7 +1230,7 @@
     }
   }
   function scaleImage(img) {
-    appendStyleURL(SCALE_IMAGE);
+    GMAPI.addStyle(scaleImageCSS);
     if (img.naturalWidth && img.naturalHeight) {
       checkScaling.call(img);
     } else {
@@ -1193,19 +1247,11 @@
     document.body.style.backgroundImage = `url('${BACKGROUND_IMAGE}')`;
   }
   function alignCenter() {
-    appendStyleURL(ALIGN_CENTER);
+    GMAPI.addStyle(alignCenterCSS);
   }
-  function injectStyle(wrapper, img) {
-    remove("style, link[rel=stylesheet]");
+  function setIds(wrapper, img) {
     wrapper.id = "adsbypasser-wrapper";
     img.id = "adsbypasser-image";
-  }
-  function appendStyleURL(url) {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.type = "text/css";
-    link.href = url;
-    document.head.appendChild(link);
   }
   async function replaceBody(imgSrc) {
     const redirectImage = await GMAPI.getValue("redirect_image");
@@ -1216,23 +1262,21 @@
       return;
     }
     info(`replacing body with \`${imgSrc}\` ...`);
-    removeAllTimer();
-    enableScrolling();
-    document.body = document.createElement("body");
+    const ac = await GMAPI.getValue("align_center");
+    const si = await GMAPI.getValue("scale_image");
+    const cb = await GMAPI.getValue("change_background");
+    await rebuildDocument();
     const wrapper = document.createElement("div");
     document.body.appendChild(wrapper);
     const img = document.createElement("img");
     img.src = imgSrc;
     wrapper.appendChild(img);
-    const ac = await GMAPI.getValue("align_center");
-    const si = await GMAPI.getValue("scale_image");
     if (ac || si) {
-      injectStyle(wrapper, img);
+      setIds(wrapper, img);
     }
     if (ac) {
       alignCenter();
     }
-    const cb = await GMAPI.getValue("change_background");
     if (cb) {
       changeBackground();
     }
@@ -1262,7 +1306,6 @@
   $.block = block;
   $.get = get$1;
   $.getCookie = getCookie;
-  $.nuke = nuke;
   $.openImage = openImage;
   $.openLink = openLink;
   $.post = post$1;
@@ -1519,6 +1562,46 @@
       await _.wait(12000);
       const b = $(".btn.btn-success.btn-lg.get-link");
       b.click();
+    },
+  });
+  _.register({
+    rule: {
+      host: /^(www\.)?(forumdinheiro|guis2|tarviral|umconto)\.com$/,
+    },
+    async start() {
+      const api = `${window.location.origin}/api`;
+      const session = JSON.parse(await $.get(`${api}/session-info`));
+      if (!session.hasSession) {
+        return;
+      }
+      for (
+        let progress = session.stageNumber + 1;
+        progress <= session.totalStage + 1;
+        progress++
+      ) {
+        const text = await $.get(
+          `${api}/trpc/linkSession.nextStage`,
+          {
+            batch: 1,
+            input: JSON.stringify({
+              0: {
+                json: {
+                  token: session.sessionToken,
+                  progress,
+                  stageId: session.stageId,
+                },
+              },
+            }),
+          },
+          { "trpc-accept": "application/jsonl" },
+        );
+        const m = text.match(/"destinationLink":("(?:[^"\\]|\\.)*")/);
+        if (m) {
+          await $.openLink(JSON.parse(m[1]));
+          return;
+        }
+      }
+      _.warn("destination link not found");
     },
   });
   _.register({
@@ -1949,24 +2032,47 @@
   });
   _.register({
     rule: {
+      host: /^(www\.)?fappic\.com$/,
+    },
+    async ready() {
+      const i = $(".pic");
+      await $.openImage(i.src);
+    },
+  });
+  _.register({
+    rule: {
       host: /^fastpic\.org$/,
       path: [/^\/view\//, /^\/fullview\//],
     },
     async ready() {
       const extraRedirect = () => {
         const bodyText = (document.body?.textContent || "").toLowerCase();
-        const hasContinueButton = [...document.querySelectorAll("a, button")].some((el) => {
+        const hasContinueButton = [
+          ...document.querySelectorAll("a, button"),
+        ].some((el) => {
           const text = (el.textContent || "").trim().toLowerCase();
-          return text.includes("continue to image") || text.includes("click to continue to image") || text.includes("перейти к изображению");
+          return (
+            text.includes("continue to image") ||
+            text.includes("click to continue to image") ||
+            text.includes("перейти к изображению")
+          );
         });
-        const hasFallbackText = bodyText.includes("button not working?") && bodyText.includes("open the image page with this link");
+        const hasFallbackText =
+          bodyText.includes("button not working?") &&
+          bodyText.includes("open the image page with this link");
         if (!hasContinueButton || !hasFallbackText) {
           return null;
         }
-        const fallbackText = [...document.querySelectorAll("body *")].find((el) => {
-          const text = (el.textContent || "").trim().toLowerCase();
-          return text.includes("button not working?") && text.includes("open the image page with this link") && [...el.querySelectorAll("a[href]")].length > 0;
-        });
+        const fallbackText = [...document.querySelectorAll("body *")].find(
+          (el) => {
+            const text = (el.textContent || "").trim().toLowerCase();
+            return (
+              text.includes("button not working?") &&
+              text.includes("open the image page with this link") &&
+              [...el.querySelectorAll("a[href]")].length > 0
+            );
+          },
+        );
         if (fallbackText) {
           const link = fallbackText.querySelector("a[href]");
           if (link?.href) {
@@ -2083,13 +2189,11 @@
     rule: {
       host: [
         /^croea\.com$/,
-        /^fappic\.com$/,
         /^imagehaha\.com$/,
         /^imagenpic\.com$/,
         /^imageshimage\.com$/,
         /^imagetwist\.com$/,
         /^imagexport\.com$/,
-        /^vipr\.im$/,
       ],
     },
     async ready() {
@@ -2274,6 +2378,7 @@
       "https://porn-pig.com/upload/en/*",
       "https://porn4f.com/upload/en/*",
       "https://porn4f.org/upload/en/*",
+      "https://ria-kurumi.vip/upload/en/*",
       "https://s-porn.com/upload/en/*",
       "https://shentai-anime.com/upload/en/*",
       "https://sht-link.com/upload/en/*",
@@ -2414,6 +2519,17 @@
   });
   _.register({
     rule: {
+      host: /^vipr\.im$/,
+    },
+    async ready() {
+      const i = $(".pic");
+      await $.openImage(i.src, {
+        replace: true,
+      });
+    },
+  });
+  _.register({
+    rule: {
       host: /^xxxwebdlxxx\.(org|top)$/,
     },
     async ready() {
@@ -2421,8 +2537,6 @@
       await $.openImage(a.src);
     },
   });
-  const isSafari =
-    Object.prototype.toString.call(window.HTMLElement).indexOf("Constructor") > 0;
   function disableWindowOpen() {
     try {
       usw.open = () => ({ closed: false });
@@ -2432,44 +2546,8 @@
     usw.alert = nop;
     usw.confirm = nop;
   }
-  function disableLeavePrompt(element) {
-    if (!element) {
-      return;
-    }
-    const seal = {
-      set: () => info("blocked onbeforeunload"),
-    };
-    element.onbeforeunload = undefined;
-    if (isSafari) {
-      element.__defineSetter__("onbeforeunload", seal.set);
-    } else {
-      usw.Object.defineProperty(element, "onbeforeunload", {
-        configurable: true,
-        enumerable: false,
-        get: undefined,
-        set: seal.set,
-      });
-    }
-    const originalAddEventListener = element.addEventListener;
-    element.addEventListener = function (type) {
-      if (type === "beforeunload") {
-        info("blocked addEventListener onbeforeunload");
-        return;
-      }
-      return originalAddEventListener.apply(this, arguments);
-    };
-  }
   function changeTitle() {
     document.title += " - AdsBypasser";
-  }
-  function waitDOM() {
-    return new Promise((resolve) => {
-      if (document.readyState !== "loading") {
-        resolve();
-        return;
-      }
-      document.addEventListener("DOMContentLoaded", () => resolve());
-    });
   }
   async function beforeDOMReady(handler) {
     const config = await dumpConfig();
