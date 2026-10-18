@@ -3,14 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.28.0
+// @version        8.29.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.28.0/static/img/logo.png
-// @grant          GM_addStyle
+// @icon           https://adsbypasser.github.io/assets/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -18,7 +17,6 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @grant          GM_xmlhttpRequest
-// @grant          GM.addStyle
 // @grant          GM.deleteValue
 // @grant          GM.getValue
 // @grant          GM.info
@@ -151,6 +149,7 @@
 // @match          *://*.kin8-jav.com/*
 // @match          *://*.kingofshrink.com/*
 // @match          *://*.kr-av.com/*
+// @match          *://*.kr1min.com/*
 // @match          *://*.linegee.net/*
 // @match          *://*.linkify.ru/*
 // @match          *://*.lnk2.cc/*
@@ -158,6 +157,7 @@
 // @match          *://*.lookmyimg.com/*
 // @match          *://*.mangalist.org/*
 // @match          *://*.mirrored.to/*
+// @match          *://*.misa.homes/*
 // @match          *://*.multiup.io/*
 // @match          *://*.network-loop.com/*
 // @match          *://*.nmac.to/*
@@ -566,7 +566,6 @@
   const rawUSW = getUnsafeWindow();
   const usw = getUnsafeWindowProxy();
   const GMAPI = getGreaseMonkeyAPI();
-  const VERSION = getGMInfo().script?.version ?? "";
   function getUnsafeWindow() {
     let w = null;
     try {
@@ -590,16 +589,7 @@
       deleteValue: GM?.deleteValue ?? promisify(GM_deleteValue),
       xmlHttpRequest: GM?.xmlHttpRequest ?? GM_xmlhttpRequest,
       registerMenuCommand: GM?.registerMenuCommand ?? GM_registerMenuCommand,
-      addStyle:
-        GM?.addStyle ??
-        (typeof GM_addStyle === "function" ? GM_addStyle : addStyleFallback),
     };
-  }
-  function addStyleFallback(css) {
-    const style = document.createElement("style");
-    style.textContent = css;
-    (document.head ?? document.documentElement).appendChild(style);
-    return style;
   }
   function promisify(fn) {
     return (...args) => Promise.resolve(fn(...args));
@@ -790,7 +780,7 @@
       verify: (v) => typeof v === "boolean",
       normalize: Boolean,
       label: "Change Background",
-      help: "Use Firefox-like image background.",
+      help: "Use dark image background.",
       type: "checkbox",
     },
     {
@@ -1178,10 +1168,6 @@
     }
     window.top.location.replace(to);
   }
-  var alignCenterCSS = "html{height:100%}body{height:100%;margin:0}#adsbypasser-wrapper{width:100%;height:100%;position:relative;text-align:center;line-height:0}#adsbypasser-image{margin:auto;top:0;bottom:0;left:0;right:0}";
-  var scaleImageCSS = "#adsbypasser-image.adsbypasser-resizable{cursor:-webkit-zoom-out;cursor:-moz-zoom-out;cursor:zoom-out}#adsbypasser-image.adsbypasser-resizable.adsbypasser-shrinked{max-width:100%;max-height:100%;cursor:-webkit-zoom-in;cursor:-moz-zoom-in;cursor:zoom-in}";
-  const RESOURCE_ROOT = `https://raw.githubusercontent.com/adsbypasser/adsbypasser/v${VERSION}/static`;
-  const BACKGROUND_IMAGE = `${RESOURCE_ROOT}/img/imagedoc-darknoise.png`;
   async function openImage(imgSrc, options = {}) {
     const replace = !!options.replace;
     const referer = !!options.referer;
@@ -1194,64 +1180,74 @@
       await openLink(imgSrc, { referer });
     }
   }
-  function toggleShrinking(event) {
-    if (!this.classList.contains("adsbypasser-shrinked")) {
-      this.classList.add("adsbypasser-shrinked");
-      return;
-    }
-    const before = this.getBoundingClientRect();
-    const rx = (event.clientX - before.left) / before.width;
-    const ry = (event.clientY - before.top) / before.height;
-    this.classList.remove("adsbypasser-shrinked");
-    const after = this.getBoundingClientRect();
-    window.scrollBy(
-      after.left + rx * after.width - event.clientX,
-      after.top + ry * after.height - event.clientY,
-    );
-  }
-  function checkScaling() {
-    const nw = this.naturalWidth;
-    const nh = this.naturalHeight;
-    const cw = document.documentElement.clientWidth;
-    const ch = document.documentElement.clientHeight;
-    if (
-      (nw > cw || nh > ch) &&
-      !this.classList.contains("adsbypasser-resizable")
-    ) {
-      this.classList.add("adsbypasser-resizable", "adsbypasser-shrinked");
-      this.addEventListener("click", toggleShrinking);
-    } else if (
-      nw <= cw &&
-      nh <= ch &&
-      this.classList.contains("adsbypasser-resizable")
-    ) {
-      this.removeEventListener("click", toggleShrinking);
-      this.classList.remove("adsbypasser-shrinked", "adsbypasser-resizable");
-    }
-  }
   function scaleImage(img) {
-    GMAPI.addStyle(scaleImageCSS);
+    let resizable = false;
+    let shrinked = false;
+    function applyStyle() {
+      img.style.maxWidth = shrinked ? "100%" : "";
+      img.style.maxHeight = shrinked ? "100%" : "";
+      if (!resizable) {
+        img.style.cursor = "";
+      } else {
+        img.style.cursor = shrinked ? "zoom-in" : "zoom-out";
+      }
+    }
+    function toggleShrinking(event) {
+      if (!shrinked) {
+        shrinked = true;
+        applyStyle();
+        return;
+      }
+      const before = img.getBoundingClientRect();
+      const rx = (event.clientX - before.left) / before.width;
+      const ry = (event.clientY - before.top) / before.height;
+      shrinked = false;
+      applyStyle();
+      const after = img.getBoundingClientRect();
+      window.scrollBy(
+        after.left + rx * after.width - event.clientX,
+        after.top + ry * after.height - event.clientY,
+      );
+    }
+    function checkScaling() {
+      const nw = img.naturalWidth;
+      const nh = img.naturalHeight;
+      const cw = document.documentElement.clientWidth;
+      const ch = document.documentElement.clientHeight;
+      if ((nw > cw || nh > ch) && !resizable) {
+        resizable = true;
+        shrinked = true;
+        img.addEventListener("click", toggleShrinking);
+      } else if (nw <= cw && nh <= ch && resizable) {
+        img.removeEventListener("click", toggleShrinking);
+        resizable = false;
+        shrinked = false;
+      }
+      applyStyle();
+    }
     if (img.naturalWidth && img.naturalHeight) {
-      checkScaling.call(img);
+      checkScaling();
     } else {
       img.addEventListener("load", checkScaling);
     }
     let h = 0;
     window.addEventListener("resize", () => {
       clearTimeout(h);
-      h = setTimeout(checkScaling.bind(img), 100);
+      h = setTimeout(checkScaling, 100);
     });
   }
   function changeBackground() {
     document.body.style.backgroundColor = "#222222";
-    document.body.style.backgroundImage = `url('${BACKGROUND_IMAGE}')`;
   }
-  function alignCenter() {
-    GMAPI.addStyle(alignCenterCSS);
-  }
-  function setIds(wrapper, img) {
-    wrapper.id = "adsbypasser-wrapper";
-    img.id = "adsbypasser-image";
+  function alignCenter(wrapper, img) {
+    document.documentElement.style.height = "100%";
+    document.body.style.height = "100%";
+    document.body.style.margin = "0";
+    wrapper.style.display = "flex";
+    wrapper.style.width = "100%";
+    wrapper.style.height = "100%";
+    img.style.margin = "auto";
+    img.style.flex = "none";
   }
   async function replaceBody(imgSrc) {
     const redirectImage = await GMAPI.getValue("redirect_image");
@@ -1271,11 +1267,8 @@
     const img = document.createElement("img");
     img.src = imgSrc;
     wrapper.appendChild(img);
-    if (ac || si) {
-      setIds(wrapper, img);
-    }
     if (ac) {
-      alignCenter();
+      alignCenter(wrapper, img);
     }
     if (cb) {
       changeBackground();
@@ -2372,6 +2365,8 @@
       "https://kin8-av.com/upload/en/*",
       "https://kin8-jav.com/upload/en/*",
       "https://kr-av.com/upload/en/*",
+      "https://kr1min.com/upload/en/*",
+      "https://misa.homes/upload/en/*",
       "https://old-young.net/upload/en/*",
       "https://ovabee.com/upload/en/*",
       "https://pig69.com/upload/en/*",

@@ -3,14 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.28.0
+// @version        8.29.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.full.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.full.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.28.0/static/img/logo.png
-// @grant          GM_addStyle
+// @icon           https://adsbypasser.github.io/assets/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -18,7 +17,6 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @grant          GM_xmlhttpRequest
-// @grant          GM.addStyle
 // @grant          GM.deleteValue
 // @grant          GM.getValue
 // @grant          GM.info
@@ -151,6 +149,7 @@
 // @match          *://*.kin8-jav.com/*
 // @match          *://*.kingofshrink.com/*
 // @match          *://*.kr-av.com/*
+// @match          *://*.kr1min.com/*
 // @match          *://*.linegee.net/*
 // @match          *://*.linkify.ru/*
 // @match          *://*.lnk2.cc/*
@@ -158,6 +157,7 @@
 // @match          *://*.lookmyimg.com/*
 // @match          *://*.mangalist.org/*
 // @match          *://*.mirrored.to/*
+// @match          *://*.misa.homes/*
 // @match          *://*.multiup.io/*
 // @match          *://*.network-loop.com/*
 // @match          *://*.nmac.to/*

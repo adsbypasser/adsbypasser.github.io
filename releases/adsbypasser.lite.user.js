@@ -3,14 +3,13 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.28.0
+// @version        8.29.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
 // @updateURL      https://adsbypasser.github.io/releases/adsbypasser.lite.meta.js
 // @downloadURL    https://adsbypasser.github.io/releases/adsbypasser.lite.user.js
-// @icon           https://raw.githubusercontent.com/adsbypasser/adsbypasser/v8.28.0/static/img/logo.png
-// @grant          GM_addStyle
+// @icon           https://adsbypasser.github.io/assets/img/logo.png
 // @grant          GM_deleteValue
 // @grant          GM_getValue
 // @grant          GM_info
@@ -18,7 +17,6 @@
 // @grant          GM_registerMenuCommand
 // @grant          GM_setValue
 // @grant          GM_xmlhttpRequest
-// @grant          GM.addStyle
 // @grant          GM.deleteValue
 // @grant          GM.getValue
 // @grant          GM.info
@@ -438,7 +436,6 @@
   const rawUSW = getUnsafeWindow();
   const usw = getUnsafeWindowProxy();
   const GMAPI = getGreaseMonkeyAPI();
-  getGMInfo().script?.version ?? "";
   function getUnsafeWindow() {
     let w = null;
     try {
@@ -462,16 +459,7 @@
       deleteValue: GM?.deleteValue ?? promisify(GM_deleteValue),
       xmlHttpRequest: GM?.xmlHttpRequest ?? GM_xmlhttpRequest,
       registerMenuCommand: GM?.registerMenuCommand ?? GM_registerMenuCommand,
-      addStyle:
-        GM?.addStyle ??
-        (typeof GM_addStyle === "function" ? GM_addStyle : addStyleFallback),
     };
-  }
-  function addStyleFallback(css) {
-    const style = document.createElement("style");
-    style.textContent = css;
-    (document.head ?? document.documentElement).appendChild(style);
-    return style;
   }
   function promisify(fn) {
     return (...args) => Promise.resolve(fn(...args));
@@ -651,7 +639,7 @@
       verify: (v) => typeof v === "boolean",
       normalize: Boolean,
       label: "Change Background",
-      help: "Use Firefox-like image background.",
+      help: "Use dark image background.",
       type: "checkbox",
     },
     {
