@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.29.0
+// @version        8.30.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -60,6 +60,7 @@
 // @match          *://*.chinese-pics.vip/*
 // @match          *://*.cloudgallery.net/*
 // @match          *://*.cn-av.com/*
+// @match          *://*.cn1min.com/*
 // @match          *://*.cnpics.org/*
 // @match          *://*.cnxx.me/*
 // @match          *://*.cnxxx.org/*
@@ -132,6 +133,7 @@
 // @match          *://*.imgxxt.in/*
 // @match          *://*.imx.to/*
 // @match          *://*.jav-load.com/*
+// @match          *://*.jav1min.com/*
 // @match          *://*.javball.com/*
 // @match          *://*.javbee.co/*
 // @match          *://*.javlibrary.com/*
@@ -139,6 +141,7 @@
 // @match          *://*.javstore.net/*
 // @match          *://*.javsunday.com/*
 // @match          *://*.javtele.net/*
+// @match          *://*.javtele.org/*
 // @match          *://*.javtenshi.com/*
 // @match          *://*.javxspot.com/*
 // @match          *://*.katfile.vip/*
@@ -218,6 +221,7 @@
 // @match          *://*.vipr.im/*
 // @match          *://*.xcamcovid.com/*
 // @match          *://*.xxpics.org/*
+// @match          *://*.xxxfans.org/*
 // @match          *://*.xxxwebdlxxx.org/*
 // @match          *://*.xxxwebdlxxx.top/*
 // @match          *://*.yasir252.com/*
@@ -2340,6 +2344,7 @@
       "https://chinese-pics.com/upload/en/*",
       "https://chinese-pics.vip/upload/en/*",
       "https://cn-av.com/upload/en/*",
+      "https://cn1min.com/upload/en/*",
       "https://cnpics.org/upload/en/*",
       "https://cnxx.me/upload/en/*",
       "https://cnxxx.org/upload/en/*",
@@ -2357,11 +2362,13 @@
       "https://hentaicovid.vip/upload/en/*",
       "https://idol69.net/upload/en/*",
       "https://imgo.info/upload/en/*",
+      "https://jav1min.com/upload/en/*",
       "https://javball.com/upload/en/*",
       "https://javbee.co/upload/en/*",
       "https://javring.com/upload/en/*",
       "https://javsunday.com/upload/en/*",
       "https://javtele.net/upload/en/*",
+      "https://javtele.org/upload/en/*",
       "https://kin8-av.com/upload/en/*",
       "https://kin8-jav.com/upload/en/*",
       "https://kr-av.com/upload/en/*",
@@ -2380,6 +2387,7 @@
       "https://sweetie-fox.com/upload/en/*",
       "https://xcamcovid.com/upload/en/*",
       "https://xxpics.org/upload/en/*",
+      "https://xxxfans.org/upload/en/*",
     ],
     async ready() {
       const m = $('meta[property="og:image"]');

@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.29.0
+// @version        8.30.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -60,6 +60,7 @@
 // @match          *://*.chinese-pics.vip/*
 // @match          *://*.cloudgallery.net/*
 // @match          *://*.cn-av.com/*
+// @match          *://*.cn1min.com/*
 // @match          *://*.cnpics.org/*
 // @match          *://*.cnxx.me/*
 // @match          *://*.cnxxx.org/*
@@ -132,6 +133,7 @@
 // @match          *://*.imgxxt.in/*
 // @match          *://*.imx.to/*
 // @match          *://*.jav-load.com/*
+// @match          *://*.jav1min.com/*
 // @match          *://*.javball.com/*
 // @match          *://*.javbee.co/*
 // @match          *://*.javlibrary.com/*
@@ -139,6 +141,7 @@
 // @match          *://*.javstore.net/*
 // @match          *://*.javsunday.com/*
 // @match          *://*.javtele.net/*
+// @match          *://*.javtele.org/*
 // @match          *://*.javtenshi.com/*
 // @match          *://*.javxspot.com/*
 // @match          *://*.katfile.vip/*
@@ -218,6 +221,7 @@
 // @match          *://*.vipr.im/*
 // @match          *://*.xcamcovid.com/*
 // @match          *://*.xxpics.org/*
+// @match          *://*.xxxfans.org/*
 // @match          *://*.xxxwebdlxxx.org/*
 // @match          *://*.xxxwebdlxxx.top/*
 // @match          *://*.yasir252.com/*
