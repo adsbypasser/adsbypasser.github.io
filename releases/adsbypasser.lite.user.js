@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.30.0
+// @version        8.31.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -30,18 +30,18 @@
 // @connect        *
 // @match          *://adsbypasser.github.io/*
 // @match          *://*.1ink.cc/*
+// @match          *://*.a2zapk.dev/*
 // @match          *://*.a2zapk.io/*
 // @match          *://*.adfoc.us/*
 // @match          *://*.adshnk.com/*
-// @match          *://*.ak.sv/*
 // @match          *://*.anchoreth.com/*
 // @match          *://*.apunkasoftware.net/*
-// @match          *://*.binbox.io/*
 // @match          *://*.blogmado.com/*
 // @match          *://*.boost.ink/*
 // @match          *://*.cpmlink.net/*
 // @match          *://*.cuttty.com/*
-// @match          *://*.exe-links.com/*
+// @match          *://*.cuty.io/*
+// @match          *://*.exe.io/*
 // @match          *://*.exeo.app/*
 // @match          *://*.exeygo.com/*
 // @match          *://*.f95zone.to/*
@@ -50,12 +50,14 @@
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.goo.st/*
 // @match          *://*.gplinks.co/*
+// @match          *://*.gplinks.com/*
 // @match          *://*.guis2.com/*
 // @match          *://*.hen-tay.net/*
 // @match          *://*.icutlink.com/*
 // @match          *://*.imagetwist.netlify.app/*
 // @match          *://*.javlibrary.com/*
-// @match          *://*.katfile.vip/*
+// @match          *://*.katfile.co/*
+// @match          *://*.katfile.com/*
 // @match          *://*.keeplinks.org/*
 // @match          *://*.kimochi.info/*
 // @match          *://*.kingofshrink.com/*
@@ -63,7 +65,6 @@
 // @match          *://*.linkify.ru/*
 // @match          *://*.lnk2.cc/*
 // @match          *://*.lolinez.com/*
-// @match          *://*.mangalist.org/*
 // @match          *://*.mirrored.to/*
 // @match          *://*.multiup.io/*
 // @match          *://*.network-loop.com/*
@@ -73,7 +74,7 @@
 // @match          *://*.ouo.press/*
 // @match          *://*.rlu.ru/*
 // @match          *://*.ryuugames.com/*
-// @match          *://*.sfile.mobi/*
+// @match          *://*.sfile.co/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
 // @match          *://*.supercheats.com/*
@@ -1060,19 +1061,6 @@
   $.window = usw;
   _.register({
     rule: {
-      host: /^ak\.sv$/,
-    },
-    async ready() {
-      await _.wait(1000);
-      const any = $("html");
-      any.click();
-      await _.wait(6000);
-      const a = $('a[class="download_button"]');
-      await $.openLink(a);
-    },
-  });
-  _.register({
-    rule: {
       host: /^(www\.)?apunkasoftware\.net$/,
     },
     async ready() {
@@ -1091,11 +1079,12 @@
   });
   _.register({
     rule: {
-      host: /^katfile\.vip$/,
+      host: [/^katfile\.co$/, /^katfile\.com$/],
     },
     async ready() {
-      const a = $('a[id="dlink"]');
-      await $.openLink(a.href);
+      await _.wait(1000);
+      const b = $(".btn.btn-default");
+      b.click();
     },
   });
   _.register({
@@ -1128,12 +1117,12 @@
   });
   _.register({
     rule: {
-      host: /^sfile\.mobi$/,
+      host: /^sfile\.co$/,
     },
     async ready() {
       await _.wait(8000);
-      const btn = $("#download");
-      btn.click();
+      const a = $('a[id="download"]');
+      await $.openLink(a.href);
     },
   });
   _.register({
@@ -1177,7 +1166,7 @@
   });
   _.register({
     rule: {
-      host: /^a2zapk\.io$/,
+      host: [/^a2zapk\.dev$/, /^a2zapk\.io$/],
     },
     async ready() {
       const a = $("#dlbtn li a");
@@ -1218,18 +1207,6 @@
     },
   });
   _.register({
-    rule: [
-      {
-        host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
-        path: /\/o\/([a-zA-Z0-9]+)/,
-      },
-    ],
-    async start(m) {
-      const direct_link = window.atob(m.path[1]);
-      await $.openLink(direct_link);
-    },
-  });
-  _.register({
     rule: {
       host: /^blogmado\.com/,
     },
@@ -1263,7 +1240,7 @@
   });
   _.register({
     rule: {
-      host: /^cuttty\.com$/,
+      host: [/^cutty\.com$/, /^cuty\.io$/],
     },
     async ready() {
       await _.wait(9000);
@@ -1273,16 +1250,17 @@
   });
   _.register({
     rule: {
-      host: [/^exe-links\.com$/, /^exeo\.app$/, /^exeygo\.com$/],
+      host: [/^exe\.io$/, /^exeo\.app$/, /^exeygo\.com$/],
     },
     async ready() {
-      const a = $(".link-button.button");
+      await _.wait(2000);
+      const a = $("#submit-button");
       a.click();
       await _.wait(2000);
-      const b = $(".link-button");
+      const b = $("#submit-button");
       b.click();
       await _.wait(6000);
-      const c = $(".button.link-button");
+      const c = $("#submit-button");
       c.click();
     },
   });
@@ -1379,7 +1357,7 @@
   });
   _.register({
     rule: {
-      host: /^gplinks\.co$/,
+      host: [/^gplinks\.co$/, /^gplinks\.com$/],
     },
     async ready() {
       await _.wait(8000);
@@ -1493,16 +1471,6 @@
     },
     async start(m) {
       await $.openLink(m.query[1]);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^mangalist\.org$/,
-    },
-    async ready() {
-      await _.wait(1000);
-      const b = $(".btn-primary.url.text-center");
-      b.click();
     },
   });
   _.register({

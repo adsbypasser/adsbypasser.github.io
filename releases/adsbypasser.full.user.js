@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.30.0
+// @version        8.31.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -30,50 +30,44 @@
 // @connect        *
 // @match          *://adsbypasser.github.io/*
 // @match          *://*.1ink.cc/*
-// @match          *://*.1minx.com/*
 // @match          *://*.2i.cz/*
 // @match          *://*.2i.sk/*
-// @match          *://*.3minx.com/*
+// @match          *://*.2minx.com/*
 // @match          *://*.3xpla.net/*
 // @match          *://*.3xplanet.com/*
 // @match          *://*.3xplanet.net/*
 // @match          *://*.3xplanet.xyz/*
-// @match          *://*.4fuk.me/*
-// @match          *://*.4up.pics/*
-// @match          *://*.555fap.com/*
+// @match          *://*.a2zapk.dev/*
 // @match          *://*.a2zapk.io/*
 // @match          *://*.adfoc.us/*
 // @match          *://*.adshnk.com/*
 // @match          *://*.ai18.pics/*
-// @match          *://*.ak.sv/*
 // @match          *://*.anchoreth.com/*
-// @match          *://*.anime-jav.com/*
+// @match          *://*.anime-jav.vip/*
 // @match          *://*.apunkasoftware.net/*
 // @match          *://*.bayimg.com/*
+// @match          *://*.bbcuck.com/*
 // @match          *://*.beeimg.com/*
-// @match          *://*.binbox.io/*
-// @match          *://*.blackwidof.org/*
 // @match          *://*.blogmado.com/*
 // @match          *://*.boost.ink/*
 // @match          *://*.casimages.com/*
-// @match          *://*.chinese-pics.com/*
 // @match          *://*.chinese-pics.vip/*
 // @match          *://*.cloudgallery.net/*
-// @match          *://*.cn-av.com/*
+// @match          *://*.cn-av.vip/*
 // @match          *://*.cn1min.com/*
 // @match          *://*.cnpics.org/*
-// @match          *://*.cnxx.me/*
 // @match          *://*.cnxxx.org/*
-// @match          *://*.cosplay18.pics/*
 // @match          *://*.cosplaytele.vip/*
 // @match          *://*.cpmlink.net/*
 // @match          *://*.croea.com/*
 // @match          *://*.cubeupload.com/*
+// @match          *://*.cute-porn.com/*
 // @match          *://*.cuttty.com/*
+// @match          *://*.cuty.io/*
 // @match          *://*.depic.me/*
 // @match          *://*.directupload.eu/*
 // @match          *://*.dpic.me/*
-// @match          *://*.exe-links.com/*
+// @match          *://*.exe.io/*
 // @match          *://*.exeo.app/*
 // @match          *://*.exeygo.com/*
 // @match          *://*.f95zone.to/*
@@ -81,27 +75,25 @@
 // @match          *://*.fastpic.org/*
 // @match          *://*.fc2ppv.me/*
 // @match          *://*.fc2ppv.stream/*
-// @match          *://*.fikfok.net/*
+// @match          *://*.fc2ppv.vip/*
 // @match          *://*.fir3.net/*
 // @match          *://*.forumdinheiro.com/*
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.giphy.com/*
-// @match          *://*.gofile.download/*
+// @match          *://*.girlxxx.vip/*
 // @match          *://*.goo.st/*
 // @match          *://*.goonbox.cr/*
 // @match          *://*.gplinks.co/*
+// @match          *://*.gplinks.com/*
 // @match          *://*.guis2.com/*
 // @match          *://*.hen-tay.net/*
 // @match          *://*.hentai-manga.org/*
-// @match          *://*.hentai-sub.com/*
 // @match          *://*.hentai4f.com/*
-// @match          *://*.hentaicovid.com/*
-// @match          *://*.hentaicovid.org/*
-// @match          *://*.hentaicovid.vip/*
+// @match          *://*.hentaishine.com/*
+// @match          *://*.homexxx.vip/*
 // @match          *://*.hostpic.org/*
 // @match          *://*.ibb.co/*
 // @match          *://*.icutlink.com/*
-// @match          *://*.idol69.net/*
 // @match          *://*.im.ge/*
 // @match          *://*.imagebam.com/*
 // @match          *://*.imageban.ru/*
@@ -120,12 +112,9 @@
 // @match          *://*.imgbb.com/*
 // @match          *://*.imgblaze.net/*
 // @match          *://*.imgbox.com/*
-// @match          *://*.imgfira.cc/*
 // @match          *://*.imgflip.com/*
 // @match          *://*.imgfrost.net/*
 // @match          *://*.imghit.com/*
-// @match          *://*.imgo.info/*
-// @match          *://*.imgouhmde.sbs/*
 // @match          *://*.imgouskel.sbs/*
 // @match          *://*.imgpulse.top/*
 // @match          *://*.imgpv.com/*
@@ -137,19 +126,16 @@
 // @match          *://*.javball.com/*
 // @match          *://*.javbee.co/*
 // @match          *://*.javlibrary.com/*
-// @match          *://*.javring.com/*
 // @match          *://*.javstore.net/*
-// @match          *://*.javsunday.com/*
 // @match          *://*.javtele.net/*
 // @match          *://*.javtele.org/*
 // @match          *://*.javtenshi.com/*
 // @match          *://*.javxspot.com/*
-// @match          *://*.katfile.vip/*
+// @match          *://*.katfile.co/*
+// @match          *://*.katfile.com/*
 // @match          *://*.keeplinks.org/*
 // @match          *://*.keptarolo.hu/*
 // @match          *://*.kimochi.info/*
-// @match          *://*.kin8-av.com/*
-// @match          *://*.kin8-jav.com/*
 // @match          *://*.kingofshrink.com/*
 // @match          *://*.kr-av.com/*
 // @match          *://*.kr1min.com/*
@@ -158,52 +144,50 @@
 // @match          *://*.lnk2.cc/*
 // @match          *://*.lolinez.com/*
 // @match          *://*.lookmyimg.com/*
-// @match          *://*.mangalist.org/*
 // @match          *://*.mirrored.to/*
 // @match          *://*.misa.homes/*
 // @match          *://*.multiup.io/*
 // @match          *://*.network-loop.com/*
 // @match          *://*.nmac.to/*
 // @match          *://*.noelshack.com/*
-// @match          *://*.old-young.net/*
+// @match          *://*.old-young.vip/*
 // @match          *://*.orangepix.is/*
 // @match          *://*.otomi-games.com/*
 // @match          *://*.ouo.io/*
 // @match          *://*.ouo.press/*
-// @match          *://*.ovabee.com/*
 // @match          *://*.photosex.biz/*
 // @match          *://*.pic-upload.de/*
 // @match          *://*.picforall.eu/*
+// @match          *://*.picshick.com/*
 // @match          *://*.picstate.com/*
-// @match          *://*.pig69.com/*
+// @match          *://*.pig69.vip/*
 // @match          *://*.pilot007.org/*
 // @match          *://*.pimpandhost.com/*
 // @match          *://*.pixfy.cfd/*
 // @match          *://*.pixho.st/*
 // @match          *://*.pixhost.cc/*
 // @match          *://*.pixhost.to/*
-// @match          *://*.pixxxels.cc/*
+// @match          *://*.pixsera.net/*
 // @match          *://*.porn-pig.com/*
-// @match          *://*.porn4f.com/*
-// @match          *://*.porn4f.org/*
+// @match          *://*.postimages.org/*
 // @match          *://*.postimg.cc/*
 // @match          *://*.prnt.sc/*
 // @match          *://*.ria-kurumi.vip/*
 // @match          *://*.rintor.space/*
 // @match          *://*.rlu.ru/*
+// @match          *://*.russian18.vip/*
 // @match          *://*.ryuugames.com/*
 // @match          *://*.s-porn.com/*
-// @match          *://*.sfile.mobi/*
-// @match          *://*.shentai-anime.com/*
+// @match          *://*.sfile.co/*
 // @match          *://*.shotcan.com/*
 // @match          *://*.sht-link.com/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
 // @match          *://*.supercheats.com/*
-// @match          *://*.sweetie-fox.com/*
 // @match          *://*.swzz.xyz/*
 // @match          *://*.tarviral.com/*
 // @match          *://*.tenor.com/*
+// @match          *://*.thaiav.org/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
 // @match          *://*.trafficimage.club/*
@@ -219,7 +203,6 @@
 // @match          *://*.urlgalleries.net/*
 // @match          *://*.usersdrive.com/*
 // @match          *://*.vipr.im/*
-// @match          *://*.xcamcovid.com/*
 // @match          *://*.xxpics.org/*
 // @match          *://*.xxxfans.org/*
 // @match          *://*.xxxwebdlxxx.org/*
@@ -1315,19 +1298,6 @@
   $.window = usw;
   _.register({
     rule: {
-      host: /^ak\.sv$/,
-    },
-    async ready() {
-      await _.wait(1000);
-      const any = $("html");
-      any.click();
-      await _.wait(6000);
-      const a = $('a[class="download_button"]');
-      await $.openLink(a);
-    },
-  });
-  _.register({
-    rule: {
       host: /^(www\.)?apunkasoftware\.net$/,
     },
     async ready() {
@@ -1346,11 +1316,12 @@
   });
   _.register({
     rule: {
-      host: /^katfile\.vip$/,
+      host: [/^katfile\.co$/, /^katfile\.com$/],
     },
     async ready() {
-      const a = $('a[id="dlink"]');
-      await $.openLink(a.href);
+      await _.wait(1000);
+      const b = $(".btn.btn-default");
+      b.click();
     },
   });
   _.register({
@@ -1383,12 +1354,12 @@
   });
   _.register({
     rule: {
-      host: /^sfile\.mobi$/,
+      host: /^sfile\.co$/,
     },
     async ready() {
       await _.wait(8000);
-      const btn = $("#download");
-      btn.click();
+      const a = $('a[id="download"]');
+      await $.openLink(a.href);
     },
   });
   _.register({
@@ -1432,7 +1403,7 @@
   });
   _.register({
     rule: {
-      host: /^a2zapk\.io$/,
+      host: [/^a2zapk\.dev$/, /^a2zapk\.io$/],
     },
     async ready() {
       const a = $("#dlbtn li a");
@@ -1473,18 +1444,6 @@
     },
   });
   _.register({
-    rule: [
-      {
-        host: /^(www\.)?([a-zA-Z0-9]+\.)?binbox\.io$/,
-        path: /\/o\/([a-zA-Z0-9]+)/,
-      },
-    ],
-    async start(m) {
-      const direct_link = window.atob(m.path[1]);
-      await $.openLink(direct_link);
-    },
-  });
-  _.register({
     rule: {
       host: /^blogmado\.com/,
     },
@@ -1518,7 +1477,7 @@
   });
   _.register({
     rule: {
-      host: /^cuttty\.com$/,
+      host: [/^cutty\.com$/, /^cuty\.io$/],
     },
     async ready() {
       await _.wait(9000);
@@ -1528,16 +1487,17 @@
   });
   _.register({
     rule: {
-      host: [/^exe-links\.com$/, /^exeo\.app$/, /^exeygo\.com$/],
+      host: [/^exe\.io$/, /^exeo\.app$/, /^exeygo\.com$/],
     },
     async ready() {
-      const a = $(".link-button.button");
+      await _.wait(2000);
+      const a = $("#submit-button");
       a.click();
       await _.wait(2000);
-      const b = $(".link-button");
+      const b = $("#submit-button");
       b.click();
       await _.wait(6000);
-      const c = $(".button.link-button");
+      const c = $("#submit-button");
       c.click();
     },
   });
@@ -1634,7 +1594,7 @@
   });
   _.register({
     rule: {
-      host: /^gplinks\.co$/,
+      host: [/^gplinks\.co$/, /^gplinks\.com$/],
     },
     async ready() {
       await _.wait(8000);
@@ -1748,16 +1708,6 @@
     },
     async start(m) {
       await $.openLink(m.query[1]);
-    },
-  });
-  _.register({
-    rule: {
-      host: /^mangalist\.org$/,
-    },
-    async ready() {
-      await _.wait(1000);
-      const b = $(".btn-primary.url.text-center");
-      b.click();
     },
   });
   _.register({
@@ -1980,8 +1930,7 @@
   _.register({
     rule: {
       host: [
-        /^www\.2i\.(cz|sk)$/,
-        /^www\.imghit\.com$/,
+        /^(img\.)?trafficimage\.club$/,
         /^img\.javstore\.net$/,
         /^imgpulse\.top$/,
         /^imgxxt\.in$/,
@@ -1991,7 +1940,8 @@
         /^pixfy\.cfd$/,
         /^rintor\.space$/,
         /^shotcan\.com$/,
-        /^(img\.)?trafficimage\.club$/,
+        /^www\.2i\.(cz|sk)$/,
+        /^www\.imghit\.com$/,
       ],
       path: /^\/(image|i)\/.*/,
     },
@@ -2143,7 +2093,7 @@
   });
   _.register({
     rule: {
-      host: /^www\.imagebam\.com$/,
+      host: /^imagebam\.com$/,
     },
     async ready() {
       let a = $.$("#continue > a");
@@ -2185,12 +2135,13 @@
   _.register({
     rule: {
       host: [
+        /^(?:phun\.)?imagetwist\.com$/,
         /^croea\.com$/,
         /^imagehaha\.com$/,
         /^imagenpic\.com$/,
         /^imageshimage\.com$/,
-        /^imagetwist\.com$/,
         /^imagexport\.com$/,
+        /^picshick\.com$/,
       ],
     },
     async ready() {
@@ -2225,13 +2176,11 @@
     rule: {
       host: [
         /^cloudgallery\.net$/,
+        /^img[a-z]{2,10}\.sbs$/,
         /^imgair\.net$/,
         /^imgblaze\.net$/,
-        /^imgfira\.cc$/,
         /^imgfrost\.net$/,
-        /^img[a-z]{2,10}\.(sbs|shop)$/,
-        /^pic[a-z]{2,10}\.(sbs|shop)$/,
-        /^pix[a-z]{2,10}\.sbs$/,
+        /^pixsera\.net$/,
       ],
     },
     async ready() {
@@ -2274,8 +2223,10 @@
       host: /^imgpv\.com$/,
     },
     async ready() {
-      const b = $("div > button");
-      b.click();
+      const a = $("#img-preview");
+      await $.openImage(a.src, {
+        replace: true,
+      });
     },
   });
   _.register({
@@ -2333,59 +2284,41 @@
   });
   _.register({
     rule: [
-      "https://*.4up.pics/en/*",
-      "https://1minx.com/upload/en/*",
-      "https://3minx.com/upload/en/*",
-      "https://4fuk.me/upload/en/*",
-      "https://555fap.com/upload/en/*",
+      "https://2minx.com/upload/en/*",
       "https://ai18.pics/upload/en/*",
-      "https://anime-jav.com/upload/en/*",
-      "https://blackwidof.org/upload/en/*",
-      "https://chinese-pics.com/upload/en/*",
+      "https://anime-jav.vip/upload/en/*",
+      "https://bbcuck.com/upload/en/*",
       "https://chinese-pics.vip/upload/en/*",
-      "https://cn-av.com/upload/en/*",
+      "https://cn-av.vip/upload/en/*",
       "https://cn1min.com/upload/en/*",
       "https://cnpics.org/upload/en/*",
-      "https://cnxx.me/upload/en/*",
       "https://cnxxx.org/upload/en/*",
-      "https://cosplay18.pics/upload/en/*",
       "https://cosplaytele.vip/upload/en/*",
+      "https://cute-porn.com/c/en/*",
       "https://fc2ppv.me/upload/en/*",
       "https://fc2ppv.stream/upload/en/*",
-      "https://fikfok.net/upload/en/*",
-      "https://gofile.download/upload/en/*",
+      "https://fc2ppv.vip/upload/en/*",
+      "https://girlxxx.vip/upload/en/*",
       "https://hentai-manga.org/upload/en/*",
-      "https://hentai-sub.com/upload/en/*",
       "https://hentai4f.com/upload/en/*",
-      "https://hentaicovid.com/uploads/en/*",
-      "https://hentaicovid.org/upload/en/*",
-      "https://hentaicovid.vip/upload/en/*",
-      "https://idol69.net/upload/en/*",
-      "https://imgo.info/upload/en/*",
+      "https://hentaishine.com/upload/en/*",
+      "https://homexxx.vip/upload/en/*",
       "https://jav1min.com/upload/en/*",
       "https://javball.com/upload/en/*",
       "https://javbee.co/upload/en/*",
-      "https://javring.com/upload/en/*",
-      "https://javsunday.com/upload/en/*",
       "https://javtele.net/upload/en/*",
       "https://javtele.org/upload/en/*",
-      "https://kin8-av.com/upload/en/*",
-      "https://kin8-jav.com/upload/en/*",
       "https://kr-av.com/upload/en/*",
       "https://kr1min.com/upload/en/*",
       "https://misa.homes/upload/en/*",
-      "https://old-young.net/upload/en/*",
-      "https://ovabee.com/upload/en/*",
-      "https://pig69.com/upload/en/*",
+      "https://old-young.vip/upload/en/*",
+      "https://pig69.vip/upload/en/*",
       "https://porn-pig.com/upload/en/*",
-      "https://porn4f.com/upload/en/*",
-      "https://porn4f.org/upload/en/*",
       "https://ria-kurumi.vip/upload/en/*",
+      "https://russian18.vip/upload/en/*",
       "https://s-porn.com/upload/en/*",
-      "https://shentai-anime.com/upload/en/*",
       "https://sht-link.com/upload/en/*",
-      "https://sweetie-fox.com/upload/en/*",
-      "https://xcamcovid.com/upload/en/*",
+      "https://thaiav.org/upload/en/*",
       "https://xxpics.org/upload/en/*",
       "https://xxxfans.org/upload/en/*",
     ],
@@ -2468,7 +2401,7 @@
   });
   _.register({
     rule: {
-      host: [/^pixxxels\.cc$/, /^postimg\.cc$/],
+      host: [/^postimages\.org$/, /^postimg\.cc$/],
     },
     async ready() {
       const ele = $("#download");

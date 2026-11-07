@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.30.0
+// @version        8.31.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -30,18 +30,18 @@
 // @connect        *
 // @match          *://adsbypasser.github.io/*
 // @match          *://*.1ink.cc/*
+// @match          *://*.a2zapk.dev/*
 // @match          *://*.a2zapk.io/*
 // @match          *://*.adfoc.us/*
 // @match          *://*.adshnk.com/*
-// @match          *://*.ak.sv/*
 // @match          *://*.anchoreth.com/*
 // @match          *://*.apunkasoftware.net/*
-// @match          *://*.binbox.io/*
 // @match          *://*.blogmado.com/*
 // @match          *://*.boost.ink/*
 // @match          *://*.cpmlink.net/*
 // @match          *://*.cuttty.com/*
-// @match          *://*.exe-links.com/*
+// @match          *://*.cuty.io/*
+// @match          *://*.exe.io/*
 // @match          *://*.exeo.app/*
 // @match          *://*.exeygo.com/*
 // @match          *://*.f95zone.to/*
@@ -50,12 +50,14 @@
 // @match          *://*.get-click2.blogspot.com/*
 // @match          *://*.goo.st/*
 // @match          *://*.gplinks.co/*
+// @match          *://*.gplinks.com/*
 // @match          *://*.guis2.com/*
 // @match          *://*.hen-tay.net/*
 // @match          *://*.icutlink.com/*
 // @match          *://*.imagetwist.netlify.app/*
 // @match          *://*.javlibrary.com/*
-// @match          *://*.katfile.vip/*
+// @match          *://*.katfile.co/*
+// @match          *://*.katfile.com/*
 // @match          *://*.keeplinks.org/*
 // @match          *://*.kimochi.info/*
 // @match          *://*.kingofshrink.com/*
@@ -63,7 +65,6 @@
 // @match          *://*.linkify.ru/*
 // @match          *://*.lnk2.cc/*
 // @match          *://*.lolinez.com/*
-// @match          *://*.mangalist.org/*
 // @match          *://*.mirrored.to/*
 // @match          *://*.multiup.io/*
 // @match          *://*.network-loop.com/*
@@ -73,7 +74,7 @@
 // @match          *://*.ouo.press/*
 // @match          *://*.rlu.ru/*
 // @match          *://*.ryuugames.com/*
-// @match          *://*.sfile.mobi/*
+// @match          *://*.sfile.co/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.spaste.com/*
 // @match          *://*.supercheats.com/*
