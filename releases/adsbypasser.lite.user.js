@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.31.0
+// @version        8.32.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -76,6 +76,7 @@
 // @match          *://*.ryuugames.com/*
 // @match          *://*.sfile.co/*
 // @match          *://*.similarsites.com/*
+// @match          *://*.simpcity.cr/*
 // @match          *://*.spaste.com/*
 // @match          *://*.supercheats.com/*
 // @match          *://*.swzz.xyz/*
@@ -433,6 +434,9 @@
       }
       document.addEventListener("DOMContentLoaded", () => resolve());
     });
+  }
+  function getCurrentURL() {
+    return new URL(window.location.href);
   }
   const rawUSW = getUnsafeWindow();
   const usw = getUnsafeWindowProxy();
@@ -1059,6 +1063,10 @@
   $.setCookie = setCookie;
   $.toDOM = toDOM;
   $.window = usw;
+  Object.defineProperty($, 'url', {
+    get: getCurrentURL,
+    enumerable: true,
+  });
   _.register({
     rule: {
       host: /^(www\.)?apunkasoftware\.net$/,
@@ -1200,10 +1208,10 @@
   _.register({
     rule: {
       host: /^anchoreth\.com$/,
-      query: /v=([^&]+)/,
+      query: /[?&]v=/,
     },
-    async start(m) {
-      await $.openLink(atob(m.query[1]));
+    async start() {
+      await $.openLink(atob($.url.searchParams.get("v")));
     },
   });
   _.register({
@@ -1407,10 +1415,10 @@
   _.register({
     rule: {
       host: /^www\.javlibrary\.com$/,
-      query: /url=([^&]+)/,
+      query: /[?&]url=/,
     },
-    async start(m) {
-      await $.openLink(decodeURIComponent(m.query[1]));
+    async start() {
+      await $.openLink($.url.searchParams.get("url"));
     },
   });
   _.register({
@@ -1467,16 +1475,16 @@
   _.register({
     rule: {
       host: /^www\.lolinez\.com$/,
-      query: /\?(.+)/,
+      query: /^\?./,
     },
-    async start(m) {
-      await $.openLink(m.query[1]);
+    async start() {
+      await $.openLink($.url.search.slice(1));
     },
   });
   _.register({
     rule: {
       host: /^network-loop\.com$/,
-      query: /u=([^&]+)/,
+      query: /[?&]u=/,
     },
     async start() {
       await _.wait(3000);
@@ -1554,6 +1562,16 @@
   });
   _.register({
     rule: {
+      host: /^simpcity\.cr$/,
+      path: /^\/redirect\/?$/,
+      query: /(?:\?|&)to=([^&]+)/,
+    },
+    async start(m) {
+      await $.openLink(atob(decodeURIComponent(m.query[1])));
+    },
+  });
+  _.register({
+    rule: {
       host: /^www\.spaste\.com$/,
       path: /^\/site\//,
     },
@@ -1566,10 +1584,10 @@
     rule: {
       host: /^(www\.)?supercheats\.com$/,
       path: /^\/interstitial\.html$/,
-      query: /(?:\?|&)oldurl=([^&]+)(?:$|&)/,
+      query: /[?&]oldurl=/,
     },
-    async start(m) {
-      await $.openLink(m.query[1]);
+    async start() {
+      await $.openLink($.url.searchParams.get("oldurl"));
     },
   });
   _.register({

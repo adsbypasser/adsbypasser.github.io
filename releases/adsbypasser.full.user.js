@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.31.0
+// @version        8.32.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -33,6 +33,7 @@
 // @match          *://*.2i.cz/*
 // @match          *://*.2i.sk/*
 // @match          *://*.2minx.com/*
+// @match          *://*.3sporn.com/*
 // @match          *://*.3xpla.net/*
 // @match          *://*.3xplanet.com/*
 // @match          *://*.3xplanet.net/*
@@ -42,6 +43,7 @@
 // @match          *://*.adfoc.us/*
 // @match          *://*.adshnk.com/*
 // @match          *://*.ai18.pics/*
+// @match          *://*.aixxx.vip/*
 // @match          *://*.anchoreth.com/*
 // @match          *://*.anime-jav.vip/*
 // @match          *://*.apunkasoftware.net/*
@@ -131,6 +133,7 @@
 // @match          *://*.javtele.org/*
 // @match          *://*.javtenshi.com/*
 // @match          *://*.javxspot.com/*
+// @match          *://*.jvs91.net/*
 // @match          *://*.katfile.co/*
 // @match          *://*.katfile.com/*
 // @match          *://*.keeplinks.org/*
@@ -150,6 +153,7 @@
 // @match          *://*.network-loop.com/*
 // @match          *://*.nmac.to/*
 // @match          *://*.noelshack.com/*
+// @match          *://*.nudestreet.vip/*
 // @match          *://*.old-young.vip/*
 // @match          *://*.orangepix.is/*
 // @match          *://*.otomi-games.com/*
@@ -182,7 +186,9 @@
 // @match          *://*.shotcan.com/*
 // @match          *://*.sht-link.com/*
 // @match          *://*.similarsites.com/*
+// @match          *://*.simpcity.cr/*
 // @match          *://*.spaste.com/*
+// @match          *://*.stits.vip/*
 // @match          *://*.supercheats.com/*
 // @match          *://*.swzz.xyz/*
 // @match          *://*.tarviral.com/*
@@ -549,6 +555,9 @@
       }
       document.addEventListener("DOMContentLoaded", () => resolve());
     });
+  }
+  function getCurrentURL() {
+    return new URL(window.location.href);
   }
   const rawUSW = getUnsafeWindow();
   const usw = getUnsafeWindowProxy();
@@ -1296,6 +1305,10 @@
   $.setCookie = setCookie;
   $.toDOM = toDOM;
   $.window = usw;
+  Object.defineProperty($, 'url', {
+    get: getCurrentURL,
+    enumerable: true,
+  });
   _.register({
     rule: {
       host: /^(www\.)?apunkasoftware\.net$/,
@@ -1437,10 +1450,10 @@
   _.register({
     rule: {
       host: /^anchoreth\.com$/,
-      query: /v=([^&]+)/,
+      query: /[?&]v=/,
     },
-    async start(m) {
-      await $.openLink(atob(m.query[1]));
+    async start() {
+      await $.openLink(atob($.url.searchParams.get("v")));
     },
   });
   _.register({
@@ -1644,10 +1657,10 @@
   _.register({
     rule: {
       host: /^www\.javlibrary\.com$/,
-      query: /url=([^&]+)/,
+      query: /[?&]url=/,
     },
-    async start(m) {
-      await $.openLink(decodeURIComponent(m.query[1]));
+    async start() {
+      await $.openLink($.url.searchParams.get("url"));
     },
   });
   _.register({
@@ -1704,16 +1717,16 @@
   _.register({
     rule: {
       host: /^www\.lolinez\.com$/,
-      query: /\?(.+)/,
+      query: /^\?./,
     },
-    async start(m) {
-      await $.openLink(m.query[1]);
+    async start() {
+      await $.openLink($.url.search.slice(1));
     },
   });
   _.register({
     rule: {
       host: /^network-loop\.com$/,
-      query: /u=([^&]+)/,
+      query: /[?&]u=/,
     },
     async start() {
       await _.wait(3000);
@@ -1791,6 +1804,16 @@
   });
   _.register({
     rule: {
+      host: /^simpcity\.cr$/,
+      path: /^\/redirect\/?$/,
+      query: /(?:\?|&)to=([^&]+)/,
+    },
+    async start(m) {
+      await $.openLink(atob(decodeURIComponent(m.query[1])));
+    },
+  });
+  _.register({
+    rule: {
       host: /^www\.spaste\.com$/,
       path: /^\/site\//,
     },
@@ -1803,10 +1826,10 @@
     rule: {
       host: /^(www\.)?supercheats\.com$/,
       path: /^\/interstitial\.html$/,
-      query: /(?:\?|&)oldurl=([^&]+)(?:$|&)/,
+      query: /[?&]oldurl=/,
     },
-    async start(m) {
-      await $.openLink(m.query[1]);
+    async start() {
+      await $.openLink($.url.searchParams.get("oldurl"));
     },
   });
   _.register({
@@ -2285,7 +2308,9 @@
   _.register({
     rule: [
       "https://2minx.com/upload/en/*",
+      "https://3sporn.com/s/en/*",
       "https://ai18.pics/upload/en/*",
+      "https://aixxx.vip/upload/en/*",
       "https://anime-jav.vip/upload/en/*",
       "https://bbcuck.com/upload/en/*",
       "https://chinese-pics.vip/upload/en/*",
@@ -2311,6 +2336,7 @@
       "https://kr-av.com/upload/en/*",
       "https://kr1min.com/upload/en/*",
       "https://misa.homes/upload/en/*",
+      "https://nudestreet.vip/img/en/*",
       "https://old-young.vip/upload/en/*",
       "https://pig69.vip/upload/en/*",
       "https://porn-pig.com/upload/en/*",
@@ -2318,6 +2344,7 @@
       "https://russian18.vip/upload/en/*",
       "https://s-porn.com/upload/en/*",
       "https://sht-link.com/upload/en/*",
+      "https://stits.vip/s/en/*",
       "https://thaiav.org/upload/en/*",
       "https://xxpics.org/upload/en/*",
       "https://xxxfans.org/upload/en/*",
@@ -2325,6 +2352,15 @@
     async ready() {
       const m = $('meta[property="og:image"]');
       await $.openImage(m.content);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^jvs91\.net$/,
+    },
+    async ready() {
+      const a = $('[class="button"]');
+      await $.openLink(a.href);
     },
   });
   _.register({
@@ -2381,7 +2417,7 @@
       path: /^\/image\/\d+/,
     },
     async start(m) {
-      await $.openImage(m.path + "?size=original");
+      await $.openImage(m.path[0] + "?size=original");
     },
   });
   _.register({

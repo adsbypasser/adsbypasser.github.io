@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.31.0
+// @version        8.32.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -33,6 +33,7 @@
 // @match          *://*.2i.cz/*
 // @match          *://*.2i.sk/*
 // @match          *://*.2minx.com/*
+// @match          *://*.3sporn.com/*
 // @match          *://*.3xpla.net/*
 // @match          *://*.3xplanet.com/*
 // @match          *://*.3xplanet.net/*
@@ -42,6 +43,7 @@
 // @match          *://*.adfoc.us/*
 // @match          *://*.adshnk.com/*
 // @match          *://*.ai18.pics/*
+// @match          *://*.aixxx.vip/*
 // @match          *://*.anchoreth.com/*
 // @match          *://*.anime-jav.vip/*
 // @match          *://*.apunkasoftware.net/*
@@ -131,6 +133,7 @@
 // @match          *://*.javtele.org/*
 // @match          *://*.javtenshi.com/*
 // @match          *://*.javxspot.com/*
+// @match          *://*.jvs91.net/*
 // @match          *://*.katfile.co/*
 // @match          *://*.katfile.com/*
 // @match          *://*.keeplinks.org/*
@@ -150,6 +153,7 @@
 // @match          *://*.network-loop.com/*
 // @match          *://*.nmac.to/*
 // @match          *://*.noelshack.com/*
+// @match          *://*.nudestreet.vip/*
 // @match          *://*.old-young.vip/*
 // @match          *://*.orangepix.is/*
 // @match          *://*.otomi-games.com/*
@@ -182,7 +186,9 @@
 // @match          *://*.shotcan.com/*
 // @match          *://*.sht-link.com/*
 // @match          *://*.similarsites.com/*
+// @match          *://*.simpcity.cr/*
 // @match          *://*.spaste.com/*
+// @match          *://*.stits.vip/*
 // @match          *://*.supercheats.com/*
 // @match          *://*.swzz.xyz/*
 // @match          *://*.tarviral.com/*

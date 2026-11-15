@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.31.0
+// @version        8.32.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -76,6 +76,7 @@
 // @match          *://*.ryuugames.com/*
 // @match          *://*.sfile.co/*
 // @match          *://*.similarsites.com/*
+// @match          *://*.simpcity.cr/*
 // @match          *://*.spaste.com/*
 // @match          *://*.supercheats.com/*
 // @match          *://*.swzz.xyz/*
