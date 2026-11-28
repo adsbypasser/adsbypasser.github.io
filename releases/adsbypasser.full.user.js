@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.32.0
+// @version        8.33.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -47,11 +47,14 @@
 // @match          *://*.anchoreth.com/*
 // @match          *://*.anime-jav.vip/*
 // @match          *://*.apunkasoftware.net/*
+// @match          *://*.ashnk.com/*
 // @match          *://*.bayimg.com/*
 // @match          *://*.bbcuck.com/*
 // @match          *://*.beeimg.com/*
 // @match          *://*.blogmado.com/*
 // @match          *://*.boost.ink/*
+// @match          *://*.brazilian18.com/*
+// @match          *://*.british18.com/*
 // @match          *://*.casimages.com/*
 // @match          *://*.chinese-pics.vip/*
 // @match          *://*.cloudgallery.net/*
@@ -59,6 +62,7 @@
 // @match          *://*.cn1min.com/*
 // @match          *://*.cnpics.org/*
 // @match          *://*.cnxxx.org/*
+// @match          *://*.colombian18.com/*
 // @match          *://*.cosplaytele.vip/*
 // @match          *://*.cpmlink.net/*
 // @match          *://*.croea.com/*
@@ -81,6 +85,7 @@
 // @match          *://*.fir3.net/*
 // @match          *://*.forumdinheiro.com/*
 // @match          *://*.get-click2.blogspot.com/*
+// @match          *://*.giantxporn.com/*
 // @match          *://*.giphy.com/*
 // @match          *://*.girlxxx.vip/*
 // @match          *://*.goo.st/*
@@ -94,6 +99,7 @@
 // @match          *://*.hentaishine.com/*
 // @match          *://*.homexxx.vip/*
 // @match          *://*.hostpic.org/*
+// @match          *://*.housewife.homes/*
 // @match          *://*.ibb.co/*
 // @match          *://*.icutlink.com/*
 // @match          *://*.im.ge/*
@@ -123,6 +129,8 @@
 // @match          *://*.imgtraffic.com/*
 // @match          *://*.imgxxt.in/*
 // @match          *://*.imx.to/*
+// @match          *://*.indianx.vip/*
+// @match          *://*.italian18.com/*
 // @match          *://*.jav-load.com/*
 // @match          *://*.jav1min.com/*
 // @match          *://*.javball.com/*
@@ -150,6 +158,7 @@
 // @match          *://*.mirrored.to/*
 // @match          *://*.misa.homes/*
 // @match          *://*.multiup.io/*
+// @match          *://*.myfirsttime.vip/*
 // @match          *://*.network-loop.com/*
 // @match          *://*.nmac.to/*
 // @match          *://*.noelshack.com/*
@@ -164,6 +173,7 @@
 // @match          *://*.picforall.eu/*
 // @match          *://*.picshick.com/*
 // @match          *://*.picstate.com/*
+// @match          *://*.picturelol.com/*
 // @match          *://*.pig69.vip/*
 // @match          *://*.pilot007.org/*
 // @match          *://*.pimpandhost.com/*
@@ -184,6 +194,7 @@
 // @match          *://*.s-porn.com/*
 // @match          *://*.sfile.co/*
 // @match          *://*.shotcan.com/*
+// @match          *://*.shrink-service.it/*
 // @match          *://*.sht-link.com/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.simpcity.cr/*
@@ -196,6 +207,7 @@
 // @match          *://*.thaiav.org/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
+// @match          *://*.tight-pussy.com/*
 // @match          *://*.trafficimage.club/*
 // @match          *://*.tribuntekno.com/*
 // @match          *://*.turboimagehost.com/*
@@ -209,12 +221,12 @@
 // @match          *://*.urlgalleries.net/*
 // @match          *://*.usersdrive.com/*
 // @match          *://*.vipr.im/*
+// @match          *://*.xvintage.org/*
 // @match          *://*.xxpics.org/*
 // @match          *://*.xxxfans.org/*
 // @match          *://*.xxxwebdlxxx.org/*
 // @match          *://*.xxxwebdlxxx.top/*
 // @match          *://*.yasir252.com/*
-// @match          *://*.zegtrends.com/*
 // ==/UserScript==
 
 (function () {
@@ -1007,7 +1019,7 @@
       } else {
         data = toQuery(data);
       }
-      headers["Content-Length"] = data.length;
+      headers["Content-Length"] = String(data.length);
     }
     return new Promise((resolve, reject) => {
       GMAPI.xmlHttpRequest({
@@ -1434,17 +1446,54 @@
   });
   _.register({
     rule: {
-      host: /^adshnk\.com$/,
+      host: [
+        /^(?:\w+\.)?adshnk\.com$/,
+        /^(?:\w+\.)?ashnk\.com$/,
+        /^(?:\w+\.)?shrink-service\.it$/,
+      ],
+      path: /^\/(?:(?:btn|s)\/)?([A-Za-z0-9]{2,})\/?$/,
     },
-    async ready() {
-      await _.wait(16000);
-      const b = $(
-        'button[class="ui right labeled icon button primary huge fluid"]',
+    async start(m) {
+      const forcedDomain = "adshnk.com";
+      const cookieBypassV1 = $.getCookie("cookie_bypass_v1") || "false";
+      const uri = `https://${forcedDomain}/${m.path[1]}`;
+      const response = await $.post(
+        "https://www.shrink-service.it/v3/api/prototype/init",
+        {
+          req: "init",
+          uri,
+          cookie_bypass_v1: cookieBypassV1,
+        },
+        {
+          Origin: _.none,
+          Referer: _.none,
+          "X-Requested-With": _.none,
+        },
       );
-      b.click();
-      await _.wait(18000);
-      const a = $('a[id="final_redirect"]');
-      await $.openLink(a.href);
+      const entries = JSON.parse(response);
+      const response0 = entries["0"];
+      if (!response0) {
+        _.warn("destination link not found");
+        return;
+      }
+      let destination;
+      if (response0.metadata) {
+        try {
+          destination = JSON.parse(response0.metadata).url;
+        } catch {
+        }
+      }
+      if (!destination && response0.destination) {
+        destination = response0.destination.replace(
+          /&[a-zA-Z0-9#]+;/g,
+          (entity) => $.toDOM(entity).body.textContent,
+        );
+      }
+      if (!destination) {
+        _.warn("destination link not found");
+        return;
+      }
+      await $.openLink(destination);
     },
   });
   _.register({
@@ -1637,16 +1686,6 @@
   });
   _.register({
     rule: {
-      host: /^zegtrends\.com$/,
-    },
-    async ready() {
-      await _.wait(12000);
-      const b = $("div > button.bsub");
-      b.click();
-    },
-  });
-  _.register({
-    rule: {
       host: /^imagetwist\.netlify\.app$/,
     },
     async ready() {
@@ -1671,6 +1710,36 @@
     async ready() {
       const ma = $("a#next");
       await $.openLink(ma.href);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^kimochi\.info$/,
+      path: /^\/download\/(?!file\/?$).+/,
+    },
+    async ready() {
+      const isReady = (button) => {
+        if (!button || button.disabled || button.hasAttribute("disabled")) {
+          return false;
+        }
+        const form = button.closest("form") || document;
+        const turnstileWidget = $.$(".cf-turnstile", form);
+        if (turnstileWidget) {
+          const turnstileInput = $.$('input[name="cf-turnstile-response"]', form);
+          if (!turnstileInput || !turnstileInput.value) {
+            return false;
+          }
+        }
+        return true;
+      };
+      if (!$.$("#downloadBtn")) {
+        return;
+      }
+      const button = await _.tryEvery(200, () => {
+        const el = $.$("#downloadBtn");
+        return isReady(el) ? el : _.none;
+      });
+      button.click();
     },
   });
   _.register({
@@ -1777,6 +1846,63 @@
     async ready() {
       const a = $("#content > .long_url > a");
       await $.openLink(a.href);
+    },
+  });
+  _.register({
+    rule: {
+      host: /^www\.ryuugames\.com$/,
+      path: /^\/processing(?:\/download)?\/?$/,
+    },
+    async ready() {
+      const isHttpUrl = (url) =>
+        typeof url === "string" && /^https?:\/\//i.test(url);
+      const form = $.$("#continueForm");
+      if (form) {
+        const hostInput = $.$('input[name="host"]', form);
+        if (hostInput && hostInput.value) {
+          try {
+            const normalized = hostInput.value
+              .trim()
+              .replace(/-/g, "+")
+              .replace(/_/g, "/");
+            const padded = normalized.padEnd(
+              Math.ceil(normalized.length / 4) * 4,
+              "=",
+            );
+            const payload = JSON.parse(atob(padded));
+            if (payload && isHttpUrl(payload.url)) {
+              await $.openLink(payload.url);
+              return;
+            }
+          } catch (e) {
+            _.warn("failed to decode host payload from processing page", e);
+          }
+        }
+        form.submit();
+        return;
+      }
+      const container = $.$(".ryuu-sl-container[data-api-url]");
+      const apiUrl = container?.getAttribute("data-api-url");
+      if (apiUrl) {
+        try {
+          const response = await $.get(apiUrl);
+          const data = JSON.parse(response);
+          if (data && data.success && isHttpUrl(data.url)) {
+            await $.openLink(data.url);
+            return;
+          }
+        } catch (e) {
+          _.warn("failed to fetch safelink API", e);
+        }
+      }
+      const button = $.$("#ryuu-sl-download-btn");
+      if (button) {
+        button.disabled = false;
+        button.classList.add("ryuu-sl-ready");
+        button.classList.remove("ryuu-sl-disabled");
+        button.style.display = "";
+        button.click();
+      }
     },
   });
   _.register({
@@ -2165,6 +2291,7 @@
         /^imageshimage\.com$/,
         /^imagexport\.com$/,
         /^picshick\.com$/,
+        /^picturelol\.com$/,
       ],
     },
     async ready() {
@@ -2297,12 +2424,12 @@
       host: /^imx\.to$/,
     },
     async ready() {
-      let a = $.$("#continuebutton, .button");
+      let a = $.$(".btn");
       if (a) {
         a.click();
       }
-      a = $(".centred");
-      await $.openImage(a.src);
+      a = $(".img-photo");
+      await $.openLink(a.href);
     },
   });
   _.register({
@@ -2313,21 +2440,28 @@
       "https://aixxx.vip/upload/en/*",
       "https://anime-jav.vip/upload/en/*",
       "https://bbcuck.com/upload/en/*",
+      "https://brazilian18.com/b/en/*",
+      "https://british18.com/b/en/*",
       "https://chinese-pics.vip/upload/en/*",
       "https://cn-av.vip/upload/en/*",
       "https://cn1min.com/upload/en/*",
       "https://cnpics.org/upload/en/*",
       "https://cnxxx.org/upload/en/*",
+      "https://colombian18.com/c/en/*",
       "https://cosplaytele.vip/upload/en/*",
       "https://cute-porn.com/c/en/*",
       "https://fc2ppv.me/upload/en/*",
       "https://fc2ppv.stream/upload/en/*",
       "https://fc2ppv.vip/upload/en/*",
+      "https://giantxporn.com/g/en/*",
       "https://girlxxx.vip/upload/en/*",
       "https://hentai-manga.org/upload/en/*",
       "https://hentai4f.com/upload/en/*",
       "https://hentaishine.com/upload/en/*",
       "https://homexxx.vip/upload/en/*",
+      "https://housewife.homes/h/en/*",
+      "https://indianx.vip/i/en/*",
+      "https://italian18.com/i/en/*",
       "https://jav1min.com/upload/en/*",
       "https://javball.com/upload/en/*",
       "https://javbee.co/upload/en/*",
@@ -2336,6 +2470,7 @@
       "https://kr-av.com/upload/en/*",
       "https://kr1min.com/upload/en/*",
       "https://misa.homes/upload/en/*",
+      "https://myfirsttime.vip/m/en/*",
       "https://nudestreet.vip/img/en/*",
       "https://old-young.vip/upload/en/*",
       "https://pig69.vip/upload/en/*",
@@ -2346,6 +2481,8 @@
       "https://sht-link.com/upload/en/*",
       "https://stits.vip/s/en/*",
       "https://thaiav.org/upload/en/*",
+      "https://tight-pussy.com/t/en/*",
+      "https://xvintage.org/x/en/*",
       "https://xxpics.org/upload/en/*",
       "https://xxxfans.org/upload/en/*",
     ],

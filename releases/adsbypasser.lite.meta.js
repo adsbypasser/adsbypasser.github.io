@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.32.0
+// @version        8.33.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -36,6 +36,7 @@
 // @match          *://*.adshnk.com/*
 // @match          *://*.anchoreth.com/*
 // @match          *://*.apunkasoftware.net/*
+// @match          *://*.ashnk.com/*
 // @match          *://*.blogmado.com/*
 // @match          *://*.boost.ink/*
 // @match          *://*.cpmlink.net/*
@@ -75,6 +76,7 @@
 // @match          *://*.rlu.ru/*
 // @match          *://*.ryuugames.com/*
 // @match          *://*.sfile.co/*
+// @match          *://*.shrink-service.it/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.simpcity.cr/*
 // @match          *://*.spaste.com/*
@@ -93,5 +95,4 @@
 // @match          *://*.urlgalleries.net/*
 // @match          *://*.usersdrive.com/*
 // @match          *://*.yasir252.com/*
-// @match          *://*.zegtrends.com/*
 // ==/UserScript==

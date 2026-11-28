@@ -3,7 +3,7 @@
 // @namespace      AdsBypasser
 // @description    Bypass Ads
 // @author         AdsBypasser Team
-// @version        8.32.0
+// @version        8.33.0
 // @license        BSD-3-Clause
 // @homepageURL    https://adsbypasser.github.io/
 // @supportURL     https://github.com/adsbypasser/adsbypasser/issues
@@ -47,11 +47,14 @@
 // @match          *://*.anchoreth.com/*
 // @match          *://*.anime-jav.vip/*
 // @match          *://*.apunkasoftware.net/*
+// @match          *://*.ashnk.com/*
 // @match          *://*.bayimg.com/*
 // @match          *://*.bbcuck.com/*
 // @match          *://*.beeimg.com/*
 // @match          *://*.blogmado.com/*
 // @match          *://*.boost.ink/*
+// @match          *://*.brazilian18.com/*
+// @match          *://*.british18.com/*
 // @match          *://*.casimages.com/*
 // @match          *://*.chinese-pics.vip/*
 // @match          *://*.cloudgallery.net/*
@@ -59,6 +62,7 @@
 // @match          *://*.cn1min.com/*
 // @match          *://*.cnpics.org/*
 // @match          *://*.cnxxx.org/*
+// @match          *://*.colombian18.com/*
 // @match          *://*.cosplaytele.vip/*
 // @match          *://*.cpmlink.net/*
 // @match          *://*.croea.com/*
@@ -81,6 +85,7 @@
 // @match          *://*.fir3.net/*
 // @match          *://*.forumdinheiro.com/*
 // @match          *://*.get-click2.blogspot.com/*
+// @match          *://*.giantxporn.com/*
 // @match          *://*.giphy.com/*
 // @match          *://*.girlxxx.vip/*
 // @match          *://*.goo.st/*
@@ -94,6 +99,7 @@
 // @match          *://*.hentaishine.com/*
 // @match          *://*.homexxx.vip/*
 // @match          *://*.hostpic.org/*
+// @match          *://*.housewife.homes/*
 // @match          *://*.ibb.co/*
 // @match          *://*.icutlink.com/*
 // @match          *://*.im.ge/*
@@ -123,6 +129,8 @@
 // @match          *://*.imgtraffic.com/*
 // @match          *://*.imgxxt.in/*
 // @match          *://*.imx.to/*
+// @match          *://*.indianx.vip/*
+// @match          *://*.italian18.com/*
 // @match          *://*.jav-load.com/*
 // @match          *://*.jav1min.com/*
 // @match          *://*.javball.com/*
@@ -150,6 +158,7 @@
 // @match          *://*.mirrored.to/*
 // @match          *://*.misa.homes/*
 // @match          *://*.multiup.io/*
+// @match          *://*.myfirsttime.vip/*
 // @match          *://*.network-loop.com/*
 // @match          *://*.nmac.to/*
 // @match          *://*.noelshack.com/*
@@ -164,6 +173,7 @@
 // @match          *://*.picforall.eu/*
 // @match          *://*.picshick.com/*
 // @match          *://*.picstate.com/*
+// @match          *://*.picturelol.com/*
 // @match          *://*.pig69.vip/*
 // @match          *://*.pilot007.org/*
 // @match          *://*.pimpandhost.com/*
@@ -184,6 +194,7 @@
 // @match          *://*.s-porn.com/*
 // @match          *://*.sfile.co/*
 // @match          *://*.shotcan.com/*
+// @match          *://*.shrink-service.it/*
 // @match          *://*.sht-link.com/*
 // @match          *://*.similarsites.com/*
 // @match          *://*.simpcity.cr/*
@@ -196,6 +207,7 @@
 // @match          *://*.thaiav.org/*
 // @match          *://*.thefileslocker.net/*
 // @match          *://*.thinfi.com/*
+// @match          *://*.tight-pussy.com/*
 // @match          *://*.trafficimage.club/*
 // @match          *://*.tribuntekno.com/*
 // @match          *://*.turboimagehost.com/*
@@ -209,10 +221,10 @@
 // @match          *://*.urlgalleries.net/*
 // @match          *://*.usersdrive.com/*
 // @match          *://*.vipr.im/*
+// @match          *://*.xvintage.org/*
 // @match          *://*.xxpics.org/*
 // @match          *://*.xxxfans.org/*
 // @match          *://*.xxxwebdlxxx.org/*
 // @match          *://*.xxxwebdlxxx.top/*
 // @match          *://*.yasir252.com/*
-// @match          *://*.zegtrends.com/*
 // ==/UserScript==
